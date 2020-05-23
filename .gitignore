@@ -1,1 +1,6 @@
-/.ipynb_checkpoints
+.ipynb_checkpoints/
+sm_sample_files/
+in_situ_data/
+testdata/
+test_output_data/
+*.idea*
