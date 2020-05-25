@@ -15,6 +15,7 @@ from datetime import timedelta
 import warnings
 
 
+# TO DO: remove overpass parameters
 # Classes for H5 format
 class SPL4SMP_h5_Img(ImageBase):
     """
@@ -41,8 +42,13 @@ class SPL4SMP_h5_Img(ImageBase):
         If true the read data will be returned as 1D arrays.
     """
 
+    # old version
+    # def __init__(self, filename, mode='r', parameter='soil_moisture',
+    #              overpass='AM', var_overpass_str=True, flatten=False):
+
+    # TO DO: remove overpass parameters
     def __init__(self, filename, mode='r', parameter='soil_moisture',
-                 overpass='AM', var_overpass_str=True, flatten=False):
+                 flatten=False):
         super(SPL4SMP_h5_Img, self).__init__(filename, mode=mode)
 
         if type(parameter) != list:
@@ -146,7 +152,7 @@ class SPL4SMP_h5_Img(ImageBase):
     def close(self):
         pass
 
-
+# TO DO: remove overpass parameters
 class SPL4SMP_h5_Ds(MultiTemporalImageBase):
     """
     Class for reading a collection of SMAP Level 4 Passive Soil Moisture images in h5 format.
@@ -174,6 +180,7 @@ class SPL4SMP_h5_Ds(MultiTemporalImageBase):
         If true the read data will be returned as 1D arrays.
     """
 
+    # TO DO: remove overpass parameters
     def __init__(self, data_path, parameter='soil_moisture', overpass='AM',
                  var_overpass_str=True, subpath_templ=['%Y.%m.%d'], crid=None, flatten=False):
 
@@ -217,6 +224,7 @@ class SPL4SMP_h5_Ds(MultiTemporalImageBase):
 
         return timestamps
         
+# TO DO: remove overpass parameters
 # Classes for NC format
 class SPL4SMP_nc_Img(ImageBase):
     """
@@ -243,6 +251,7 @@ class SPL4SMP_nc_Img(ImageBase):
         If true the read data will be returned as 1D arrays.
     """
 
+    # TO DO: remove overpass parameters
     def __init__(self, filename, mode='r', parameter='soil_moisture',
                  overpass='AM', var_overpass_str=True, flatten=False):
         super(SPL4SMP_nc_Img, self).__init__(filename, mode=mode)
@@ -270,6 +279,7 @@ class SPL4SMP_nc_Img(ImageBase):
     def close(self):
         pass
 
+# TO DO: remove overpass parameters
 class SPL4SMP_nc_Ds(MultiTemporalImageBase):
     """
     Class for reading a collection of SMAP Level 4 Passive Soil Moisture images in nc format.
@@ -297,6 +307,7 @@ class SPL4SMP_nc_Ds(MultiTemporalImageBase):
         If true the read data will be returned as 1D arrays.
     """
 
+    # TO DO: remove overpass parameters
     def __init__(self, data_path, parameter='soil_moisture', overpass='AM',
                  var_overpass_str=True, subpath_templ=['%Y.%m.%d'], crid=None, flatten=False):
         ioclass_kws = {'parameter': parameter,
