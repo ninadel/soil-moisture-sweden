@@ -18,14 +18,14 @@ input_dataset = SPL3SMP_Ds(input_root, parameter=parameters,
                                crid=None, flatten=True)
 
 # reshuffle
-# smap_L3_reshuffle.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
+smap_L3_reshuffle.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
 
 # test reshuffle
 # output note: why is timestamp set to midnight?
 # ds = SMAPTs(outputpath, parameters=['soil_moisture','soil_moisture_error', 'retrieval_qual_flag', 'surface_flag'], ioclass_kws={'read_bulk': True})
-ds = SMAPTs(outputpath, parameters=['retrieval_qual_flag', 'surface_flag'],
-            ioclass_kws={'read_bulk': True})
+# ds = SMAPTs(outputpath, parameters=['retrieval_qual_flag', 'surface_flag'],
+#             ioclass_kws={'read_bulk': True})
 # read_ts takes either lon, lat coordinates or a grid point indices.
 # and returns a pandas.DataFrame
-ts = ds.read(19.556539, 64.182029) # (lon, lat)
-print(ts.head())
+# ts = ds.read(19.556539, 64.182029) # (lon, lat)
+# print(ts.head())
