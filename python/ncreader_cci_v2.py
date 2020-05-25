@@ -29,16 +29,21 @@ iy = near(lat_, lati)
 
 
 # get all time records of variable [vname] at indices [iy,ix]
-vname = 'sm'
-var = nc_fid.variables[vname]
-print(var)
+avar = nc_fid.variables['sm']
+# print(avar)
+a = avar[:, iy, ix]
+# print('a')
+# print(a)
 
-h = var[:, iy, ix]
+bvar = nc_fid.variables['sm_uncertainty']
+# print(bvar)
+b = bvar[:, iy, ix]
+print('b')
+print(b)
 
-for time in jd:
-    print(time)
-# print(h)
-# print(len(h))
+# for time in jd:
+#     print(time)
+
 
 # plt.figure(figsize=(16,4))
 # plt.plot_date(jd, h, fmt='-')
