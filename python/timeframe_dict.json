@@ -1,0 +1,79 @@
+{
+	"years": {
+		"2015": {
+			"years": [
+				2015
+			]
+		},
+		"2016": {
+			"years": [
+				2016
+			]
+		},
+		"2017": {
+			"years": [
+				2017
+			]
+		},
+		"2018": {
+			"years": [
+				2018
+			]
+		}
+	},
+	"seasons": {
+		"winter": {
+			"months": [
+				12,
+				1,
+				2
+			]
+		},
+		"spring": {
+			"months": [
+				3,
+				4,
+				5
+			]
+		},
+		"summer": {
+			"months": [
+				6,
+				7,
+				8
+			]
+		},
+		"fall": {
+			"months": [
+				9,
+				10,
+				11
+			]
+		},
+		"warm-months": {
+			"months": [
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			]
+		}
+	},
+	"drought_timeframes": {
+		"non-drought-years": {
+			"years": [
+				2015,
+				2016,
+				2017
+			]
+		},
+		"drought-years": {
+			"years": [
+				2018
+			]
+		}
+	}
+}
