@@ -1,44 +1,91 @@
+"""
+Author: Nina del Rosario
+Date: 5/25/2020
+Script for analyzing SM datasets
+"""
+
 import sm_tools
-import datasets
+import sm_datasets
 import json
 
-# station_dict = get_station_dict(input_dir)
-# sm-tools.get_station_dict(r'C:\git\nordic-insitu-sm-data')
+# directory that has in situ data, used to get stations
+# in_situ_dir = ''
+
+# get stations
+# sm_tools.get_station_dict(r'C:\git\nordic-insitu-sm-data')
+
+# load timeframe_dict from external file
 with open('timeframe_dict.json', 'r') as f:
-    timeframes = json.load(f)
+    timeframe_dict = json.load(f)
 
-# print(timeframes)
 
-dataset_dict = {}
+dataset_dict = {
+    "reference dataset": {
+    },
+    "evaluation dataset": {
+    }
+}
 
-# start reader for each reference dataset and append dataset to dictionary
-# start reader for each evaluation dataset and append dataset to dictionary
+dataset_dict["reference dataset"]["in-situ"] = []
+dataset_dict["reference dataset"]["GLDAS"] = []
+dataset_dict["evaluation dataset"]["GLDAS"] = []
+dataset_dict["evaluation dataset"]["SMAP L3"] = []
 
-# create empty metric dataset for all comparisons
-    # headings: dataset 1, dataset 2, network, station, timeframe, metric 1, metric 2, metric 3, metric 4
-# for each evaluation dataset
-    # for each reference dataset
-            # create empty comparison dataset for matched data
-            # headings: network, station, timestamp, dataset 1 name, dataset 1 data, dataset 2 name, dataset 2 data
-        # for each network in station dict
-            # for each station in station_dict
-                # get evaluation dataset for station
-                # get reference dataset for station
-                # temporal match datasets
-                # concat station matched datasets to comparison dataset
-        # calculate metrics across all data, network = all, station = all, timeframe = all
-        # calculate metrics across networks, network = network, station = network, timeframe = all
-            # for each network, create a filtered dataframe
-            # calculate metrics
-        # calculate metrics across all stations, network = network, station = station, timeframe = all
-            # for each sstation, create a filtered dataframe
-            # calculate metrics
-        # calculate metrics for each timeframe across all data, network = all, station = all, timeframe = timeframe
-            # for each timeframe, create a filtered dataframe
-            # calculate metrics
-        # calculate metrics for each timeframe across all Sweden, network = ICOS, station = all, timeframe = timeframe
-            # for each timeframe, create a filtered dataframe
-            # calculate metrics
+# for ascat TS, will need to do something manually
+    # get dataset for each year 2015-2018
+    # append all to 1 dataframe
+    # compare ascat TS to in-situ
+    # compare ascat TS to GLDAS
+
+print(dataset_dict)
+
+# initiate readers and add to dataset dict
+# initiate reader
+# add to dataset_dict
+    # "name": reader obj
+
+# create metrics dataframe
+# create log txt file
+# for eval_name, eval_dataset in dataset dict
+    # for ref_name, ref_dataset in dataset dict
+        # print to log
+        # create comparison matched dataframe: network, station, dataset 1 name, dataset 2 name, datetime, dataset 1 values, dataset 2 values
+        # for network name, network dict in station dict
+            # print to log
+            # create network matched dataframe: network, station, dataset 1 name, dataset 2 name, datetime, dataset 1 values, dataset 2 values
+            # for station_name, station_dict in network_dict
+                # print to log
+                # lon = station lon
+                # lat = station lat
+                # get reference ts
+                # get evaluation ts
+                # get matched dataset for station
+                # print to log: matched record count
+                # get metrics for station comparison
+                # print to log: station metrics
+                # add to metrics dataframe
+                # create station matched dataframe: network, station, dataset 1 name, dataset 2 name, datetime, dataset 1 values, dataset 2 values
+                # append station matched dataframe to network matched dataframe
+                # print to log
+            # get metrics for network comparison
+            # print to log: network metrics
+            # add to metrics dataframe
+            # append network matched dataframe to comparison matched dataframe
+            # print to log
+        # get metrics for comparison (overall)
+        # print to log
+        # for timeframe, values in timeframe_dict
+            # print to log
+            # get filtered dataframe from comparison matched dataframe
+            # print to log: filtered record count
+            # get metrics for timeframe comparison
+            # print to log: timeframe metrics
+            # add to metrics dataframe
+            # print to log
+
+# print metrics
+
+# write metrics to csv
 
 # calc anomalies
 # https://github.com/TUW-GEO/pytesmo/blob/master/pytesmo/time_series/anomaly.py

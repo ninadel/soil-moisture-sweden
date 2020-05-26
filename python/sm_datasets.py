@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario
+Date: 5/25/2020
+Classes for SM datasets
+"""
+
 # dataset class
 class Dataset(object):
     """
@@ -7,8 +13,9 @@ class Dataset(object):
         station: in-situ station name
     """
 
-    def __init__(self, data, network=None, station=None):
+    def __init__(self, data, name=None, network=None, station=None):
         self.data = data
+        self.name = name
         self.network = network
         self.station = station
 
@@ -18,8 +25,8 @@ class TSDataset(Dataset):
     class for handling time series for a single station
     """""
 
-    def __init__(self, data, network, station):
-        super().__init__(data, network, station)
+    def __init__(self, data, name, network, station):
+        super().__init__(data, name, network, station)
 
     def get_timeframe_data(self, year_filter=None, month_filter=None):
         """
@@ -48,16 +55,21 @@ class TSDataset(Dataset):
         # return [start date, end date]
         pass
 
+    def sub_timestamp(self, hour, minute):
+        # in absence of timestamp, manually substitute timestamp
+        # return data
+        pass
+
 
 class MatchedDataset(TSDataset):
     """""
     class for handling temporally matched data
     """""
 
-    def __init__(self, data, network, station, eval_dataset=None, ref_dataset=None):
+    def __init__(self, data, network, station, eval_ts=None, ref_ts=None):
         super().__init__(data, network, station)
-        self.eval_dataset = eval_dataset
-        self.ref_dataset = ref_dataset
+        self.eval_ts = eval_ts
+        self.ref_ts = ref_ts
 
     def get_network_data(self, networks):
         """
