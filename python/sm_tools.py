@@ -6,6 +6,14 @@ Functions for analyzing soil moisture datasets
 import ismn
 import pandas
 import pytesmo
+import datetime
+
+
+def get_timestamp:
+    # Converting datetime object to string
+    timestamp = datetime.now()
+    timestampStr = timestamp.strftime("%y%m%d_%H%M")
+    return timestampStr
 
 
 # based on a directory of in situ text files, create a dictionary of stations
