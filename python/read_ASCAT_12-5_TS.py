@@ -36,8 +36,9 @@ grid_dir = r'C:\git\soil-moisture-sweden\sm_sample_files\TUW_WARP5_grid_info_2_1
 # update to 2.2?
 grid_file = 'TUW_WARP5_grid_info_2_1.nc'
 
-ascat_2018ts_dir = r'C:\git\soil-moisture-sweden\sm_sample_files\ascat-h113-ts-2018'
-ts_reader = H113Ts(ascat_2018ts_dir,
+ts_dir = r'C:\git\soil-moisture-sweden\sm_sample_files\ascat-h113-ts-2018'
+
+ts_reader = H113Ts(ts_dir,
                              grid_dir,
                              grid_filename=grid_file,
                              static_layer_path=static_layers_dir)
