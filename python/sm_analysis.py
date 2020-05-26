@@ -73,6 +73,8 @@ print(dataset_dict)
             # append network matched dataframe to comparison matched dataframe
             # print to log
         # get metrics for comparison (overall)
+        # get timestamp
+        # write comparison dataframe to csv
         # print to log
         # for timeframe, values in timeframe_dict
             # print to log
@@ -85,6 +87,7 @@ print(dataset_dict)
 
 # print metrics
 
+# get timestamp
 # write metrics to csv
 
 # calc anomalies
