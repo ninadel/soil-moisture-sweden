@@ -1,8 +1,8 @@
 name: sm_win
 channels:
   - jmcmurray
-  - anaconda
   - conda-forge
+  - anaconda
   - defaults
 dependencies:
   - attrs=19.3.0=py_0
@@ -12,9 +12,9 @@ dependencies:
   - blas=1.0=mkl
   - bleach=3.1.4=py_0
   - bzip2=1.0.8=he774522_0
-  - ca-certificates=2020.4.5.1=hecc5488_0
+  - ca-certificates=2020.1.1=0
   - cartopy=0.16.0=py36hc59b559_0
-  - certifi=2020.4.5.1=py36h9f0ad1d_0
+  - certifi=2020.4.5.1=py36_0
   - cffi=1.14.0=py36h7a1dbc1_0
   - cftime=1.1.2=py36h2a96729_0
   - chardet=3.0.4=py36_1003
@@ -165,7 +165,7 @@ dependencies:
     - more-itertools==8.2.0
     - pygeobase==0.3.18
     - pygeogrids==0.2.6
-    - pynetcf==0.1.18
+    - pynetcf==0.2.2
     - pytesmo==0.8
     - pyyaml==5.3.1
     - repurpose==0.7.1
