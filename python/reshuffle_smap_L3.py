@@ -42,8 +42,36 @@ from smap_io.interface import SPL3SMP_Ds
 
 # removing var_overpass_str to test
 def reshuffle(input_dataset, outputpath, startdate, enddate,
-              parameters, overpass='AM', 
+              parameters, overpass='AM',
               crid=None, imgbuffer=50):
+
+    """
+    Reshuffle method applied to ERA-Interim data.
+    Parameters
+    ----------
+    input_dataset: object
+        SPL3SMP_Ds object.
+    outputpath : string
+        Output path.
+    startdate : datetime
+        Start date.
+    enddate : datetime
+        End date.
+    parameters: list
+        parameters to read and convert
+    overpass : str, optional (default: 'AM')
+        Select 'AM' for the descending overpass or 'PM' for the ascending one.
+        If the version data does not contain multiple overpasses, this must be None
+    var_overpass_str : bool, optional (default: True)
+        Append overpass indicator to the loaded variables. E.g. Soil Moisture
+        will be called soil_moisture_pm and soil_moisture_am, and soil_moisture
+        in all cases if this is set to False.
+    crid : int, optional (default: None)
+        Search for files with this Composite Release ID for reshuffling only.
+        See also https://nsidc.org/data/smap/data_versions#CRID
+    imgbuffer: int, optional (default: 50)
+        How many images to read at once before writing time series.
+    """
 
     global_attr = {'product': 'SPL3SMP'}
 
