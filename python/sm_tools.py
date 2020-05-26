@@ -23,6 +23,9 @@ def get_station_dict(input_dir):
     pass
 
 
+def concat_data(data1, data2):
+    pass
+
 # get location data (lon, lat, ts)
 def get_location_data(lon, lat, ts):
     # get data

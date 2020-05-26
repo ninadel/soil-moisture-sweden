@@ -18,7 +18,7 @@ import json
 with open('timeframe_dict.json', 'r') as f:
     timeframe_dict = json.load(f)
 
-
+# dictionary levels: function, product
 dataset_dict = {
     "reference dataset": {
     },
