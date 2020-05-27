@@ -1,0 +1,5 @@
+<br />
+<b>Warning</b>:  pg_query(): Query failed: ERROR:  relation &quot;copernicus_grid&quot; does not exist
+LINE 3:      FROM copernicus_grid WHERE country_gid = 211
+                  ^ in <b>/var/www/dgg/class.points.php</b> on line <b>96</b><br />
+Invalid query!

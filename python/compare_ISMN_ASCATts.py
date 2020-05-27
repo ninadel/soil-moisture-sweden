@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 # ref_data_folder = r"C:\git\soil-moisture-sweden\testdata\ismn\multinetwork\header_values"
 ref_data_folder = r"C:\git\soil-moisture-sweden\in_situ_data\HOBE_Data_2015-2018"
 
-eval_data_folder = r"C:\git\soil-moisture-sweden\sm_sample_files\ascat-h113-ts-2018"
+eval_data_folder = r"C:\git\soil-moisture-sweden\sm_sample_files\denmark_reshuffle_data\ascat-h113-ts-2018"
 
 eval_grid_folder = r"C:\git\soil-moisture-sweden\ascat_ts_aux\warp5_grid"
 
