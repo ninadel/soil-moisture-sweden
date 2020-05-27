@@ -1,0 +1,2 @@
+pointlist: grid point files downloaded from https://www.geo.tuwien.ac.at/dgg/index.php for Sweden, Norway, Finland, and Denmark
+cells: lists of cells used for each country (based on coarse resolution products, which typically include more cells than high resolution products)
