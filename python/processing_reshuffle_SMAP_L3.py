@@ -6,7 +6,7 @@ from datetime import datetime
 from smap_io.interface import SPL3SMP_Ds, SMAPTs
 
 reshuffle = True
-test_reshuffle = False
+test_reshuffle = True
 
 input_root = r'C:\git\soil-moisture-sweden\sm_sample_files\SPL3SMP-smap-l3-36km\20180601_20180630'
 outputpath = r'C:\git\soil-moisture-sweden\test_output_data\test_smapL3_reshuffle'
@@ -31,4 +31,4 @@ if test_reshuffle:
     # read_ts takes either lon, lat coordinates or a grid point indices.
     # and returns a pandas.DataFrame
     ts = ds.read(19.556539, 64.182029) # (lon, lat)
-    print(ts.head())
+    print(ts)
