@@ -29,7 +29,7 @@ datasets_dict = {'ASCAT 12.5 TS' :
         'grid_file': 'TUW_WARP5_grid_info_2_3.nc',
         'static_layers_dir': r'C:\git\soil-moisture-sweden\sm_sample_files\h-saf_static_layers\static_layer',
         'reader_name': 'ascat_12-5_ts',
-        'reader_class': 'H115Ts'
+        'reader_class': 'H115Ts(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)'
     }
 }
 
@@ -37,7 +37,7 @@ datasets_dict = {'ASCAT 12.5 TS' :
 with open('networks_dict.json', 'r') as f:
     networks_dict = json.load(f)
 
-print(networks_dict)
+# print(networks_dict)
 
 test_station = networks_dict['FMI']['SAA111']
 print(test_station)
@@ -59,7 +59,8 @@ for dataset, dataset_dict in datasets_dict.items():
 
     ts = ts_reader.read(test_station['lon'], test_station['lat'])
 
-    print(ts.data.columns)
-    print(ts.data['sm'])
+    # print(ts)
+    # print(ts.data.columns)
+    # print(ts.data['sm'])
     # help(ts)
 
