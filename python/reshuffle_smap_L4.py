@@ -84,12 +84,13 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
     # get time series attributes from first day of data.
     data = input_dataset.read(startdate)
     ts_attributes = data.metadata
-    ease09 = EASE2_grid(9000)
-    lons, lats = np.meshgrid(ease09.londim, ease09.latdim)
-    grid = BasicGrid(lons.flatten(), lats.flatten())
+    # ease grid not working
+    # ease09 = EASE2_grid(9000)
+    # lons, lats = np.meshgrid(data.lon, data.lat)
+    grid = BasicGrid(data.lon, data.lat)
 
     reshuffler = Img2Ts(input_dataset=input_dataset, outputpath=outputpath,
-                        startdate=startdate, enddate=enddate, input_grid=None,
+                        startdate=startdate, enddate=enddate, input_grid=grid,
                         imgbuffer=imgbuffer, cellsize_lat=5.0, cellsize_lon=5.0,
                         global_attr=global_attr, ts_attributes=ts_attributes)
     reshuffler.calc()
