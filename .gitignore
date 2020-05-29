@@ -2,6 +2,7 @@
 sm_sample_files/
 testdata/
 test_output_data/
+test_input_data/
 *.idea*
 __pycache__
 python/py_test*.py
