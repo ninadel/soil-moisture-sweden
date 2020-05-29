@@ -7,7 +7,7 @@ from smap_extension import SPL4SMP_nc_Ds
 from smap_io import SMAPTs
 
 reshuffle = True
-test_reshuffle = False
+test_reshuffle = True
 
 input_root = r'C:\git\soil-moisture-sweden\sm_sample_files\SPL4SMAU-smap-ma-l4-09km_clipped_nc'
 outputpath = r'C:\git\soil-moisture-sweden\test_output_data\test_smapL4_reshuffle'
@@ -29,4 +29,4 @@ if test_reshuffle:
     # read_ts takes either lon, lat coordinates or a grid point indices.
     # and returns a pandas.DataFrame
     ts = ds.read(19.556539, 64.182029) # (lon, lat)
-    print(ts.head())
+    print(ts)
