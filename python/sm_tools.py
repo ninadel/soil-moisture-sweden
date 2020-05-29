@@ -9,7 +9,7 @@ import pytesmo
 import datetime
 
 
-def get_timestamp:
+def get_timestamp():
     # Converting datetime object to string
     timestamp = datetime.now()
     timestampStr = timestamp.strftime("%y%m%d_%H%M")
