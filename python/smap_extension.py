@@ -57,8 +57,8 @@ class SPL4SMP_nc_Img(ImageBase):
             print(" ".join([self.filename, "Analysis Data can not be opened"]))
             raise e
 
-        latitude = super_ds['cell_lat']
-        longitude = super_ds['cell_lon']
+        latitude = super_ds['cell_lat'][:]
+        longitude = super_ds['cell_lon'][:]
 
         parameters = list(self.parameters)
 
@@ -86,6 +86,9 @@ class SPL4SMP_nc_Img(ImageBase):
             return_data[parameter] = data
             return_meta[parameter] = metadata
 
+        # test
+        # help(longitude)
+        # print(type(longitude))
         if self.flatten:
             longitude = longitude.flatten()
             latitude = latitude.flatten()
