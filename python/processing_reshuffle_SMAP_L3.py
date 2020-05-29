@@ -12,7 +12,7 @@ input_root = r'C:\git\soil-moisture-sweden\sm_sample_files\SPL3SMP-smap-l3-36km\
 outputpath = r'C:\git\soil-moisture-sweden\test_output_data\test_smapL3_reshuffle'
 startdate = datetime(2018, 6, 1, 0, 0, 0)
 enddate = datetime(2018, 6, 30, 23, 59, 59)
-parameters = ['soil_moisture', 'soil_moisture_error', 'retrieval_qual_flag', 'surface_flag', 'EASE_column_index', 'EASE_row_index', 'longitude', 'latitude']
+parameters = ['soil_moisture', 'soil_moisture_error', 'retrieval_qual_flag', 'surface_flag']
 
 # initialize SMAP L3 reader
 input_dataset = SPL3SMP_Ds(input_root, parameter=parameters,
