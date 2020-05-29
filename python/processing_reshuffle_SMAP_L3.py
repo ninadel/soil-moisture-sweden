@@ -1,5 +1,5 @@
 import os
-import smap_L3_reshuffle
+import reshuffle_smap_L3
 # from smap_io import reshuffle
 import os
 from datetime import datetime
@@ -21,7 +21,7 @@ input_dataset = SPL3SMP_Ds(input_root, parameter=parameters,
 
 # reshuffle
 if reshuffle:
-    smap_L3_reshuffle.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
+    reshuffle_smap_L3.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
 
 # test reshuffle
 # output note: why is timestamp set to midnight?
