@@ -15,39 +15,24 @@ import json
 # sm_tools.get_station_dict(r'C:\git\nordic-insitu-sm-data')
 
 # load timeframe_dict from external file
-with open('timeframe_dict.json', 'r') as f:
-    timeframe_dict = json.load(f)
+with open('timeframes_dict.json', 'r') as t:
+    timeframes_dict = json.load(t)
 
 # dictionary levels: function, product, year, reader (extra dict for ascat?)
-dataset_dict = {
-    "reference dataset": {
-    },
-    "evaluation dataset": {
-    }
-}
+with open('datasets_dict.json', 'r') as d:
+    datasets_dict = json.load(d)
 
-dataset_dict["reference dataset"]["in-situ"] = []
-dataset_dict["reference dataset"]["GLDAS"] = []
-dataset_dict["evaluation dataset"]["GLDAS"] = []
-dataset_dict["evaluation dataset"]["SMAP L3"] = []
+print(datasets_dict)
 
-# for ascat TS, will need to do something manually
-    # get dataset for each year 2015-2018
-    # append all to 1 dataframe
-    # compare ascat TS to in-situ
-    # compare ascat TS to GLDAS
-
-print(dataset_dict)
-
-# initiate readers and add to dataset dict
+# initiate readers and add to datasets dict
 # initiate reader
 # add to dataset_dict
     # "name": reader obj
 
 # create metrics dataframe
 # create log txt file
-# for eval_name, eval_dataset in dataset dict
-    # for ref_name, ref_dataset in dataset dict
+# for eval_name, eval_dataset in datasets dict
+    # for ref_name, ref_dataset in datasets dict
         # print to log
         # create comparison matched dataframe: network, station, dataset 1 name, dataset 2 name, datetime, dataset 1 values, dataset 2 values
         # for network name, network dict in station dict
@@ -59,6 +44,7 @@ print(dataset_dict)
                 # lat = station lat
                 # get reference ts
                 # get evaluation ts
+                    # NOTE: evaluation ts call is different between ASCAT TS (.data) and reshuffle TS
                 # get matched dataset for station
                 # print to log: matched record count
                 # get metrics for station comparison
