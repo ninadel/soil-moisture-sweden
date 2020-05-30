@@ -3,11 +3,11 @@ Author: Nina del Rosario
 Date: 5/25/2020
 Functions for analyzing soil moisture datasets
 """
+import datetime
 import ismn
+import os
 import pandas
 import pytesmo
-import datetime
-
 
 def get_timestamp():
     # Converting datetime object to string
@@ -16,15 +16,21 @@ def get_timestamp():
     return timestampStr
 
 
-# based on a directory of in situ text files, create a dictionary of stations
-def get_station_dict(input_dir):
-    # return dictionary
-    # see "C:\git\nordic-insitu-sm-data\ismn-network-processing.ipynb" for reference
-    pass
-
-
-def concat_data(data1, data2):
-    pass
+def add_icos_data(input_dir, stations, icos_dict, data_only=True):
+    temp_dict = {}
+    if type(stations) != list:
+        stations = [stations]
+    for station in stations:
+        filename = station + '.csv'
+        data = pandas.read_csv(os.path.join(input_dir, filename), sep=',', index_col=0)
+        icos_dict[station]['data'] = data
+    # generate dict where data key is present
+    if data_only:
+        for station, metadata_dict in icos_dict.items():
+            if 'data' in metadata_dict.keys():
+                temp_dict[station] = metadata_dict
+        icos_dict = temp_dict
+    return icos_dict
 
 # get location data (lon, lat, ts)
 def get_location_data(lon, lat, ts):
