@@ -1,9 +1,8 @@
 {
-  "Degero": {"station":"Degero", "latitude":64.182029, "longitude":19.556539, "elevation":270},
-  "Hyltemossa": {"station":"Hyltemossa", "latitude":56.097581, "longitude":13.419064, "elevation":115},
-  "Lanna": {"station":"Lanna", "latitude":58.340629, "longitude":13.101768, "elevation":75},
-  "Norunda": {"station":"Norunda", "latitude":60.086441, "longitude":17.479455, "elevation":46},
-  "Ostergarnsholm": {"station":"Ostergarnsholm", "latitude":57.430061, "longitude":18.984339, "elevation":0},
-  "Stordalen": {"station":"Stordalen", "latitude":68.356003, "longitude":19.0452, "elevation":360},
-  "Svartberget": {"station":"Svartberget", "latitude":64.256125, "longitude":19.774413, "elevation":270}
+  "SE-Htm": {"station": "Hyltemossa", "latitude": 56.097581, "longitude": 13.419064", "elevation": 115},
+  "SE-Lnn": {"station": "Lanna", "latitude": 58.340629, "longitude": 13.101768", "elevation": 75},
+  "SE-Nor": {"station": "Norunda", "latitude": 60.086441, "longitude": 17.479455", "elevation": 46},
+  "SE-Oes": {"station": "Ostergarnsholm", "latitude": 57.430061, "longitude": 18.984339", "elevation": 0},
+  "SE-Sto": {"station": "Stordalen", "latitude": 68.356003, "longitude": 19.0452", "elevation": 360},
+  "SE-Svb": {"station": "Svartberget", "latitude": 64.256125, "longitude": 19.774413", "elevation": 270}
 }
