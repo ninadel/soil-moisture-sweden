@@ -17,6 +17,26 @@ with open('timeframes_dict.json', 'r') as f:
 with open('datasets_dict.json', 'r') as f:
     datasets_dict = json.load(f)
 
+# dictionary levels: function, product, year, reader (extra dict for ascat?)
+with open('icos_dict.json', 'r') as f:
+    icos_dict = json.load(f)
+
+# directory that has in situ data, used to get stations
+# in_situ_dir = ''
+ISMN_dir = ''
+ICOS_dir = r'C:\git\soil-moisture-sweden\test_input_data'
+
+analyze_icos = True
+
+# add stations with SM data to dictionary
+if analyze_icos:
+    icos_analyze = sm_tools.add_icos_data(ICOS_dir, 'Degero', icos_dict)
+    for station, metadata_dict in icos_analyze.items():
+        station_name = station
+        station_data = metadata_dict['data']
+        print(station_name)
+        print(station_data)
+
 # initiate readers and add to datasets dict
 # initiate reader
 # add to dataset_dict
