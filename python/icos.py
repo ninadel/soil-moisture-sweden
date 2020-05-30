@@ -1,6 +1,5 @@
 from ismn.readers import ISMNTimeSeries
 
-
 class ICOSTimeSeries(ISMNTimeSeries):
     """
     class that contains a time series of ISMN data read from one text file
@@ -33,7 +32,6 @@ class ICOSTimeSeries(ISMNTimeSeries):
         for key in data:
             setattr(self, key, data[key])
 
-
 class ICOSSMTimeSeries(ICOSTimeSeries):
     """
     class that contains a time series of ISMN data read from one text file
@@ -60,8 +58,7 @@ class ICOSSMTimeSeries(ICOSTimeSeries):
     data : pandas.DataFrame
         data of the time series
     """
-    def __init__(self, metadata):
-
+    def __init__(self, metadata, data):
         for key in metadata:
             setattr(self, key, metadata[key])
 
@@ -70,6 +67,13 @@ class ICOSSMTimeSeries(ICOSTimeSeries):
         self.depth_from = ["0.05"]
         self.depth_to = ["0.05"]
         self.data = data
+
+    def get_sm(self, qc_values=0):
+        if type(qc_values) != list:
+            qc_values = [qc_values]
+        data = self.data[['datetime_utc', 'icos_ssm', 'qc_ssm']]
+        data = data.loc[data['qc_ssm'].isin([qc_values])]
+        return data
 
 
 # class ISMNTimeSeries(object):
