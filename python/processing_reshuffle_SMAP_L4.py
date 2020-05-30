@@ -9,8 +9,8 @@ from smap_io import SMAPTs
 reshuffle = True
 test_reshuffle = True
 
-input_root = r'C:\git\soil-moisture-sweden\sm_sample_files\SPL4SMAU-smap-ma-l4-09km_clipped_nc'
-outputpath = r'C:\git\soil-moisture-sweden\test_output_data\test_smapL4_reshuffle'
+input_root = r'..\sm_sample_files\SPL4SMAU-smap-ma-l4-09km_clipped_nc'
+outputpath = r'..\test_output_data\test_smapL4_reshuffle'
 startdate = datetime(2018, 6, 1, 0, 0, 0)
 enddate = datetime(2018, 6, 30, 23, 59, 59)
 parameters = ['sm_surface_analysis', 'sm_surface_analysis_ensstd']

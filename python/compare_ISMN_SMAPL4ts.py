@@ -14,12 +14,12 @@ import pytesmo.metrics as metrics
 import os
 import matplotlib.pyplot as plt
 
-# ref_data_folder = r"C:\git\soil-moisture-sweden\testdata\ismn\multinetwork\header_values"
-ref_data_folder = r"C:\git\soil-moisture-sweden\in_situ_data\HOBE_Data_2015-2018"
+# ref_data_folder = r"..\testdata\ismn\multinetwork\header_values"
+ref_data_folder = r"..\in_situ_data\HOBE_Data_2015-2018"
 
-eval_data_folder = r"C:\git\soil-moisture-sweden\test_output_data\test_smapL4_reshuffle"
+eval_data_folder = r"..\test_output_data\test_smapL4_reshuffle"
 
-eval_grid_folder = r"C:\git\soil-moisture-sweden\test_output_data\test_smapL4_reshuffle"
+eval_grid_folder = r"..\test_output_data\test_smapL4_reshuffle"
 eval_grid_file = 'grid.nc'
 eval_static_layers_folder = None
 

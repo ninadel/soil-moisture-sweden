@@ -23,8 +23,8 @@ with open('icos_dict.json', 'r') as f:
 
 # directory that has in situ data, used to get stations
 # in_situ_dir = ''
-ISMN_dir = ''
-ICOS_dir = r'C:\git\soil-moisture-sweden\test_input_data'
+ISMN_dir = ""
+ICOS_dir = r"..\test_input_data"
 
 analyze_icos = True
 

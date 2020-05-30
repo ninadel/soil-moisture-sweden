@@ -27,7 +27,7 @@ print(datareader_dict)
 
 years = ['2015', '2016', '2017', '2018']
 
-dataloc_dict['SMAP L3'] = r"C:\git\soil-moisture-sweden\sm_sample_files\SPL3SMP-smap-l3-36km"
+dataloc_dict['SMAP L3'] = r"..\sm_sample_files\SPL3SMP-smap-l3-36km"
 
 # eval object example
 # ts_reader2 = eval('H113Ts(ascat_2018ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)')

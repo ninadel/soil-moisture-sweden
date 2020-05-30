@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import netCDF4
 from scipy import spatial
 from datetime import datetime, timedelta
-nc_f = r'C:\git\soil-moisture-sweden\sm_sample_files\NordicESACCICombined2014to2019\ClipESACCICombined2015.nc'
+nc_f = r'..\sm_sample_files\NordicESACCICombined2014to2019\ClipESACCICombined2015.nc'
 nc_fid = netCDF4.Dataset(nc_f, 'r')
 nc_fid.variables
 # Coordinates of the station you want to extract [lon, lat]
@@ -45,7 +45,7 @@ tree = spatial.KDTree(zip(lon_.ravel(), lat_.ravel()))
 # Extraction of cci sm 2015 to 2018
 datahub = []
 for ii in np.arange(2015,2018):
-    nc_f = r'C:\git\soil-moisture-sweden\sm_sample_files\NordicESACCICombined2014to2019\ClipESACCICombined' + str(ii) + '.nc'
+    nc_f = r'..\sm_sample_files\NordicESACCICombined2014to2019\ClipESACCICombined' + str(ii) + '.nc'
     nc_fid = netCDF4.Dataset(nc_f, 'r')
     sm = nc_fid.variables['sm'][ID]
     # np.concatenate does not preserve masking of MaskedArray inputs, here np.ma.concatenate is used

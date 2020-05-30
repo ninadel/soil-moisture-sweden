@@ -24,10 +24,10 @@ from datetime import datetime
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 datasets_dict = {'ASCAT 12.5 TS' :
     {
-        'ts_dir': r'C:\git\soil-moisture-sweden\sm_sample_files\ascat-h115-ts-2019',
-        'grid_dir': r'C:\git\soil-moisture-sweden\ascat_ts_aux\warp5_grid',
+        'ts_dir': r'..\sm_sample_files\ascat-h115-ts-2019',
+        'grid_dir': r'..\ascat_ts_aux\warp5_grid',
         'grid_file': 'TUW_WARP5_grid_info_2_3.nc',
-        'static_layers_dir': r'C:\git\soil-moisture-sweden\sm_sample_files\h-saf_static_layers\static_layer',
+        'static_layers_dir': r'..\sm_sample_files\h-saf_static_layers\static_layer',
         'reader_name': 'ascat_12-5_ts',
         'reader_class': 'H115Ts(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)'
     }

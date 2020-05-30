@@ -14,14 +14,14 @@ import pytesmo.metrics as metrics
 import os
 import matplotlib.pyplot as plt
 
-# ref_data_folder = r"C:\git\soil-moisture-sweden\testdata\ismn\multinetwork\header_values"
-ref_data_folder = r"C:\git\soil-moisture-sweden\in_situ_data\HOBE_Data_2015-2018"
+# ref_data_folder = r"..\testdata\ismn\multinetwork\header_values"
+ref_data_folder = r"..\in_situ_data\HOBE_Data_2015-2018"
 
-eval_data_folder = r"C:\git\soil-moisture-sweden\sm_sample_files\denmark_reshuffle_data\ascat-h113-ts-2018"
+eval_data_folder = r"..\sm_sample_files\denmark_reshuffle_data\ascat-h113-ts-2018"
 
-eval_grid_folder = r"C:\git\soil-moisture-sweden\ascat_ts_aux\warp5_grid"
+eval_grid_folder = r"..\ascat_ts_aux\warp5_grid"
 
-eval_static_layers_folder = r"C:\git\soil-moisture-sweden\ascat_ts_aux\static_layer"
+eval_static_layers_folder = r"..\ascat_ts_aux\static_layer"
 
 # init the eval data reader with the paths
 eval_data_reader = ascat.H113Ts(eval_data_folder, eval_grid_folder,

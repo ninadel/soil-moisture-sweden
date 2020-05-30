@@ -7,8 +7,8 @@ from datetime import datetime
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 datasets_dict = {'SMAP L3' :
     {
-        'ts_dir': r'C:\git\soil-moisture-sweden\test_output_data\test_smapL3_reshuffle',
-        'grid_dir': r'C:\git\soil-moisture-sweden\test_output_data\test_smapL3_reshuffle',
+        'ts_dir': r'..\test_output_data\test_smapL3_reshuffle',
+        'grid_dir': r'..\test_output_data\test_smapL3_reshuffle',
         'grid_file': 'grid.nc',
         'static_layers_dir': None,
         'reader_name': 'SMAP_L3_ts',

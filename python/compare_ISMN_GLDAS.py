@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import csv
 
 testdata_folder = '../testdata'
-test_output_folder = r'C:\git\soil-moisture-sweden\test_output_data'
+test_output_folder = r'..\test_output_data'
 
 ascat_data_folder = os.path.join(testdata_folder,
                                  'sat/ascat/netcdf/55R22')
