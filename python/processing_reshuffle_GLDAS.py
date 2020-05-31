@@ -18,7 +18,8 @@ parameters = ['SoilMoi0_10cm_inst']
 # suppressing landgrid since that seems to be out of date
 input_dataset = GLDAS_Noah_v21_025Ds(input_dir, parameters, array_1D=True)
 # input_dataset = GLDAS_Noah_v21_025Ds(input_root, parameters, landgrid=None, array_1D=True)
-# for some reason I havve to manually set this if I have my files flat?
+# for some reason I have to manually set this if I have my files flat?
+input_dataset.subpath_templ = []
 startdate = datetime(2015, 1, 1)
 enddate = datetime(2018, 12, 31, 23, 59)
 reshuffle(input_dataset, output_dir, startdate, enddate, parameters)
