@@ -8,38 +8,6 @@ class ICOSTimeSeries(ISMNTimeSeries):
     network : string
         network the time series belongs to
     station : string
-        station name 3the time series belongs to
-    latitude : float
-        latitude of station
-    longitude : float
-        longitude of station
-    elevation : float
-        elevation of station
-    variable : list
-        variable measured
-    depth_from : list
-        shallower depth of layer the variable was measured at
-    depth_to : list
-        deeper depth of layer the variable was measured at
-    sensor : string
-        sensor name
-    data : pandas.DataFrame
-        data of the time series
-    """
-
-    def __init__(self, data):
-
-        for key in data:
-            setattr(self, key, data[key])
-
-class ICOSSMTimeSeries(ICOSTimeSeries):
-    """
-    class that contains a time series of ISMN data read from one text file
-    Attributes
-    ----------
-    network : string
-        network the time series belongs to
-    station : string
         station name the time series belongs to
     latitude : float
         latitude of station
@@ -67,14 +35,8 @@ class ICOSSMTimeSeries(ICOSTimeSeries):
         self.depth_from = ["0.05"]
         self.depth_to = ["0.05"]
         self.data = data
-
-    def get_sm(self, qc_values=0):
-        if type(qc_values) != list:
-            qc_values = [qc_values]
-        data = self.data[['datetime_utc', 'icos_ssm', 'qc_ssm']]
-        data = data.loc[data['qc_ssm'].isin([qc_values])]
-        return data
-
+        self.ssm_data = data[['icos_ssm', 'qc_ssm']]
+        self.ts_data = data[['icos_ts', 'qc_ts']]
 
 # class ISMNTimeSeries(object):
 #     """
