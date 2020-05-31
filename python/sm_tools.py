@@ -34,9 +34,25 @@ def filter_icos_data(data, qc_values, dropna=True):
     return data
 
 
-def get_product_data(lon, lat, product_inputs):
-    # if product has a .data suffix
-    # if product doesn't have a .data suffix
+def get_product_data(lon, lat, product, product_inputs, filter_data=True):
+    if product == "ASCAT 12.5 TS":
+        from ascat import H115Ts
+        ts_data_dir = product_inputs["ts_data_dir"]
+        grid_dir =  product_inputs["ts_data_dir"]
+        grid_file =  product_inputs["grid_file"]
+        static_layers_dir = product_inputs["static_layers_dir"]
+        ts = H115Ts(cdr_path=ts_data_dir, grid_path=grid_dir, grid_filename=grid_file,
+                    static_layer_path=static_layers_dir)
+        data = ts.data
+        print(product, data.shape)
+        if filter_data:
+            # filter data
+            print(product, "(filtered)", data.shape)
+        return data
+    if product == "GLDAS":
+        pass
+    if product == "SMAP L4":
+        pass
     pass
 
 
