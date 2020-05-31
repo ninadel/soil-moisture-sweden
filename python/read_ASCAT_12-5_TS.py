@@ -67,7 +67,7 @@ for dataset, dataset_dict in datasets_dict.items():
     print(ts.data.columns)
     print('ts.data', ts.data.shape)
     print(ts.data['ssf'])
-    ts.data.to_csv('..\\products_sample_data\\H115_sample.csv')
+    ts.data.to_csv('..\\product_sample_data\\H115_sample.csv')
     # print(ts.data['sm'])
     # help(ts)
 
