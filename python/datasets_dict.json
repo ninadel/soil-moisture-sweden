@@ -7,6 +7,6 @@
           "reader_name": "ascat_12-5_ts",
           "reader_class": "H115Ts",
           "reader_params": "(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)",
-          "data": ".data"
+          "data_str": ".data"
       }
   }
