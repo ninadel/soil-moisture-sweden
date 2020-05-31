@@ -40,9 +40,9 @@ with open('networks_dict.json', 'r') as f:
 
 # print(networks_dict)
 
-test_station = networks_dict['FMI']['SAA111']
-print(test_station)
-print(test_station['lon'], test_station['lat'])
+# test_station = networks_dict['FMI']['SAA111']
+# print(test_station)
+# print(test_station['lon'], test_station['lat'])
 
 for dataset, dataset_dict in datasets_dict.items():
     dataset_name = dataset
@@ -60,7 +60,8 @@ for dataset, dataset_dict in datasets_dict.items():
     ts_reader = H115Ts
     ts_reader = eval(dataset_dict['reader_class'])
 
-    ts = ts_reader.read(test_station['lon'], test_station['lat'])
+    # Degero: 19.556539 64.182029
+    ts = ts_reader.read(19.556539, 64.182029)
 
     print(ts)
     print(ts.data.columns)

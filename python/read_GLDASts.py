@@ -40,7 +40,8 @@ for dataset, dataset_dict in datasets_dict.items():
 
     ts_reader = eval(dataset_dict['reader_class'])
 
-    ts = ts_reader.read(test_station['lon'], test_station['lat'])
+    # Degero: 19.556539 64.182029
+    ts = ts_reader.read(19.556539, 64.182029)
 
     # print(ts.data.columns)
     # print(ts.data['soil_moisture'])
