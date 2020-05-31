@@ -14,23 +14,6 @@ def get_timestamp():
     return timestampStr
 
 
-def add_icos_data(input_dir, stations, icos_dict, data_only=True):
-    temp_dict = {}
-    if type(stations) != list:
-        stations = [stations]
-    for station in stations:
-        filename = station + '.csv'
-        data = pandas.read_csv(os.path.join(input_dir, filename), sep=',', index_col=0)
-        icos_dict[station]['data'] = data
-    # generate dict where data key is present
-    if data_only:
-        for station, metadata_dict in icos_dict.items():
-            if 'data' in metadata_dict.keys():
-                temp_dict[station] = metadata_dict
-        icos_dict = temp_dict
-    return icos_dict
-
-
 def get_icos_stations(dir):
     data_dict = {}
     for filename in os.listdir(dir):
@@ -51,25 +34,24 @@ def filter_icos_data(data, qc_values, dropna=True):
     return data
 
 
-# get location data (lon, lat, ts)
-def get_location_data(lon, lat, ts):
-    # get data
-    # return dataframe
+def get_product_data(lon, lat, product_inputs):
+    # if product has a .data suffix
+    # if product doesn't have a .data suffix
     pass
 
 
 # get data for all network/stations in a dictionary
-def compare_ts(eval_ts_data, ref_ts_data, eval_ts_name=None, ref_ts_name=None, timeframe=None, network=None, station=None, lon=None, lat=None):
+def get_metrics(data, metrics=('bias', 'rmsd', 'ubrmsd', 'pearsonr')):
     """""
-    eval_ts: dataset of product to be evaluated
-    ref_ts: reference dataset
-    timeframe: timeframe dictionary, default is None
+    data: temporally matched dataset
+    metrics: list of metrics to calculate on matched dataset
+        default: 'pearsonr', 'bias', 'rmsd', 'ubrmsd'
     """""
-    print('analyzing', )
-    # initiate matched dataset object
-    matched_data = []
-    # get metrics on matched datset object
-    metrics = matched_data.get_metrics()
-    return metrics
-
-
+    print('getting metrics', metrics)
+    if type(metrics) != list:
+        metrics = [metrics]
+    # bias, rmsd, ubrmsd, pearsonr, pearsonr p-value
+    metric_values = []
+    for metric in metrics:
+        pass
+    return metric_values
