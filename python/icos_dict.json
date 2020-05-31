@@ -1,4 +1,10 @@
 {
+  "SE-Deg": {
+    "station": "Degero",
+    "latitude": 64.182029,
+    "longitude": 19.556539,
+    "elevation": 270
+  },
   "SE-Htm": {
     "station": "Hyltemossa",
     "latitude": 56.097581,
