@@ -3,44 +3,59 @@ Author: Nina del Rosario
 Date: 5/25/2020
 Script for analyzing SM datasets
 """
-from icos import ICOSSMTimeSeries
+from ascat import H115Ts
+from icos import ICOSTimeSeries
 import json
-import pandas
+from pandas import DataFrame, read_csv
 import numpy
+from pytesmo import temporal_matching, scaling, df_metrics, metrics
 import sm_tools
 import sm_datasets
-# load timeframe_dict from external file
+
 with open('timeframes_dict.json', 'r') as f:
     timeframes_dict = json.load(f)
 
-# dictionary levels: function, product, year, reader (extra dict for ascat?)
 with open('datasets_dict.json', 'r') as f:
     datasets_dict = json.load(f)
 
-# dictionary levels: function, product, year, reader (extra dict for ascat?)
 with open('icos_dict.json', 'r') as f:
     icos_dict = json.load(f)
 
-# directory that has in situ data, used to get stations
-# in_situ_dir = ''
-ISMN_dir = ""
-ICOS_dir = r"..\test_input_data"
+# directory that has ICOS in situ data, used to get stations
+icos_input_dir = r"..\icos_data"
+icos_files = sm_tools.get_icos_stations(icos_input_dir)
 
-analyze_icos = True
+metrics_df = DataFrame
 
-# add stations with SM data to dictionary
-if analyze_icos:
-    icos_analyze = sm_tools.add_icos_data(ICOS_dir, 'Degero', icos_dict)
-    for station, metadata_dict in icos_analyze.items():
-        station_name = station
-        station_data = metadata_dict['data']
-        print(station_name)
-        print(station_data)
+for product in datasets_dict.items():
+    matched_df = DataFrame(columns=['datetime_utc', ])
+    for station, file in icos_files.items():
+        file_data = read_csv(file, index_col=0)
+        # get insitu data, dropna, filter to qc values of 0 and 3
+        station_metadata = icos_dict[station]
+        station_ts = ICOSTimeSeries(station_metadata, file_data)
+        print(station_ts.ssm_data.shape)
+        ssm_filtered_ts = sm_tools.filter_icos_data(station_ts.ssm_data, qc_values=[0, 3], dropna=True)
+        # get product data for station lat/lon
+        print(ssm_filtered_ts.shape)
+        # match data (product is ref ts and in situ is second ts)
+        break
 
-# initiate readers and add to datasets dict
-# initiate reader
-# add to dataset_dict
-    # "name": reader obj
+
+# {"ASCAT 12.5 TS" :
+#       {
+#           "ts_dir": "C:\\git\\soil-moisture-sweden\\sm_sample_files\\ascat-h115-ts-2019",
+#           "grid_dir": "C:\\git\\soil-moisture-sweden\\ascat_ts_aux\\warp5_grid",
+#           "grid_file": "TUW_WARP5_grid_info_2_3.nc",
+#           "static_layers_dir": "C:\\git\\soil-moisture-sweden\\sm_sample_files\\h-saf_static_layers\\static_layer",
+#           "reader_name": "ascat_12-5_ts",
+#           "reader_class": "H115Ts",
+#           "reader_params": "(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)",
+#           "data_str": ".data"
+#       }
+#   }
+
+
 
 # create metrics dataframe
 # create log txt file
