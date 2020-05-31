@@ -14,13 +14,14 @@ import sm_datasets
 
 # Use dictionary to set analyses to perform, input data locations, and parameters
 icos_analyses_dict = {
-    "ASCAT 12.5 TS" : {
+    "ASCAT 12.5 TS": {
         "analyze": True,
         "ts_data_dir": r"",
         "grid_dir": r"",
         "grid_file": "",
         "static_layers_dir": None,  # optional
-        "parameters": None  # optional
+        "parameters": None,  # optional
+        "scaling": None
     },
     "GLDAS": {
     },
@@ -53,7 +54,7 @@ for product, product_inputs in icos_analyses_dict.items():
         ssm_filtered_ts = sm_tools.filter_icos_data(station_ts.ssm_data, qc_values=[0, 3], dropna=True)
         # get product data for station lat/lon
         print(ssm_filtered_ts.shape)
-        product_data = sm_tools.get_product_data(station_ts.longitude, station_ts.latitude, product_inputs)
+        product_data = sm_tools.get_product_data(station_ts.longitude, station_ts.latitude, product, product_inputs)
         # match data (product is ref ts and in situ is second ts)
         break
 
