@@ -28,7 +28,7 @@ icos_files = sm_tools.get_icos_stations(icos_input_dir)
 metrics_df = DataFrame
 
 for product in datasets_dict.items():
-    matched_df = DataFrame(columns=['datetime_utc', ])
+    matched_df = DataFrame()
     for station, file in icos_files.items():
         file_data = read_csv(file, index_col=0)
         # get insitu data, dropna, filter to qc values of 0 and 3
