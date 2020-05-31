@@ -1,6 +1,6 @@
 """
 Author: Nina del Rosario
-Date: 5/25/2020
+Date: 5/31/2020
 Script for analyzing SM datasets
 """
 from ascat import H115Ts
@@ -12,11 +12,26 @@ from pytesmo import temporal_matching, scaling, df_metrics, metrics
 import sm_tools
 import sm_datasets
 
+# Use dictionary to set analyses to perform, input data locations, and parameters
+icos_analyses_dict = {
+    "ASCAT 12.5 TS" : {
+        "analyze": True,
+        "ts_data_dir": r"",
+        "grid_dir": r"",
+        "grid_file": "",
+        "static_layers_dir": None,  # optional
+        "parameters": None  # optional
+    },
+    "GLDAS": {
+    },
+    "SMAP L4": {
+    }
+}
+
+# open external dictionaries
+# dictionary which defines timeframes to analyze
 with open('timeframes_dict.json', 'r') as f:
     timeframes_dict = json.load(f)
-
-with open('datasets_dict.json', 'r') as f:
-    datasets_dict = json.load(f)
 
 with open('icos_dict.json', 'r') as f:
     icos_dict = json.load(f)
@@ -25,10 +40,10 @@ with open('icos_dict.json', 'r') as f:
 icos_input_dir = r"..\icos_data"
 icos_files = sm_tools.get_icos_stations(icos_input_dir)
 
-metrics_df = DataFrame
+metrics_df = DataFrame(columns=['network', 'station', 'temp_scope', 'data_scope', 'product', 'n', 'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearson r p-value'])
 
-for product in datasets_dict.items():
-    matched_df = DataFrame()
+for product, product_inputs in icos_analyses_dict.items():
+    matched_df = DataFrame(columns=['datetime_utc', product, 'icos_ssm', 'icos_ssm_qc'])
     for station, file in icos_files.items():
         file_data = read_csv(file, index_col=0)
         # get insitu data, dropna, filter to qc values of 0 and 3
@@ -38,6 +53,7 @@ for product in datasets_dict.items():
         ssm_filtered_ts = sm_tools.filter_icos_data(station_ts.ssm_data, qc_values=[0, 3], dropna=True)
         # get product data for station lat/lon
         print(ssm_filtered_ts.shape)
+        product_data = sm_tools.get_product_data(station_ts.longitude, station_ts.latitude, product_inputs)
         # match data (product is ref ts and in situ is second ts)
         break
 
