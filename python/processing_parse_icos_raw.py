@@ -6,7 +6,7 @@ import datetime
 input_folder = r"C:\git\nordic-insitu-sm-data\ICOS_raw-data"
 output_folder = r"C:\git\soil-moisture-sweden\icos_data"
 
-filter_fields = ['date', 'time', 'SWC_1_1_1', 'qc_SWC_1_1_1', 'TS_1_1_1', 'qc_TS_1_1_1']
+import_fields = ['date', 'time', 'SWC_1_1_1', 'qc_SWC_1_1_1', 'TS_1_1_1', 'qc_TS_1_1_1']
 target_fields = ['datetime_utc', 'icos_ssm', 'qc_ssm', 'icos_ts', 'qc_ts']
 
 raw_file_dict = {}
@@ -35,7 +35,7 @@ for station in raw_file_dict:
     for year in file_dict:
         file = file_dict[year]
         # open each file as a dataframe, no index, 2 header rows
-        file_df = pandas.read_csv(os.path.join(input_folder, file), usecols=filter_fields, skiprows=[1])
+        file_df = pandas.read_csv(os.path.join(input_folder, file), usecols=import_fields, skiprows=[1])
         rename_dict = {'SWC_1_1_1': "icos_ssm",
                        'qc_SWC_1_1_1': 'qc_ssm',
                        'TS_1_1_1': 'icos_ts',
