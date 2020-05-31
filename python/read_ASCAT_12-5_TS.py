@@ -1,7 +1,8 @@
 import os
+import pandas
 import numpy
 import json
-from ascat.h_saf import H25Ts, H109Ts, H111Ts, H113Ts, H115Ts
+from ascat.h_saf import H115Ts
 from datetime import datetime
 
 # H25 Metop ASCAT DR2015 SSM 12.5 km sampling
@@ -27,7 +28,7 @@ datasets_dict = {'ASCAT 12.5 TS' :
         'ts_dir': r'..\sm_sample_files\ascat-h115-ts-2019',
         'grid_dir': r'..\ascat_ts_aux\warp5_grid',
         'grid_file': 'TUW_WARP5_grid_info_2_3.nc',
-        'static_layers_dir': r'..\sm_sample_files\h-saf_static_layers\static_layer',
+        'static_layers_dir': r'..\ascat_ts_aux\static_layer',
         'reader_name': 'ascat_12-5_ts',
         'reader_class': 'H115Ts(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)'
     }
@@ -55,12 +56,17 @@ for dataset, dataset_dict in datasets_dict.items():
 
     ts_dir = dataset_dict['ts_dir']
 
-    ts_reader = eval(dataset_dict['reader_class']+'(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)')
+
+    ts_reader = H115Ts
+    ts_reader = eval(dataset_dict['reader_class'])
 
     ts = ts_reader.read(test_station['lon'], test_station['lat'])
 
-    # print(ts)
-    # print(ts.data.columns)
+    print(ts)
+    print(ts.data.columns)
+    print('ts.data', ts.data.shape)
+    print(ts.data['ssf'])
+    ts.data.to_csv('..\\products_sample_data\\H115_sample.csv')
     # print(ts.data['sm'])
     # help(ts)
 
