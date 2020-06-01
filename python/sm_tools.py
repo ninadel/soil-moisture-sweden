@@ -12,7 +12,7 @@ from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 def get_timestamp():
     # Converting datetime object to string
     timestamp = datetime.now()
-    timestamp_str = timestamp.strftime("%y%m%d_%H%M")
+    timestamp_str = timestamp.strftime("%Y%m%d_%H%M")
     return timestamp_str
 
 
@@ -65,7 +65,6 @@ def get_metrics(data, metrics=('bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p
     metrics: list of metrics to calculate on matched dataset
         default: 'pearsonr', 'bias', 'rmsd', 'ubrmsd'
     """""
-    print('getting metrics', metrics)
     if type(metrics) != list:
         metrics = [metrics]
     # bias, rmsd, ubrmsd, pearsonr, pearsonr p-value
