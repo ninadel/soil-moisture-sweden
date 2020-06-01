@@ -7,8 +7,8 @@ from datetime import datetime
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 datasets_dict = {'SMAP L3' :
     {
-        'ts_dir': r'..\test_output_data\test_smapL3_reshuffle',
-        'grid_dir': r'..\test_output_data\test_smapL3_reshuffle',
+        'ts_dir': r'C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-smap-l3-36km_nordic_reshuffle',
+        'grid_dir': r'C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-smap-l3-36km_nordic_reshuffle',
         'grid_file': 'grid.nc',
         'static_layers_dir': None,
         'reader_name': 'SMAP_L3_ts',
@@ -22,9 +22,9 @@ with open('networks_dict.json', 'r') as f:
 
 print(networks_dict)
 
-test_station = networks_dict['FMI']['SAA111']
-print(test_station)
-print(test_station['lon'], test_station['lat'])
+# test_station = networks_dict['FMI']['SAA111']
+# print(test_station)
+# print(test_station['lon'], test_station['lat'])
 
 for dataset, dataset_dict in datasets_dict.items():
     dataset_name = dataset
@@ -40,7 +40,8 @@ for dataset, dataset_dict in datasets_dict.items():
 
     ts_reader = eval(dataset_dict['reader_class'])
 
-    ts = ts_reader.read(test_station['lon'], test_station['lat'])
+    # Degero: 19.556539 64.182029
+    ts = ts_reader.read(19.556539, 64.182029)
 
     print(ts)
     print(ts.columns)
