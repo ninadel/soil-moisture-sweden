@@ -6,6 +6,8 @@ Functions for analyzing soil moisture datasets
 import datetime
 import os
 import pandas
+from ascat import H115Ts
+from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 
 def get_timestamp():
     # Converting datetime object to string
@@ -34,21 +36,21 @@ def filter_icos_data(data, qc_values, dropna=True):
     return data
 
 
-def get_product_data(lon, lat, product, product_inputs, filter_data=True):
+def get_product_reader(product, product_inputs, filter_data=True):
     if product == "ASCAT 12.5 TS":
-        from ascat import H115Ts
         ts_data_dir = product_inputs["ts_data_dir"]
-        grid_dir =  product_inputs["ts_data_dir"]
-        grid_file =  product_inputs["grid_file"]
+        grid_dir = product_inputs["ts_data_dir"]
+        grid_file = product_inputs["grid_file"]
         static_layers_dir = product_inputs["static_layers_dir"]
-        ts = H115Ts(cdr_path=ts_data_dir, grid_path=grid_dir, grid_filename=grid_file,
+        reader = H115Ts(cdr_path=ts_data_dir, grid_path=grid_dir, grid_filename=grid_file,
                     static_layer_path=static_layers_dir)
-        data = ts.data
-        print(product, data.shape)
         if filter_data:
+            print(product, "filter: ")
             # filter data
+            # ssf flag_values = 0, 1, 2, 3, 4
+            # ssf flag_meanings = "unknown unfrozen frozen_temporary melting_water_on_the_surface permanent_ice";
             print(product, "(filtered)", data.shape)
-        return data
+        return reader
     if product == "GLDAS":
         pass
     if product == "SMAP L4":
