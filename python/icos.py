@@ -35,8 +35,15 @@ class ICOSTimeSeries(ISMNTimeSeries):
         self.depth_from = ["0.05"]
         self.depth_to = ["0.05"]
         self.data = data
-        self.ssm_data = data[['icos_ssm', 'qc_ssm']]
-        self.ts_data = data[['icos_ts', 'qc_ts']]
+
+    def get_ssm_data(self, qc_values, dropna=True):
+        data = self.data
+        if type(qc_values) != list:
+            qc_values = [qc_values]
+        data = data.loc[data['qc_ssm'].isin(qc_values)]
+        if dropna:
+            data.dropna()
+        return data
 
 # class ISMNTimeSeries(object):
 #     """
