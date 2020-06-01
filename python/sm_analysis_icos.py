@@ -24,8 +24,7 @@ icos_analyses_dict = {
         "scaling": None
     },
     "GLDAS": {
-    },
-    "SMAP L4": {
+        "analyze": False
     }
 }
 
@@ -37,26 +36,55 @@ with open('timeframes_dict.json', 'r') as f:
 with open('icos_dict.json', 'r') as f:
     icos_dict = json.load(f)
 
+# switch to filter icos or product data
+filter_icos = True
+filter_product = True
+
 # directory that has ICOS in situ data, used to get stations
 icos_input_dir = r"..\icos_data"
 icos_files = sm_tools.get_icos_stations(icos_input_dir)
 
-metrics_df = DataFrame(columns=['network', 'station', 'temp_scope', 'data_scope', 'product', 'n', 'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearson r p-value'])
+metrics_df = DataFrame(columns=['network', 'station', 'temp_scope', 'icos_data_scope', 'product', 'product_data_scope',
+                                'n', 'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearson r p-value'])
+
+analysis_queue = {}
+for product, product_inputs in icos_analyses_dict.items():
+    if product_inputs['analyze']:
+        analysis_queue[product] = product_inputs
+
+print(analysis_queue)
 
 for product, product_inputs in icos_analyses_dict.items():
+    # initialize product reader
+    if filter_product:
+        product_data_scope = 'Filtered'
+        # product_reader = sm_tools.get_product_reader(product, product_inputs)
+    else:
+        product_data_scope = 'Unfiltered'
+        # product_reader = sm_tools.get_product_reader(product, product_inputs, filter_data=False)
     matched_df = DataFrame(columns=['datetime_utc', product, 'icos_ssm', 'icos_ssm_qc'])
     for station, file in icos_files.items():
         file_data = read_csv(file, index_col=0)
         # get insitu data, dropna, filter to qc values of 0 and 3
         station_metadata = icos_dict[station]
         station_ts = ICOSTimeSeries(station_metadata, file_data)
-        print(station_ts.ssm_data.shape)
-        ssm_filtered_ts = sm_tools.filter_icos_data(station_ts.ssm_data, qc_values=[0, 3], dropna=True)
+        print(station, 'station_ts.data:', station_ts.data.shape)
+        # initialize icos reader
+        if filter_icos:
+            icos_data_scope = 'Filtered'
+            station_data = station_ts.get_ssm_data(qc_values = [0])
+            print(station, 'station_data (filtered):', station_data.shape)
+        else:
+            icos_data_scope = 'Unfiltered'
+            station_data = station_ts.get_ssm_data(qc_values = [0,3])
+            print(station, 'station_data (unfiltered):', station_data.shape)
+        # print(station_ts.ssm_data.shape)
+        # ssm_filtered_ts = sm_tools.filter_icos_data(station_ts.ssm_data, qc_values=[0, 3], dropna=True)
         # get product data for station lat/lon
-        print(ssm_filtered_ts.shape)
-        product_data = sm_tools.get_product_data(station_ts.longitude, station_ts.latitude, product, product_inputs)
+        # print(ssm_filtered_ts.shape)
+        # product_data = sm_tools.get_product_data(station_ts.longitude, station_ts.latitude, product, product_inputs)
         # match data (product is ref ts and in situ is second ts)
-        break
+        # break
 
 
 # {"ASCAT 12.5 TS" :
