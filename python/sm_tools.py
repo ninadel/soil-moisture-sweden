@@ -3,7 +3,7 @@ Author: Nina del Rosario
 Date: 5/25/2020
 Functions for analyzing soil moisture datasets
 """
-import datetime
+from datetime import datetime
 import os
 import pandas
 from ascat import H115Ts
@@ -12,8 +12,8 @@ from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 def get_timestamp():
     # Converting datetime object to string
     timestamp = datetime.now()
-    timestampStr = timestamp.strftime("%y%m%d_%H%M")
-    return timestampStr
+    timestamp_str = timestamp.strftime("%y%m%d_%H%M")
+    return timestamp_str
 
 
 def get_icos_stations(dir):
@@ -59,7 +59,7 @@ def get_product_reader(product, product_inputs, filter_data=True):
 
 
 # get data for all network/stations in a dictionary
-def get_metrics(data, metrics=('bias', 'rmsd', 'ubrmsd', 'pearsonr')):
+def get_metrics(data, metrics=('bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p')):
     """""
     data: temporally matched dataset
     metrics: list of metrics to calculate on matched dataset
@@ -69,7 +69,8 @@ def get_metrics(data, metrics=('bias', 'rmsd', 'ubrmsd', 'pearsonr')):
     if type(metrics) != list:
         metrics = [metrics]
     # bias, rmsd, ubrmsd, pearsonr, pearsonr p-value
-    metric_values = []
-    for metric in metrics:
-        pass
+    metric_values = [None, None, None, None, None]
+    if data.shape[0] > 4:
+        for metric in metrics:
+            pass
     return metric_values
