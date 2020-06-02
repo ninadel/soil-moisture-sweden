@@ -7,3 +7,4 @@ test_input_data/
 __pycache__
 python/py_test*.py
 *pytesmo_example*
+input_data/
