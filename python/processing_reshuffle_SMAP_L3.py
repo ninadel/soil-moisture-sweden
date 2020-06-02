@@ -1,3 +1,8 @@
+"""
+Author: Nina del Rosario, nina.del@gmail.com
+Date: 5/31/2020
+Script to reshuffle SMAP L3 data based on repurpose package
+"""
 import os
 import reshuffle_smap_L3
 # from smap_io import reshuffle

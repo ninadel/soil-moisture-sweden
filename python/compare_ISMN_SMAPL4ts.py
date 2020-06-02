@@ -1,7 +1,8 @@
 """
 Author: Nina del Rosario, nina.del@gmail.com
 Date: 5/26/2020
-Script for analyzing SM datasets
+Script to compare SMAP L4 TS data to ISMN data
+Reshuffled SMAP L4 data created through smap_extension SMAP L4 class
 """
 
 import ismn.interface as ismn

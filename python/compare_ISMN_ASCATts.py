@@ -1,7 +1,7 @@
 """
 Author: Nina del Rosario, nina.del@gmail.com
 Date: 5/26/2020
-Script for analyzing SM datasets
+Script to compare ASCAT 12.5 TS data (H115) to ISMN data
 """
 
 import ismn.interface as ismn

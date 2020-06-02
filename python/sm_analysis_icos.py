@@ -11,21 +11,20 @@ import numpy
 import os
 import pandas
 from pytesmo import temporal_matching, scaling, df_metrics, metrics
-import sm_tools
+import sm_config as config
+import sm_tools as tools
 import sm_datasets
 
-# Use dictionary to set analyses to perform, input data locations, and parameters
+# Dictionary to set analyses to perform
+# Use datasets_dict.json to change default parameters
 icos_analyses_dict = {
     "ASCAT 12.5 TS": {
         "analyze": True,
-        "ts_data_dir": r"",
-        "grid_dir": r"",
-        "grid_file": "",
-        "static_layers_dir": None,  # optional
-        "parameters": None,  # optional
-        "scaling": None
     },
     "GLDAS": {
+        "analyze": False
+    },
+    "SMAP L4": {
         "analyze": False
     }
 }
@@ -44,7 +43,7 @@ filter_product = True
 
 # directory that has ICOS in situ data, used to get stations
 icos_input_dir = r"..\icos_data"
-icos_files = sm_tools.get_icos_stations(icos_input_dir)
+icos_files = tools.get_icos_stations(icos_input_dir)
 
 metrics_df_columns = ['timestamp', 'network', 'station', 'temp_scope', 'icos_data_scope', 'product',
                       'product_data_scope', 'n', 'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p']
@@ -58,7 +57,7 @@ for product, product_inputs in icos_analyses_dict.items():
     if product_inputs['analyze']:
         analysis_queue[product] = product_inputs
 
-timestamp = sm_tools.get_timestamp()
+timestamp = tools.get_timestamp()
 for product, product_inputs in analysis_queue.items():
     temp_scope = analysis_startdate.strftime("%y%m%d")+"_"+analysis_enddate.strftime("%y%m%d")
     product_str = product.replace(' ', '-')
@@ -68,10 +67,10 @@ for product, product_inputs in analysis_queue.items():
     network_matched_df = pandas.DataFrame(columns=['datetime_utc', product, 'icos_ssm', 'icos_ssm_qc'])
     if filter_product:
         product_data_scope = 'Filtered'
-        # product_reader = sm_tools.get_product_reader(product, product_inputs)
+        # product_reader = tools.get_product_reader(product, product_inputs)
     else:
         product_data_scope = 'Unfiltered'
-        # product_reader = sm_tools.get_product_reader(product, product_inputs, filter_data=False)
+        # product_reader = tools.get_product_reader(product, product_inputs, filter_data=False)
     # filter product data by date
     for station, file in icos_files.items():
         station_matched_df = pandas.DataFrame(columns=['datetime_utc', product, 'icos_ssm', 'icos_ssm_qc'])
@@ -89,7 +88,7 @@ for product, product_inputs in analysis_queue.items():
             icos_data_scope = 'Unfiltered'
             station_data = station_ts.get_ssm_data(qc_values=[0,3])
             print(station, 'station_data (unfiltered):', station_data.shape)
-        metrics = sm_tools.get_metrics(station_matched_df)
+        metrics = tools.get_metrics(station_matched_df)
         bias = metrics[0]
         rmsd = metrics[1]
         ubrmsd = metrics[2]
@@ -107,7 +106,7 @@ for product, product_inputs in analysis_queue.items():
         filename = 'matched_data_ICOS_{}_{}_{}_{}_{}'.format(station, icos_data_scope, product_str, product_data_scope,
                                                              timestamp)
     # network level analysis
-    metrics = sm_tools.get_metrics(network_matched_df)
+    metrics = tools.get_metrics(network_matched_df)
     bias = metrics[0]
     rmsd = metrics[1]
     ubrmsd = metrics[2]
