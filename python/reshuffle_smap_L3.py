@@ -84,9 +84,10 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
     # get time series attributes from first day of data.
     data = input_dataset.read(startdate)
     ts_attributes = data.metadata
-    ease36 = EASE2_grid(36000)
-    lons, lats = np.meshgrid(ease36.londim, ease36.latdim)
-    grid = BasicGrid(lons.flatten(), lats.flatten())
+    # ease2 grid not working
+    # ease36 = EASE2_grid(36000)
+    # lons, lats = np.meshgrid(ease36.londim, ease36.latdim)
+    grid = BasicGrid(data.lon, data.lat)
 
     reshuffler = Img2Ts(input_dataset=input_dataset, outputpath=outputpath,
                         startdate=startdate, enddate=enddate, input_grid=grid,

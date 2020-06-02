@@ -13,11 +13,11 @@ from smap_io.interface import SPL3SMP_Ds, SMAPTs
 reshuffle = True
 test_reshuffle = True
 
-input_root = r'..\sm_sample_files\SPL3SMP-smap-l3-36km\20180601_20180630'
-outputpath = r'..\test_output_data\test_smapL3_reshuffle'
-startdate = datetime(2018, 6, 1, 0, 0, 0)
-enddate = datetime(2018, 6, 30, 23, 59, 59)
-parameters = ['soil_moisture', 'soil_moisture_error', 'retrieval_qual_flag', 'surface_flag']
+input_root = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\SMAP\SPL3SMP-smap-l3-36km_clipped_h5'
+outputpath = r'C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-smap-l3-36km_nordic_reshuffle'
+startdate = datetime(2015, 4, 1, 0, 0, 0)
+enddate = datetime(2018, 12, 31, 23, 59, 59)
+parameters = ['soil_moisture', 'soil_moisture_error', 'retrieval_qual_flag', 'surface_flag', 'freeze_thaw_fraction']
 
 # initialize SMAP L3 reader
 input_dataset = SPL3SMP_Ds(input_root, parameter=parameters,
@@ -31,9 +31,10 @@ if reshuffle:
 # test reshuffle
 # output note: why is timestamp set to midnight?
 if test_reshuffle:
-    ds = SMAPTs(outputpath, parameters=['soil_moisture','soil_moisture_error', 'retrieval_qual_flag', 'surface_flag'],
+    ds = SMAPTs(outputpath, parameters=parameters,
                 ioclass_kws={'read_bulk': True})
     # read_ts takes either lon, lat coordinates or a grid point indices.
     # and returns a pandas.DataFrame
-    ts = ds.read(19.556539, 64.182029) # (lon, lat)
+    # Degero: 19.556539 64.182029
+    ts = ds.read(19.556539, 64.182029)
     print(ts)
