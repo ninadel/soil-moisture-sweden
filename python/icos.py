@@ -6,6 +6,7 @@ Class to handle ICOS TS data
 
 from ismn.readers import ISMNTimeSeries
 
+
 class ICOSTimeSeries(ISMNTimeSeries):
     """
     class that contains a time series of ISMN data read from one text file
