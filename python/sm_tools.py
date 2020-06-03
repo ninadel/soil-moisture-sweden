@@ -9,11 +9,19 @@ import pandas
 from ascat import H115Ts
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 
+
 def get_timestamp():
     # Converting datetime object to string
     timestamp = datetime.now()
     timestamp_str = timestamp.strftime("%Y%m%d_%H%M")
     return timestamp_str
+
+
+def write_log(filename, string, print_string=True):
+    with open(filename, 'a') as logfile:
+        logfile.write(string + '\n')
+    if print_string:
+        print(string)
 
 
 def get_icos_stations(dir):
@@ -25,6 +33,7 @@ def get_icos_stations(dir):
     return data_dict
 
 
+# REMOVE?
 # takes a 2 column ICOS time series and filters based on column 2
 def filter_icos_data(data, qc_values, dropna=True):
     qc_column = data.columns[1]
@@ -43,13 +52,13 @@ def get_product_reader(product, product_inputs, filter_data=True):
         grid_file = product_inputs["grid_file"]
         static_layers_dir = product_inputs["static_layers_dir"]
         reader = H115Ts(cdr_path=ts_data_dir, grid_path=grid_dir, grid_filename=grid_file,
-                    static_layer_path=static_layers_dir)
+                        static_layer_path=static_layers_dir)
         if filter_data:
             print(product, "filter: ")
             # filter data
             # ssf flag_values = 0, 1, 2, 3, 4
             # ssf flag_meanings = "unknown unfrozen frozen_temporary melting_water_on_the_surface permanent_ice";
-            print(product, "(filtered)", data.shape)
+            print(product, "(filtered)", reader.data.shape)
         return reader
     if product == "GLDAS":
         pass
