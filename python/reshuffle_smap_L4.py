@@ -25,7 +25,8 @@
 Module for a command line interface to convert the SMAP data into a
 time series format using the repurpose package
 
-Adapted to take SPL4SMP_nc_Ds object as an argument
+Adapted by Nina del Rosario to take SPL4SMP_nc_Ds object as an argument
+Based on smap_io package
 '''
 
 import os
@@ -38,7 +39,7 @@ from pygeogrids import BasicGrid
 
 from repurpose.img2ts import Img2Ts
 from ease_grid import EASE2_grid
-from smap_io.interface import SPL3SMP_Ds
+from smap_io.interface import SPL4SMP_Ds
 
 # removing var_overpass_str to test
 def reshuffle(input_dataset, outputpath, startdate, enddate,
@@ -50,7 +51,7 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
     Parameters
     ----------
     input_dataset: object
-        SPL3SMP_Ds object.
+        SPL4SMP_nc_Ds object.
     outputpath : string
         Output path.
     startdate : datetime

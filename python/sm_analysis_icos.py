@@ -1,19 +1,17 @@
 """
 Author: Nina del Rosario
 Date: 5/31/2020
-Script for analyzing SM datasets
+Script for comparing SM datasets to ICOS in-situ data
 """
 from ascat import H115Ts
 from datetime import datetime
 from icos import ICOSTimeSeries
-import json
 import numpy
 import os
 import pandas
 from pytesmo import temporal_matching, scaling, df_metrics, metrics
 import sm_config as config
 import sm_tools as tools
-import sm_datasets
 
 # Dictionary to set analyses to perform
 # Use datasets_dict.json to change default parameters
@@ -29,21 +27,10 @@ icos_analyses_dict = {
     }
 }
 
-# open external dictionaries
-# dictionary which defines timeframes to analyze
-with open('timeframes_dict.json', 'r') as f:
-    timeframes_dict = json.load(f)
-
-with open('icos_dict.json', 'r') as f:
-    icos_dict = json.load(f)
-
 # switch to filter icos or product data
 filter_icos = True
 filter_product = True
 
-# directory that has ICOS in situ data, used to get stations
-icos_input_dir = r"..\icos_data"
-icos_files = tools.get_icos_stations(icos_input_dir)
 
 metrics_df_columns = ['timestamp', 'network', 'station', 'temp_scope', 'icos_data_scope', 'product',
                       'product_data_scope', 'n', 'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p']

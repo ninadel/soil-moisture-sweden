@@ -1,8 +1,7 @@
-
 """
 Author: Nina del Rosario
 Date: 5/25/2020
-Script for analyzing SM datasets
+Script for comparing SM datasets to ISMN in-situ data
 """
 from icos import ICOSSMTimeSeries
 import json

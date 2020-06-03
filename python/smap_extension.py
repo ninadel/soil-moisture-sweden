@@ -1,6 +1,9 @@
-# Author: Nina del Rosario
-# Class for extending TUW-GEO smap_io package (https://github.com/TUW-GEO/smap_io) to include SMAP L4
-# Adapted from SMAPL3 reader: https://github.com/TUW-GEO/smap_io/blob/master/smap_io/interface.py
+"""""
+Author: Nina del Rosario
+Date: 6/2/2020
+Classes for extending TUW-GEO smap_io package (https://github.com/TUW-GEO/smap_io)
+Adapted from SMAPL3 reader: https://github.com/TUW-GEO/smap_io/blob/master/smap_io/interface.py
+"""""
 
 # Dependencies
 import numpy as np

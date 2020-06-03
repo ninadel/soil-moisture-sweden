@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario
+Date: 6/2/2020
+Script for exploring reading GLDAS TS (generated via repurpose package)
+"""
+
 import os
 import numpy
 import json
