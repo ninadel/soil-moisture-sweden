@@ -4,7 +4,14 @@ Date: 6/2/2020
 Configuration settings for sm analysis
 """
 import json
+import os
 import sm_tools as tools
+
+timestamp = tools.get_timestamp()
+
+analysis_output_dir = r"..\analysis_output"
+icos_logfile = os.path.join(analysis_output_dir, "{}_ICOS_log.txt".format(timestamp))
+ismn_logfile = os.path.join(analysis_output_dir, "{}_ISMN_log.txt".format(timestamp))
 
 # directory that has ICOS in situ data, used to determine which stations to use in analysis
 icos_input_dir = r"..\icos_data"
