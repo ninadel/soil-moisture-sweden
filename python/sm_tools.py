@@ -8,6 +8,7 @@ import os
 import pandas
 from ascat import H115Ts
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
+from pytesmo import metrics
 
 
 def get_timestamp():
@@ -58,17 +59,16 @@ def get_product_data(lon, lat, product, product_metadata, product_reader, variab
     return sm
 
 # get data for all network/stations in a dictionary
-def get_metrics(data, xcol, ycol, metrics=('bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p')):
+def get_metrics(data, xcol, ycol):
     """""
     data: temporally matched dataset
     metrics: list of metrics to calculate on matched dataset
         default: 'pearsonr', 'bias', 'rmsd', 'ubrmsd'
     """""
-    if type(metrics) != list:
-        metrics = [metrics]
-    # bias, rmsd, ubrmsd, pearsonr, pearsonr p-value
-    metric_values = [None, None, None, None, None]
-    if len(metrics) > 4:
-        for metric in metrics:
-            pass
-    return metric_values
+    x, y = data[xcol].values, data[ycol].values
+    bias = metrics.bias(x, y)
+    rmsd = metrics.rmsd(x, y)
+    ubrmsd = metrics.ubrmsd(x, y)
+    pearsonr = metrics.pearsonr(x, y)[0]
+    pearsonr_p = metrics.pearsonr(x, y)[1]
+    return [bias, rmsd, ubrmsd, pearsonr, pearsonr_p]
