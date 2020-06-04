@@ -29,32 +29,22 @@ import sm_config as config
 # uncertainty. The soil moisture product has not been pre-filtered, meaning that a masking of invalid measurements
 # (e.g. frozen ground, snow cover) by the user is highly recommended before further processing.
 
+print_sample = False
 
+ts_reader = H115Ts(cdr_path=config.datasets_dict['ASCAT 12.5 TS']['ts_dir'],
+                   grid_path=config.datasets_dict['ASCAT 12.5 TS']['grid_dir'],
+                   grid_filename=config.datasets_dict['ASCAT 12.5 TS']['grid_file'],
+                   static_layer_path=config.datasets_dict['ASCAT 12.5 TS']['static_layers_dir'])
 
-for dataset, dataset_dict in config.datasets_dict.items():
-    dataset_name = dataset
-    print(dataset)
-    # is this optional?
-    static_layers_dir = dataset_dict['static_layers_dir']
-    # update to 2.2?
-    grid_dir = dataset_dict['grid_dir']
-    # update to 2.2?
-    grid_file = dataset_dict['grid_file']
+# Degero: 19.556539 64.182029
+ts = ts_reader.read(19.556539, 64.182029)
 
-    ts_dir = dataset_dict['ts_dir']
-
-
-    ts_reader = H115Ts
-    ts_reader = eval(dataset_dict['reader_class'])
-
-    # Degero: 19.556539 64.182029
-    ts = ts_reader.read(19.556539, 64.182029)
-
-    print(ts)
-    print(ts.data.columns)
-    print('ts.data', ts.data.shape)
-    print(ts.data['ssf'])
+print(ts)
+print(ts.data.columns)
+print('ts.data', ts.data.shape)
+print(ts.data['ssf'])
+if print_sample:
     ts.data.to_csv('..\\product_sample_data\\H115_sample.csv')
-    # print(ts.data['sm'])
-    # help(ts)
+# print(ts.data['sm'])
+# help(ts)
 
