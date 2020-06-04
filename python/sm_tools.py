@@ -43,7 +43,9 @@ def get_product_reader(product, product_metadata):
         reader = H115Ts(cdr_path=ts_dir, grid_path=grid_dir, grid_filename=grid_file,
                         static_layer_path=static_layers_dir)
     if product == "GLDAS":
-        pass
+        ts_dir = product_metadata["ts_dir"]
+        grid_dir = product_metadata["grid_dir"]
+        reader = H115Ts(ts_dir, grid_dir)
     if product == "SMAP L4":
         pass
     return reader
@@ -76,3 +78,9 @@ def get_metrics(data, xcol, ycol):
     pearsonr = metrics.pearsonr(x, y)[0]
     pearsonr_p = metrics.pearsonr(x, y)[1]
     return [bias, rmsd, ubrmsd, pearsonr, pearsonr_p]
+
+
+def convert_tab_comma(filename):
+    file_df = pandas.read_csv(filename, sep="\t")
+    output_file = filename[:-4]+'_commareformat'+filename[-4:]
+    file_df.to_csv(output_file, sep=",")
