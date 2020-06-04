@@ -9,7 +9,8 @@ import sm_tools as tools
 
 timestamp = tools.get_timestamp()
 
-analysis_output_dir = r"..\analysis_output"
+analysis_output_root = r"..\analysis_output"
+analysis_output_dir = os.path.join(analysis_output_root,'{}_output'.format(timestamp))
 icos_logfile = os.path.join(analysis_output_dir, "{}_ICOS_log.txt".format(timestamp))
 ismn_logfile = os.path.join(analysis_output_dir, "{}_ISMN_log.txt".format(timestamp))
 
@@ -20,12 +21,13 @@ icos_files = tools.get_icos_stations(icos_input_dir)
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 datasets_dict = {'ASCAT 12.5 TS':
     {
-        'ts_dir': r'..\sm_sample_files\ascat-h115-ts-2019',
+        'ts_dir': r'..\input_data\ascat-h115-ts-2019',
         'grid_dir': r'..\ascat_ts_aux\warp5_grid',
         'grid_file': 'TUW_WARP5_grid_info_2_3.nc',
         'static_layers_dir': r'..\ascat_ts_aux\static_layer',
         'reader_name': 'ascat_12-5_ts',
-        'reader_class': 'H115Ts(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)'
+        'reader_class': 'H115Ts(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)',
+        'sm_field': 'sm'
     }
 }
 
