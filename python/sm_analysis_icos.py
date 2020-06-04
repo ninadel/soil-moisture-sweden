@@ -20,7 +20,7 @@ icos_analyses_dict = {
         "analyze": True,
     },
     "GLDAS": {
-        "analyze": False
+        "analyze": True
     },
     "SMAP L4": {
         "analyze": False
@@ -28,7 +28,7 @@ icos_analyses_dict = {
 }
 
 # switch to filter icos or product data
-filter_icos = False
+filter_icos = True
 filter_product = True
 
 metrics_df_columns = ['timestamp', 'network', 'station', 'temp_scope', 'icos_data_scope', 'product',
@@ -46,7 +46,8 @@ for product, product_inputs in icos_analyses_dict.items():
 
 for product, product_inputs in analysis_queue.items():
     temp_scope = analysis_startdate.strftime("%Y%m%d")+"_"+analysis_enddate.strftime("%Y%m%d")
-    print("analyzing {} for {}".format(product, temp_scope))
+    tools.write_log(config.icos_logfile, "===")
+    tools.write_log(config.icos_logfile, "analyzing {} for {}".format(product, temp_scope))
     product_str = product.replace(' ', '-')
     product_metadata = config.datasets_dict[product]
     # initialize product reader
@@ -56,16 +57,14 @@ for product, product_inputs in analysis_queue.items():
     else:
         product_data_scope = 'Unfiltered'
     product_reader = tools.get_product_reader(product, product_metadata)
-    print(type(product_reader))
-    # filter product data by date
-    # print(product, "(filtered)", reader.data.shape)
     for station, file in config.icos_files.items():
-        print("analyzing {} * {} for {}".format(product, station, temp_scope))
+        tools.write_log(config.icos_logfile, "---")
+        tools.write_log(config.icos_logfile, "analyzing {} * {} for {}".format(product, station, temp_scope))
         file_data = pandas.read_csv(file, index_col=0)
         # get insitu data, dropna, filter to qc values of 0 and 3
         station_metadata = config.icos_dict[station]
         station_ts = ICOSTimeSeries(station_metadata, file_data)
-        print(station, 'station_ts.data.shape', station_ts.data.shape)
+        tools.write_log(config.icos_logfile, '{} station_ts.data.shape {}'.format(station, station_ts.data.shape))
         # initialize icos reader
         if filter_icos:
             icos_data_scope = 'Filtered'
@@ -73,71 +72,72 @@ for product, product_inputs in analysis_queue.items():
         else:
             icos_data_scope = 'Unfiltered'
             station_ssm_data = station_ts.get_ssm_data(qc_values=[0,3])
-        print(station, 'station_ssm_data ({})'.format(icos_data_scope), station_ssm_data.shape)
+        tools.write_log(config.icos_logfile, '{} station_ssm_data ({}) {}'.format(station, icos_data_scope,
+                                                                                  station_ssm_data.shape))
         # get product data for station
         product_data = tools.get_product_data(lon=station_metadata['longitude'], lat=station_metadata['latitude'],
                                               product=product, product_metadata=product_metadata,
                                               product_reader=product_reader, filter_product=filter_product)
         filename = '{}_data_{}_{}.csv'.format(product_str, station, config.timestamp)
         product_data.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
-        # test to output all vars to csv
-        # product_data_test = tools.get_product_data(lon=station_metadata['longitude'], lat=station_metadata['latitude'],
-        #                                       variable=None, product=product, product_metadata=product_metadata,
-        #                                       product_reader=product_reader)
-        # filename = '{}_allvars_data_{}_{}.csv'.format(product_str, station, config.timestamp)
-        # product_data_test.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
-        print('product_data.shape', product_data.shape)
+        tools.write_log(config.icos_logfile, 'product_data.shape {}'.format(product_data.shape))
         product_data = product_data.loc[analysis_startdate:analysis_enddate]
-        #data = data.loc[data['qc_ssm'].isin(qc_values)]
-        print('product_data.shape after date filter', product_data.shape)
-        # print('product_data.columns', product_data.columns)
-        matched_data = temporal_matching.matching(product_data, station_ssm_data, window=1/24.)
-        print('matched_data.shape', matched_data.shape)
-        filename = 'matched_data_{}_{}_{}.csv'.format(station, product_str, config.timestamp)
-        matched_data.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
-        # for now, not sure if only % products are scaled
-        matched_rows = matched_data.shape[0]
-        if matched_rows > 10:
+        tools.write_log(config.icos_logfile, 'product_data.shape after date filter {}'.format(product_data.shape))
+        # tools.write_log(config.icos_logfile, 'product_data.columns', product_data.columns)
+        if station_ssm_data.shape[0] > 10:
+            matched_data = temporal_matching.matching(product_data, station_ssm_data, window=1/24.)
+            tools.write_log(config.icos_logfile, 'matched_data.shape {}'.format(matched_data.shape))
+            filename = 'matched_data_{}_{}_{}.csv'.format(station, product_str, config.timestamp)
+            matched_data.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
+            # for now, not sure if only % products are scaled
+            matched_rows = matched_data.shape[0]
             # scaling causing errors, hold off for now
-            # if product == 'ASCAT 12.5 TS':
-            #     matched_data = scaling.scale(matched_data, method='lin_cdf_match', reference_index=1)
-            #     print('matched_data.columns (scaled)', matched_data.columns)
-            #     filename = 'matched_data_{}_{}_scaled_{}.csv'.format(station, product_str, config.timestamp)
-            #     matched_data.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
+            if product == 'ASCAT 12.5 TS':
+                matched_data = scaling.scale(matched_data, method='lin_cdf_match', reference_index=1)
+                filename = 'matched_data_{}_{}_scaled_{}.csv'.format(station, product_str, config.timestamp)
+                matched_data.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
             # start future function
-            metrics = tools.get_metrics(matched_data, 'sm', 'icos_ssm')
+            metrics = tools.get_metrics(matched_data, product_metadata['sm_field'], 'icos_ssm')
             bias = metrics[0]
             rmsd = metrics[1]
             ubrmsd = metrics[2]
             pearsonr = metrics[3]
             pearsonr_p = metrics[4]
-            print("---")
-            print("{} ssm * {} ssm metrics:".format(station, product))
-            print("bias: {}, rmsd: {}, ubrmsd: {}, pearsonr: {}, pearsonr_p: {}, n: {}".format(bias, rmsd, ubrmsd, pearsonr, pearsonr_p, matched_rows))
+            tools.write_log(config.icos_logfile, " ")
+            tools.write_log(config.icos_logfile, "{} ssm * {} ssm metrics:".format(station, product))
+            tools.write_log(config.icos_logfile,
+                            "bias: {}, rmsd: {}, ubrmsd: {}, pearsonr: {}, pearsonr_p: {}, n: {}".format(bias, rmsd,
+                                                                                                         ubrmsd,
+                                                                                                         pearsonr,
+                                                                                                         pearsonr_p,
+                                                                                                         matched_rows))
             station_metrics_df = pandas.DataFrame([[config.timestamp, 'ICOS', station, temp_scope, icos_data_scope,
                                                     product_str, product_data_scope, matched_rows, bias, rmsd, ubrmsd,
                                                     pearsonr, pearsonr_p]], columns=metrics_df_columns)
             metrics_df = pandas.concat([metrics_df, station_metrics_df])
             # end future function
         else:
-            print('{} matched rows. metrics not computed for station.'.format(matched_rows))
+            tools.write_log(config.icos_logfile, station)
+            tools.write_log(config.icos_logfile, '{} matched rows. metrics not computed for station.'.format(matched_rows))
+            tools.write_log(config.icos_logfile, "---")
+            break
         filename = 'matched_data_ICOS_{}_{}_{}_{}_{}.csv'.format(station, icos_data_scope, product_str,
                                                                  product_data_scope, config.timestamp)
         network_matched_df = pandas.concat([network_matched_df, matched_data])
     # network level analysis
     # start future function
-    metrics = tools.get_metrics(network_matched_df, 'sm', 'icos_ssm')
+    metrics = tools.get_metrics(network_matched_df, product_metadata['sm_field'], 'icos_ssm')
     bias = metrics[0]
     rmsd = metrics[1]
     ubrmsd = metrics[2]
     pearsonr = metrics[3]
     pearsonr_p = metrics[4]
     matched_rows = network_matched_df.shape[0]
-    print("---")
-    print("ICOS ssm * {} ssm metrics:".format(product))
-    print("bias: {}, rmsd: {}, ubrmsd: {}, pearsonr: {}, pearsonr_p: {}, n: {}".format(bias, rmsd, ubrmsd, pearsonr,
-                                                                                       pearsonr_p, matched_rows))
-    print("---")
+    tools.write_log(config.icos_logfile, "ICOS ssm * {} ssm metrics:".format(product))
+    tools.write_log(config.icos_logfile,
+                    "bias: {}, rmsd: {}, ubrmsd: {}, pearsonr: {}, pearsonr_p: {}, n: {}".format(bias, rmsd, ubrmsd,
+                                                                                                 pearsonr, pearsonr_p,
+                                                                                                 matched_rows))
     network_metrics_df = pandas.DataFrame([[config.timestamp, 'ICOS', 'All', temp_scope, icos_data_scope,
                                             product_str, product_data_scope, matched_rows, bias, rmsd, ubrmsd,
                                             pearsonr, pearsonr_p]], columns=metrics_df_columns)
