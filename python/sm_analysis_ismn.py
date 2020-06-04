@@ -20,7 +20,7 @@ ismn_analyses_dict = {
         "analyze": True,
     },
     "GLDAS": {
-        "analyze": False
+        "analyze": True
     },
     "SMAP L4": {
         "analyze": False
@@ -87,7 +87,7 @@ for product, product_inputs in analysis_queue.items():
             if matched_rows > 10:
                 # scaling causing errors, hold off for now
                  # start future function
-                metrics = tools.get_metrics(matched_data, 'sm', 'ismn_ssm')
+                metrics = tools.get_metrics(matched_data, product_metadata['sm_field'], 'ismn_ssm')
                 bias = metrics[0]
                 rmsd = metrics[1]
                 ubrmsd = metrics[2]
@@ -108,7 +108,7 @@ for product, product_inputs in analysis_queue.items():
             network_matched_df = pandas.concat([network_matched_df, matched_data])
     # network level analysis
     # start future function
-    metrics = tools.get_metrics(network_matched_df, 'sm', 'ismn_ssm')
+    metrics = tools.get_metrics(network_matched_df, product_metadata['sm_field'], 'ismn_ssm')
     bias = metrics[0]
     rmsd = metrics[1]
     ubrmsd = metrics[2]
