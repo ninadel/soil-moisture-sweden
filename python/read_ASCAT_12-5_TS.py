@@ -10,6 +10,7 @@ import numpy
 import json
 from ascat.h_saf import H115Ts
 from datetime import datetime
+import sm_config as config
 
 # H25 Metop ASCAT DR2015 SSM 12.5 km sampling
 # H108 Metop ASCAT DR2015 EXT SSM 12.5 km sampling
@@ -30,7 +31,7 @@ from datetime import datetime
 
 
 
-for dataset, dataset_dict in datasets_dict.items():
+for dataset, dataset_dict in config.datasets_dict.items():
     dataset_name = dataset
     print(dataset)
     # is this optional?
