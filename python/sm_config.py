@@ -18,7 +18,7 @@ ismn_logfile = os.path.join(ismn_analysis_output_dir, '{}_ISMN_log.txt'.format(t
 icos_input_dir = r'..\icos_data'
 icos_files = tools.get_icos_stations(icos_input_dir)
 
-ismn_input_dir = r'C:\git\soil-moisture-sweden\test_input_data\Data_seperate_files_header_20150101_20181231_7409_m09n_20200604\SMOSMANIA'
+ismn_input_dir = r'C:\git\nordic-insitu-sm-data\HOBE'
 
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
@@ -28,7 +28,6 @@ datasets_dict = {'ASCAT 12.5 TS':
         'grid_dir': r'..\ascat_ts_aux\warp5_grid',
         'grid_file': 'TUW_WARP5_grid_info_2_3.nc',
         'static_layers_dir': None,
-        'reader_class': 'H115Ts(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)',
         'sm_field': 'sm'
     },
     'GLDAS': {
