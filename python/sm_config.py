@@ -10,13 +10,16 @@ import sm_tools as tools
 timestamp = tools.get_timestamp()
 
 analysis_output_root = r"..\analysis_output"
-analysis_output_dir = os.path.join(analysis_output_root,'{}_output'.format(timestamp))
-icos_logfile = os.path.join(analysis_output_dir, "{}_ICOS_log.txt".format(timestamp))
-ismn_logfile = os.path.join(analysis_output_dir, "{}_ISMN_log.txt".format(timestamp))
+icos_analysis_output_dir = os.path.join(analysis_output_root,'{}_ICOS_output'.format(timestamp))
+ismn_analysis_output_dir = os.path.join(analysis_output_root,'{}_ISMN_output'.format(timestamp))
+icos_logfile = os.path.join(icos_analysis_output_dir, "{}_ICOS_log.txt".format(timestamp))
+ismn_logfile = os.path.join(ismn_analysis_output_dir, "{}_ISMN_log.txt".format(timestamp))
 
-# directory that has ICOS in situ data, used to determine which stations to use in analysis
 icos_input_dir = r"..\icos_data"
 icos_files = tools.get_icos_stations(icos_input_dir)
+
+ismn_input_dir = r"..\ismn_data\HOBE_Data_2015-2018"
+
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 datasets_dict = {'ASCAT 12.5 TS':
