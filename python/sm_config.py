@@ -33,7 +33,6 @@ datasets_dict = {'ASCAT 12.5 TS':
     },
     'GLDAS': {
         'ts_dir': r'..\input_data\GLDAS_global_reshuffle',
-        'grid_dir': r'..\input_data\GLDAS_global_reshuffle',
         'sm_field': 'SoilMoi0_10cm_inst'
     }
 }
