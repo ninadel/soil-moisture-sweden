@@ -9,3 +9,4 @@ python/py_test*.py
 *pytesmo_example*
 input_data/
 analysis_output/
+*python_metadata*
