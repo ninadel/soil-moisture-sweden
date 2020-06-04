@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 import pandas
 from ascat import H115Ts
+from gldas.interface import GLDASTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
 
@@ -44,8 +45,7 @@ def get_product_reader(product, product_metadata):
                         static_layer_path=static_layers_dir)
     if product == "GLDAS":
         ts_dir = product_metadata["ts_dir"]
-        grid_dir = product_metadata["grid_dir"]
-        reader = H115Ts(ts_dir, grid_dir)
+        reader = GLDASTs(ts_path=ts_dir)
     if product == "SMAP L4":
         pass
     return reader
@@ -55,14 +55,16 @@ def get_product_data(lon, lat, product, product_metadata, product_reader, filter
     ts = product_reader.read(lon, lat)
     if product == 'ASCAT 12.5 TS':
         data = ts.data
-        print('data pre-filter', data.shape)
         if filter_product:
             data = data.loc[data['ssf'] == 1]
-            data = data.loc[data['frozen_prob'] < 80]
-        print('data post-filter', data.shape)
+    if product == 'GLDAS':
+        data = ts
+        if filter_product:
+            print("No filters for GLDAS")
     if variable == 'sm':
         data = data[product_metadata['sm_field']]
     return data
+
 
 # get data for all network/stations in a dictionary
 def get_metrics(data, xcol, ycol):
