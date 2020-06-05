@@ -8,6 +8,7 @@ import os
 import pandas
 from ascat import H115Ts
 from gldas.interface import GLDASTs
+from smap_io import SMAPTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
 
@@ -46,8 +47,12 @@ def get_product_reader(product, product_metadata):
     if product == "GLDAS":
         ts_dir = product_metadata["ts_dir"]
         reader = GLDASTs(ts_path=ts_dir)
+    if product == "SMAP L3":
+        ts_dir = product_metadata["ts_dir"]
+        reader = SMAPTs(ts_path=ts_dir)
     if product == "SMAP L4":
-        pass
+        ts_dir = product_metadata["ts_dir"]
+        reader = SMAPTs(ts_path=ts_dir)
     return reader
 
 
@@ -61,6 +66,14 @@ def get_product_data(lon, lat, product, product_metadata, product_reader, filter
         data = ts
         if filter_product:
             print("No filters for GLDAS")
+    if product == 'SMAP L3':
+        data = ts
+        if filter_product:
+            print("For now, no filters for SMAP L3")
+    if product == 'SMAP L4':
+        data = ts
+        if filter_product:
+            print("For now, no filters for SMAP L4")
     if variable == 'sm':
         data = data[product_metadata['sm_field']]
     return data
