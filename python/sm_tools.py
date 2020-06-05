@@ -11,6 +11,7 @@ import pandas
 from ascat import H115Ts
 from gldas.interface import GLDASTs
 from icos import ICOSTimeSeries
+from ismn.interface import ISMN_Interface
 from smap_io import SMAPTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
@@ -51,6 +52,18 @@ def get_icos_readers(input_dir):
         reader = ICOSTimeSeries(metadata, data)
         readers.append(reader)
     return readers
+
+
+def get_ismn_readers(input_dir):
+    ismn_readers = []
+    interface = ISMN_Interface(input_dir)
+    for network in interface.list_networks():
+        for stationname in interface.list_stations(network=network):
+            station = interface.get_station(stationname, network=network)
+            if 'soil moisture' in station.variables:
+                ismn_readers.append(station)
+    return ismn_readers
+
 
 def get_product_reader(product, product_metadata):
     if product == "ASCAT 12.5 TS":
@@ -93,6 +106,19 @@ def get_product_data(lon, lat, product, product_metadata, product_reader, filter
     if variable == 'sm':
         data = data[product_metadata['sm_field']]
     return data
+
+
+def get_product_list(products):
+    product_list = []
+    if str(type(products)) == "<class 'dict'>":
+        for product, value in products.items():
+            if value["analyze"]:
+                product_list.append(product)
+    elif str(type(products)) == "<class 'list'>":
+        product_list = products
+    elif str(type(products)) == "<class 'str'>":
+        product_list = [products]
+    return product_list
 
 
 # get data for all network/stations in a dictionary
