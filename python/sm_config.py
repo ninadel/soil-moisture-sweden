@@ -16,9 +16,9 @@ icos_logfile = os.path.join(icos_analysis_output_dir, '{}_ICOS_log.txt'.format(t
 ismn_logfile = os.path.join(ismn_analysis_output_dir, '{}_ISMN_log.txt'.format(timestamp))
 
 icos_input_dir = r'..\icos_data'
-icos_files = tools.get_icos_stations(icos_input_dir)
+icos_files = tools.get_icos_files(icos_input_dir)
 
-ismn_input_dir = r'..\ismn_data\FMI_Data_2015-2018'
+ismn_input_dir = r'..\ismn_data'
 
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
