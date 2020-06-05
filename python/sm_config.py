@@ -18,7 +18,7 @@ ismn_logfile = os.path.join(ismn_analysis_output_dir, '{}_ISMN_log.txt'.format(t
 icos_input_dir = r'..\icos_data'
 icos_files = tools.get_icos_stations(icos_input_dir)
 
-ismn_input_dir = r'C:\git\nordic-insitu-sm-data\HOBE'
+ismn_input_dir = r'..\ismn_data\FMI_Data_2015-2018'
 
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
@@ -33,6 +33,14 @@ datasets_dict = {'ASCAT 12.5 TS':
     'GLDAS': {
         'ts_dir': r'..\input_data\GLDAS_global_reshuffle',
         'sm_field': 'SoilMoi0_10cm_inst'
+    },
+    'SMAP L3': {
+        'ts_dir': r'..\input_data\SPL3SMP-smap-l3-36km_nordic_reshuffle',
+        'sm_field': 'soil_moisture'
+    },
+    'SMAP L4': {
+        'ts_dir': r'..\input_data\SPL4SMAU_nordic_reshuffle',
+        'sm_field': 'sm_surface_analysis'
     }
 }
 
