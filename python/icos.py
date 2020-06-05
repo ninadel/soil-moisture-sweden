@@ -38,9 +38,12 @@ class ICOSTimeSeries(ISMNTimeSeries):
             setattr(self, key, metadata[key])
 
         self.network = "ICOS"
-        self.sensor = "Insert Sensor Here"
+        self.sensor = "Delta-T Theta Probe ML2x"
         self.depth_from = ["0.05"]
         self.depth_to = ["0.05"]
+        self.longitude = metadata["longitude"]
+        self.latitude = metadata["latitude"]
+        self.elevation = metadata["elevation"]
         self.data = data
         self.data.index = pandas.to_datetime(self.data.index)
 
