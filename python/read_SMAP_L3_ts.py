@@ -45,4 +45,6 @@ for dataset, dataset_dict in datasets_dict.items():
 
     print(ts)
     print(ts.columns)
+    ts.to_csv('..\\product_sample_data\\SPL3SMP-reshuffle.csv')
+
 
