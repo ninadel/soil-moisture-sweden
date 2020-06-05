@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario, nina.del@gmail.com
+Date: 5/31/2020
+Script to explore structure of CCI NC files
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4

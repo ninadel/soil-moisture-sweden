@@ -1,3 +1,8 @@
+"""
+Author: Nina del Rosario
+Date: 6/2/2020
+Script for reading SMAP L3 files
+"""
 from smap_io import SPL3SMP_Ds, SPL3SMP_Img
 from datetime import datetime
 import os

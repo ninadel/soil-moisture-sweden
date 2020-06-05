@@ -1,7 +1,7 @@
 """
 Author: Nina del Rosario, nina.del@gmail.com
 Date: 5/26/2020
-Script for analyzing SM datasets
+Script to compare ASCAT 12.5 TS data (H115) to ISMN data
 """
 
 import ismn.interface as ismn
@@ -15,16 +15,17 @@ import os
 import matplotlib.pyplot as plt
 
 # ref_data_folder = r"..\testdata\ismn\multinetwork\header_values"
-ref_data_folder = r"..\in_situ_data\HOBE_Data_2015-2018"
+ref_data_folder = r"..\ismn_data\HOBE_Data_2015-2018"
+print(ref_data_folder)
 
-eval_data_folder = r"..\sm_sample_files\denmark_reshuffle_data\ascat-h113-ts-2018"
+eval_data_folder = r"..\input_data\ascat-h115-ts-2019"
 
 eval_grid_folder = r"..\ascat_ts_aux\warp5_grid"
 
 eval_static_layers_folder = r"..\ascat_ts_aux\static_layer"
 
 # init the eval data reader with the paths
-eval_data_reader = ascat.H113Ts(eval_data_folder, eval_grid_folder,
+eval_data_reader = ascat.H115Ts(eval_data_folder, eval_grid_folder,
                                      grid_filename='TUW_WARP5_grid_info_2_3.nc',
                                      static_layer_path=eval_static_layers_folder)
 
@@ -87,7 +88,7 @@ for station in ISMN_reader.stations_that_measure('soil moisture'):
         
         # continue only with relevant columns
         matched_data = matched_data[[label_eval, label_ref]]
-        
+
         # the plot shows that ISMN and ASCAT are observed in different units
         matched_data.plot(figsize=(15, 5), secondary_y=[label_eval],
                           title='temporally merged data')

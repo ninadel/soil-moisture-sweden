@@ -1,9 +1,16 @@
+"""
+Author: Nina del Rosario
+Date: 6/2/2020
+File to explore reading of ASCAT 12.5 TS (H115 2019)
+"""
+
 import os
 import pandas
 import numpy
 import json
 from ascat.h_saf import H115Ts
 from datetime import datetime
+import sm_config as config
 
 # H25 Metop ASCAT DR2015 SSM 12.5 km sampling
 # H108 Metop ASCAT DR2015 EXT SSM 12.5 km sampling
@@ -22,52 +29,22 @@ from datetime import datetime
 # uncertainty. The soil moisture product has not been pre-filtered, meaning that a masking of invalid measurements
 # (e.g. frozen ground, snow cover) by the user is highly recommended before further processing.
 
-# dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
-datasets_dict = {'ASCAT 12.5 TS' :
-    {
-        'ts_dir': r'..\sm_sample_files\ascat-h115-ts-2019',
-        'grid_dir': r'..\ascat_ts_aux\warp5_grid',
-        'grid_file': 'TUW_WARP5_grid_info_2_3.nc',
-        'static_layers_dir': r'..\ascat_ts_aux\static_layer',
-        'reader_name': 'ascat_12-5_ts',
-        'reader_class': 'H115Ts(ts_dir, grid_dir, grid_filename=grid_file, static_layer_path=static_layers_dir)'
-    }
-}
+print_sample = False
 
-# load networks_dict from external file
-with open('networks_dict.json', 'r') as f:
-    networks_dict = json.load(f)
+ts_reader = H115Ts(cdr_path=config.datasets_dict['ASCAT 12.5 TS']['ts_dir'],
+                   grid_path=config.datasets_dict['ASCAT 12.5 TS']['grid_dir'],
+                   grid_filename=config.datasets_dict['ASCAT 12.5 TS']['grid_file'],
+                   static_layer_path=config.datasets_dict['ASCAT 12.5 TS']['static_layers_dir'])
 
-# print(networks_dict)
+# Degero: 19.556539 64.182029
+ts = ts_reader.read(19.556539, 64.182029)
 
-# test_station = networks_dict['FMI']['SAA111']
-# print(test_station)
-# print(test_station['lon'], test_station['lat'])
-
-for dataset, dataset_dict in datasets_dict.items():
-    dataset_name = dataset
-    print(dataset)
-    # is this optional?
-    static_layers_dir = dataset_dict['static_layers_dir']
-    # update to 2.2?
-    grid_dir = dataset_dict['grid_dir']
-    # update to 2.2?
-    grid_file = dataset_dict['grid_file']
-
-    ts_dir = dataset_dict['ts_dir']
-
-
-    ts_reader = H115Ts
-    ts_reader = eval(dataset_dict['reader_class'])
-
-    # Degero: 19.556539 64.182029
-    ts = ts_reader.read(19.556539, 64.182029)
-
-    print(ts)
-    print(ts.data.columns)
-    print('ts.data', ts.data.shape)
-    print(ts.data['ssf'])
+print(ts)
+print(ts.data.columns)
+print('ts.data', ts.data.shape)
+print(ts.data['ssf'])
+if print_sample:
     ts.data.to_csv('..\\product_sample_data\\H115_sample.csv')
-    # print(ts.data['sm'])
-    # help(ts)
+# print(ts.data['sm'])
+# help(ts)
 

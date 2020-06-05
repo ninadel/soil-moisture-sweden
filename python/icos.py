@@ -1,4 +1,11 @@
+"""
+Author: Nina del Rosario, nina.del@gmail.com
+Date: 5/31/2020
+Class to handle ICOS TS data
+"""
+
 from ismn.readers import ISMNTimeSeries
+import pandas
 
 class ICOSTimeSeries(ISMNTimeSeries):
     """
@@ -35,6 +42,7 @@ class ICOSTimeSeries(ISMNTimeSeries):
         self.depth_from = ["0.05"]
         self.depth_to = ["0.05"]
         self.data = data
+        self.data.index = pandas.to_datetime(self.data.index)
 
     def get_ssm_data(self, qc_values, dropna=True):
         data = self.data
@@ -43,7 +51,7 @@ class ICOSTimeSeries(ISMNTimeSeries):
         data = data.loc[data['qc_ssm'].isin(qc_values)]
         if dropna:
             data.dropna()
-        return data
+        return data['icos_ssm']
 
 # class ISMNTimeSeries(object):
 #     """

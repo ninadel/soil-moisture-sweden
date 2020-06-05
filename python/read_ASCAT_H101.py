@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario
+Date: 6/2/2020
+Script for exploring reading of ASCAT 12.5 H101 product
+"""
+
 from ascat.h_saf import H101img
 from datetime import datetime
 import os

@@ -1,3 +1,8 @@
+"""
+Author: Nina del Rosario
+Date: 6/2/2020
+Script to explore reading SMAP L4 files
+"""
 from smap_extension import SPL4SMP_nc_Ds, SPL4SMP_nc_Img
 from datetime import datetime
 import os

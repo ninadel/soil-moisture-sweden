@@ -24,7 +24,8 @@
 Module for a command line interface to convert the GLDAS data into a
 time series format using the repurpose package
 
-Adapted from: https://github.com/TUW-GEO/gldas/blob/master/gldas/reshuffle.py
+Adapted by Nina del Rosario from: https://github.com/TUW-GEO/gldas/blob/master/gldas/reshuffle.py4
+nina.del@gmail.com
 Works only for NC files
 
 """

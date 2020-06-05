@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario
+Date: 6/2/2020
+Class to read ASCAT H08 (1 km sm-obs-2) product
+"""
+
 from ascat.h_saf import H08img
 from datetime import datetime
 import os

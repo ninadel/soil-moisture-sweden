@@ -25,7 +25,8 @@
 Module for a command line interface to convert the SMAP data into a
 time series format using the repurpose package
 
-Adapted to take SPL3SMP_Ds object as an argument
+Adapted by Nina del Rosario to take SPL3SMP_Ds object as an argument
+nina.del@gmail.com
 '''
 
 import os

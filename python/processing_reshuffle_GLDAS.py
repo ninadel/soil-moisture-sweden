@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario, nina.del@gmail.com
+Date: 5/31/2020
+Script to reshuffle GLDAS data based on repurpose package
+"""
+
 import os
 from datetime import datetime
 from gldas.interface import GLDAS_Noah_v21_025Ds
