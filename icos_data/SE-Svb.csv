@@ -1,4 +1,4 @@
-datetime_utc,icos_ssm,qc_ssm,icos_ts,qc_ts
+datetime_utc,soil moisture,qc_ssm,icos_ts,qc_ts
 2013-12-31 23:30:00,0.4121,3,0.7559999999999999,0
 2014-01-01 00:00:00,0.4121,3,0.755,0
 2014-01-01 00:30:00,0.4121,3,0.755,0
