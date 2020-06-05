@@ -4,10 +4,13 @@ Date: 5/25/2020
 Functions for analyzing soil moisture datasets
 """
 from datetime import datetime
+import json
 import os
 import pandas
+
 from ascat import H115Ts
 from gldas.interface import GLDASTs
+from icos import ICOSTimeSeries
 from smap_io import SMAPTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
@@ -27,7 +30,7 @@ def write_log(filename, string, print_string=True):
         print(string)
 
 
-def get_icos_stations(input_dir):
+def get_icos_files(input_dir):
     data_dict = {}
     for filename in os.listdir(input_dir):
         filename_parts = filename.split(".")
@@ -35,6 +38,19 @@ def get_icos_stations(input_dir):
         data_dict[station] = os.path.join(input_dir, filename)
     return data_dict
 
+
+def get_icos_readers(input_dir):
+    with open('icos_dict.json', 'r') as f:
+        icos_dict = json.load(f)
+    readers = []
+    for filename in os.listdir(input_dir):
+        filename_parts = filename.split(".")
+        station = filename_parts[0]
+        metadata = icos_dict[station]
+        data = pandas.read_csv(os.path.join(input_dir, filename))
+        reader = ICOSTimeSeries(metadata, data)
+        readers.append(reader)
+    return readers
 
 def get_product_reader(product, product_metadata):
     if product == "ASCAT 12.5 TS":
