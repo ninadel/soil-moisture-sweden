@@ -17,13 +17,16 @@ import sm_tools as tools
 # Use datasets_dict.json to change default parameters
 ismn_analyses_dict = {
     "ASCAT 12.5 TS": {
-        "analyze": True,
+        "analyze": False
     },
     "GLDAS": {
+        "analyze": False
+    },
+    "SMAP L3": {
         "analyze": True
     },
     "SMAP L4": {
-        "analyze": False
+        "analyze": True
     }
 }
 
