@@ -34,9 +34,7 @@ class ICOSTimeSeries(ISMNTimeSeries):
         data of the time series
     """
     def __init__(self, metadata, data):
-        for key in metadata:
-            setattr(self, key, metadata[key])
-
+        self.station = metadata["station"]
         self.network = "ICOS"
         self.sensor = "Delta-T Theta Probe ML2x"
         self.depth_from = ["0.05"]
