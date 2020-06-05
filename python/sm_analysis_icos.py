@@ -104,7 +104,7 @@ for product, product_inputs in analysis_queue.items():
                 filename = 'matched_data_{}_{}_scaled_{}.csv'.format(station, product_str, config.timestamp)
                 matched_data.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
             # start future function
-            metrics = tools.get_metrics(matched_data, product_metadata['sm_field'], 'icos_ssm')
+            metrics = tools.get_metrics(matched_data, product_metadata['sm_field'], 'soil moisture')
             bias = metrics[0]
             rmsd = metrics[1]
             ubrmsd = metrics[2]
@@ -130,7 +130,7 @@ for product, product_inputs in analysis_queue.items():
         network_matched_df = pandas.concat([network_matched_df, matched_data])
     # network level analysis
     # start future function
-    metrics = tools.get_metrics(network_matched_df, product_metadata['sm_field'], 'icos_ssm')
+    metrics = tools.get_metrics(network_matched_df, product_metadata['sm_field'], 'soil moisture')
     bias = metrics[0]
     rmsd = metrics[1]
     ubrmsd = metrics[2]
