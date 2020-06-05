@@ -11,11 +11,11 @@ import pandas
 import datetime
 
 # input data
-input_folder = r"C:\git\nordic-insitu-sm-data\ICOS_raw-data\nor_reformatted"
+input_folder = r"C:\git\nordic-insitu-sm-data\ICOS_raw-data"
 output_folder = r"C:\git\soil-moisture-sweden\icos_data"
 
 import_fields = ['date', 'time', 'SWC_1_1_1', 'qc_SWC_1_1_1', 'TS_1_1_1', 'qc_TS_1_1_1']
-target_fields = ['datetime_utc', 'icos_ssm', 'qc_ssm', 'icos_ts', 'qc_ts']
+target_fields = ['datetime_utc', 'soil moisture', 'qc_ssm', 'icos_ts', 'qc_ts']
 
 raw_file_dict = {}
 
@@ -45,7 +45,7 @@ for station in raw_file_dict:
         print(year)
         # open each file as a dataframe, no index, 2 header rows
         file_df = pandas.read_csv(os.path.join(input_folder, file), usecols=import_fields, skiprows=[1])
-        rename_dict = {'SWC_1_1_1': "icos_ssm",
+        rename_dict = {'SWC_1_1_1': "soil moisture",
                        'qc_SWC_1_1_1': 'qc_ssm',
                        'TS_1_1_1': 'icos_ts',
                        'qc_TS_1_1_1': 'qc_ts'}
@@ -55,8 +55,8 @@ for station in raw_file_dict:
         file_df['datetime_cet'] = file_df['datetime_cet'].apply(pandas.to_datetime)
         file_df['datetime_utc'] = file_df['datetime_cet'] - datetime.timedelta(hours=1)
         # convert % to decimals
-        file_df['icos_ssm'] = file_df['icos_ssm'] / 100
-        temp_df = file_df[['datetime_utc', 'icos_ssm', 'qc_ssm', 'icos_ts', 'qc_ts']]
+        file_df['soil moisture'] = file_df['soil moisture'] / 100
+        temp_df = file_df[['datetime_utc', 'soil moisture', 'qc_ssm', 'icos_ts', 'qc_ts']]
         station_df = pandas.concat([station_df, temp_df])
     station_df = station_df.set_index('datetime_utc')
     print(station, station_df.shape)
