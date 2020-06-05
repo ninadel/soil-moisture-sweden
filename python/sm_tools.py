@@ -48,7 +48,7 @@ def get_icos_readers(input_dir):
         filename_parts = filename.split(".")
         station = filename_parts[0]
         metadata = icos_dict[station]
-        data = pandas.read_csv(os.path.join(input_dir, filename))
+        data = pandas.read_csv(os.path.join(input_dir, filename), index_col=0)
         reader = ICOSTimeSeries(metadata, data)
         readers.append(reader)
     return readers
@@ -57,11 +57,15 @@ def get_icos_readers(input_dir):
 def get_ismn_readers(input_dir):
     ismn_readers = []
     interface = ISMN_Interface(input_dir)
-    for network in interface.list_networks():
-        for stationname in interface.list_stations(network=network):
-            station = interface.get_station(stationname, network=network)
-            if 'soil moisture' in station.variables:
-                ismn_readers.append(station)
+    for station_object in interface.stations_that_measure('soil moisture'):
+        for ISMN_time_series in station_object.data_for_variable('soil moisture', min_depth=0, max_depth=0.1):
+            ismn_readers.append(ISMN_time_series)
+    # for network in interface.list_networks():
+    #     for stationname in interface.list_stations(network=network):
+    #         station = interface.get_station(stationname, network=network)
+    #         if 'soil moisture' in station.variables:
+    #             ismn_readers.append(station)
+    print(len(ismn_readers))
     return ismn_readers
 
 
