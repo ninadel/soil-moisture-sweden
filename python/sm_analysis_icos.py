@@ -17,10 +17,13 @@ import sm_tools as tools
 # Use datasets_dict.json to change default parameters
 icos_analyses_dict = {
     "ASCAT 12.5 TS": {
-        "analyze": True,
+        "analyze": True
     },
     "GLDAS": {
-        "analyze": True
+        "analyze": False
+    },
+    "SMAP L3": {
+        "analyze": False
     },
     "SMAP L4": {
         "analyze": False
@@ -28,7 +31,7 @@ icos_analyses_dict = {
 }
 
 # switch to filter icos or product data
-filter_icos = True
+filter_icos = False
 filter_product = True
 
 metrics_df_columns = ['timestamp', 'network', 'station', 'temp_scope', 'icos_data_scope', 'product',
@@ -84,13 +87,17 @@ for product, product_inputs in analysis_queue.items():
         product_data = product_data.loc[analysis_startdate:analysis_enddate]
         tools.write_log(config.icos_logfile, 'product_data.shape after date filter {}'.format(product_data.shape))
         # tools.write_log(config.icos_logfile, 'product_data.columns', product_data.columns)
-        if station_ssm_data.shape[0] > 10:
+        try:
             matched_data = temporal_matching.matching(product_data, station_ssm_data, window=1/24.)
             tools.write_log(config.icos_logfile, 'matched_data.shape {}'.format(matched_data.shape))
             filename = 'matched_data_{}_{}_{}.csv'.format(station, product_str, config.timestamp)
             matched_data.to_csv(os.path.join(config.icos_analysis_output_dir, filename), sep=",")
             # for now, not sure if only % products are scaled
             matched_rows = matched_data.shape[0]
+            # if matched_rows < 10:
+            #     tools.write_log(config.icos_logfile, station)
+            #     tools.write_log(config.icos_logfile, '{} matched rows. metrics not computed for station.'.format(matched_rows))
+            #     tools.write_log(config.icos_logfile, "---")
             # scaling causing errors, hold off for now
             if product == 'ASCAT 12.5 TS':
                 matched_data = scaling.scale(matched_data, method='lin_cdf_match', reference_index=1)
@@ -115,12 +122,9 @@ for product, product_inputs in analysis_queue.items():
                                                     product_str, product_data_scope, matched_rows, bias, rmsd, ubrmsd,
                                                     pearsonr, pearsonr_p]], columns=metrics_df_columns)
             metrics_df = pandas.concat([metrics_df, station_metrics_df])
-            # end future function
-        else:
-            tools.write_log(config.icos_logfile, station)
-            tools.write_log(config.icos_logfile, '{} matched rows. metrics not computed for station.'.format(matched_rows))
-            tools.write_log(config.icos_logfile, "---")
-            break
+        except:
+            tools.write_log(config.icos_logfile, "can't match")
+        # end future function
         filename = 'matched_data_ICOS_{}_{}_{}_{}_{}.csv'.format(station, icos_data_scope, product_str,
                                                                  product_data_scope, config.timestamp)
         network_matched_df = pandas.concat([network_matched_df, matched_data])
