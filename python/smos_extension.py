@@ -12,7 +12,7 @@ from pynetcf.time_series import GriddedNcOrthoMultiTs
 from datetime import timedelta
 from netCDF4 import Dataset
 from pygeogrids.netcdf import load_grid
-from grid import EASE01CellGrid
+from grid import smoc_bec_grid, EASE01CellGrid
 
 
 class SMOSBECImg(ImageBase):
@@ -143,7 +143,7 @@ class SMOSBECImg(ImageBase):
         '''
 
         if self.grid is None:
-            self.grid = EASE01CellGrid()
+            self.grid = smoc_bec_grid()
         try:
             return_img, return_metadata = self.read_img()
         except IOError:
