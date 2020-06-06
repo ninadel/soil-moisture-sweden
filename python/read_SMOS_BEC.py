@@ -16,8 +16,8 @@ file_path = r'..\sm_sample_files\smos-bec-01km\ASC\BEC_SM____SMOS__EUM_L4__A_201
 # def __init__(self, filename, mode='r', parameters='SM', flatten=False,
 #                  grid=None, read_flags=(0,1)):
 image_reader = SMOSBECImg(file_path)
-
-image = image_reader.read()
+#
+# image = image_reader.read()
 
 # trying to read multiple images
 # def __init__(self, data_path, parameters='SM', flatten=False,
