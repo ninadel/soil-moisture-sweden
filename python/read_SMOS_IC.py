@@ -1,7 +1,7 @@
 """
 Author: Nina del Rosario
 Date: 6/2/2020
-Script to explore reading SMAP L4 files
+Script to explore reading SMOS IC files
 """
 from smos.smos_ic.interface import SMOSImg, SMOSDs
 from datetime import datetime
@@ -23,12 +23,6 @@ image = image_reader.read()
 #                  grid=None, filename_templ=None, read_flags=(0,1)):
 imagegroup_reader = SMOSDs(data_path, parameters=['Soil_Moisture'])
 imagegroup_reader.read_bulk = True
-
-# NOTE: have to suppress subpath_templ to read files that are all in one directory
-# imagegroup_reader.subpath_templ = []
-
-# timestamps = smap_reader.tstamps_for_daterange(datetime(2018, 6, 1), datetime(2018, 6, 30))
-# print(timestamps)
 
 print(image.data['Soil_Moisture'].shape)
 

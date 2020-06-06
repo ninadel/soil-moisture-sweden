@@ -5,7 +5,6 @@ Script to reshuffle SMOS IO data based on repurpose package
 """
 import os
 from smos.smos_ic import reshuffle
-# from smap_io import reshuffle
 import os
 from datetime import datetime
 from smos.smos_ic.interface import SMOSDs, SMOSTs
@@ -14,8 +13,8 @@ from smos.smos_ic.reshuffle import reshuffle
 run_reshuffle = True
 test_reshuffle = True
 
-input_root = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\smos-ic-l3-25km_global\ASC'
-outputpath = r'C:\Nina_PCTower_Share\PCTower_SM\smos-ic-l3-25km_global_reshuffle\ASC'
+input_root = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\smos-ic-l3-25km_global\DES'
+outputpath = r'C:\Nina_PCTower_Share\PCTower_SM\smos-ic-l3-25km_global_reshuffle\DES'
 startdate = datetime(2015, 1, 1, 0, 0, 0)
 enddate = datetime(2018, 12, 31, 23, 59, 59)
 parameters = ['Soil_Moisture', 'Soil_Moisture_StdError', 'Quality_Flag', 'UTC_Seconds']
