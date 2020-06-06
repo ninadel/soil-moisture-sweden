@@ -7,25 +7,28 @@ from esa_cci_sm.interface import CCI_SM_025Img, CCI_SM_025Ds
 from datetime import datetime
 import os
 
-data_path = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\smos-ic-l3-25km_global\ASC'
+data_path = r'..\sm_sample_files\cci-0.25deg_global'
 os.listdir(data_path)
+sm_field = 'sm'
 
 # trying to read a single image
-# def __init__(self, filename, mode='r', parameters='Soil_Moisture', flatten=False, grid=None, read_flags=(0,1))
-file_path = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\smos-ic-l3-25km_global\ASC\2018\SM_RE06_MIR_CDF3SA_20180601T000000_20180601T235959_105_001_8.DBL.nc"
-image_reader = SMOSImg(file_path)
+# def __init__(self, filename, mode='r', parameter=None, subgrid=None,
+#                  array_1D=False)
+file_path = os.path.join(data_path, 'ESACCI-SOILMOISTURE-L3S-SSMV-COMBINED-20180601000000-fv04.7.nc')
+image_reader = CCI_SM_025Img(file_path)
 
-print(image_reader.keys())
-image = image_reader.read()
+# print(image_reader.keys())
+image1 = image_reader.read()
+print(image1.data[sm_field].shape)
 
 # trying to read multiple images
-# def __init__(self, data_path, parameters='Soil_Moisture', flatten=False,
-#                  grid=None, filename_templ=None, read_flags=(0,1)):
-imagegroup_reader = SMOSDs(data_path, parameters=['Soil_Moisture'])
+# def __init__(self, data_path, parameter=None, subgrid=None, array_1D=False):
+imagegroup_reader = CCI_SM_025Ds(data_path, parameter=[sm_field])
 imagegroup_reader.read_bulk = True
 
-print(image.data['Soil_Moisture'].shape)
+# NOTE: have to suppress subpath_templ to read files that are all in one directory
+imagegroup_reader.subpath_templ = []
 
-smos_image = imagegroup_reader.read(datetime(2018, 6, 3))
-print(smos_image.data.head())
-print(smos_image.data['Soil_Moisture'].shape)
+image2 = imagegroup_reader.read(datetime(2018, 6, 3))
+print(image2.data)
+print(image2.data[sm_field].shape)
