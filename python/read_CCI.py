@@ -23,7 +23,7 @@ print(image1.data[sm_field].shape)
 
 # trying to read multiple images
 # def __init__(self, data_path, parameter=None, subgrid=None, array_1D=False):
-imagegroup_reader = CCI_SM_025Ds(data_path, parameter=[sm_field])
+imagegroup_reader = CCI_SM_025Ds(data_path, parameter=[sm_field, 'sm_uncertainty'])
 imagegroup_reader.read_bulk = True
 
 # NOTE: have to suppress subpath_templ to read files that are all in one directory
@@ -31,4 +31,5 @@ imagegroup_reader.subpath_templ = []
 
 image2 = imagegroup_reader.read(datetime(2018, 6, 3))
 print(image2.data)
+print(image2.data.keys())
 print(image2.data[sm_field].shape)
