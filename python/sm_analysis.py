@@ -41,33 +41,43 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
                 enddate and each timeframe
     """""
     log_file, metrics_file, data_output_folder = tools.create_output_dir(output_folder)
-    metrics_df = pandas.DataFrame()
+    metrics_df = pandas.DataFrame(columns=config.metrics_df_columns)
     product_list = tools.get_product_list(products)
     for product in product_list:
         product_str = product.replace(' ', '-')
         product_reader = tools.get_product_reader(product, config.datasets_dict[product])
         product_sm_col = config.datasets_dict[product]['sm_field']
         for ref_loc in references:
-            tools.write_log(config.logfile, "analyzing {} x {}".format(product, ref_loc.station))
+            tools.write_log(log_file, "analyzing {} x {} {}".format(product, ref_loc.network, ref_loc.station))
             ref_data = tools.get_ref_data(ref_loc)[0]
-            print(ref_data.size)
+            ref_data.to_csv(os.path.join(data_output_folder, 'ref_data_{}_{}.csv'.format(ref_loc.network,
+                                                                                         ref_loc.station)))
+            tools.write_log(log_file, 'ref_data.shape: {}'.format(ref_data.shape))
             ref_sm_col = tools.get_ref_data(ref_loc)[1]
             product_data = tools.get_product_data(lon=ref_loc.longitude, lat=ref_loc.latitude, product=product,
                                                   reader=product_reader, filter_prod=filter_prod)
-            print(product_data.size)
+            product_data.to_csv(os.path.join(data_output_folder, '{}_data_{}_{}.csv'.format(product_str,
+                                                                                            ref_loc.network,
+                                                                                            ref_loc.station)))
+            tools.write_log(log_file, 'product_data.shape: {}'.format(product_data.shape))
             product_data = product_data.loc[startdate:enddate]
             matched_data = temporal_matching.matching(product_data, ref_data, window=1/24.)
-            print('matched_data.size', matched_data.size)
-            print(matched_data)
+            matched_data.to_csv(os.path.join(data_output_folder, 'matched_data_{}_{}_{}.csv'.format(product_str,
+                                                                                                    ref_loc.network,
+                                                                                                    ref_loc.station)))
+            tools.write_log(log_file, 'matched_data.shape: {}'.format(matched_data.shape))
             # insert scaling conditional here
             metric_values = tools.get_metrics(matched_data, product_sm_col, ref_sm_col, anomaly)
             n = matched_data.shape[0]
             station_metrics_df = pandas.DataFrame([[ref_loc.network, ref_loc.station, filter_ref, product_str,
                                                     filter_prod, timeframe, anomaly, n] + metric_values],
-                                                  columns=metrics_df_columns)
-            tools.write_log(config.logfile, str(station_metrics_df))
+                                                  columns=config.metrics_df_columns)
+            tools.write_log(log_file, str(station_metrics_df))
             metrics_df = pandas.concat([metrics_df, station_metrics_df])
-    metrics_df.to_csv(os.path.join(output_folder))
+            metrics_df.reset_index(drop=True, inplace=True)
+            tools.write_log(log_file, '{} x {} {} analysis complete'.format(product, ref_loc.network, ref_loc.station))
+            tools.write_log(log_file, '')
+    metrics_df.to_csv(metrics_file, sep=',')
     return metrics_df
 
 
@@ -79,12 +89,12 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
 # Dictionary to set analyses to perform
 analyses_dict = {
     "ASCAT 12.5 TS": True,
-    "GLDAS": False,
-    "SMAP L3": False,
-    "SMAP L4": False
+    "GLDAS": True,
+    "SMAP L3": True,
+    "SMAP L4": True
 }
 
-analysis_output_folder = config.analysis_output_dir
+analysis_output_folder = r"../analysis_output"
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
 ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 reference_list = icos_readers + ismn_readers
@@ -93,8 +103,8 @@ reference_list = icos_readers + ismn_readers
 # def evaluate(references, products, startdate, enddate, output_folder, filter_ref=False, filter_prod=True,
 #              export_ts=True, timeframe=None, anomaly=False):
 
-evaluation_results = evaluate(reference_list, analyses_dict, startdate=datetime(2015, 4, 1),
+evaluation_results = evaluate(icos_readers, analyses_dict, startdate=datetime(2015, 4, 1),
                               enddate=datetime(2018, 12, 31, 23, 59), output_folder=analysis_output_folder)
 
 # evaluation_results.to_csv('metrics_{}'.format(config.timestamp))
-print(evaluation_results)
+# print(evaluation_results)

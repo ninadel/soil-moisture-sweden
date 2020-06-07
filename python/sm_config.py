@@ -5,23 +5,12 @@ Configuration settings for sm analysis
 '''
 from datetime import datetime
 import json
-import os
-
-#timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-analysis_output_root = r'..\analysis_output'
-# icos_analysis_output_dir = os.path.join(analysis_output_root,'{}_ICOS_output'.format(timestamp))
-# ismn_analysis_output_dir = os.path.join(analysis_output_root,'{}_ISMN_output'.format(timestamp))
-# icos_logfile = os.path.join(icos_analysis_output_dir, '{}_ICOS_log.txt'.format(timestamp))
-# ismn_logfile = os.path.join(ismn_analysis_output_dir, '{}_ISMN_log.txt'.format(timestamp))
-analysis_output_dir = os.path.join(analysis_output_root,'{}_analysis_output'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
-logfile = os.path.join(analysis_output_dir, 'analysis_log.txt')
 
 icos_input_dir = r'..\icos_data'
-# icos_files = tools.get_icos_files(icos_input_dir)
-
 ismn_input_dir = r'..\ismn_data\HOBE_Data_2015-2018'
 
+metrics_df_columns = ['network', 'station', 'ref_filtered', 'product', 'product_filtered', 'timeframe', 'anomaly', 'n',
+                      'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p']
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 datasets_dict = {'ASCAT 12.5 TS':
@@ -52,9 +41,9 @@ with open('timeframes_dict.json', 'r') as f:
     timeframes_dict = json.load(f)
 
 # dictionary which defines timeframes to analyze
-with open('icos_dict.json', 'r') as f:
-    icos_dict = json.load(f)
-
-# load networks_dict from external file
-with open('networks_dict.json', 'r') as f:
-    networks_dict = json.load(f)
+# with open('icos_dict.json', 'r') as f:
+#     icos_dict = json.load(f)
+#
+# # load networks_dict from external file
+# with open('networks_dict.json', 'r') as f:
+#     networks_dict = json.load(f)
