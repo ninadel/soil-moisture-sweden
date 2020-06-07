@@ -60,6 +60,7 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
             product_data.to_csv(os.path.join(data_output_folder, '{}_data_{}_{}.csv'.format(product_str,
                                                                                             ref_loc.network,
                                                                                             ref_loc.station)))
+            product_data.rename('product_sm', inplace=True)
             tools.write_log(log_file, 'product_data.shape: {}'.format(product_data.shape))
             product_data = product_data.loc[startdate:enddate]
             tools.write_log(log_file, 'product_data.shape (with date filter): {}'.format(product_data.shape))
@@ -69,7 +70,7 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
                                                                                                     ref_loc.station)))
             tools.write_log(log_file, 'matched_data.shape: {}'.format(matched_data.shape))
             # insert scaling conditional here
-            metric_values = tools.get_metrics(matched_data, product_sm_col, 'ref_sm', anomaly)
+            metric_values = tools.get_metrics(matched_data, 'product_sm', 'ref_sm', anomaly)
             n = matched_data.shape[0]
             station_metrics_df = pandas.DataFrame([[ref_loc.network, ref_loc.station, filter_ref, product_str,
                                                     filter_prod, timeframe, anomaly, n] + metric_values],
@@ -103,7 +104,7 @@ ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 reference_list = icos_readers + ismn_readers
 
 # for first argument, use icos_readers, ismn_readers, or reference_list
-evaluation_results = evaluate(icos_readers, analyses_dict, startdate=datetime(2015, 4, 1),
+evaluation_results = evaluate(reference_list, analyses_dict, startdate=datetime(2015, 4, 1),
                               enddate=datetime(2018, 12, 31, 23, 59), output_folder=analysis_output_folder)
 
 print(evaluation_results)
