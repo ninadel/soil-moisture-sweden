@@ -12,7 +12,7 @@ import datetime
 
 # input data
 input_folder = r"C:\git\nordic-insitu-sm-data\ICOS_raw-data"
-output_folder = r"C:\git\soil-moisture-sweden\icos_data"
+output_folder = r"..\icos_data"
 
 import_fields = ['date', 'time', 'SWC_1_1_1', 'qc_SWC_1_1_1', 'TS_1_1_1', 'qc_TS_1_1_1']
 target_fields = ['datetime_utc', 'soil moisture', 'qc_ssm', 'icos_ts', 'qc_ts']
