@@ -14,7 +14,7 @@ from smap_io import SMAPTs
 reshuffle = True
 test_reshuffle = False
 
-input_root = r"C:\git\soil-moisture-sweden\test_input_data"
+input_root = r"..\test_input_data"
 outputpath = r"C:\Nina_PCTower_Share\PCTower_SM\SMAPL4_nordic_reshuffle"
 startdate = datetime(2015, 4, 1, 0, 0, 0)
 enddate = datetime(2018, 12, 31, 23, 59, 59)
