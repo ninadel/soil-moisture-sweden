@@ -3,20 +3,22 @@ Author: Nina del Rosario
 Date: 6/2/2020
 Configuration settings for sm analysis
 '''
+from datetime import datetime
 import json
 import os
-import sm_tools as tools
 
-timestamp = tools.get_timestamp()
+#timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 analysis_output_root = r'..\analysis_output'
-icos_analysis_output_dir = os.path.join(analysis_output_root,'{}_ICOS_output'.format(timestamp))
-ismn_analysis_output_dir = os.path.join(analysis_output_root,'{}_ISMN_output'.format(timestamp))
-icos_logfile = os.path.join(icos_analysis_output_dir, '{}_ICOS_log.txt'.format(timestamp))
-ismn_logfile = os.path.join(ismn_analysis_output_dir, '{}_ISMN_log.txt'.format(timestamp))
+# icos_analysis_output_dir = os.path.join(analysis_output_root,'{}_ICOS_output'.format(timestamp))
+# ismn_analysis_output_dir = os.path.join(analysis_output_root,'{}_ISMN_output'.format(timestamp))
+# icos_logfile = os.path.join(icos_analysis_output_dir, '{}_ICOS_log.txt'.format(timestamp))
+# ismn_logfile = os.path.join(ismn_analysis_output_dir, '{}_ISMN_log.txt'.format(timestamp))
+analysis_output_dir = os.path.join(analysis_output_root,'{}_analysis_output'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+logfile = os.path.join(analysis_output_dir, 'analysis_log.txt')
 
 icos_input_dir = r'..\icos_data'
-icos_files = tools.get_icos_files(icos_input_dir)
+# icos_files = tools.get_icos_files(icos_input_dir)
 
 ismn_input_dir = r'..\ismn_data\HOBE_Data_2015-2018'
 

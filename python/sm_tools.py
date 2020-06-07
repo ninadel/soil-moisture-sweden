@@ -15,13 +15,7 @@ from ismn.interface import ISMN_Interface
 from smap_io import SMAPTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
-
-
-def get_timestamp():
-    # Converting datetime object to string
-    timestamp = datetime.now()
-    timestamp_str = timestamp.strftime("%Y%m%d_%H%M%S")
-    return timestamp_str
+import sm_config as config
 
 
 def write_log(filename, string, print_string=True):
@@ -29,6 +23,18 @@ def write_log(filename, string, print_string=True):
         logfile.write(string + '\n')
     if print_string:
         print(string)
+
+
+def create_output_dir(output_folder):
+    analysis_results_folder = os.path.join(output_folder, '{}_analysis'.format(datetime.now().
+                                                                               strftime("%Y%m%d_%H%M%S")))
+    os.makedirs(analysis_results_folder)
+    data_output_folder = os.path.join(analysis_results_folder, 'data_output')
+    os.mkdir(data_output_folder)
+    log_file = os.path.join(analysis_results_folder, 'analysis_log.txt')
+    metrics_file = os.path.join(analysis_results_folder, 'analysis_metrics.csv')
+    return log_file, metrics_file, data_output_folder
+    # MOVE to config later
 
 
 def get_icos_files(input_dir):
@@ -60,13 +66,20 @@ def get_ismn_readers(input_dir):
     for station_object in interface.stations_that_measure('soil moisture'):
         for ISMN_time_series in station_object.data_for_variable('soil moisture', min_depth=0, max_depth=0.1):
             ismn_readers.append(ISMN_time_series)
-    # for network in interface.list_networks():
-    #     for stationname in interface.list_stations(network=network):
-    #         station = interface.get_station(stationname, network=network)
-    #         if 'soil moisture' in station.variables:
-    #             ismn_readers.append(station)
-    print(len(ismn_readers))
     return ismn_readers
+
+
+def get_product_list(products):
+    product_list = []
+    if str(type(products)) == "<class 'dict'>":
+        for product, analyze in products.items():
+            if analyze:
+                product_list.append(product)
+    elif str(type(products)) == "<class 'list'>":
+        product_list = products
+    elif str(type(products)) == "<class 'str'>":
+        product_list = [products]
+    return product_list
 
 
 def get_product_reader(product, product_metadata):
@@ -89,55 +102,71 @@ def get_product_reader(product, product_metadata):
     return reader
 
 
-def get_product_data(lon, lat, product, product_metadata, product_reader, filter_product=True, variable='sm'):
-    ts = product_reader.read(lon, lat)
+def get_ref_data(ts, filter_ref=False):
+    if str(type(ts)) == "<class 'icos.ICOSTimeSeries'>":
+        ref_data = ts.data
+        if filter_ref:
+            ref_data = ref_data.loc[ref_data['qc_ssm'] == 0]
+        sm_field = 'soil moisture'
+        sm_data = ref_data[sm_field]
+        sm_data.dropna()
+        return sm_data, sm_field
+    elif str(type(ts)) == "<class 'ismn.readers.ISMNTimeSeries'>":
+        ref_data = ts.data
+        sm_field = 'soil moisture'
+        sm_data = ref_data[sm_field]
+        sm_data.dropna()
+        return sm_data, sm_field
+
+
+def get_product_data(lon, lat, product, reader, filter_prod=True):
+    ts = reader.read(lon, lat)
     if product == 'ASCAT 12.5 TS':
         data = ts.data
-        if filter_product:
+        if filter_prod:
             data = data.loc[data['ssf'] == 1]
     if product == 'GLDAS':
         data = ts
-        if filter_product:
+        if filter_prod:
             print("No filters for GLDAS")
     if product == 'SMAP L3':
         data = ts
-        if filter_product:
+        if filter_prod:
             print("For now, no filters for SMAP L3")
     if product == 'SMAP L4':
         data = ts
-        if filter_product:
+        if filter_prod:
             print("For now, no filters for SMAP L4")
-    if variable == 'sm':
-        data = data[product_metadata['sm_field']]
-    return data
-
-
-def get_product_list(products):
-    product_list = []
-    if str(type(products)) == "<class 'dict'>":
-        for product, value in products.items():
-            if value["analyze"]:
-                product_list.append(product)
-    elif str(type(products)) == "<class 'list'>":
-        product_list = products
-    elif str(type(products)) == "<class 'str'>":
-        product_list = [products]
-    return product_list
+    product_metadata = config.datasets_dict[product]
+    sm = data[product_metadata['sm_field']]
+    return sm
 
 
 # get data for all network/stations in a dictionary
-def get_metrics(data, xcol, ycol):
+def get_metrics(data, xcol, ycol, anomaly=False):
     """""
     data: temporally matched dataset
     metrics: list of metrics to calculate on matched dataset
         default: 'pearsonr', 'bias', 'rmsd', 'ubrmsd'
     """""
-    x, y = data[xcol].values, data[ycol].values
-    bias = metrics.bias(x, y)
-    rmsd = metrics.rmsd(x, y)
-    ubrmsd = metrics.ubrmsd(x, y)
-    pearsonr = metrics.pearsonr(x, y)[0]
-    pearsonr_p = metrics.pearsonr(x, y)[1]
+    if data.shape[0] == 0:
+        bias = None
+        rmsd = None
+        ubrmsd = None
+        pearsonr = None
+        pearsonr_p = None
+    else:
+        x, y = data[xcol].values, data[ycol].values
+        pearsonr = metrics.pearsonr(x, y)[0]
+        pearsonr_p = metrics.pearsonr(x, y)[1]
+        if not anomaly:
+            bias = metrics.bias(x, y)
+            rmsd = metrics.rmsd(x, y)
+            ubrmsd = metrics.ubrmsd(x, y)
+        else:
+            bias = None
+            rmsd = None
+            ubrmsd = None
     return [bias, rmsd, ubrmsd, pearsonr, pearsonr_p]
 
 

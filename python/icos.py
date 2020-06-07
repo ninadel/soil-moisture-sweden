@@ -45,15 +45,6 @@ class ICOSTimeSeries(ISMNTimeSeries):
         self.data = data
         self.data.index = pandas.to_datetime(self.data.index)
 
-    def get_ssm_data(self, qc_values, dropna=True):
-        data = self.data
-        if type(qc_values) != list:
-            qc_values = [qc_values]
-        data = data.loc[data['qc_ssm'].isin(qc_values)]
-        if dropna:
-            data.dropna()
-        return data['icos_ssm']
-
 # class ISMNTimeSeries(object):
 #     """
 #     class that contains a time series of ISMN data read from one text file
