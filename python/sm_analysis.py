@@ -48,12 +48,13 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
         product_reader = tools.get_product_reader(product, config.datasets_dict[product])
         product_sm_col = config.datasets_dict[product]['sm_field']
         for ref_loc in references:
-            tools.write_log(log_file, "analyzing {} x {} {}".format(product, ref_loc.network, ref_loc.station))
+            tools.write_log(log_file, "*** analyzing {} x {} {} ***".format(product, ref_loc.network, ref_loc.station))
             ref_data = tools.get_ref_data(ref_loc)[0]
             ref_data.to_csv(os.path.join(data_output_folder, 'ref_data_{}_{}.csv'.format(ref_loc.network,
                                                                                          ref_loc.station)))
             tools.write_log(log_file, 'ref_data.shape: {}'.format(ref_data.shape))
             ref_sm_col = tools.get_ref_data(ref_loc)[1]
+            ref_data.rename('ref_sm', inplace=True)
             product_data = tools.get_product_data(lon=ref_loc.longitude, lat=ref_loc.latitude, product=product,
                                                   reader=product_reader, filter_prod=filter_prod)
             product_data.to_csv(os.path.join(data_output_folder, '{}_data_{}_{}.csv'.format(product_str,
@@ -61,13 +62,14 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
                                                                                             ref_loc.station)))
             tools.write_log(log_file, 'product_data.shape: {}'.format(product_data.shape))
             product_data = product_data.loc[startdate:enddate]
+            tools.write_log(log_file, 'product_data.shape (with date filter): {}'.format(product_data.shape))
             matched_data = temporal_matching.matching(product_data, ref_data, window=1/24.)
             matched_data.to_csv(os.path.join(data_output_folder, 'matched_data_{}_{}_{}.csv'.format(product_str,
                                                                                                     ref_loc.network,
                                                                                                     ref_loc.station)))
             tools.write_log(log_file, 'matched_data.shape: {}'.format(matched_data.shape))
             # insert scaling conditional here
-            metric_values = tools.get_metrics(matched_data, product_sm_col, ref_sm_col, anomaly)
+            metric_values = tools.get_metrics(matched_data, product_sm_col, 'ref_sm', anomaly)
             n = matched_data.shape[0]
             station_metrics_df = pandas.DataFrame([[ref_loc.network, ref_loc.station, filter_ref, product_str,
                                                     filter_prod, timeframe, anomaly, n] + metric_values],
@@ -86,7 +88,7 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
     # GLDAS: one big network, prefix existing networks e.g. ICOS_Degero
 
 
-# Dictionary to set analyses to perform
+# Dictionary which turns on/off product analyses
 analyses_dict = {
     "ASCAT 12.5 TS": True,
     "GLDAS": True,
@@ -97,14 +99,11 @@ analyses_dict = {
 analysis_output_folder = r"../analysis_output"
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
 ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
+# use this as a parameter below if you want to analyze both ICOS and ISMN
 reference_list = icos_readers + ismn_readers
 
-# help(ismn_readers[0])
-# def evaluate(references, products, startdate, enddate, output_folder, filter_ref=False, filter_prod=True,
-#              export_ts=True, timeframe=None, anomaly=False):
-
+# for first argument, use icos_readers, ismn_readers, or reference_list
 evaluation_results = evaluate(icos_readers, analyses_dict, startdate=datetime(2015, 4, 1),
                               enddate=datetime(2018, 12, 31, 23, 59), output_folder=analysis_output_folder)
 
-# evaluation_results.to_csv('metrics_{}'.format(config.timestamp))
-# print(evaluation_results)
+print(evaluation_results)

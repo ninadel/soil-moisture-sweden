@@ -7,7 +7,7 @@ from datetime import datetime
 import json
 
 icos_input_dir = r'..\icos_data'
-ismn_input_dir = r'..\ismn_data\HOBE_Data_2015-2018'
+ismn_input_dir = r'..\ismn_data'
 
 metrics_df_columns = ['network', 'station', 'ref_filtered', 'product', 'product_filtered', 'timeframe', 'anomaly', 'n',
                       'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p']
