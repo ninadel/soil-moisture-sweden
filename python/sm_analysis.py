@@ -46,7 +46,7 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
     for product in product_list:
         product_str = product.replace(' ', '-')
         product_reader = tools.get_product_reader(product, config.datasets_dict[product])
-        product_sm_col = config.datasets_dict[product]['sm_field']
+        product_sm_col = config.product_fields_dict[product]['sm_field']
         for ref_loc in references:
             tools.write_log(log_file, "*** analyzing {} x {} {} ***".format(product, ref_loc.network, ref_loc.station))
             ref_data = tools.get_ref_data(ref_loc)[0]
@@ -104,7 +104,7 @@ ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 reference_list = icos_readers + ismn_readers
 
 # for first argument, use icos_readers, ismn_readers, or reference_list
-evaluation_results = evaluate(reference_list, analyses_dict, startdate=datetime(2015, 4, 1),
+evaluation_results = evaluate(icos_readers, analyses_dict, startdate=datetime(2015, 4, 1),
                               enddate=datetime(2018, 12, 31, 23, 59), output_folder=analysis_output_folder)
 
 print(evaluation_results)

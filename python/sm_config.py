@@ -15,67 +15,37 @@ metrics_df_columns = ['network', 'station', 'ref_filtered', 'product', 'product_
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 datasets_dict = {
     'ASCAT H08': {
-        'ts_dir': None,
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': None
+        'ts_dir': None
     },
     'ASCAT 12.5 TS': {
         'ts_dir': r'..\input_data\ascat-h115-ts-2019',
         'grid_dir': r'..\ascat_ts_aux\warp5_grid',
         'grid_file': 'TUW_WARP5_grid_info_2_3.nc',
-        'static_layers_dir': None,
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': 'sm'
+        'static_layers_dir': None
     },
     'CCI': {
-        'ts_dir': None,
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': None
+        'ts_dir': None
     },
     'GLDAS': {
         'ts_dir': r'..\input_data\GLDAS_global_reshuffle',
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': 'SoilMoi0_10cm_inst'
     },
     'SMAP L3': {
-        'ts_dir': r'..\input_data\SPL3SMP-smap-l3-36km_nordic_reshuffle',
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': 'soil_moisture'
+        'ts_dir': r'..\input_data\SPL3SMP-smap-l3-36km_nordic_reshuffle'
     },
     'SMAP L3 Enhanced': {
-        'ts_dir': None,
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': None
+        'ts_dir': None
     },
     'SMAP L4': {
-        'ts_dir': r'..\input_data\SPL4SMAU_nordic_reshuffle',
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': 'sm_surface_analysis'
+        'ts_dir': r'..\input_data\SPL4SMAU_nordic_reshuffle'
     },
     'Sentinel-1': {
-        'ts_dir': None,
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': None
+        'ts_dir': None
     },
     'SMOS BEC': {
-        'ts_dir': None,
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': None
+        'ts_dir': None
     },
     'SMOS IC': {
-        'ts_dir': None,
-        'lon_field': None,
-        'lat_field': None,
-        'sm_field': None
+        'ts_dir': None
     }
 }
 
@@ -83,6 +53,9 @@ datasets_dict = {
 # dictionary which defines timeframes to analyze
 with open('timeframes_dict.json', 'r') as f:
     timeframes_dict = json.load(f)
+
+with open('product_fields_dict.json', 'r') as f:
+    product_fields_dict = json.load(f)
 
 # dictionary which defines timeframes to analyze
 # with open('icos_dict.json', 'r') as f:
