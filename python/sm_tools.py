@@ -5,6 +5,7 @@ Functions for analyzing soil moisture datasets
 """
 from datetime import datetime
 import json
+import numpy
 import os
 import pandas
 
@@ -12,6 +13,7 @@ from ascat import H115Ts
 from gldas.interface import GLDASTs
 from icos import ICOSTimeSeries
 from ismn.interface import ISMN_Interface
+import netCDF4
 from smap_io import SMAPTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
@@ -174,3 +176,49 @@ def convert_tab_comma(filename):
     file_df = pandas.read_csv(filename, sep="\t")
     output_file = filename[:-4]+'_commareformat'+filename[-4:]
     file_df.to_csv(output_file, sep=",")
+
+
+# given an NC file and coordinate fields, return lower left coordinate and upper right coordinate
+def get_geo_extent(nc_file, lon_field='lon', lat_field='lat'):
+    nc = netCDF4.Dataset(nc_file, 'r')
+    try:
+        lon_array = nc[lon_field][:]
+        lat_array = nc[lat_field][:]
+        ll = (numpy.amin(lat_array), numpy.amin(lon_array))
+        ur = (numpy.amax(lat_array), numpy.amax(lon_array))
+        return ll, ur
+    except:
+        print("can't read file")
+
+
+# for a value, find the nearest value and its index
+def find_nearest(array, value):
+    array = numpy.asarray(array)
+    idx = (numpy.abs(array - value)).argmin()
+    return idx, array[idx]
+
+
+# for an input root folder, loop through each file and find the values for a given coordinate
+def get_series(input_root, sm_field, lon_loc, lat_loc, lon_field='lon', lat_field='lat', datetime_len=8,
+               datetime_startstr="201", cutoff=None):
+    series = pandas.DataFrame()
+    files = os.listdir(input_root)
+    count = 0
+    for file in files:
+        date_str_idx = file.find(datetime_startstr)
+        date_str = file[date_str_idx:date_str_idx+8]
+        print(date_str)
+        file_path = os.path.join(input_root, file)
+        nc = netCDF4.Dataset(file_path, 'r')
+        lon_array = nc[lon_field][:]
+        lat_array = nc[lat_field][:]
+        nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
+        nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
+        sm_value = nc[sm_field][:][0, nearest_lat_idx, nearest_lon_idx]
+        file_df = pandas.DataFrame([[date_str, sm_value]])
+        series = pandas.concat([series, file_df])
+        count += 1
+        if cutoff is not None:
+            if count == cutoff:
+                break
+    return series
