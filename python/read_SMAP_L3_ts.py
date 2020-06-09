@@ -13,7 +13,7 @@ import sm_config as config
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 print_sample = False
 
-ts_reader = SMAPTs(config.datasets_dict['SMAP L3']['ts_dir'])
+ts_reader = SMAPTs(config.product_inputs_dict['SMAP L3']['ts_dir'])
 
 # Degero: 19.556539 64.182029
 ts = ts_reader.read(19.556539, 64.182029)

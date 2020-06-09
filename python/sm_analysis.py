@@ -29,7 +29,7 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
     references: list of ICOS or ISMN time series objects (adding GLDAS soon)
     products:   dictionary of product(s) to analyze, examples:
                 analyses_dict = {"ASCAT 12.5 TS": True}
-                see dataset_dict in sm_config.py for dataset names and to set dataset parameters
+                see product_parameters_dict in sm_config.py for dataset names and to set dataset parameters
     startdate:  datetime used to filter product data to be analyzed
     enddate:    datetime used to filter product data to be analyzed
     output_folder: directory where metrics and ts data will be saved
@@ -45,7 +45,7 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
     product_list = tools.get_product_list(products)
     for product in product_list:
         product_str = product.replace(' ', '-')
-        product_reader = tools.get_product_reader(product, config.datasets_dict[product])
+        product_reader = tools.get_product_reader(product, config.product_inputs_dict[product])
         product_sm_col = config.product_fields_dict[product]['sm_field']
         for ref_loc in references:
             tools.write_log(log_file, "*** analyzing {} x {} {} ***".format(product, ref_loc.network, ref_loc.station))

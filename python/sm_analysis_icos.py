@@ -15,7 +15,7 @@ For analysis use sm_analysis.py
 # import sm_tools as tools
 #
 # # Dictionary to set analyses to perform
-# # Use datasets_dict.json to change default parameters
+# # Use product_inputs_dict.json to change default parameters
 # icos_analyses_dict = {
 #     "ASCAT 12.5 TS": {
 #         "analyze": True
@@ -53,7 +53,7 @@ For analysis use sm_analysis.py
 #     tools.write_log(config.icos_logfile, "===")
 #     tools.write_log(config.icos_logfile, "analyzing {} for {}".format(product, temp_scope))
 #     product_str = product.replace(' ', '-')
-#     product_metadata = config.datasets_dict[product]
+#     product_metadata = config.product_inputs_dict[product]
 #     # initialize product reader
 #     network_matched_df = pandas.DataFrame()
 #     if filter_product:

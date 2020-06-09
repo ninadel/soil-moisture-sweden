@@ -12,6 +12,7 @@ import time
 import os
 import pandas
 import sm_tools as tools
+import sm_config as config
 
 # Degero: lon 19.556539 lat 64.182029
 station_lon = 19.556539
@@ -22,9 +23,22 @@ station_lat = 64.182029
 # series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat, parameters=['SM'])
 # print(series)
 
-series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat, sm_field='SM')
-print(series)
+# series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat, sm_field='SM')
+# print(series)
 
+
+# SMAP L3 Enhanced
+series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat,
+                          parameters=['SM', 'quality_flag'])
+print(series)
+print(series.shape)
+
+
+# SMOS BEC
+# series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat,
+#                           parameters=['SM', 'quality_flag'])
+# print(series)
+# print(series.shape)
 
 # "smos-bec-01km\ASC\BEC_SM____SMOS__EUM_L4__A_20180601T030707_001km_1d_REP_v5.0.nc"
 # nc = netCDF4.Dataset(

@@ -15,7 +15,7 @@ For analysis use sm_analysis.py
 # import sm_tools as tools
 #
 # # Dictionary to set analyses to perform
-# # Use datasets_dict.json to change default parameters
+# # Use product_inputs_dict.json to change default parameters
 # ismn_analyses_dict = {
 #     "ASCAT 12.5 TS": {
 #         "analyze": False
@@ -50,7 +50,7 @@ For analysis use sm_analysis.py
 # for product, product_inputs in analysis_queue.items():
 #     temp_scope = analysis_startdate.strftime("%Y%m%d")+"_"+analysis_enddate.strftime("%Y%m%d")
 #     product_str = product.replace(' ', '-')
-#     product_metadata = config.datasets_dict[product]
+#     product_metadata = config.product_inputs_dict[product]
 #     print("analyzing {}; temp_scope {}".format(product, temp_scope))
 #     # initialize product reader
 #     network_matched_df = pandas.DataFrame()

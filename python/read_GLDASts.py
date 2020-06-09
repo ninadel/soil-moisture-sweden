@@ -12,7 +12,7 @@ from datetime import datetime
 import sm_config as config
 
 # load station_dict from external file
-ts_reader = GLDASTs(config.datasets_dict['GLDAS']['ts_dir'])
+ts_reader = GLDASTs(config.product_inputs_dict['GLDAS']['ts_dir'])
 
 # Degero: 19.556539 64.182029
 ts = ts_reader.read(19.556539, 64.182029)

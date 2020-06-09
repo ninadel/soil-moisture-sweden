@@ -13,7 +13,7 @@ metrics_df_columns = ['network', 'station', 'ref_filtered', 'product', 'product_
                       'bias', 'rmsd', 'ubrmsd', 'pearsonr', 'pearsonr_p']
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
-datasets_dict = {
+product_inputs_dict = {
     'ASCAT H08': {
         'ts_dir': None
     },
