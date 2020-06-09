@@ -144,7 +144,8 @@ def get_product_data(lon, lat, product, reader, filter_prod=True):
             print("For now, no filters for SMAP L4")
         # Timestampp OK
     product_metadata = config.datasets_dict[product]
-    sm = data[product_metadata['sm_field']]
+    sm = data[config.product_fields_dict[product]['sm_field']]
+    # sm = data[product_metadata['sm_field']]
     return sm
 
 
