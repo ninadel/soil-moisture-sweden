@@ -199,7 +199,7 @@ def find_nearest(array, value):
 
 
 # for an input root folder, loop through each file and find the values for a given coordinate
-def get_series(input_root, sm_field, lon_loc, lat_loc, lon_field='lon', lat_field='lat', datetime_len=8,
+def get_series(input_root, lon_loc, lat_loc, sm_field='SM', lon_field='lon', lat_field='lat', datetime_len=8,
                datetime_startstr="201", cutoff=None):
     series = pandas.DataFrame()
     files = os.listdir(input_root)
@@ -207,7 +207,6 @@ def get_series(input_root, sm_field, lon_loc, lat_loc, lon_field='lon', lat_fiel
     for file in files:
         date_str_idx = file.find(datetime_startstr)
         date_str = file[date_str_idx:date_str_idx+8]
-        print(date_str)
         file_path = os.path.join(input_root, file)
         nc = netCDF4.Dataset(file_path, 'r')
         lon_array = nc[lon_field][:]
@@ -215,10 +214,11 @@ def get_series(input_root, sm_field, lon_loc, lat_loc, lon_field='lon', lat_fiel
         nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
         nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
         sm_value = nc[sm_field][:][0, nearest_lat_idx, nearest_lon_idx]
-        file_df = pandas.DataFrame([[date_str, sm_value]])
+        file_df = pandas.DataFrame([[date_str, sm_value]], columns=['datestr', sm_field])
         series = pandas.concat([series, file_df])
         count += 1
         if cutoff is not None:
             if count == cutoff:
                 break
+    series.set_index('datestr', inplace=True)
     return series

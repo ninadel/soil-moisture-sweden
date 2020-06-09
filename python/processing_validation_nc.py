@@ -19,5 +19,16 @@ station_lat = 64.182029
 
 
 # print(os.listdir(r"..\sm_sample_files\smos-bec-01km\ASC"))
-series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", 'SM', station_lon, station_lat)
+# series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat, parameters=['SM'])
+# print(series)
+
+series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat, sm_field='SM')
 print(series)
+
+
+# "smos-bec-01km\ASC\BEC_SM____SMOS__EUM_L4__A_20180601T030707_001km_1d_REP_v5.0.nc"
+# nc = netCDF4.Dataset(
+#     r"..\sm_sample_files\smos-bec-01km\ASC\BEC_SM____SMOS__EUM_L4__A_20180601T030707_001km_1d_REP_v5.0.nc", 'r')
+# print(nc.variables.keys())
+# print(list(nc.variables.keys()))
+
