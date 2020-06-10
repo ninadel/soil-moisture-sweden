@@ -14,7 +14,7 @@ metrics_df_columns = ["network", "station", "ref_filtered", "product", "product_
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 product_inputs_dict = {
-    "ASCAT H08": {
+    "ASCAT SM-OBS-2": {
         "ts_dir": None
     },
     "ASCAT 12.5 TS": {
