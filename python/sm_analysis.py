@@ -28,7 +28,7 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
     Parameters
     references: list of ICOS or ISMN time series objects (adding GLDAS soon)
     products:   dictionary of product(s) to analyze, examples:
-                analyses_dict = {"ASCAT 12.5 TS": True}
+                evaluation_dict = {"ASCAT 12.5 TS": True}
                 see product_parameters_dict in sm_config.py for dataset names and to set dataset parameters
     startdate:  datetime used to filter product data to be analyzed
     enddate:    datetime used to filter product data to be analyzed
@@ -90,23 +90,38 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
 
 
 # Dictionary which turns on/off product analyses
-analyses_dict = {
+evaluation_dict = {
     "ASCAT 12.5 TS": False,
-    "CCI": True,
-    "GLDAS": False,
+    "ASCAT SM-OBS-2": False,
+    "CCI": False,
+    "GLDAS": True,
     "SMAP L3": False,
     "SMAP L4": False,
     "SMOS-IC": False
 }
 
-analysis_output_folder = r"../analysis_output"
+in_situ_evaluation = False
+gldas_evaluation = True
+
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
 ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 # use this as a parameter below if you want to analyze both ICOS and ISMN
 reference_list = icos_readers + ismn_readers
 
-# for first argument, use icos_readers, ismn_readers, or reference_list
-evaluation_results = evaluate(icos_readers, analyses_dict, startdate=datetime(2015, 4, 1),
-                              enddate=datetime(2018, 12, 31, 23, 59), output_folder=analysis_output_folder)
+analysis_output_folder = r"../analysis_output"
 
-print(evaluation_results)
+if in_situ_evaluation:
+    # for first argument, use icos_readers, ismn_readers, or reference_list
+    evaluation_results = evaluate(icos_readers, evaluation_dict, startdate=datetime(2015, 4, 1),
+                                  enddate=datetime(2018, 12, 31, 23, 59), output_folder=analysis_output_folder)
+    print(evaluation_results)
+
+if gldas_evaluation:
+    # gldas_references = tools.get_gldas_references(config.swe_gldasvc_dict,
+    #                                               config.product_inputs_dict['GLDAS']['ts_dir'],
+    #                                               veg_class_filter='Cropland')
+    gldas_references = tools.get_gldas_references(config.swe_gldasvc_dict,
+                                                  config.product_inputs_dict['GLDAS']['ts_dir'])
+    evaluation_results = evaluate(gldas_references, evaluation_dict, startdate=datetime(2015, 4, 1),
+                                  enddate=datetime(2018, 12, 31, 23, 59), output_folder=analysis_output_folder)
+    print(evaluation_results)
