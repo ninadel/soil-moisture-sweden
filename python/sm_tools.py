@@ -4,7 +4,6 @@ Date: 5/25/2020
 Functions for analyzing soil moisture datasets
 """
 from datetime import datetime
-import icos
 import ismn
 import json
 import numpy
@@ -14,6 +13,8 @@ import pandas
 from ascat import H115Ts
 from esa_cci_sm.interface import CCITs
 from gldas.interface import GLDASTs
+from gldas_ref_loc import GLDASRefLoc
+import icos
 from icos import ICOSTimeSeries
 from ismn.interface import ISMN_Interface
 import netCDF4
@@ -85,14 +86,6 @@ def get_product_list(products):
         product_list = products
     elif type(products) == str:
         product_list = [products]
-    # if str(type(products)) == "<class 'dict'>":
-    #     for product, analyze in products.items():
-    #         if analyze:
-    #             product_list.append(product)
-    # elif str(type(products)) == "<class 'list'>":
-    #     product_list = products
-    # elif str(type(products)) == "<class 'str'>":
-    #     product_list = [products]
     return product_list
 
 
@@ -137,6 +130,10 @@ def get_ref_data(ts, filter_ref=False):
         sm_data = ref_data[sm_field]
         sm_data.dropna()
         return sm_data, sm_field
+    elif type(ts) == GLDASRefLoc:
+        ref_data = ts.data["SoilMoi0_10cm_inst"]
+        sm_field = "gldas_sm"
+        return ref_data, sm_field
 
 
 def get_product_data(lon, lat, product, reader, filter_prod=True):
@@ -263,27 +260,24 @@ def get_series(input_root, lon_loc, lat_loc, parameters, lon_field="lon", lat_fi
     return series
 
 
-# # for an input root folder, loop through each file and find the values for a given coordinate
-# def get_series(input_root, lon_loc, lat_loc, sm_field="SM", lon_field="lon", lat_field="lat", datetime_len=8,
-#                datetime_startstr="201", cutoff=None):
-#     series = pandas.DataFrame()
-#     files = os.listdir(input_root)
-#     count = 0
-#     for file in files:
-#         date_str_idx = file.find(datetime_startstr)
-#         date_str = file[date_str_idx:date_str_idx+8]
-#         file_path = os.path.join(input_root, file)
-#         nc = netCDF4.Dataset(file_path, "r")
-#         lon_array = nc[lon_field][:]
-#         lat_array = nc[lat_field][:]
-#         nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
-#         nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
-#         sm_value = nc[sm_field][:][0, nearest_lat_idx, nearest_lon_idx]
-#         file_df = pandas.DataFrame([[date_str, sm_value]], columns=["datestr", sm_field])
-#         series = pandas.concat([series, file_df])
-#         count += 1
-#         if cutoff is not None:
-#             if count == cutoff:
-#                 break
-#     series.set_index("datestr", inplace=True)
-#     return series
+# function which parses swe_gldasvc_dict.json into a list of GLDASRefLoc objects
+def get_gldas_references(ref_dict, input_root, veg_class_filter=None):
+    reader = GLDASTs(input_root)
+    ref_loc_list = []
+    if veg_class_filter is not None:
+        if type(veg_class_filter) != list:
+            veg_classes = [veg_class_filter]
+        else:
+            veg_classes = veg_class_filter
+    else:
+        veg_classes = list(ref_dict.keys())
+    for veg_class in veg_classes:
+        point_list = ref_dict[veg_class]
+        for point in point_list:
+            # points are stored in [lat, lon] format
+            lat = point[0]
+            lon = point[1]
+            data = reader.read(lon, lat)
+            ref = GLDASRefLoc(lon, lat, veg_class, data)
+            ref_loc_list.append(ref)
+    return ref_loc_list
