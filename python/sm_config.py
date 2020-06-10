@@ -54,13 +54,10 @@ product_inputs_dict = {
 with open("timeframes_dict.json", "r") as f:
     timeframes_dict = json.load(f)
 
+# dictionary which stores static fields (e.g. lat, lon, sm field)
 with open("product_fields_dict.json", "r") as f:
     product_fields_dict = json.load(f)
 
-# dictionary which defines timeframes to analyze
-# with open("icos_dict.json", "r") as f:
-#     icos_dict = json.load(f)
-#
-# # load networks_dict from external file
-# with open("networks_dict.json", "r") as f:
-#     networks_dict = json.load(f)
+# dictionary which stores GLDAS vegetation classes and corresponding SWE grid points
+with open("swe_gldasvc_dict.json", "r") as f:
+    swe_gldasvc_dict = json.load(f)
