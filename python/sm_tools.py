@@ -12,6 +12,7 @@ import os
 import pandas
 
 from ascat import H115Ts
+from esa_cci_sm.interface import CCITs
 from gldas.interface import GLDASTs
 from icos import ICOSTimeSeries
 from ismn.interface import ISMN_Interface
@@ -103,6 +104,9 @@ def get_product_reader(product, product_metadata):
         static_layers_dir = product_metadata["static_layers_dir"]
         reader = H115Ts(cdr_path=ts_dir, grid_path=grid_dir, grid_filename=grid_file,
                         static_layer_path=static_layers_dir)
+    if product == "CCI":
+        ts_dir = product_metadata["ts_dir"]
+        reader = CCITs(ts_path=ts_dir)
     if product == "GLDAS":
         ts_dir = product_metadata["ts_dir"]
         reader = GLDASTs(ts_path=ts_dir)
@@ -142,6 +146,10 @@ def get_product_data(lon, lat, product, reader, filter_prod=True):
         if filter_prod:
             data = data.loc[data["ssf"] == 1]
         # Timestampp OK
+    if product == "CCI":
+        data = ts
+        if filter_prod:
+            print("For now, no filters for CCI")
     if product == "GLDAS":
         data = ts
         if filter_prod:
