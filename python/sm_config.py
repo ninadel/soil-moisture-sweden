@@ -41,11 +41,11 @@ product_inputs_dict = {
     'Sentinel-1': {
         'ts_dir': None
     },
-    'SMOS BEC': {
+    'SMOS-BEC': {
         'ts_dir': None
     },
-    'SMOS IC': {
-        'ts_dir': None
+    'SMOS-IC': {
+        'ts_dir': r'C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC'
     }
 }
 

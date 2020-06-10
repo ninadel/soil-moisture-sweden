@@ -39,12 +39,12 @@
         "lat_field": "lat",
         "sm_field": "ssm"
     },
-    "SMOS BEC": {
+    "SMOS-BEC": {
         "lon_field": "lon",
         "lat_field": "lat",
         "sm_field": "SM"
     },
-    "SMOS IC": {
+    "SMOS-IC": {
         "lon_field": "lon",
         "lat_field": "lat",
         "sm_field": "Soil_Moisture"

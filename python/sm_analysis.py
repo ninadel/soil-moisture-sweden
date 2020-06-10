@@ -91,10 +91,11 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
 
 # Dictionary which turns on/off product analyses
 analyses_dict = {
-    "ASCAT 12.5 TS": True,
-    "GLDAS": True,
-    "SMAP L3": True,
-    "SMAP L4": True
+    "ASCAT 12.5 TS": False,
+    "GLDAS": False,
+    "SMAP L3": False,
+    "SMAP L4": False,
+    "SMOS-IC": True
 }
 
 analysis_output_folder = r"../analysis_output"

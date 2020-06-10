@@ -4,6 +4,8 @@ Date: 5/25/2020
 Functions for analyzing soil moisture datasets
 """
 from datetime import datetime
+import icos
+import ismn
 import json
 import numpy
 import os
@@ -15,26 +17,27 @@ from icos import ICOSTimeSeries
 from ismn.interface import ISMN_Interface
 import netCDF4
 from smap_io import SMAPTs
+from smos.smos_ic.interface import SMOSTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
 import sm_config as config
 
 
 def write_log(filename, string, print_string=True):
-    with open(filename, 'a') as logfile:
-        logfile.write(string + '\n')
+    with open(filename, "a") as logfile:
+        logfile.write(string + "\n")
     if print_string:
         print(string)
 
 
 def create_output_dir(output_folder):
-    analysis_results_folder = os.path.join(output_folder, '{}_analysis'.format(datetime.now().
+    analysis_results_folder = os.path.join(output_folder, "{}_analysis".format(datetime.now().
                                                                                strftime("%Y%m%d_%H%M%S")))
     os.makedirs(analysis_results_folder)
-    data_output_folder = os.path.join(analysis_results_folder, 'data_output')
+    data_output_folder = os.path.join(analysis_results_folder, "data_output")
     os.mkdir(data_output_folder)
-    log_file = os.path.join(analysis_results_folder, 'analysis_log.txt')
-    metrics_file = os.path.join(analysis_results_folder, 'analysis_metrics.csv')
+    log_file = os.path.join(analysis_results_folder, "analysis_log.txt")
+    metrics_file = os.path.join(analysis_results_folder, "analysis_metrics.csv")
     return log_file, metrics_file, data_output_folder
     # MOVE to config later
 
@@ -49,7 +52,7 @@ def get_icos_files(input_dir):
 
 
 def get_icos_readers(input_dir):
-    with open('icos_dict.json', 'r') as f:
+    with open("icos_dict.json", "r") as f:
         icos_dict = json.load(f)
     readers = []
     for filename in os.listdir(input_dir):
@@ -65,22 +68,30 @@ def get_icos_readers(input_dir):
 def get_ismn_readers(input_dir):
     ismn_readers = []
     interface = ISMN_Interface(input_dir)
-    for station_object in interface.stations_that_measure('soil moisture'):
-        for ISMN_time_series in station_object.data_for_variable('soil moisture', min_depth=0, max_depth=0.1):
+    for station_object in interface.stations_that_measure("soil moisture"):
+        for ISMN_time_series in station_object.data_for_variable("soil moisture", min_depth=0, max_depth=0.1):
             ismn_readers.append(ISMN_time_series)
     return ismn_readers
 
 
 def get_product_list(products):
     product_list = []
-    if str(type(products)) == "<class 'dict'>":
+    if type(products) == dict:
         for product, analyze in products.items():
             if analyze:
                 product_list.append(product)
-    elif str(type(products)) == "<class 'list'>":
+    elif type(products) == list:
         product_list = products
-    elif str(type(products)) == "<class 'str'>":
+    elif type(products) == str:
         product_list = [products]
+    # if str(type(products)) == "<class 'dict'>":
+    #     for product, analyze in products.items():
+    #         if analyze:
+    #             product_list.append(product)
+    # elif str(type(products)) == "<class 'list'>":
+    #     product_list = products
+    # elif str(type(products)) == "<class 'str'>":
+    #     product_list = [products]
     return product_list
 
 
@@ -101,21 +112,24 @@ def get_product_reader(product, product_metadata):
     if product == "SMAP L4":
         ts_dir = product_metadata["ts_dir"]
         reader = SMAPTs(ts_path=ts_dir)
+    if product == "SMOS-IC":
+        ts_dir = product_metadata["ts_dir"]
+        reader = SMOSTs(ts_path=ts_dir)
     return reader
 
 
 def get_ref_data(ts, filter_ref=False):
-    if str(type(ts)) == "<class 'icos.ICOSTimeSeries'>":
+    if type(ts) == icos.ICOSTimeSeries:
         ref_data = ts.data
         if filter_ref:
-            ref_data = ref_data.loc[ref_data['qc_ssm'] == 0]
-        sm_field = 'soil moisture'
+            ref_data = ref_data.loc[ref_data["qc_ssm"] == 0]
+        sm_field = "soil moisture"
         sm_data = ref_data[sm_field]
         sm_data.dropna()
         return sm_data, sm_field
-    elif str(type(ts)) == "<class 'ismn.readers.ISMNTimeSeries'>":
+    elif type(ts) == ismn.readers.ISMNTimeSeries:
         ref_data = ts.data
-        sm_field = 'soil moisture'
+        sm_field = "soil moisture"
         sm_data = ref_data[sm_field]
         sm_data.dropna()
         return sm_data, sm_field
@@ -123,29 +137,35 @@ def get_ref_data(ts, filter_ref=False):
 
 def get_product_data(lon, lat, product, reader, filter_prod=True):
     ts = reader.read(lon, lat)
-    if product == 'ASCAT 12.5 TS':
+    if product == "ASCAT 12.5 TS":
         data = ts.data
         if filter_prod:
-            data = data.loc[data['ssf'] == 1]
+            data = data.loc[data["ssf"] == 1]
         # Timestampp OK
-    if product == 'GLDAS':
+    if product == "GLDAS":
         data = ts
         if filter_prod:
             print("No filters for GLDAS")
         # Timestampp OK
-    if product == 'SMAP L3':
+    if product == "SMAP L3":
         data = ts
         if filter_prod:
             print("For now, no filters for SMAP L3")
         # Force Timestamp: 6AM CET, 5AM UTC
-    if product == 'SMAP L4':
+    if product == "SMAP L4":
         data = ts
         if filter_prod:
             print("For now, no filters for SMAP L4")
         # Timestampp OK
+    if product == "SMOS-IC":
+        data = ts
+        if filter_prod:
+            print("For now, no filters for SMOS-IC")
+            # See "Quality_Flag" field
+        # Timestampp OK
     product_metadata = config.product_inputs_dict[product]
-    sm = data[config.product_fields_dict[product]['sm_field']]
-    # sm = data[product_metadata['sm_field']]
+    sm = data[config.product_fields_dict[product]["sm_field"]]
+    # sm = data[product_metadata["sm_field"]]
     return sm
 
 
@@ -154,7 +174,7 @@ def get_metrics(data, xcol, ycol, anomaly=False):
     """""
     data: temporally matched dataset
     metrics: list of metrics to calculate on matched dataset
-        default: 'pearsonr', 'bias', 'rmsd', 'ubrmsd'
+        default: "pearsonr", "bias", "rmsd", "ubrmsd"
     """""
     if data.shape[0] == 0:
         bias = None
@@ -179,13 +199,13 @@ def get_metrics(data, xcol, ycol, anomaly=False):
 
 def convert_tab_comma(filename):
     file_df = pandas.read_csv(filename, sep="\t")
-    output_file = filename[:-4]+'_commareformat'+filename[-4:]
+    output_file = filename[:-4]+"_commareformat"+filename[-4:]
     file_df.to_csv(output_file, sep=",")
 
 
 # given an NC file and coordinate fields, return lower left coordinate and upper right coordinate
-def get_geo_extent(nc_file, lon_field='lon', lat_field='lat'):
-    nc = netCDF4.Dataset(nc_file, 'r')
+def get_geo_extent(nc_file, lon_field="lon", lat_field="lat"):
+    nc = netCDF4.Dataset(nc_file, "r")
     try:
         lon_array = nc[lon_field][:]
         lat_array = nc[lat_field][:]
@@ -193,7 +213,7 @@ def get_geo_extent(nc_file, lon_field='lon', lat_field='lat'):
         ur = (numpy.amax(lat_array), numpy.amax(lon_array))
         return ll, ur
     except:
-        print("can't read file")
+        print("cant\' read file")
 
 
 # for a value, find the nearest value and its index
@@ -203,7 +223,7 @@ def find_nearest(array, value):
     return idx, array[idx]
 
 
-def get_series(input_root, lon_loc, lat_loc, parameters, lon_field='lon', lat_field='lat', datetime_len=8,
+def get_series(input_root, lon_loc, lat_loc, parameters, lon_field="lon", lat_field="lat", datetime_len=8,
                datetime_startstr="201", cutoff=None):
     if type(parameters) != list:
         parameters = [parameters]
@@ -214,13 +234,13 @@ def get_series(input_root, lon_loc, lat_loc, parameters, lon_field='lon', lat_fi
         date_str_idx = file.find(datetime_startstr)
         date_str = file[date_str_idx:date_str_idx + 8]
         file_path = os.path.join(input_root, file)
-        nc = netCDF4.Dataset(file_path, 'r')
+        nc = netCDF4.Dataset(file_path, "r")
         lon_array = nc[lon_field][:]
         lat_array = nc[lat_field][:]
         nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
         nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
         values = [date_str]
-        columns = ['date_str']
+        columns = ["date_str"]
         for parameter in parameters:
             columns.append(parameter)
             value = nc[parameter][:][0, nearest_lat_idx, nearest_lon_idx]
@@ -231,12 +251,12 @@ def get_series(input_root, lon_loc, lat_loc, parameters, lon_field='lon', lat_fi
         if cutoff is not None:
             if count == cutoff:
                 break
-    series.set_index('date_str', inplace=True)
+    series.set_index("date_str", inplace=True)
     return series
 
 
 # # for an input root folder, loop through each file and find the values for a given coordinate
-# def get_series(input_root, lon_loc, lat_loc, sm_field='SM', lon_field='lon', lat_field='lat', datetime_len=8,
+# def get_series(input_root, lon_loc, lat_loc, sm_field="SM", lon_field="lon", lat_field="lat", datetime_len=8,
 #                datetime_startstr="201", cutoff=None):
 #     series = pandas.DataFrame()
 #     files = os.listdir(input_root)
@@ -245,17 +265,17 @@ def get_series(input_root, lon_loc, lat_loc, parameters, lon_field='lon', lat_fi
 #         date_str_idx = file.find(datetime_startstr)
 #         date_str = file[date_str_idx:date_str_idx+8]
 #         file_path = os.path.join(input_root, file)
-#         nc = netCDF4.Dataset(file_path, 'r')
+#         nc = netCDF4.Dataset(file_path, "r")
 #         lon_array = nc[lon_field][:]
 #         lat_array = nc[lat_field][:]
 #         nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
 #         nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
 #         sm_value = nc[sm_field][:][0, nearest_lat_idx, nearest_lon_idx]
-#         file_df = pandas.DataFrame([[date_str, sm_value]], columns=['datestr', sm_field])
+#         file_df = pandas.DataFrame([[date_str, sm_value]], columns=["datestr", sm_field])
 #         series = pandas.concat([series, file_df])
 #         count += 1
 #         if cutoff is not None:
 #             if count == cutoff:
 #                 break
-#     series.set_index('datestr', inplace=True)
+#     series.set_index("datestr", inplace=True)
 #     return series
