@@ -36,9 +36,9 @@ for index, row in sweden_points.iterrows():
 
 print(sweden_GLDAS_domveg_points)
 
-with open('swe_gldasvc_dict.json', 'w') as f:
-    json.dump(sweden_GLDAS_domveg_points, f)
-
+# with open('swe_gldasvc_dict.json', 'w') as f:
+#     json.dump(sweden_GLDAS_domveg_points, f)
+#
 for key, value in sweden_GLDAS_domveg_points.items():
     print(key, len(value))
 
