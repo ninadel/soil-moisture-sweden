@@ -1,52 +1,62 @@
 {
-    "ASCAT H08": {
+    "ASCAT SM-OBS-2": {
         "lon_field": "",
         "lat_field": "",
-        "sm_field": ""
+        "sm_field": "",
+        "scale": "lin_cdf_match"
     },
     "ASCAT 12.5 TS": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "sm"
+        "sm_field": "sm",
+        "scale": "lin_cdf_match"
     },
     "CCI": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "sm"
+        "sm_field": "sm",
+        "scale": ""
     },
     "GLDAS": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "SoilMoi0_10cm_inst"
+        "sm_field": "SoilMoi0_10cm_inst",
+        "scale": ""
     },
     "SMAP L3": {
         "lon_field": "longitude",
         "lat_field": "latitude",
-        "sm_field": "soil_moisture"
+        "sm_field": "soil_moisture",
+        "scale": ""
     },
     "SMAP L3 Enhanced": {
         "lon_field": "longitude",
         "lat_field": "latitude",
-        "sm_field": "soil_moisture"
+        "sm_field": "soil_moisture",
+        "scale": ""
     },
     "SMAP L4": {
         "lon_field": "cell_lon",
         "lat_field": "cell_lat",
-        "sm_field": "sm_surface_analysis"
+        "sm_field": "sm_surface_analysis",
+        "scale": ""
     },
     "Sentinel-1": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "ssm"
+        "sm_field": "ssm",
+        "scale": ""
     },
     "SMOS-BEC": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "SM"
+        "sm_field": "SM",
+        "scale": ""
     },
     "SMOS-IC": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "Soil_Moisture"
+        "sm_field": "Soil_Moisture",
+        "scale": ""
     }
 }
