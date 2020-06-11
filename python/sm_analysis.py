@@ -21,6 +21,7 @@ evaluation_dict = {
 
 insitu_evaluation = True
 gldas_evaluation = False
+anomaly_evaluation = True
 
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
 ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
@@ -33,7 +34,7 @@ if insitu_evaluation:
     # for first argument, use icos_readers, ismn_readers, or reference_list
     insitu_evaluation_results = evaluation.evaluate(icos_readers, evaluation_dict, startdate=datetime(2015, 4, 1),
                                                     enddate=datetime(2018, 12, 31, 23, 59),
-                                                    output_folder=analysis_output_folder)
+                                                    output_folder=analysis_output_folder, anomaly=anomaly_evaluation)
     print(insitu_evaluation_results)
 
 if gldas_evaluation:
@@ -41,5 +42,5 @@ if gldas_evaluation:
                                                   config.product_inputs_dict['GLDAS']['ts_dir'])
     gldas_evaluation_results = evaluation.evaluate(gldas_references, evaluation_dict, startdate=datetime(2015, 4, 1),
                                                    enddate=datetime(2018, 12, 31, 23, 59),
-                                                   output_folder=analysis_output_folder)
+                                                   output_folder=analysis_output_folder, anomaly=anomaly_evaluation)
     print(gldas_evaluation_results)
