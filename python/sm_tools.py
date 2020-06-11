@@ -22,6 +22,7 @@ from smap_io import SMAPTs
 from smos.smos_ic.interface import SMOSTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
+from pytesmo.time_series.anomaly import calc_anomaly
 import sm_config as config
 
 
@@ -115,7 +116,7 @@ def get_product_reader(product, product_metadata):
     return reader
 
 
-def get_ref_data(ts, filter_ref=False):
+def get_ref_data(ts, filter_ref=False, anomaly=False):
     if type(ts) == icos.ICOSTimeSeries:
         ref_data = ts.data
         if filter_ref:
@@ -123,20 +124,23 @@ def get_ref_data(ts, filter_ref=False):
         sm_field = "soil moisture"
         sm_data = ref_data[sm_field]
         sm_data.dropna()
-        return sm_data, sm_field
+        # return sm_data, sm_field
     elif type(ts) == ismn.readers.ISMNTimeSeries:
         ref_data = ts.data
         sm_field = "soil moisture"
         sm_data = ref_data[sm_field]
         sm_data.dropna()
-        return sm_data, sm_field
+        # return sm_data, sm_field
     elif type(ts) == GLDASRefLoc:
         ref_data = ts.data["SoilMoi0_10cm_inst"]
         sm_field = "gldas_sm"
-        return ref_data, sm_field
+    sm_data = ref_data[sm_field]
+    if anomaly:
+        sm_data = calc_anomaly(sm_data)
+    return sm_data, sm_field
 
 
-def get_product_data(lon, lat, product, reader, filter_prod=True):
+def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False):
     ts = reader.read(lon, lat)
     if product == "ASCAT 12.5 TS":
         data = ts.data
@@ -171,6 +175,8 @@ def get_product_data(lon, lat, product, reader, filter_prod=True):
     product_metadata = config.product_inputs_dict[product]
     sm = data[config.product_fields_dict[product]["sm_field"]]
     # sm = data[product_metadata["sm_field"]]
+    if anomaly:
+        sm = calc_anomaly(sm)
     return sm
 
 
