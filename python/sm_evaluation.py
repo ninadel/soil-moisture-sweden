@@ -44,14 +44,14 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
         product_sm_col = config.product_fields_dict[product]['sm_field']
         for ref_loc in references:
             tools.write_log(log_file, "*** analyzing {} x {} {} ***".format(product, ref_loc.network, ref_loc.station))
-            ref_data = tools.get_ref_data(ref_loc)[0]
+            ref_data = tools.get_ref_data(ref_loc, filter_ref, anomaly)[0]
             ref_data.to_csv(os.path.join(data_output_folder, 'ref_data_{}_{}.csv'.format(ref_loc.network,
                                                                                          ref_loc.station)))
             tools.write_log(log_file, 'ref_data.shape: {}'.format(ref_data.shape))
             ref_sm_col = tools.get_ref_data(ref_loc)[1]
             ref_data.rename('ref_sm', inplace=True)
             product_data = tools.get_product_data(lon=ref_loc.longitude, lat=ref_loc.latitude, product=product,
-                                                  reader=product_reader, filter_prod=filter_prod)
+                                                  reader=product_reader, filter_prod=filter_prod, anomaly=anomaly)
             product_data.to_csv(os.path.join(data_output_folder, '{}_data_{}_{}.csv'.format(product_str,
                                                                                             ref_loc.network,
                                                                                             ref_loc.station)))
