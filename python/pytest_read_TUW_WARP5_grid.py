@@ -12,7 +12,7 @@ import time
 import os
 import pandas
 
-file_loc = r"..\sm_sample_files\smos-bec-01km\ASC\BEC_SM____SMOS__EUM_L4__A_20180622T033954_001km_1d_REP_v5.0.nc"
+file_loc = r"..\ascat_ts_aux\warp5_grid\TUW_WARP5_grid_info_2_3.nc"
 nc_fid = netCDF4.Dataset(file_loc, 'r')
 # help(nc_fid)
 print(nc_fid.ncattrs())
@@ -20,16 +20,16 @@ print(nc_fid.ncattrs())
 for key, value in nc_fid.dimensions.items():
     print(key)
 
-
 lat = nc_fid['lat'][:]
 lon = nc_fid['lon'][:]
 print('lat.shape', lat.shape)
 print('lon.shape', lon.shape)
+print(lat)
+print(lon)
 
 # print(nc_fid['lat'].shape)
 #
 # print(nc_fid['lat'])
-# print(lon)
 # print(lon)
 # print(type(lon))
 
@@ -40,9 +40,9 @@ print('lon.shape', lon.shape)
 # # help(data)
 # print(data[0,50,50])
 #
-print(nc_fid['lat'].shape)
-print(nc_fid['lat'])
-lat = nc_fid['lat'][:]
+# print(nc_fid['lat'].shape)
+# print(nc_fid['lat'])
+# lat = nc_fid['lat'][:]
 # print('lat.shape', lat.shape)
 # print(lat)
 # print(type(lat))
