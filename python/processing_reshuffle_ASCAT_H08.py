@@ -8,6 +8,8 @@ output_dir = r"../test_output_data"
 
 input_dataset = H08img(input_dir)
 
+startdate = datetime(2018, 6, 1, 6, 15)
+enddate = datetime(2018, 6, 30, 23, 59)
 
-reshuffle()
+reshuffle(input_dir, output_dir, startdate, enddate, parameters, imgbuffer=50)
 

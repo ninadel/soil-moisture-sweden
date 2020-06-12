@@ -11,6 +11,7 @@ import numpy as np
 from datetime import datetime
 
 from pygeogrids import BasicGrid
+from grid_gldas import GLDAS025Cellgrid
 from ascat.h_saf import H08img
 
 from repurpose.img2ts import Img2Ts
@@ -44,7 +45,7 @@ def reshuffle(input_root, outputpath, startdate, enddate, parameters, imgbuffer=
     # get time series attributes from first day of data.
     data = input_dataset.read(startdate)
     ts_attributes = data.metadata
-    grid = BasicGrid(data.lon, data.lat)
+    grid = GLDAS025Cellgrid()
 
     reshuffler = Img2Ts(input_dataset=input_dataset, outputpath=outputpath,
                         startdate=startdate, enddate=enddate, input_grid=grid,
