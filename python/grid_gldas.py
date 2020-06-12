@@ -74,5 +74,5 @@ def GLDAS025Cellgrid():
 #     return GLDAS025Grids(only_land=True)
 
 
-if __name__ == '__main__':
-    GLDAS025LandGrid()
+# if __name__ == '__main__':
+#     GLDAS025LandGrid()
