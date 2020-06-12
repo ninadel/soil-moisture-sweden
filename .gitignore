@@ -10,3 +10,4 @@ python/py_test*.py
 input_data/
 analysis_output/
 *python_metadata*
+iris/
