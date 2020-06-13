@@ -24,7 +24,7 @@ timeframe_end = datetime(2018, 6, 30, 23, 59)
 nordic_boundary = [54.53, 71.46, 4.25, 31.73]
 icos_boundary = [56.097581, 68.356003, 13.101768, 19.774413]
 
-sweden_bounds = {
+extent_sweden = {
     'min_lat': 55.375,
     'max_lat': 68.875,
     'min_lon': 11.375,
@@ -60,10 +60,10 @@ for file in os.listdir(os.path.join(data_path, 'h08_201806_buf')):
         with open(all_files, "a") as logfile:
             logfile.write("{} {} {} {} {} {} \n".format(file, dt, image_lons.min(), image_lons.max(), image_lats.min(),
                                                         image_lats.max()))
-        if (sweden_bounds['min_lat'] < image_lats.max() and sweden_bounds['min_lat'] > image_lats.min() or \
-            sweden_bounds['max_lat'] > image_lats.min() and sweden_bounds['max_lat'] < image_lats.max()) and \
-                (sweden_bounds['min_lon'] < image_lons.max() and sweden_bounds['min_lon'] > image_lons.min() or \
-                 sweden_bounds['max_lon'] > image_lons.min() and sweden_bounds['max_lon'] < image_lons.max()):
+        if (extent_sweden['min_lat'] < image_lats.max() and extent_sweden['min_lat'] > image_lats.min() or \
+            extent_sweden['max_lat'] > image_lats.min() and extent_sweden['max_lat'] < image_lats.max()) and \
+                (extent_sweden['min_lon'] < image_lons.max() and extent_sweden['min_lon'] > image_lons.min() or \
+                 extent_sweden['max_lon'] > image_lons.min() and extent_sweden['max_lon'] < image_lons.max()):
             match_count += 1
             print(match_count)
             with open(matching_files, "a") as logfile:

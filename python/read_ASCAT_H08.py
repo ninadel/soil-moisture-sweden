@@ -21,7 +21,7 @@ timeframe_end = datetime(2018, 6, 30, 23, 59)
 nordic_boundary = [54.53, 71.46, 4.25, 31.73]
 icos_boundary = [56.097581, 68.356003, 13.101768, 19.774413]
 
-sweden_bounds = {
+extent_sweden = {
     'min_lat': 55.375,
     'max_lat': 68.875,
     'min_lon': 11.375,
