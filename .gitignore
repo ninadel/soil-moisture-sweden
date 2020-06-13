@@ -11,3 +11,4 @@ input_data/
 analysis_output/
 *python_metadata*
 iris/
+ignore_scripts/
