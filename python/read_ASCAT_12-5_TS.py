@@ -31,10 +31,10 @@ import sm_config as config
 
 print_sample = False
 
-ts_reader = H115Ts(cdr_path=config.product_inputs_dict['ASCAT 12.5 TS']['ts_dir'],
-                   grid_path=config.product_inputs_dict['ASCAT 12.5 TS']['grid_dir'],
-                   grid_filename=config.product_inputs_dict['ASCAT 12.5 TS']['grid_file'],
-                   static_layer_path=config.product_inputs_dict['ASCAT 12.5 TS']['static_layers_dir'])
+ts_reader = H115Ts(cdr_path=config.dict_product_inputs['ASCAT 12.5 TS']['ts_dir'],
+                   grid_path=config.dict_product_inputs['ASCAT 12.5 TS']['grid_dir'],
+                   grid_filename=config.dict_product_inputs['ASCAT 12.5 TS']['grid_file'],
+                   static_layer_path=config.dict_product_inputs['ASCAT 12.5 TS']['static_layers_dir'])
 
 # Degero: 19.556539 64.182029
 ts = ts_reader.read(19.556539, 64.182029)

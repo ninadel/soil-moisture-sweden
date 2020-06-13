@@ -40,8 +40,8 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
     product_list = tools.get_product_list(products)
     for product in product_list:
         product_str = product.replace(' ', '-')
-        product_reader = tools.get_product_reader(product, config.product_inputs_dict[product])
-        product_sm_col = config.product_fields_dict[product]['sm_field']
+        product_reader = tools.get_product_reader(product, config.dict_product_inputs[product])
+        product_sm_col = config.dict_product_fields[product]['sm_field']
         for ref_loc in references:
             tools.write_log(log_file, "*** analyzing {} x {} {} ***".format(product, ref_loc.network, ref_loc.station))
             ref_data = tools.get_ref_data(ref_loc, filter_ref, anomaly)[0]

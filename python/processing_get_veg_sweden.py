@@ -8,8 +8,8 @@ import netCDF4
 import pandas
 import sm_tools as tools
 
-with open("gldas_veg_dict.json", "r") as f:
-    gldas_veg_dict = json.load(f)
+with open("dict_gldas_veg.json", "r") as f:
+    dict_gldas_veg = json.load(f)
 
 veg_grid = r"C:\git\soil-moisture-sweden\gldas_ts_aux\GLDASp4_domveg_025d.nc4"
 veg_grid_nc = netCDF4.Dataset(veg_grid, 'r')
@@ -27,7 +27,7 @@ for index, row in sweden_points.iterrows():
     nearest_lon_idx = tools.find_nearest(lon_array, row['lon'])[0]
     nearest_lat_idx = tools.find_nearest(lat_array, row['lat'])[0]
     value = veg_grid_nc['GLDAS_domveg'][0, nearest_lat_idx, nearest_lon_idx]
-    veg_class = gldas_veg_dict[str(int(value))]
+    veg_class = dict_gldas_veg[str(int(value))]
     if veg_class not in list(sweden_GLDAS_domveg_points.keys()):
         # sweden_GLDAS_domveg_points[value_str] = {}
         sweden_GLDAS_domveg_points[veg_class] = [(row['lat'], row['lon'])]
@@ -36,7 +36,7 @@ for index, row in sweden_points.iterrows():
 
 print(sweden_GLDAS_domveg_points)
 
-# with open('swe_gldasvc_dict.json', 'w') as f:
+# with open('dict_swe_gldasvc.json', 'w') as f:
 #     json.dump(sweden_GLDAS_domveg_points, f)
 #
 for key, value in sweden_GLDAS_domveg_points.items():

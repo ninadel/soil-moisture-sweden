@@ -13,7 +13,7 @@ metrics_df_columns = ["network", "station", "ref_filtered", "product", "product_
                       "bias", "rmsd", "ubrmsd", "pearsonr", "pearsonr_p"]
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
-product_inputs_dict = {
+dict_product_inputs = {
     "ASCAT SM-OBS-2": {
         "ts_dir": None
     },
@@ -51,13 +51,13 @@ product_inputs_dict = {
 
 # open external dictionaries
 # dictionary which defines timeframes to analyze
-with open("timeframes_dict.json", "r") as f:
-    timeframes_dict = json.load(f)
+with open("dict_timeframes.json", "r") as f:
+    dict_timeframes = json.load(f)
 
 # dictionary which stores static fields (e.g. lat, lon, sm field)
-with open("product_fields_dict.json", "r") as f:
-    product_fields_dict = json.load(f)
+with open("dict_product_fields.json", "r") as f:
+    dict_product_fields = json.load(f)
 
 # dictionary which stores GLDAS vegetation classes and corresponding SWE grid points
-with open("swe_gldasvc_dict.json", "r") as f:
-    swe_gldasvc_dict = json.load(f)
+with open("dict_swe_gldasvc.json", "r") as f:
+    dict_swe_gldasvc = json.load(f)

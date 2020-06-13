@@ -55,13 +55,13 @@ def get_icos_files(input_dir):
 
 
 def get_icos_readers(input_dir):
-    with open("icos_dict.json", "r") as f:
-        icos_dict = json.load(f)
+    with open("dict_icos.json", "r") as f:
+        dict_icos = json.load(f)
     readers = []
     for filename in os.listdir(input_dir):
         filename_parts = filename.split(".")
         station = filename_parts[0]
-        metadata = icos_dict[station]
+        metadata = dict_icos[station]
         data = pandas.read_csv(os.path.join(input_dir, filename), index_col=0)
         reader = ICOSTimeSeries(metadata, data)
         readers.append(reader)
@@ -172,8 +172,8 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False)
             print("For now, no filters for SMOS-IC")
             # See "Quality_Flag" field
         # Timestampp OK
-    product_metadata = config.product_inputs_dict[product]
-    sm = data[config.product_fields_dict[product]["sm_field"]]
+    product_metadata = config.dict_product_inputs[product]
+    sm = data[config.dict_product_fields[product]["sm_field"]]
     # sm = data[product_metadata["sm_field"]]
     if anomaly:
         sm = calc_anomaly(sm)
@@ -266,7 +266,7 @@ def get_series(input_root, lon_loc, lat_loc, parameters, lon_field="lon", lat_fi
     return series
 
 
-# function which parses swe_gldasvc_dict.json into a list of GLDASRefLoc objects
+# function which parses dict_swe_gldasvc.json into a list of GLDASRefLoc objects
 def get_gldas_references(ref_dict, input_root, veg_class_filter=None):
     reader = GLDASTs(input_root)
     ref_loc_list = []
