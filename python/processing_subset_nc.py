@@ -82,7 +82,7 @@ for file in os.listdir(input_dir):
             src_var_attributes = src[variable].__dict__
             dst_var_attributes = {}
             for key, value in src_var_attributes.items():
-                if key[0] == "_":
+                if key == "_FillValue":
                     continue
                 else:
                     dst_var_attributes[key] = value
