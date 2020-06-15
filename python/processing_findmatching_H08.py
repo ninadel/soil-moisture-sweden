@@ -6,6 +6,7 @@ Class to read ASCAT H08 (1 km sm-obs-2) product
 
 from ascat.h_saf import H08img
 from datetime import datetime
+import json
 import os
 import numpy
 import pandas
@@ -24,12 +25,8 @@ timeframe_end = datetime(2018, 6, 30, 23, 59)
 nordic_boundary = [54.53, 71.46, 4.25, 31.73]
 icos_boundary = [56.097581, 68.356003, 13.101768, 19.774413]
 
-dict_extent_sweden = {
-    'min_lat': 55.375,
-    'max_lat': 68.875,
-    'min_lon': 11.375,
-    'max_lon': 24.125
-}
+with open("dict_extent_sweden.json", "r") as f:
+    dict_extent_sweden = json.load(f)
 
 h08_reader = H08img(data_path, day_search_str = 'h08_%Y%m%d__%H%M%S*.buf')
 
