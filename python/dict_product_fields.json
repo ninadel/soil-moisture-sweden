@@ -20,7 +20,9 @@
     "GLDAS": {
         "lon_field": "lon",
         "lat_field": "lat",
+        "time_field": "time",
         "sm_field": "SoilMoi0_10cm_inst",
+        "quality_fields": "",
         "scale": ""
     },
     "SMAP L3": {
