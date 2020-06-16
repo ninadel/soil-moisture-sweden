@@ -17,17 +17,17 @@ with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
 
 input_dir = r"..\sm_sample_files\cgls-biopar-ssm-01km"
-output_dir = r"..\test_output_data\gldas_subset"
-product_name = "GLDAS"
+output_dir = r"..\test_output_data\sentinel_subset"
+product_name = "Sentinel"
 
 product_metadata = dict_product_fields[product_name]
 lat_field = product_metadata['lat_field']
 lon_field = product_metadata['lon_field']
 time_field = product_metadata['time_field']
 # metadata fields that don't need to be subset
-meta_variables = ['time', 'time_bnds']
+meta_variables = ['crs', 'time']
 # fields that need to be subset based on lat/lon dimensions
-subset_variables = [product_metadata['sm_field']]
+subset_variables = ['ssm', 'ssm_noise']
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -48,28 +48,44 @@ for file in os.listdir(input_dir):
         for name, dimension in src.dimensions.items():
             if name == lat_field:
                 lats = src[lat_field][:]
+                print("lats.size:", lats.size)
                 # latitude lower and upper index based on defined bounds
-                latli = numpy.argmin(numpy.abs(lats - subset_min_lat))
-                latui = numpy.argmin(numpy.abs(lats - subset_max_lat))
+                if lats[0] > lats[-1]:
+                    latli = numpy.argmin(numpy.abs(lats - subset_max_lat))
+                    latui = numpy.argmin(numpy.abs(lats - subset_min_lat))
+                else:
+                    latli = numpy.argmin(numpy.abs(lats - subset_min_lat))
+                    latui = numpy.argmin(numpy.abs(lats - subset_max_lat))
+                print("latli:", latli)
+                print("latui:", latui)
                 lat_subset = src[lat_field][latli:latui]
+                print("lat_subset.size:", lat_subset.size)
                 dst.createDimension(lat_field, lat_subset.size)
             elif name == lon_field:
                 lons = src[lon_field][:]
+                print("lons.size:", lons.size)
                 # longitude lower and upper index based on defined bounds
-                lonli = numpy.argmin(numpy.abs(lons - subset_min_lon))
-                lonui = numpy.argmin(numpy.abs(lons - subset_max_lon))
+                if lons[0] > lons[-1]:
+                    lonli = numpy.argmin(numpy.abs(lons - subset_max_lon))
+                    lonui = numpy.argmin(numpy.abs(lons - subset_min_lon))
+                else:
+                    lonli = numpy.argmin(numpy.abs(lons - subset_min_lon))
+                    lonui = numpy.argmin(numpy.abs(lons - subset_max_lon))
+                print("lonli", lonli)
+                print("lonui", lonui)
                 # subset lat and lon subsets
                 lon_subset = src[lon_field][lonli:lonui]
+                print("lon_subset.size:", lon_subset.size)
                 # based on subset sizes, create lat and lon dimensions
                 dst.createDimension(lon_field, lon_subset.size)
             else:
                 dst.createDimension(name, (len(dimension) if not dimension.isunlimited() else None))
         # create lat variable
-        dst.createVariable(lat_field, src[lat_field].datatype, lat_field)
+        dst.createVariable(lat_field, src[lat_field].datatype, lat_field, chunksizes=lat_subset.size)
         dst[lat_field].setncatts(src[lat_field].__dict__)
         dst[lat_field][:] = lat_subset
         # create lon variable
-        dst.createVariable(lon_field, src[lon_field].datatype, lon_field)
+        dst.createVariable(lon_field, src[lon_field].datatype, lon_field, chunksizes=lon_subset.size)
         dst[lon_field].setncatts(src[lon_field].__dict__)
         dst[lon_field][:] = lon_subset
         for variable in meta_variables:
@@ -78,7 +94,6 @@ for file in os.listdir(input_dir):
             # copy variable attributes all at once via dictionary
             dst[variable].setncatts(src[variable].__dict__)
         for variable in subset_variables:
-            print(variable)
             src_var_attributes = src[variable].__dict__
             dst_var_attributes = {}
             for key, value in src_var_attributes.items():
