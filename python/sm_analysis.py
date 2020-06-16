@@ -24,7 +24,6 @@ evaluation_dict = {
 }
 
 insitu_evaluation = True
-gldas_evaluation = False
 anomaly_evaluation = False
 
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
@@ -40,11 +39,3 @@ if insitu_evaluation:
                                                     enddate=datetime(2018, 12, 31, 23, 59),
                                                     output_folder=analysis_output_folder, anomaly=anomaly_evaluation)
     print(insitu_evaluation_results)
-
-if gldas_evaluation:
-    gldas_references = tools.get_gldas_references(config.dict_swe_gldasvc,
-                                                  config.dict_product_inputs['GLDAS']['ts_dir'])
-    gldas_evaluation_results = evaluation.evaluate(gldas_references, evaluation_dict, startdate=datetime(2015, 4, 1),
-                                                   enddate=datetime(2018, 12, 31, 23, 59),
-                                                   output_folder=analysis_output_folder, anomaly=anomaly_evaluation)
-    print(gldas_evaluation_results)
