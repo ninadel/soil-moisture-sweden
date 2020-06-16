@@ -26,9 +26,10 @@ from pytesmo.time_series.anomaly import calc_anomaly
 import sm_config as config
 
 
-def write_log(filename, string, print_string=True):
-    with open(filename, "a") as logfile:
-        logfile.write(string + "\n")
+def write_log(filename, string, print_string=True, write_output=True):
+    if write_output:
+        with open(filename, "a") as logfile:
+            logfile.write(string + "\n")
     if print_string:
         print(string)
 
