@@ -16,7 +16,7 @@ with open("dict_extent_nordic.json", "r") as f:
 with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
 
-input_dir = r"..\sm_sample_files\gldas-noah-2.1-0.25deg"
+input_dir = r"..\sm_sample_files\cgls-biopar-ssm-01km"
 output_dir = r"..\test_output_data\gldas_subset"
 product_name = "GLDAS"
 
@@ -90,6 +90,7 @@ for file in os.listdir(input_dir):
                                fill_value=src_var_attributes['_FillValue'])
             dst[variable][:] = src[variable][:, latli:latui, lonli:lonui]
             dst[variable].setncatts(dst_var_attributes)
+    break
 
 # import netCDF4 as nc
 # toexclude = ['ExcludeVar1', 'ExcludeVar2']
