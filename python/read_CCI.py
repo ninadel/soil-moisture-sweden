@@ -7,8 +7,8 @@ from esa_cci_sm.interface import CCI_SM_025Img, CCI_SM_025Ds
 from datetime import datetime
 import os
 
-data_path = r'..\sm_sample_files\cci-0.25deg_global'
-os.listdir(data_path)
+product = "CCI Combined"
+data_path = r"C:\git\soil-moisture-sweden\sm_sample_files\cci-0.25deg_combined_global\ESACCI-SOILMOISTURE-L3S-SSMV-COMBINED-20180601000000-fv04.7.nc"
 sm_field = 'sm'
 
 # trying to read a single image
