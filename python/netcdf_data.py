@@ -7,11 +7,9 @@ import json
 import netCDF4
 import sm_tools as tools
 
-class NCTimeSeries(object):
-    def __init__(self, input_dir, product):
-        self.input_dir = input_dir
-        self.product = product
-    pass
+# dictionary which stores static fields (e.g. lat, lon, sm field)
+with open("dict_product_fields.json", "r") as f:
+    dict_product_fields = json.load(f)
 
 
 class NCFile(object):
@@ -24,6 +22,7 @@ class NCFile(object):
         self.lon_field = dict_product_fields[product]['lon_field']
         self.time_field = dict_product_fields[product]['time_field']
         self.sm_field = dict_product_fields['sm_field']
+        self.filters = dict_product_fields['filter_dict']
         self.dataset = netCDF4.Dataset(self.inpput_file, 'r')
 
     def get_summary(self, show_field_data=True, other_fields=None, output_file=None):
@@ -53,4 +52,22 @@ class NCFile(object):
         tools.write_log(output_file, "shape:", self.dataset[self.time_field][:].shape)
         if show_field_data:
             tools.write_log(output_file, self.dataset[self.time_field][:])
+
+
+class NCTimeSeries(object):
+    def __init__(self, input_dir, product):
+        self.input_dir = input_dir
+        self.product = product
+        self.lat_field = dict_product_fields[product]['lat_field']
+        self.lon_field = dict_product_fields[product]['lon_field']
+        self.time_field = dict_product_fields[product]['time_field']
+        self.sm_field = dict_product_fields[product]['sm_field']
+        self.filters = dict_product_fields[product]['filter_dict']
+    def get_data(self, input_dir, filter=True):
+
+        pass
+    def write_to_file(self, data_dict):
+        pass
+
+
 
