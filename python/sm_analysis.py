@@ -10,13 +10,17 @@ import sm_evaluation as evaluation
 
 # Dictionary which turns on/off product analyses
 evaluation_dict = {
-    "ASCAT 12.5 TS": True,
-    "ASCAT SM-OBS-2": False,
-    "CCI": False,
+    "ASCAT 12.5 TS": False,
+    "ASCAT SM-OBS-2": False,    # not supported yet
+    "CCI Active": False,     # not supported yet
+    "CCI Passive": False,    # not supported yet
+    "CCI Combined": False,
     "GLDAS": False,
+    "Sentinel": False,     # not supported yet
     "SMAP L3": False,
     "SMAP L4": False,
-    "SMOS-IC": False
+    "SMOS-IC": False,
+    "SMOS-BEC": False    # not supported yet
 }
 
 insitu_evaluation = True
