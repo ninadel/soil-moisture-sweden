@@ -23,7 +23,13 @@ dict_product_inputs = {
         "grid_file": "TUW_WARP5_grid_info_2_3.nc",
         "static_layers_dir": None
     },
-    "CCI": {
+    "CCI Active": {
+        "ts_dir": None
+    },
+    "CCI Passive": {
+        "ts_dir": None
+    },
+    "CCI Combined": {
         "ts_dir": r"C:\git\soil-moisture-sweden\input_data\cci-0.25deg_global_reshuffle"
     },
     "GLDAS": {
