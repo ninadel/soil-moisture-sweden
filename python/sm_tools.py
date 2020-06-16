@@ -142,9 +142,6 @@ def get_ref_data(ts, filter_ref=False, anomaly=False):
         sm_data = ref_data[sm_field]
         sm_data.dropna()
         # return sm_data, sm_field
-    elif type(ts) == GLDASRefLoc:
-        ref_data = ts.data["SoilMoi0_10cm_inst"]
-        sm_field = "gldas_sm"
     sm_data = ref_data[sm_field]
     if anomaly:
         sm_data = calc_anomaly(sm_data)
@@ -285,29 +282,6 @@ def get_series(input_root, lon_loc, lat_loc, parameters, lon_field="lon", lat_fi
                 break
     series.set_index("date_str", inplace=True)
     return series
-
-
-# function which parses dict_swe_gldasvc.json into a list of GLDASRefLoc objects
-def get_gldas_references(ref_dict, input_root, veg_class_filter=None):
-    reader = GLDASTs(input_root)
-    ref_loc_list = []
-    if veg_class_filter is not None:
-        if type(veg_class_filter) != list:
-            veg_classes = [veg_class_filter]
-        else:
-            veg_classes = veg_class_filter
-    else:
-        veg_classes = list(ref_dict.keys())
-    for veg_class in veg_classes:
-        point_list = ref_dict[veg_class]
-        for point in point_list:
-            # points are stored in [lat, lon] format
-            lat = point[0]
-            lon = point[1]
-            data = reader.read(lon, lat)
-            ref = GLDASRefLoc(lon, lat, veg_class, data)
-            ref_loc_list.append(ref)
-    return ref_loc_list
 
 
 def get_netcdf_summary(file, lon_field=None, lat_field=None, sm_field=None, time_field=None, show_field_data=True):
