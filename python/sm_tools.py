@@ -98,18 +98,28 @@ def get_product_reader(product, product_metadata):
         static_layers_dir = product_metadata["static_layers_dir"]
         reader = H115Ts(cdr_path=ts_dir, grid_path=grid_dir, grid_filename=grid_file,
                         static_layer_path=static_layers_dir)
-    if product == "CCI":
+    if product == "CCI Active":
+        ts_dir = product_metadata["ts_dir"]
+        reader = CCITs(ts_path=ts_dir)
+    if product == "CCI Passive":
+        ts_dir = product_metadata["ts_dir"]
+        reader = CCITs(ts_path=ts_dir)
+    if product == "CCI Combined":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
     if product == "GLDAS":
         ts_dir = product_metadata["ts_dir"]
         reader = GLDASTs(ts_path=ts_dir)
+    if product == "Sentinel":
+        reader = None
     if product == "SMAP L3":
         ts_dir = product_metadata["ts_dir"]
         reader = SMAPTs(ts_path=ts_dir)
     if product == "SMAP L4":
         ts_dir = product_metadata["ts_dir"]
         reader = SMAPTs(ts_path=ts_dir)
+    if product == "SMOS-BEC":
+        reader = None
     if product == "SMOS-IC":
         ts_dir = product_metadata["ts_dir"]
         reader = SMOSTs(ts_path=ts_dir)
@@ -147,7 +157,15 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False)
         if filter_prod:
             data = data.loc[data["ssf"] == 1]
         # Timestampp OK
-    if product == "CCI":
+    if product == "CCI Active":
+        data = ts
+        if filter_prod:
+            print("For now, no filters for CCI")
+    if product == "CCI Passive":
+        data = ts
+        if filter_prod:
+            print("For now, no filters for CCI")
+    if product == "CCI Combined":
         data = ts
         if filter_prod:
             print("For now, no filters for CCI")
@@ -166,6 +184,8 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False)
         if filter_prod:
             print("For now, no filters for SMAP L4")
         # Timestampp OK
+    if product == "SMOS-BEC":
+        pass
     if product == "SMOS-IC":
         data = ts
         if filter_prod:
@@ -287,3 +307,35 @@ def get_gldas_references(ref_dict, input_root, veg_class_filter=None):
             ref = GLDASRefLoc(lon, lat, veg_class, data)
             ref_loc_list.append(ref)
     return ref_loc_list
+
+
+def get_netcdf_summary(file, lon_field=None, lat_field=None, sm_field=None, time_field=None, show_field_data=True):
+    dataset = netCDF4.Dataset(file, 'r')
+    print("Attributes in dataset:")
+    print(dataset.ncattrs())
+    print("\nDimensions in dataset:")
+    for dimension in dataset.dimensions.items():
+        print(dimension)
+    print("\nVariables in dataset:")
+    for variable in dataset.variables.items():
+        print(variable)
+    if lon_field is not None:
+        print("\nLongitude field:")
+        print("shape:", dataset[lon_field][:].shape)
+        if show_field_data:
+            print(dataset[lon_field][:])
+    if lat_field is not None:
+        print("\nLatitude field:")
+        print("shape:", dataset[lat_field][:].shape)
+        if show_field_data:
+            print(dataset[lat_field][:])
+    if sm_field is not None:
+        print("\nSM field:")
+        print("shape:", dataset[sm_field][:].shape)
+        if show_field_data:
+            print(dataset[sm_field][:])
+    if time_field is not None:
+        print("\nTime field:")
+        print("shape:", dataset[time_field][:].shape)
+        if show_field_data:
+            print(dataset[time_field][:])
