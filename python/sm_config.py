@@ -64,6 +64,6 @@ with open("dict_timeframes.json", "r") as f:
 with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
 
-# dictionary which stores GLDAS vegetation classes and corresponding SWE grid points
-with open("dict_swe_gldasvc.json", "r") as f:
-    dict_swe_gldasvc = json.load(f)
+# dictionary which stores GLDAS grid points
+with open("dict_swe_gldas_points.json", "r") as f:
+    dict_swe_gldas_points = json.load(f)
