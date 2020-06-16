@@ -13,7 +13,6 @@ import pandas
 from ascat import H115Ts
 from esa_cci_sm.interface import CCITs
 from gldas.interface import GLDASTs
-from gldas_ref_loc import GLDASRefLoc
 import icos
 from icos import ICOSTimeSeries
 from ismn.interface import ISMN_Interface
