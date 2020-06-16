@@ -25,6 +25,13 @@
         "quality_fields": "",
         "scale": ""
     },
+    "Sentinel": {
+        "lon_field": "lon",
+        "lat_field": "lat",
+        "time_field": "time",
+        "sm_field": "ssm",
+        "scale": "lin_cdf_match"
+    },
     "SMAP L3": {
         "lon_field": "longitude",
         "lat_field": "latitude",
