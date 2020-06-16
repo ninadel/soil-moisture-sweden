@@ -1,0 +1,6277 @@
+{
+  "912322": {
+    "lat": 68.375,
+    "lon": 20.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903692": {
+    "lat": 66.875,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902249": {
+    "lat": 66.625,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902231": {
+    "lat": 66.625,
+    "lon": 17.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "900813": {
+    "lat": 66.375,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851823": {
+    "lat": 57.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846059": {
+    "lat": 56.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841731": {
+    "lat": 56.125,
+    "lon": 12.875,
+    "veg_class_name": "Cropland"
+  },
+  "895043": {
+    "lat": 65.375,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876294": {
+    "lat": 62.125,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879189": {
+    "lat": 62.625,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874863": {
+    "lat": 61.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874865": {
+    "lat": 61.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912324": {
+    "lat": 68.375,
+    "lon": 21.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910892": {
+    "lat": 68.125,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909444": {
+    "lat": 67.875,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909452": {
+    "lat": 67.875,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906570": {
+    "lat": 67.375,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903693": {
+    "lat": 66.875,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900799": {
+    "lat": 66.375,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899353": {
+    "lat": 66.125,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866215": {
+    "lat": 60.375,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863335": {
+    "lat": 59.875,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856137": {
+    "lat": 58.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854686": {
+    "lat": 58.375,
+    "lon": 11.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "853265": {
+    "lat": 58.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851814": {
+    "lat": 57.875,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850377": {
+    "lat": 57.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843171": {
+    "lat": 56.375,
+    "lon": 12.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "841735": {
+    "lat": 56.125,
+    "lon": 13.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "840296": {
+    "lat": 55.875,
+    "lon": 14.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "893599": {
+    "lat": 65.125,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870545": {
+    "lat": 61.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883492": {
+    "lat": 63.375,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873411": {
+    "lat": 61.625,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867666": {
+    "lat": 60.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905109": {
+    "lat": 67.125,
+    "lon": 17.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "905119": {
+    "lat": 67.125,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902251": {
+    "lat": 66.625,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900788": {
+    "lat": 66.375,
+    "lon": 17.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "899340": {
+    "lat": 66.125,
+    "lon": 15.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "857587": {
+    "lat": 58.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856128": {
+    "lat": 58.625,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850393": {
+    "lat": 57.625,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847493": {
+    "lat": 57.125,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897914": {
+    "lat": 65.875,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896467": {
+    "lat": 65.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896471": {
+    "lat": 65.625,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895030": {
+    "lat": 65.375,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895040": {
+    "lat": 65.375,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895041": {
+    "lat": 65.375,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889260": {
+    "lat": 64.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887833": {
+    "lat": 64.125,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887818": {
+    "lat": 64.125,
+    "lon": 14.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "886384": {
+    "lat": 63.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886392": {
+    "lat": 63.875,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884932": {
+    "lat": 63.625,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884956": {
+    "lat": 63.625,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880608": {
+    "lat": 62.875,
+    "lon": 12.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "909438": {
+    "lat": 67.875,
+    "lon": 19.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "905108": {
+    "lat": 67.125,
+    "lon": 17.125,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "899362": {
+    "lat": 66.125,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866221": {
+    "lat": 60.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861894": {
+    "lat": 59.625,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860460": {
+    "lat": 59.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859015": {
+    "lat": 59.125,
+    "lon": 13.875,
+    "veg_class_name": "missing value"
+  },
+  "859018": {
+    "lat": 59.125,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856138": {
+    "lat": 58.625,
+    "lon": 14.625,
+    "veg_class_name": "missing value"
+  },
+  "856141": {
+    "lat": 58.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850385": {
+    "lat": 57.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847498": {
+    "lat": 57.125,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844615": {
+    "lat": 56.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892137": {
+    "lat": 64.875,
+    "lon": 14.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "892145": {
+    "lat": 64.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890712": {
+    "lat": 64.625,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889259": {
+    "lat": 64.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889282": {
+    "lat": 64.375,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870542": {
+    "lat": 61.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876289": {
+    "lat": 62.125,
+    "lon": 12.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "876291": {
+    "lat": 62.125,
+    "lon": 12.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "886377": {
+    "lat": 63.875,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "913761": {
+    "lat": 68.625,
+    "lon": 20.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "906552": {
+    "lat": 67.375,
+    "lon": 18.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903677": {
+    "lat": 66.875,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859027": {
+    "lat": 59.125,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859007": {
+    "lat": 59.125,
+    "lon": 11.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857588": {
+    "lat": 58.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857589": {
+    "lat": 58.875,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847489": {
+    "lat": 57.125,
+    "lon": 12.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "846057": {
+    "lat": 56.875,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846064": {
+    "lat": 56.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896461": {
+    "lat": 65.625,
+    "lon": 15.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "869091": {
+    "lat": 60.875,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883516": {
+    "lat": 63.375,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882064": {
+    "lat": 63.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880628": {
+    "lat": 62.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879181": {
+    "lat": 62.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912318": {
+    "lat": 68.375,
+    "lon": 19.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "912320": {
+    "lat": 68.375,
+    "lon": 20.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "909449": {
+    "lat": 67.875,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902243": {
+    "lat": 66.625,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902252": {
+    "lat": 66.625,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900806": {
+    "lat": 66.375,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899369": {
+    "lat": 66.125,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899374": {
+    "lat": 66.125,
+    "lon": 23.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864773": {
+    "lat": 60.125,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863332": {
+    "lat": 59.875,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863344": {
+    "lat": 59.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856125": {
+    "lat": 58.625,
+    "lon": 11.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "856131": {
+    "lat": 58.625,
+    "lon": 12.875,
+    "veg_class_name": "missing value"
+  },
+  "887838": {
+    "lat": 64.125,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886386": {
+    "lat": 63.875,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883490": {
+    "lat": 63.375,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882060": {
+    "lat": 63.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873410": {
+    "lat": 61.625,
+    "lon": 12.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "873420": {
+    "lat": 61.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867662": {
+    "lat": 60.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864789": {
+    "lat": 60.125,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863350": {
+    "lat": 59.875,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857569": {
+    "lat": 58.875,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851821": {
+    "lat": 57.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846051": {
+    "lat": 56.875,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843177": {
+    "lat": 56.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893578": {
+    "lat": 65.125,
+    "lon": 14.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "893583": {
+    "lat": 65.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892163": {
+    "lat": 64.875,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889270": {
+    "lat": 64.375,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886382": {
+    "lat": 63.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867658": {
+    "lat": 60.625,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912327": {
+    "lat": 68.375,
+    "lon": 21.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "900791": {
+    "lat": 66.375,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866224": {
+    "lat": 60.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864772": {
+    "lat": 60.125,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864783": {
+    "lat": 60.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863339": {
+    "lat": 59.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861889": {
+    "lat": 59.625,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860463": {
+    "lat": 59.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856144": {
+    "lat": 58.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851812": {
+    "lat": 57.875,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850386": {
+    "lat": 57.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841730": {
+    "lat": 56.125,
+    "lon": 12.625,
+    "veg_class_name": "Ocean "
+  },
+  "893587": {
+    "lat": 65.125,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889276": {
+    "lat": 64.375,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869096": {
+    "lat": 60.875,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870544": {
+    "lat": 61.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887843": {
+    "lat": 64.125,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884944": {
+    "lat": 63.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879168": {
+    "lat": 62.625,
+    "lon": 12.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "874861": {
+    "lat": 61.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871978": {
+    "lat": 61.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909451": {
+    "lat": 67.875,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906572": {
+    "lat": 67.375,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900796": {
+    "lat": 66.375,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866226": {
+    "lat": 60.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864781": {
+    "lat": 60.125,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863355": {
+    "lat": 59.875,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861907": {
+    "lat": 59.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856139": {
+    "lat": 58.625,
+    "lon": 14.875,
+    "veg_class_name": "missing value"
+  },
+  "851816": {
+    "lat": 57.875,
+    "lon": 14.125,
+    "veg_class_name": "Ocean "
+  },
+  "847502": {
+    "lat": 57.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897915": {
+    "lat": 65.875,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897933": {
+    "lat": 65.875,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897936": {
+    "lat": 65.875,
+    "lon": 24.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869089": {
+    "lat": 60.875,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876305": {
+    "lat": 62.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887841": {
+    "lat": 64.125,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867668": {
+    "lat": 60.625,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "908008": {
+    "lat": 67.625,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902239": {
+    "lat": 66.625,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899341": {
+    "lat": 66.125,
+    "lon": 15.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "899344": {
+    "lat": 66.125,
+    "lon": 16.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "863329": {
+    "lat": 59.875,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863340": {
+    "lat": 59.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863348": {
+    "lat": 59.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861901": {
+    "lat": 59.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850369": {
+    "lat": 57.625,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850371": {
+    "lat": 57.625,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846050": {
+    "lat": 56.875,
+    "lon": 12.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "844619": {
+    "lat": 56.625,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897934": {
+    "lat": 65.875,
+    "lon": 23.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896477": {
+    "lat": 65.625,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892141": {
+    "lat": 64.875,
+    "lon": 15.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "892156": {
+    "lat": 64.875,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889266": {
+    "lat": 64.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887840": {
+    "lat": 64.125,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887820": {
+    "lat": 64.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887826": {
+    "lat": 64.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886380": {
+    "lat": 63.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884949": {
+    "lat": 63.625,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884952": {
+    "lat": 63.625,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882070": {
+    "lat": 63.125,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880624": {
+    "lat": 62.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873425": {
+    "lat": 61.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873426": {
+    "lat": 61.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867665": {
+    "lat": 60.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "908003": {
+    "lat": 67.625,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906568": {
+    "lat": 67.375,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903672": {
+    "lat": 66.875,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899363": {
+    "lat": 66.125,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866228": {
+    "lat": 60.375,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860467": {
+    "lat": 59.375,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859032": {
+    "lat": 59.125,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857568": {
+    "lat": 58.875,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854689": {
+    "lat": 58.375,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847496": {
+    "lat": 57.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843182": {
+    "lat": 56.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897929": {
+    "lat": 65.875,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892164": {
+    "lat": 64.875,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870540": {
+    "lat": 61.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883497": {
+    "lat": 63.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880626": {
+    "lat": 62.875,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873417": {
+    "lat": 61.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871982": {
+    "lat": 61.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909453": {
+    "lat": 67.875,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900792": {
+    "lat": 66.375,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866223": {
+    "lat": 60.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864774": {
+    "lat": 60.125,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861890": {
+    "lat": 59.625,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844620": {
+    "lat": 56.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897919": {
+    "lat": 65.875,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897922": {
+    "lat": 65.875,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870547": {
+    "lat": 61.125,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886376": {
+    "lat": 63.875,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884959": {
+    "lat": 63.625,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882049": {
+    "lat": 63.125,
+    "lon": 12.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "882055": {
+    "lat": 63.125,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882057": {
+    "lat": 63.125,
+    "lon": 14.375,
+    "veg_class_name": "Ocean "
+  },
+  "877733": {
+    "lat": 62.375,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "913762": {
+    "lat": 68.625,
+    "lon": 20.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "900805": {
+    "lat": 66.375,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859009": {
+    "lat": 59.125,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859019": {
+    "lat": 59.125,
+    "lon": 14.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "857575": {
+    "lat": 58.875,
+    "lon": 13.875,
+    "veg_class_name": "missing value"
+  },
+  "848932": {
+    "lat": 57.375,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896476": {
+    "lat": 65.625,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896480": {
+    "lat": 65.625,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895023": {
+    "lat": 65.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892161": {
+    "lat": 64.875,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889264": {
+    "lat": 64.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889267": {
+    "lat": 64.375,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889271": {
+    "lat": 64.375,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886372": {
+    "lat": 63.875,
+    "lon": 13.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "886374": {
+    "lat": 63.875,
+    "lon": 13.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "882062": {
+    "lat": 63.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879177": {
+    "lat": 62.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867653": {
+    "lat": 60.625,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867657": {
+    "lat": 60.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "908004": {
+    "lat": 67.625,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906567": {
+    "lat": 67.375,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903681": {
+    "lat": 66.875,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903682": {
+    "lat": 66.875,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900809": {
+    "lat": 66.375,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900812": {
+    "lat": 66.375,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899346": {
+    "lat": 66.125,
+    "lon": 16.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "899348": {
+    "lat": 66.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866225": {
+    "lat": 60.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866212": {
+    "lat": 60.375,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860456": {
+    "lat": 59.375,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859028": {
+    "lat": 59.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847499": {
+    "lat": 57.125,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843172": {
+    "lat": 56.375,
+    "lon": 13.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "897900": {
+    "lat": 65.875,
+    "lon": 15.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "897908": {
+    "lat": 65.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896472": {
+    "lat": 65.625,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892159": {
+    "lat": 64.875,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870546": {
+    "lat": 61.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887822": {
+    "lat": 64.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886400": {
+    "lat": 63.875,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883514": {
+    "lat": 63.375,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873422": {
+    "lat": 61.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "908012": {
+    "lat": 67.625,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906554": {
+    "lat": 67.375,
+    "lon": 18.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "903665": {
+    "lat": 66.875,
+    "lon": 16.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "902224": {
+    "lat": 66.625,
+    "lon": 16.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "900802": {
+    "lat": 66.375,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864780": {
+    "lat": 60.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863345": {
+    "lat": 59.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857583": {
+    "lat": 58.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854703": {
+    "lat": 58.375,
+    "lon": 15.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "850383": {
+    "lat": 57.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897910": {
+    "lat": 65.875,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893580": {
+    "lat": 65.125,
+    "lon": 15.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "887830": {
+    "lat": 64.125,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886393": {
+    "lat": 63.875,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886397": {
+    "lat": 63.875,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880614": {
+    "lat": 62.875,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879187": {
+    "lat": 62.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874854": {
+    "lat": 61.875,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909448": {
+    "lat": 67.875,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906557": {
+    "lat": 67.375,
+    "lon": 19.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903688": {
+    "lat": 66.875,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902235": {
+    "lat": 66.625,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899338": {
+    "lat": 66.125,
+    "lon": 14.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "899343": {
+    "lat": 66.125,
+    "lon": 15.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "854704": {
+    "lat": 58.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853260": {
+    "lat": 58.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850374": {
+    "lat": 57.625,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847491": {
+    "lat": 57.125,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846056": {
+    "lat": 56.875,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844622": {
+    "lat": 56.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843175": {
+    "lat": 56.375,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "838856": {
+    "lat": 55.625,
+    "lon": 14.125,
+    "veg_class_name": "Cropland"
+  },
+  "870535": {
+    "lat": 61.125,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870543": {
+    "lat": 61.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887835": {
+    "lat": 64.125,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887823": {
+    "lat": 64.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882063": {
+    "lat": 63.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874867": {
+    "lat": 61.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874868": {
+    "lat": 61.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "908013": {
+    "lat": 67.625,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903684": {
+    "lat": 66.875,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909442": {
+    "lat": 67.875,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909431": {
+    "lat": 67.875,
+    "lon": 17.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "907990": {
+    "lat": 67.625,
+    "lon": 17.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "903686": {
+    "lat": 66.875,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902236": {
+    "lat": 66.625,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900783": {
+    "lat": 66.375,
+    "lon": 15.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "900804": {
+    "lat": 66.375,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899373": {
+    "lat": 66.125,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866227": {
+    "lat": 60.375,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863328": {
+    "lat": 59.875,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859012": {
+    "lat": 59.125,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857586": {
+    "lat": 58.875,
+    "lon": 16.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "856129": {
+    "lat": 58.625,
+    "lon": 12.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "851817": {
+    "lat": 57.875,
+    "lon": 14.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "848928": {
+    "lat": 57.375,
+    "lon": 12.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "897905": {
+    "lat": 65.875,
+    "lon": 16.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "896469": {
+    "lat": 65.625,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896484": {
+    "lat": 65.625,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896488": {
+    "lat": 65.625,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876303": {
+    "lat": 62.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887827": {
+    "lat": 64.125,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886401": {
+    "lat": 63.875,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886373": {
+    "lat": 63.875,
+    "lon": 13.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "882058": {
+    "lat": 63.125,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880612": {
+    "lat": 62.875,
+    "lon": 13.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910879": {
+    "lat": 68.125,
+    "lon": 19.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910890": {
+    "lat": 68.125,
+    "lon": 22.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "908009": {
+    "lat": 67.625,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906559": {
+    "lat": 67.375,
+    "lon": 19.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903673": {
+    "lat": 66.875,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900786": {
+    "lat": 66.375,
+    "lon": 16.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "866214": {
+    "lat": 60.375,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859026": {
+    "lat": 59.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854698": {
+    "lat": 58.375,
+    "lon": 14.625,
+    "veg_class_name": "missing value"
+  },
+  "851835": {
+    "lat": 57.875,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850384": {
+    "lat": 57.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846062": {
+    "lat": 56.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846065": {
+    "lat": 56.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895032": {
+    "lat": 65.375,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893589": {
+    "lat": 65.125,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886371": {
+    "lat": 63.875,
+    "lon": 12.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "880620": {
+    "lat": 62.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880627": {
+    "lat": 62.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880615": {
+    "lat": 62.875,
+    "lon": 13.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "879173": {
+    "lat": 62.625,
+    "lon": 13.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "874866": {
+    "lat": 61.875,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871974": {
+    "lat": 61.375,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912328": {
+    "lat": 68.375,
+    "lon": 22.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910880": {
+    "lat": 68.125,
+    "lon": 20.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906562": {
+    "lat": 67.375,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903674": {
+    "lat": 66.875,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899370": {
+    "lat": 66.125,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899371": {
+    "lat": 66.125,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899372": {
+    "lat": 66.125,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864782": {
+    "lat": 60.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860448": {
+    "lat": 59.375,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857577": {
+    "lat": 58.875,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850376": {
+    "lat": 57.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "838854": {
+    "lat": 55.625,
+    "lon": 13.625,
+    "veg_class_name": "Cropland"
+  },
+  "897899": {
+    "lat": 65.875,
+    "lon": 14.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "912313": {
+    "lat": 68.375,
+    "lon": 18.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "908010": {
+    "lat": 67.625,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899351": {
+    "lat": 66.125,
+    "lon": 17.875,
+    "veg_class_name": "Ocean "
+  },
+  "899354": {
+    "lat": 66.125,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899358": {
+    "lat": 66.125,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864771": {
+    "lat": 60.125,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864791": {
+    "lat": 60.125,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864793": {
+    "lat": 60.125,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863341": {
+    "lat": 59.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863351": {
+    "lat": 59.875,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854695": {
+    "lat": 58.375,
+    "lon": 13.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "853247": {
+    "lat": 58.125,
+    "lon": 11.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853262": {
+    "lat": 58.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850378": {
+    "lat": 57.625,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848943": {
+    "lat": 57.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "837412": {
+    "lat": 55.375,
+    "lon": 13.125,
+    "veg_class_name": "Ocean "
+  },
+  "897930": {
+    "lat": 65.875,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895042": {
+    "lat": 65.375,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889258": {
+    "lat": 64.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886395": {
+    "lat": 63.875,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883511": {
+    "lat": 63.375,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877745": {
+    "lat": 62.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909439": {
+    "lat": 67.875,
+    "lon": 19.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906564": {
+    "lat": 67.375,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905129": {
+    "lat": 67.125,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903678": {
+    "lat": 66.875,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902238": {
+    "lat": 66.625,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864775": {
+    "lat": 60.125,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854699": {
+    "lat": 58.375,
+    "lon": 14.875,
+    "veg_class_name": "Cropland"
+  },
+  "851819": {
+    "lat": 57.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848938": {
+    "lat": 57.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847504": {
+    "lat": 57.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869103": {
+    "lat": 60.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870541": {
+    "lat": 61.125,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880616": {
+    "lat": 62.875,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877729": {
+    "lat": 62.375,
+    "lon": 12.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "908001": {
+    "lat": 67.625,
+    "lon": 20.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "905130": {
+    "lat": 67.125,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902244": {
+    "lat": 66.625,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900794": {
+    "lat": 66.375,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860449": {
+    "lat": 59.375,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857570": {
+    "lat": 58.875,
+    "lon": 12.625,
+    "veg_class_name": "missing value"
+  },
+  "857573": {
+    "lat": 58.875,
+    "lon": 13.375,
+    "veg_class_name": "missing value"
+  },
+  "854687": {
+    "lat": 58.375,
+    "lon": 11.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848945": {
+    "lat": 57.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847500": {
+    "lat": 57.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844612": {
+    "lat": 56.625,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843176": {
+    "lat": 56.375,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "840293": {
+    "lat": 55.875,
+    "lon": 13.375,
+    "veg_class_name": "Cropland"
+  },
+  "897917": {
+    "lat": 65.875,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895037": {
+    "lat": 65.375,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890714": {
+    "lat": 64.625,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870548": {
+    "lat": 61.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886390": {
+    "lat": 63.875,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883502": {
+    "lat": 63.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882068": {
+    "lat": 63.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873412": {
+    "lat": 61.625,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873427": {
+    "lat": 61.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871987": {
+    "lat": 61.375,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "913764": {
+    "lat": 68.625,
+    "lon": 21.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "912330": {
+    "lat": 68.375,
+    "lon": 22.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906556": {
+    "lat": 67.375,
+    "lon": 19.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903687": {
+    "lat": 66.875,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903691": {
+    "lat": 66.875,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864794": {
+    "lat": 60.125,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863336": {
+    "lat": 59.875,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863354": {
+    "lat": 59.875,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861892": {
+    "lat": 59.625,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861897": {
+    "lat": 59.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861903": {
+    "lat": 59.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859017": {
+    "lat": 59.125,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856132": {
+    "lat": 58.625,
+    "lon": 13.125,
+    "veg_class_name": "missing value"
+  },
+  "854685": {
+    "lat": 58.375,
+    "lon": 11.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854690": {
+    "lat": 58.375,
+    "lon": 12.625,
+    "veg_class_name": "Ocean "
+  },
+  "848931": {
+    "lat": 57.375,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896479": {
+    "lat": 65.625,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895035": {
+    "lat": 65.375,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889273": {
+    "lat": 64.375,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869106": {
+    "lat": 60.875,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887837": {
+    "lat": 64.125,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877730": {
+    "lat": 62.375,
+    "lon": 12.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "877732": {
+    "lat": 62.375,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867655": {
+    "lat": 60.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "913763": {
+    "lat": 68.625,
+    "lon": 20.875,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "907987": {
+    "lat": 67.625,
+    "lon": 16.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "906571": {
+    "lat": 67.375,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899359": {
+    "lat": 66.125,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861888": {
+    "lat": 59.625,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861912": {
+    "lat": 59.625,
+    "lon": 18.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "853261": {
+    "lat": 58.125,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841734": {
+    "lat": 56.125,
+    "lon": 13.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "841736": {
+    "lat": 56.125,
+    "lon": 14.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "895036": {
+    "lat": 65.375,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893598": {
+    "lat": 65.125,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890702": {
+    "lat": 64.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890719": {
+    "lat": 64.625,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886396": {
+    "lat": 63.875,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884940": {
+    "lat": 63.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884943": {
+    "lat": 63.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882048": {
+    "lat": 63.125,
+    "lon": 12.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "882051": {
+    "lat": 63.125,
+    "lon": 12.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "877746": {
+    "lat": 62.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874849": {
+    "lat": 61.875,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867660": {
+    "lat": 60.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909429": {
+    "lat": 67.875,
+    "lon": 17.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "907993": {
+    "lat": 67.625,
+    "lon": 18.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906558": {
+    "lat": 67.375,
+    "lon": 19.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906565": {
+    "lat": 67.375,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905131": {
+    "lat": 67.125,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902225": {
+    "lat": 66.625,
+    "lon": 16.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "863331": {
+    "lat": 59.875,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897925": {
+    "lat": 65.875,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895018": {
+    "lat": 65.375,
+    "lon": 14.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "893584": {
+    "lat": 65.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893600": {
+    "lat": 65.125,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883491": {
+    "lat": 63.375,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882052": {
+    "lat": 63.125,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879170": {
+    "lat": 62.625,
+    "lon": 12.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "873418": {
+    "lat": 61.625,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909428": {
+    "lat": 67.875,
+    "lon": 17.125,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "909433": {
+    "lat": 67.875,
+    "lon": 18.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "899368": {
+    "lat": 66.125,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863342": {
+    "lat": 59.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844617": {
+    "lat": 56.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843173": {
+    "lat": 56.375,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895028": {
+    "lat": 65.375,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893597": {
+    "lat": 65.125,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892147": {
+    "lat": 64.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890722": {
+    "lat": 64.625,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890724": {
+    "lat": 64.625,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886394": {
+    "lat": 63.875,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883512": {
+    "lat": 63.375,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879179": {
+    "lat": 62.625,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871973": {
+    "lat": 61.375,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871981": {
+    "lat": 61.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909430": {
+    "lat": 67.875,
+    "lon": 17.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "905125": {
+    "lat": 67.125,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902246": {
+    "lat": 66.625,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899355": {
+    "lat": 66.125,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864792": {
+    "lat": 60.125,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854692": {
+    "lat": 58.375,
+    "lon": 13.125,
+    "veg_class_name": "Cropland"
+  },
+  "854705": {
+    "lat": 58.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896460": {
+    "lat": 65.625,
+    "lon": 15.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "896464": {
+    "lat": 65.625,
+    "lon": 16.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890695": {
+    "lat": 64.625,
+    "lon": 13.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890717": {
+    "lat": 64.625,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889262": {
+    "lat": 64.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876298": {
+    "lat": 62.125,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886379": {
+    "lat": 63.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886381": {
+    "lat": 63.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884954": {
+    "lat": 63.625,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883500": {
+    "lat": 63.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883504": {
+    "lat": 63.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882073": {
+    "lat": 63.125,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874855": {
+    "lat": 61.875,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910883": {
+    "lat": 68.125,
+    "lon": 20.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906574": {
+    "lat": 67.375,
+    "lon": 23.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906547": {
+    "lat": 67.375,
+    "lon": 16.875,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "905120": {
+    "lat": 67.125,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902255": {
+    "lat": 66.625,
+    "lon": 23.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864770": {
+    "lat": 60.125,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864779": {
+    "lat": 60.125,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857576": {
+    "lat": 58.875,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857578": {
+    "lat": 58.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854696": {
+    "lat": 58.375,
+    "lon": 14.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "853263": {
+    "lat": 58.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848939": {
+    "lat": 57.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844614": {
+    "lat": 56.625,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893595": {
+    "lat": 65.125,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889275": {
+    "lat": 64.375,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889278": {
+    "lat": 64.375,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870537": {
+    "lat": 61.125,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876293": {
+    "lat": 62.125,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887842": {
+    "lat": 64.125,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883494": {
+    "lat": 63.375,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880625": {
+    "lat": 62.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877742": {
+    "lat": 62.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907998": {
+    "lat": 67.625,
+    "lon": 19.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906545": {
+    "lat": 67.375,
+    "lon": 16.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "906553": {
+    "lat": 67.375,
+    "lon": 18.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "905112": {
+    "lat": 67.125,
+    "lon": 18.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "902234": {
+    "lat": 66.625,
+    "lon": 18.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "900811": {
+    "lat": 66.375,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864787": {
+    "lat": 60.125,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859030": {
+    "lat": 59.125,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857585": {
+    "lat": 58.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856140": {
+    "lat": 58.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854706": {
+    "lat": 58.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853264": {
+    "lat": 58.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851813": {
+    "lat": 57.875,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848953": {
+    "lat": 57.375,
+    "lon": 18.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "848929": {
+    "lat": 57.375,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848936": {
+    "lat": 57.375,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847490": {
+    "lat": 57.125,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895020": {
+    "lat": 65.375,
+    "lon": 15.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890715": {
+    "lat": 64.625,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889279": {
+    "lat": 64.375,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870539": {
+    "lat": 61.125,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887836": {
+    "lat": 64.125,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883501": {
+    "lat": 63.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907995": {
+    "lat": 67.625,
+    "lon": 18.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906551": {
+    "lat": 67.375,
+    "lon": 17.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "905115": {
+    "lat": 67.125,
+    "lon": 18.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "899352": {
+    "lat": 66.125,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866219": {
+    "lat": 60.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856126": {
+    "lat": 58.625,
+    "lon": 11.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853251": {
+    "lat": 58.125,
+    "lon": 12.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "850367": {
+    "lat": 57.625,
+    "lon": 11.875,
+    "veg_class_name": "Ocean "
+  },
+  "850370": {
+    "lat": 57.625,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850373": {
+    "lat": 57.625,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850380": {
+    "lat": 57.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844621": {
+    "lat": 56.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843181": {
+    "lat": 56.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892160": {
+    "lat": 64.875,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890697": {
+    "lat": 64.625,
+    "lon": 14.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "869101": {
+    "lat": 60.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869108": {
+    "lat": 60.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870538": {
+    "lat": 61.125,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876292": {
+    "lat": 62.125,
+    "lon": 13.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "884953": {
+    "lat": 63.625,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "913765": {
+    "lat": 68.625,
+    "lon": 21.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "912325": {
+    "lat": 68.375,
+    "lon": 21.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "902237": {
+    "lat": 66.625,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866232": {
+    "lat": 60.375,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864785": {
+    "lat": 60.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863330": {
+    "lat": 59.875,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863347": {
+    "lat": 59.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860452": {
+    "lat": 59.375,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860453": {
+    "lat": 59.375,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859023": {
+    "lat": 59.125,
+    "lon": 15.875,
+    "veg_class_name": "Ocean "
+  },
+  "851811": {
+    "lat": 57.875,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848942": {
+    "lat": 57.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847494": {
+    "lat": 57.125,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896468": {
+    "lat": 65.625,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895039": {
+    "lat": 65.375,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893577": {
+    "lat": 65.125,
+    "lon": 14.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "893588": {
+    "lat": 65.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892142": {
+    "lat": 64.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890700": {
+    "lat": 64.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890705": {
+    "lat": 64.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869095": {
+    "lat": 60.875,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876299": {
+    "lat": 62.125,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886402": {
+    "lat": 63.875,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882056": {
+    "lat": 63.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879183": {
+    "lat": 62.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877743": {
+    "lat": 62.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903675": {
+    "lat": 66.875,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902248": {
+    "lat": 66.625,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902254": {
+    "lat": 66.625,
+    "lon": 23.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864778": {
+    "lat": 60.125,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861898": {
+    "lat": 59.625,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859008": {
+    "lat": 59.125,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856130": {
+    "lat": 58.625,
+    "lon": 12.625,
+    "veg_class_name": "missing value"
+  },
+  "897902": {
+    "lat": 65.875,
+    "lon": 15.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "897920": {
+    "lat": 65.875,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896473": {
+    "lat": 65.625,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892143": {
+    "lat": 64.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892146": {
+    "lat": 64.875,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890721": {
+    "lat": 64.625,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869104": {
+    "lat": 60.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886383": {
+    "lat": 63.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874856": {
+    "lat": 61.875,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907992": {
+    "lat": 67.625,
+    "lon": 18.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "902241": {
+    "lat": 66.625,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902228": {
+    "lat": 66.625,
+    "lon": 17.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "900803": {
+    "lat": 66.375,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863346": {
+    "lat": 59.875,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859029": {
+    "lat": 59.125,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859016": {
+    "lat": 59.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857581": {
+    "lat": 58.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856143": {
+    "lat": 58.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854688": {
+    "lat": 58.375,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851836": {
+    "lat": 57.875,
+    "lon": 19.125,
+    "veg_class_name": "missing value"
+  },
+  "850382": {
+    "lat": 57.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848930": {
+    "lat": 57.375,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846058": {
+    "lat": 56.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846063": {
+    "lat": 56.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897931": {
+    "lat": 65.875,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896462": {
+    "lat": 65.625,
+    "lon": 15.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "892140": {
+    "lat": 64.875,
+    "lon": 15.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "892144": {
+    "lat": 64.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889280": {
+    "lat": 64.375,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876309": {
+    "lat": 62.125,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887839": {
+    "lat": 64.125,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887829": {
+    "lat": 64.125,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882061": {
+    "lat": 63.125,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877731": {
+    "lat": 62.375,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912323": {
+    "lat": 68.375,
+    "lon": 20.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "909432": {
+    "lat": 67.875,
+    "lon": 18.125,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "900801": {
+    "lat": 66.375,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850372": {
+    "lat": 57.625,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897923": {
+    "lat": 65.875,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895025": {
+    "lat": 65.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895038": {
+    "lat": 65.375,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893590": {
+    "lat": 65.125,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890713": {
+    "lat": 64.625,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884933": {
+    "lat": 63.625,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910874": {
+    "lat": 68.125,
+    "lon": 18.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "910888": {
+    "lat": 68.125,
+    "lon": 22.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "908000": {
+    "lat": 67.625,
+    "lon": 20.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906569": {
+    "lat": 67.375,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905114": {
+    "lat": 67.125,
+    "lon": 18.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "902229": {
+    "lat": 66.625,
+    "lon": 17.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "899349": {
+    "lat": 66.125,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854700": {
+    "lat": 58.375,
+    "lon": 15.125,
+    "veg_class_name": "Cropland"
+  },
+  "853254": {
+    "lat": 58.125,
+    "lon": 13.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "853259": {
+    "lat": 58.125,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848935": {
+    "lat": 57.375,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841743": {
+    "lat": 56.125,
+    "lon": 15.875,
+    "veg_class_name": "missing value"
+  },
+  "838855": {
+    "lat": 55.625,
+    "lon": 13.875,
+    "veg_class_name": "Cropland"
+  },
+  "897916": {
+    "lat": 65.875,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895022": {
+    "lat": 65.375,
+    "lon": 15.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890718": {
+    "lat": 64.625,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876290": {
+    "lat": 62.125,
+    "lon": 12.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "887832": {
+    "lat": 64.125,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884936": {
+    "lat": 63.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884946": {
+    "lat": 63.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882059": {
+    "lat": 63.125,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882065": {
+    "lat": 63.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880621": {
+    "lat": 62.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880633": {
+    "lat": 62.875,
+    "lon": 18.375,
+    "veg_class_name": "missing value"
+  },
+  "877736": {
+    "lat": 62.375,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874851": {
+    "lat": 61.875,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871971": {
+    "lat": 61.375,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871976": {
+    "lat": 61.375,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867650": {
+    "lat": 60.625,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912317": {
+    "lat": 68.375,
+    "lon": 19.375,
+    "veg_class_name": "Ocean "
+  },
+  "909441": {
+    "lat": 67.875,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907991": {
+    "lat": 67.625,
+    "lon": 17.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "905111": {
+    "lat": 67.125,
+    "lon": 17.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903689": {
+    "lat": 66.875,
+    "lon": 22.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900785": {
+    "lat": 66.375,
+    "lon": 16.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "900789": {
+    "lat": 66.375,
+    "lon": 17.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "899350": {
+    "lat": 66.125,
+    "lon": 17.625,
+    "veg_class_name": "Ocean "
+  },
+  "866231": {
+    "lat": 60.375,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863337": {
+    "lat": 59.875,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860464": {
+    "lat": 59.375,
+    "lon": 16.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "854697": {
+    "lat": 58.375,
+    "lon": 14.375,
+    "veg_class_name": "missing value"
+  },
+  "843183": {
+    "lat": 56.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897907": {
+    "lat": 65.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897913": {
+    "lat": 65.875,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896481": {
+    "lat": 65.625,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892155": {
+    "lat": 64.875,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889265": {
+    "lat": 64.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870531": {
+    "lat": 61.125,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876306": {
+    "lat": 62.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884945": {
+    "lat": 63.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884948": {
+    "lat": 63.625,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884958": {
+    "lat": 63.625,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883498": {
+    "lat": 63.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874858": {
+    "lat": 61.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873421": {
+    "lat": 61.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871975": {
+    "lat": 61.375,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906560": {
+    "lat": 67.375,
+    "lon": 20.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906549": {
+    "lat": 67.375,
+    "lon": 17.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "900797": {
+    "lat": 66.375,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854694": {
+    "lat": 58.375,
+    "lon": 13.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "851807": {
+    "lat": 57.875,
+    "lon": 11.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "847505": {
+    "lat": 57.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844623": {
+    "lat": 56.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897901": {
+    "lat": 65.875,
+    "lon": 15.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "896486": {
+    "lat": 65.625,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896489": {
+    "lat": 65.625,
+    "lon": 22.375,
+    "veg_class_name": "missing value"
+  },
+  "893601": {
+    "lat": 65.125,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892154": {
+    "lat": 64.875,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890696": {
+    "lat": 64.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876296": {
+    "lat": 62.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887828": {
+    "lat": 64.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886398": {
+    "lat": 63.875,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884937": {
+    "lat": 63.625,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877734": {
+    "lat": 62.375,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874853": {
+    "lat": 61.875,
+    "lon": 13.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "867663": {
+    "lat": 60.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844618": {
+    "lat": 56.625,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910887": {
+    "lat": 68.125,
+    "lon": 21.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "909436": {
+    "lat": 67.875,
+    "lon": 19.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "905128": {
+    "lat": 67.125,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903685": {
+    "lat": 66.875,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864790": {
+    "lat": 60.125,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861914": {
+    "lat": 59.625,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860455": {
+    "lat": 59.375,
+    "lon": 13.875,
+    "veg_class_name": "Ocean "
+  },
+  "857572": {
+    "lat": 58.875,
+    "lon": 13.125,
+    "veg_class_name": "missing value"
+  },
+  "851820": {
+    "lat": 57.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896458": {
+    "lat": 65.625,
+    "lon": 14.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "876302": {
+    "lat": 62.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874862": {
+    "lat": 61.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873409": {
+    "lat": 61.625,
+    "lon": 12.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910875": {
+    "lat": 68.125,
+    "lon": 18.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "909445": {
+    "lat": 67.875,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907989": {
+    "lat": 67.625,
+    "lon": 17.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "908002": {
+    "lat": 67.625,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905110": {
+    "lat": 67.125,
+    "lon": 17.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "899366": {
+    "lat": 66.125,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847492": {
+    "lat": 57.125,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897918": {
+    "lat": 65.875,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897935": {
+    "lat": 65.875,
+    "lon": 23.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895044": {
+    "lat": 65.375,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869107": {
+    "lat": 60.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884950": {
+    "lat": 63.625,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883509": {
+    "lat": 63.375,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883510": {
+    "lat": 63.375,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882066": {
+    "lat": 63.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880618": {
+    "lat": 62.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877741": {
+    "lat": 62.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871986": {
+    "lat": 61.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903669": {
+    "lat": 66.875,
+    "lon": 17.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "866218": {
+    "lat": 60.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861896": {
+    "lat": 59.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853252": {
+    "lat": 58.125,
+    "lon": 13.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "893582": {
+    "lat": 65.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893592": {
+    "lat": 65.125,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893603": {
+    "lat": 65.125,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889269": {
+    "lat": 64.375,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889283": {
+    "lat": 64.375,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884955": {
+    "lat": 63.625,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883503": {
+    "lat": 63.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883513": {
+    "lat": 63.375,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879174": {
+    "lat": 62.625,
+    "lon": 13.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "879191": {
+    "lat": 62.625,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871985": {
+    "lat": 61.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867661": {
+    "lat": 60.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903695": {
+    "lat": 66.875,
+    "lon": 23.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861887": {
+    "lat": 59.625,
+    "lon": 11.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860458": {
+    "lat": 59.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857579": {
+    "lat": 58.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "840292": {
+    "lat": 55.875,
+    "lon": 13.125,
+    "veg_class_name": "Cropland"
+  },
+  "897912": {
+    "lat": 65.875,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896465": {
+    "lat": 65.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896483": {
+    "lat": 65.625,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893586": {
+    "lat": 65.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892153": {
+    "lat": 64.875,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870533": {
+    "lat": 61.125,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886387": {
+    "lat": 63.875,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883489": {
+    "lat": 63.375,
+    "lon": 12.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "873416": {
+    "lat": 61.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905106": {
+    "lat": 67.125,
+    "lon": 16.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "851824": {
+    "lat": 57.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843179": {
+    "lat": 56.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841733": {
+    "lat": 56.125,
+    "lon": 13.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "840291": {
+    "lat": 55.875,
+    "lon": 12.875,
+    "veg_class_name": "Cropland"
+  },
+  "897932": {
+    "lat": 65.875,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895029": {
+    "lat": 65.375,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892150": {
+    "lat": 64.875,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890716": {
+    "lat": 64.625,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889263": {
+    "lat": 64.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869092": {
+    "lat": 60.875,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869098": {
+    "lat": 60.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883488": {
+    "lat": 63.375,
+    "lon": 12.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "882053": {
+    "lat": 63.125,
+    "lon": 13.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "880609": {
+    "lat": 62.875,
+    "lon": 12.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "879185": {
+    "lat": 62.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879182": {
+    "lat": 62.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867654": {
+    "lat": 60.625,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867659": {
+    "lat": 60.625,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912316": {
+    "lat": 68.375,
+    "lon": 19.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "912329": {
+    "lat": 68.375,
+    "lon": 22.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "909440": {
+    "lat": 67.875,
+    "lon": 20.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906566": {
+    "lat": 67.375,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905113": {
+    "lat": 67.125,
+    "lon": 18.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903668": {
+    "lat": 66.875,
+    "lon": 17.125,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "900784": {
+    "lat": 66.375,
+    "lon": 16.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "861913": {
+    "lat": 59.625,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857565": {
+    "lat": 58.875,
+    "lon": 11.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857567": {
+    "lat": 58.875,
+    "lon": 11.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854701": {
+    "lat": 58.375,
+    "lon": 15.375,
+    "veg_class_name": "Cropland"
+  },
+  "853253": {
+    "lat": 58.125,
+    "lon": 13.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "846052": {
+    "lat": 56.875,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895031": {
+    "lat": 65.375,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892138": {
+    "lat": 64.875,
+    "lon": 14.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "892151": {
+    "lat": 64.875,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890699": {
+    "lat": 64.625,
+    "lon": 14.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "876307": {
+    "lat": 62.125,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886391": {
+    "lat": 63.875,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873415": {
+    "lat": 61.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873423": {
+    "lat": 61.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871983": {
+    "lat": 61.375,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "915201": {
+    "lat": 68.875,
+    "lon": 20.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "913766": {
+    "lat": 68.625,
+    "lon": 21.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910872": {
+    "lat": 68.125,
+    "lon": 18.125,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "910876": {
+    "lat": 68.125,
+    "lon": 19.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "910882": {
+    "lat": 68.125,
+    "lon": 20.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "909450": {
+    "lat": 67.875,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906573": {
+    "lat": 67.375,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899356": {
+    "lat": 66.125,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861900": {
+    "lat": 59.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860447": {
+    "lat": 59.375,
+    "lon": 11.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860454": {
+    "lat": 59.375,
+    "lon": 13.625,
+    "veg_class_name": "Ocean "
+  },
+  "859014": {
+    "lat": 59.125,
+    "lon": 13.625,
+    "veg_class_name": "missing value"
+  },
+  "856134": {
+    "lat": 58.625,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851834": {
+    "lat": 57.875,
+    "lon": 18.625,
+    "veg_class_name": "Ocean "
+  },
+  "848933": {
+    "lat": 57.375,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844616": {
+    "lat": 56.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843174": {
+    "lat": 56.375,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "838852": {
+    "lat": 55.625,
+    "lon": 13.125,
+    "veg_class_name": "Cropland"
+  },
+  "897909": {
+    "lat": 65.875,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869093": {
+    "lat": 60.875,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884942": {
+    "lat": 63.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880629": {
+    "lat": 62.875,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874860": {
+    "lat": 61.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874857": {
+    "lat": 61.875,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873424": {
+    "lat": 61.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "908011": {
+    "lat": 67.625,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905133": {
+    "lat": 67.125,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903676": {
+    "lat": 66.875,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902250": {
+    "lat": 66.625,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899361": {
+    "lat": 66.125,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899365": {
+    "lat": 66.125,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860466": {
+    "lat": 59.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859024": {
+    "lat": 59.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854702": {
+    "lat": 58.375,
+    "lon": 15.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "850368": {
+    "lat": 57.625,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844613": {
+    "lat": 56.625,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897924": {
+    "lat": 65.875,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896487": {
+    "lat": 65.625,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892139": {
+    "lat": 64.875,
+    "lon": 14.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890709": {
+    "lat": 64.625,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887819": {
+    "lat": 64.125,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886385": {
+    "lat": 63.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886370": {
+    "lat": 63.875,
+    "lon": 12.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "883496": {
+    "lat": 63.375,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882069": {
+    "lat": 63.125,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879178": {
+    "lat": 62.625,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877740": {
+    "lat": 62.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897904": {
+    "lat": 65.875,
+    "lon": 16.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "895034": {
+    "lat": 65.375,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893593": {
+    "lat": 65.125,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890704": {
+    "lat": 64.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889261": {
+    "lat": 64.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887834": {
+    "lat": 64.125,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884957": {
+    "lat": 63.625,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880611": {
+    "lat": 62.875,
+    "lon": 12.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "879188": {
+    "lat": 62.625,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871977": {
+    "lat": 61.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867651": {
+    "lat": 60.625,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910878": {
+    "lat": 68.125,
+    "lon": 19.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "908007": {
+    "lat": 67.625,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906546": {
+    "lat": 67.375,
+    "lon": 16.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "902226": {
+    "lat": 66.625,
+    "lon": 16.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "902232": {
+    "lat": 66.625,
+    "lon": 18.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "900798": {
+    "lat": 66.375,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899347": {
+    "lat": 66.125,
+    "lon": 16.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "857574": {
+    "lat": 58.875,
+    "lon": 13.625,
+    "veg_class_name": "missing value"
+  },
+  "848944": {
+    "lat": 57.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848937": {
+    "lat": 57.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844626": {
+    "lat": 56.625,
+    "lon": 16.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "897903": {
+    "lat": 65.875,
+    "lon": 15.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "893602": {
+    "lat": 65.125,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876301": {
+    "lat": 62.125,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883507": {
+    "lat": 63.375,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883508": {
+    "lat": 63.375,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867656": {
+    "lat": 60.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912314": {
+    "lat": 68.375,
+    "lon": 18.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "909435": {
+    "lat": 67.875,
+    "lon": 18.875,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "909437": {
+    "lat": 67.875,
+    "lon": 19.375,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "906550": {
+    "lat": 67.375,
+    "lon": 17.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "902245": {
+    "lat": 66.625,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899345": {
+    "lat": 66.125,
+    "lon": 16.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "863352": {
+    "lat": 59.875,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859021": {
+    "lat": 59.125,
+    "lon": 15.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "859011": {
+    "lat": 59.125,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846066": {
+    "lat": 56.875,
+    "lon": 16.625,
+    "veg_class_name": "missing value"
+  },
+  "896478": {
+    "lat": 65.625,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869090": {
+    "lat": 60.875,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869105": {
+    "lat": 60.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884930": {
+    "lat": 63.625,
+    "lon": 12.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "884934": {
+    "lat": 63.625,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877737": {
+    "lat": 62.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "915203": {
+    "lat": 68.875,
+    "lon": 20.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "912312": {
+    "lat": 68.375,
+    "lon": 18.125,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "910889": {
+    "lat": 68.125,
+    "lon": 22.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "905123": {
+    "lat": 67.125,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902223": {
+    "lat": 66.625,
+    "lon": 15.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "864788": {
+    "lat": 60.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861902": {
+    "lat": 59.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856142": {
+    "lat": 58.625,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854693": {
+    "lat": 58.375,
+    "lon": 13.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "853256": {
+    "lat": 58.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851809": {
+    "lat": 57.875,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846054": {
+    "lat": 56.875,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843180": {
+    "lat": 56.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897926": {
+    "lat": 65.875,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896459": {
+    "lat": 65.625,
+    "lon": 14.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "887821": {
+    "lat": 64.125,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880622": {
+    "lat": 62.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874859": {
+    "lat": 61.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "915202": {
+    "lat": 68.875,
+    "lon": 20.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "912321": {
+    "lat": 68.375,
+    "lon": 20.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910881": {
+    "lat": 68.125,
+    "lon": 20.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "902240": {
+    "lat": 66.625,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900808": {
+    "lat": 66.375,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866230": {
+    "lat": 60.375,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866213": {
+    "lat": 60.375,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861908": {
+    "lat": 59.625,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857591": {
+    "lat": 58.875,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853248": {
+    "lat": 58.125,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853249": {
+    "lat": 58.125,
+    "lon": 12.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847497": {
+    "lat": 57.125,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "840294": {
+    "lat": 55.875,
+    "lon": 13.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "897921": {
+    "lat": 65.875,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896470": {
+    "lat": 65.625,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886389": {
+    "lat": 63.875,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883515": {
+    "lat": 63.375,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877744": {
+    "lat": 62.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874852": {
+    "lat": 61.875,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910884": {
+    "lat": 68.125,
+    "lon": 21.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "903671": {
+    "lat": 66.875,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900787": {
+    "lat": 66.375,
+    "lon": 16.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "863334": {
+    "lat": 59.875,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857582": {
+    "lat": 58.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889268": {
+    "lat": 64.375,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884939": {
+    "lat": 63.625,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877735": {
+    "lat": 62.375,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877747": {
+    "lat": 62.375,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910886": {
+    "lat": 68.125,
+    "lon": 21.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "909447": {
+    "lat": 67.875,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907996": {
+    "lat": 67.625,
+    "lon": 19.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "905132": {
+    "lat": 67.125,
+    "lon": 23.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903664": {
+    "lat": 66.875,
+    "lon": 16.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "900795": {
+    "lat": 66.375,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900814": {
+    "lat": 66.375,
+    "lon": 23.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899357": {
+    "lat": 66.125,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899360": {
+    "lat": 66.125,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866216": {
+    "lat": 60.375,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864777": {
+    "lat": 60.125,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861910": {
+    "lat": 59.625,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851818": {
+    "lat": 57.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850375": {
+    "lat": 57.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848940": {
+    "lat": 57.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "848954": {
+    "lat": 57.375,
+    "lon": 18.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "848934": {
+    "lat": 57.375,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846060": {
+    "lat": 56.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841738": {
+    "lat": 56.125,
+    "lon": 14.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "897906": {
+    "lat": 65.875,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895021": {
+    "lat": 65.375,
+    "lon": 15.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "895027": {
+    "lat": 65.375,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892136": {
+    "lat": 64.875,
+    "lon": 14.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890720": {
+    "lat": 64.625,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889281": {
+    "lat": 64.375,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879180": {
+    "lat": 62.625,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871988": {
+    "lat": 61.375,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909443": {
+    "lat": 67.875,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903683": {
+    "lat": 66.875,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899339": {
+    "lat": 66.125,
+    "lon": 14.875,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "866222": {
+    "lat": 60.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861895": {
+    "lat": 59.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860465": {
+    "lat": 59.375,
+    "lon": 16.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "859022": {
+    "lat": 59.125,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857571": {
+    "lat": 58.875,
+    "lon": 12.875,
+    "veg_class_name": "missing value"
+  },
+  "857580": {
+    "lat": 58.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851810": {
+    "lat": 57.875,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841737": {
+    "lat": 56.125,
+    "lon": 14.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "893591": {
+    "lat": 65.125,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892152": {
+    "lat": 64.875,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869097": {
+    "lat": 60.875,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869099": {
+    "lat": 60.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "874850": {
+    "lat": 61.875,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909427": {
+    "lat": 67.875,
+    "lon": 16.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "908005": {
+    "lat": 67.625,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905117": {
+    "lat": 67.125,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902227": {
+    "lat": 66.625,
+    "lon": 16.875,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "860462": {
+    "lat": 59.375,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853246": {
+    "lat": 58.125,
+    "lon": 11.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "851815": {
+    "lat": 57.875,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850381": {
+    "lat": 57.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847503": {
+    "lat": 57.125,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893596": {
+    "lat": 65.125,
+    "lon": 19.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889257": {
+    "lat": 64.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887825": {
+    "lat": 64.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884951": {
+    "lat": 63.625,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882050": {
+    "lat": 63.125,
+    "lon": 12.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "880623": {
+    "lat": 62.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879172": {
+    "lat": 62.625,
+    "lon": 13.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "879176": {
+    "lat": 62.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879186": {
+    "lat": 62.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871979": {
+    "lat": 61.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871984": {
+    "lat": 61.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867667": {
+    "lat": 60.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903679": {
+    "lat": 66.875,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900790": {
+    "lat": 66.375,
+    "lon": 17.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "900793": {
+    "lat": 66.375,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866210": {
+    "lat": 60.375,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863349": {
+    "lat": 59.875,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861899": {
+    "lat": 59.625,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860451": {
+    "lat": 59.375,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860461": {
+    "lat": 59.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859025": {
+    "lat": 59.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857566": {
+    "lat": 58.875,
+    "lon": 11.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856147": {
+    "lat": 58.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893605": {
+    "lat": 65.125,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892162": {
+    "lat": 64.875,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869094": {
+    "lat": 60.875,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870536": {
+    "lat": 61.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876304": {
+    "lat": 62.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876308": {
+    "lat": 62.125,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884929": {
+    "lat": 63.625,
+    "lon": 12.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "884941": {
+    "lat": 63.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882067": {
+    "lat": 63.125,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882071": {
+    "lat": 63.125,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880631": {
+    "lat": 62.875,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910885": {
+    "lat": 68.125,
+    "lon": 21.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "906548": {
+    "lat": 67.375,
+    "lon": 17.125,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "905116": {
+    "lat": 67.125,
+    "lon": 19.125,
+    "veg_class_name": "Open Shrublands "
+  },
+  "900800": {
+    "lat": 66.375,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900810": {
+    "lat": 66.375,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866229": {
+    "lat": 60.375,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863343": {
+    "lat": 59.875,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863353": {
+    "lat": 59.875,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861891": {
+    "lat": 59.625,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856135": {
+    "lat": 58.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "854691": {
+    "lat": 58.375,
+    "lon": 12.875,
+    "veg_class_name": "Cropland"
+  },
+  "851808": {
+    "lat": 57.875,
+    "lon": 12.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896475": {
+    "lat": 65.625,
+    "lon": 18.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895024": {
+    "lat": 65.375,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890723": {
+    "lat": 64.625,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887816": {
+    "lat": 64.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906563": {
+    "lat": 67.375,
+    "lon": 20.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905124": {
+    "lat": 67.125,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903680": {
+    "lat": 66.875,
+    "lon": 20.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902253": {
+    "lat": 66.625,
+    "lon": 23.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899367": {
+    "lat": 66.125,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861893": {
+    "lat": 59.625,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860450": {
+    "lat": 59.375,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859031": {
+    "lat": 59.125,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853255": {
+    "lat": 58.125,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853257": {
+    "lat": 58.125,
+    "lon": 14.375,
+    "veg_class_name": "missing value"
+  },
+  "847513": {
+    "lat": 57.125,
+    "lon": 18.375,
+    "veg_class_name": "Mixed Forest "
+  },
+  "846061": {
+    "lat": 56.875,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895026": {
+    "lat": 65.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892158": {
+    "lat": 64.875,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889285": {
+    "lat": 64.375,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869102": {
+    "lat": 60.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887824": {
+    "lat": 64.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883495": {
+    "lat": 63.375,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883505": {
+    "lat": 63.375,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "909434": {
+    "lat": 67.875,
+    "lon": 18.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "907986": {
+    "lat": 67.625,
+    "lon": 16.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "903667": {
+    "lat": 66.875,
+    "lon": 16.875,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "900782": {
+    "lat": 66.375,
+    "lon": 15.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "859020": {
+    "lat": 59.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853258": {
+    "lat": 58.125,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847501": {
+    "lat": 57.125,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846055": {
+    "lat": 56.875,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "841732": {
+    "lat": 56.125,
+    "lon": 13.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "897928": {
+    "lat": 65.875,
+    "lon": 22.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893585": {
+    "lat": 65.125,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890707": {
+    "lat": 64.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890711": {
+    "lat": 64.625,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887817": {
+    "lat": 64.125,
+    "lon": 14.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "884931": {
+    "lat": 63.625,
+    "lon": 12.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "879171": {
+    "lat": 62.625,
+    "lon": 12.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "874864": {
+    "lat": 61.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873414": {
+    "lat": 61.625,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871980": {
+    "lat": 61.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912326": {
+    "lat": 68.375,
+    "lon": 21.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "910891": {
+    "lat": 68.125,
+    "lon": 22.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907994": {
+    "lat": 67.625,
+    "lon": 18.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "907997": {
+    "lat": 67.625,
+    "lon": 19.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "908006": {
+    "lat": 67.625,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "906561": {
+    "lat": 67.375,
+    "lon": 20.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "905107": {
+    "lat": 67.125,
+    "lon": 16.875,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "903666": {
+    "lat": 66.875,
+    "lon": 16.625,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "902230": {
+    "lat": 66.625,
+    "lon": 17.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "866220": {
+    "lat": 60.375,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863338": {
+    "lat": 59.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "853250": {
+    "lat": 58.125,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "844624": {
+    "lat": 56.625,
+    "lon": 16.125,
+    "veg_class_name": "Mixed Forest "
+  },
+  "840295": {
+    "lat": 55.875,
+    "lon": 13.875,
+    "veg_class_name": "Mixed Forest "
+  },
+  "837413": {
+    "lat": 55.375,
+    "lon": 13.375,
+    "veg_class_name": "Cropland"
+  },
+  "897927": {
+    "lat": 65.875,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895033": {
+    "lat": 65.375,
+    "lon": 18.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893579": {
+    "lat": 65.125,
+    "lon": 14.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890698": {
+    "lat": 64.625,
+    "lon": 14.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "883493": {
+    "lat": 63.375,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880632": {
+    "lat": 62.875,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "907999": {
+    "lat": 67.625,
+    "lon": 19.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "907988": {
+    "lat": 67.625,
+    "lon": 17.125,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "902242": {
+    "lat": 66.625,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899375": {
+    "lat": 66.125,
+    "lon": 23.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864786": {
+    "lat": 60.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "863333": {
+    "lat": 59.875,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859010": {
+    "lat": 59.125,
+    "lon": 12.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850394": {
+    "lat": 57.625,
+    "lon": 18.625,
+    "veg_class_name": "Mixed Forest "
+  },
+  "848941": {
+    "lat": 57.375,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "847495": {
+    "lat": 57.125,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897911": {
+    "lat": 65.875,
+    "lon": 17.875,
+    "veg_class_name": "Ocean "
+  },
+  "895045": {
+    "lat": 65.375,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "895019": {
+    "lat": 65.375,
+    "lon": 14.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890710": {
+    "lat": 64.625,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889277": {
+    "lat": 64.375,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "869100": {
+    "lat": 60.875,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "887831": {
+    "lat": 64.125,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884935": {
+    "lat": 63.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882072": {
+    "lat": 63.125,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880630": {
+    "lat": 62.875,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867664": {
+    "lat": 60.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866217": {
+    "lat": 60.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861904": {
+    "lat": 59.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861905": {
+    "lat": 59.625,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861906": {
+    "lat": 59.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860459": {
+    "lat": 59.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "860471": {
+    "lat": 59.375,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "850379": {
+    "lat": 57.625,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892148": {
+    "lat": 64.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892149": {
+    "lat": 64.875,
+    "lon": 17.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890706": {
+    "lat": 64.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870532": {
+    "lat": 61.125,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880617": {
+    "lat": 62.875,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880619": {
+    "lat": 62.875,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879169": {
+    "lat": 62.625,
+    "lon": 12.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "879175": {
+    "lat": 62.625,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877739": {
+    "lat": 62.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "912315": {
+    "lat": 68.375,
+    "lon": 18.875,
+    "veg_class_name": "Ocean "
+  },
+  "905118": {
+    "lat": 67.125,
+    "lon": 19.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905122": {
+    "lat": 67.125,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903690": {
+    "lat": 66.875,
+    "lon": 22.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903694": {
+    "lat": 66.875,
+    "lon": 23.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "900807": {
+    "lat": 66.375,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "866211": {
+    "lat": 60.375,
+    "lon": 12.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "864784": {
+    "lat": 60.125,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "857584": {
+    "lat": 58.875,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856127": {
+    "lat": 58.625,
+    "lon": 11.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "856133": {
+    "lat": 58.625,
+    "lon": 13.375,
+    "veg_class_name": "missing value"
+  },
+  "856136": {
+    "lat": 58.625,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "846053": {
+    "lat": 56.875,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "838853": {
+    "lat": 55.625,
+    "lon": 13.375,
+    "veg_class_name": "Cropland"
+  },
+  "893581": {
+    "lat": 65.125,
+    "lon": 15.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "890703": {
+    "lat": 64.625,
+    "lon": 15.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876295": {
+    "lat": 62.125,
+    "lon": 13.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886399": {
+    "lat": 63.875,
+    "lon": 19.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886375": {
+    "lat": 63.875,
+    "lon": 13.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "883506": {
+    "lat": 63.375,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "882054": {
+    "lat": 63.125,
+    "lon": 13.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "909446": {
+    "lat": 67.875,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905126": {
+    "lat": 67.125,
+    "lon": 21.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "905127": {
+    "lat": 67.125,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "902233": {
+    "lat": 66.625,
+    "lon": 18.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "860457": {
+    "lat": 59.375,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "859013": {
+    "lat": 59.125,
+    "lon": 13.375,
+    "veg_class_name": "missing value"
+  },
+  "853266": {
+    "lat": 58.125,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "843178": {
+    "lat": 56.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "897898": {
+    "lat": 65.875,
+    "lon": 14.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "896463": {
+    "lat": 65.625,
+    "lon": 15.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "896485": {
+    "lat": 65.625,
+    "lon": 21.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893594": {
+    "lat": 65.125,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "870534": {
+    "lat": 61.125,
+    "lon": 13.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886378": {
+    "lat": 63.875,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884938": {
+    "lat": 63.625,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880613": {
+    "lat": 62.875,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877748": {
+    "lat": 62.375,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910877": {
+    "lat": 68.125,
+    "lon": 19.375,
+    "veg_class_name": "Open Shrublands "
+  },
+  "902247": {
+    "lat": 66.625,
+    "lon": 21.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "899342": {
+    "lat": 66.125,
+    "lon": 15.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "899364": {
+    "lat": 66.125,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "861911": {
+    "lat": 59.625,
+    "lon": 17.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851822": {
+    "lat": 57.875,
+    "lon": 15.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "851825": {
+    "lat": 57.875,
+    "lon": 16.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896466": {
+    "lat": 65.625,
+    "lon": 16.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896474": {
+    "lat": 65.625,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "896482": {
+    "lat": 65.625,
+    "lon": 20.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889284": {
+    "lat": 64.375,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876297": {
+    "lat": 62.125,
+    "lon": 14.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "886388": {
+    "lat": 63.875,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "883499": {
+    "lat": 63.375,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "879184": {
+    "lat": 62.625,
+    "lon": 16.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "877738": {
+    "lat": 62.375,
+    "lon": 14.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "910873": {
+    "lat": 68.125,
+    "lon": 18.375,
+    "veg_class_name": "Mixed Tundra "
+  },
+  "906555": {
+    "lat": 67.375,
+    "lon": 18.875,
+    "veg_class_name": "Open Shrublands "
+  },
+  "905121": {
+    "lat": 67.125,
+    "lon": 20.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "903670": {
+    "lat": 66.875,
+    "lon": 17.625,
+    "veg_class_name": "Wooded Tundra "
+  },
+  "864776": {
+    "lat": 60.125,
+    "lon": 14.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "893604": {
+    "lat": 65.125,
+    "lon": 21.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "892157": {
+    "lat": 64.875,
+    "lon": 19.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890701": {
+    "lat": 64.625,
+    "lon": 15.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "890708": {
+    "lat": 64.625,
+    "lon": 17.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889272": {
+    "lat": 64.375,
+    "lon": 18.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "889274": {
+    "lat": 64.375,
+    "lon": 18.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "876300": {
+    "lat": 62.125,
+    "lon": 15.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "884947": {
+    "lat": 63.625,
+    "lon": 16.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "880610": {
+    "lat": 62.875,
+    "lon": 12.625,
+    "veg_class_name": "Open Shrublands "
+  },
+  "879190": {
+    "lat": 62.625,
+    "lon": 17.625,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873413": {
+    "lat": 61.625,
+    "lon": 13.375,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "873419": {
+    "lat": 61.625,
+    "lon": 14.875,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "871972": {
+    "lat": 61.375,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  },
+  "867652": {
+    "lat": 60.625,
+    "lon": 13.125,
+    "veg_class_name": "Evergreen Needleleaf Forest "
+  }
+}
