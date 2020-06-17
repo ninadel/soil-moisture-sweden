@@ -67,3 +67,8 @@ with open("dict_product_fields.json", "r") as f:
 # dictionary which stores GLDAS grid points
 with open("dict_swe_gldas_points.json", "r") as f:
     dict_swe_gldas_points = json.load(f)
+
+swe_shuffle_cells = [1397, 1398, 1399, 1433, 1434, 1435, 1470, 1471]
+den_shuffle_cells = [1360, 1361, 1396, 1397, 1433]
+nordic_shuffle_cells = [1326, 1360, 1361, 1362, 1396, 1397, 1398, 1399, 1433, 1434, 1435, 1436, 1469, 1470, 1471, 1472,
+                        1506, 1507, 1508, 1542, 1543, 1544]
