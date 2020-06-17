@@ -156,42 +156,33 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False)
         # Timestampp OK
     if product == "CCI Active":
         data = ts
-        if filter_prod:
-            print("For now, no filters for CCI")
+        # For now, no filters for CCI
     if product == "CCI Passive":
         data = ts
-        if filter_prod:
-            print("For now, no filters for CCI")
+        # For now, no filters for CCI
     if product == "CCI Combined":
         data = ts
-        if filter_prod:
-            print("For now, no filters for CCI")
+        # For now, no filters for CCI
     if product == "GLDAS":
         data = ts
-        if filter_prod:
-            print("No filters for GLDAS")
+        # No filters for GLDAS
         # Timestampp OK
     if product == "SMAP L3":
         data = ts
-        if filter_prod:
-            print("For now, no filters for SMAP L3")
+        # For now, no filters for SMAP L3
         # Force Timestamp: 6AM CET, 5AM UTC
     if product == "SMAP L4":
         data = ts
-        if filter_prod:
-            print("For now, no filters for SMAP L4")
+        # For now, no filters for SMAP L4
         # Timestampp OK
     if product == "SMOS-BEC":
         pass
     if product == "SMOS-IC":
         data = ts
-        if filter_prod:
-            print("For now, no filters for SMOS-IC")
-            # See "Quality_Flag" field
+        # For now, no filters for SMOS-IC
+        # See "Quality_Flag" field
         # Timestampp OK
-    product_metadata = config.dict_product_inputs[product]
     sm = data[config.dict_product_fields[product]["sm_field"]]
-    # sm = data[product_metadata["sm_field"]]
     if anomaly:
         sm = calc_anomaly(sm)
     return sm
@@ -313,3 +304,28 @@ def get_netcdf_summary(file, lon_field=None, lat_field=None, sm_field=None, time
         print("shape:", dataset[time_field][:].shape)
         if show_field_data:
             print(dataset[time_field][:])
+
+
+# given a product with a suffle reader and a dictionary of locations, write TS to csv files
+def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anomaly=False):
+    product_str = product.replace(' ', '-')
+    if filter_prod:
+        filter_str = "filtered"
+    else:
+        filter_str = "unfiltered"
+    if anomaly:
+        anomaly_str = "anomaly"
+    else:
+        anomaly_str = "absolute"
+    for location, coordinate in locations.items():
+        lat = coordinate['lat']
+        lat_str = str(lat).replace('.', '-')
+        lon = coordinate['lon']
+        lon_str = str(lon).replace('.', '-')
+        output_filename = "{}_{}_{}_{}_{}_{}.csv".format(product_str, location, lat_str, lon_str, filter_str,
+                                                         anomaly_str)
+        data = get_product_data(lon=lon, lat=lat, product=product,
+                                reader=get_product_reader(product, config.dict_product_inputs[product]),
+                                filter_prod=filter_prod, anomaly=anomaly)
+        output_file = os.path.join(output_dir, output_filename)
+        data.to_csv(output_file, sep=',')
