@@ -309,6 +309,7 @@ def get_netcdf_summary(file, lon_field=None, lat_field=None, sm_field=None, time
 # given a product with a suffle reader and a dictionary of locations, write TS to csv files
 def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anomaly=False):
     product_str = product.replace(' ', '-')
+    reader = get_product_reader(product, config.dict_product_inputs[product])
     if filter_prod:
         filter_str = "filtered"
     else:
@@ -326,12 +327,12 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
         lon_str = str(lon).replace('.', '-')
         output_filename = "{}_{}_{}_{}_{}_{}.csv".format(product_str, location, lat_str, lon_str, filter_str,
                                                          anomaly_str)
-        data = get_product_data(lon=lon, lat=lat, product=product,
-                                reader=get_product_reader(product, config.dict_product_inputs[product]),
-                                filter_prod=filter_prod, anomaly=anomaly)
+        data = get_product_data(lon=lon, lat=lat, product=product, reader=reader, filter_prod=filter_prod,
+                                anomaly=anomaly)
         print("data.shape:", data.shape)
         output_file = os.path.join(output_dir, output_filename)
         data.to_csv(output_file, sep=',', encoding='latin-1')
+        del data
         index_count += 1
         print("{} of {} locations processed".format(index_count, location_count))
     else:
