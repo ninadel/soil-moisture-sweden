@@ -317,6 +317,8 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
         anomaly_str = "anomaly"
     else:
         anomaly_str = "absolute"
+    location_count = len(locations)
+    index_count = 0
     for location, coordinate in locations.items():
         lat = coordinate['lat']
         lat_str = str(lat).replace('.', '-')
@@ -327,5 +329,10 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
         data = get_product_data(lon=lon, lat=lat, product=product,
                                 reader=get_product_reader(product, config.dict_product_inputs[product]),
                                 filter_prod=filter_prod, anomaly=anomaly)
+        print("data.shape:", data.shape)
         output_file = os.path.join(output_dir, output_filename)
-        data.to_csv(output_file, sep=',')
+        data.to_csv(output_file, sep=',', encoding='latin-1')
+        index_count += 1
+        print("{} of {} locations processed".format(index_count, location_count))
+    else:
+        index_count += 1
