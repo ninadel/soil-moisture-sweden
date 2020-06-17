@@ -5,7 +5,8 @@ Script that takes a set of NC files and writes TS text files for a set of define
 """
 
 import json
-# import sm_tools as tools
+import sm_tools as tools
+import os
 
 # dictionary which stores static fields (e.g. lat, lon, sm field)
 with open("dict_product_fields.json", "r") as f:
@@ -16,8 +17,10 @@ with open("dict_swe_gldas_points.json", "r") as f:
     dict_swe_gldas_points = json.load(f)
 
 output_dir = r"..\SWE_ts_csv\GLDAS_0-25"
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 # for gpi, coordinate in dict_swe_gldas_points.items():
 #     print(gpi, coordinate)
 
-write_grid_shuffle_ts('GLDAS', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=False)
+tools.write_grid_shuffle_ts('GLDAS', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=False)
