@@ -33,7 +33,7 @@ dict_product_inputs = {
         "ts_dir": r"C:\git\soil-moisture-sweden\input_data\cci-0.25deg_global_reshuffle"
     },
     "GLDAS": {
-        "ts_dir": r"..\input_data\GLDAS_global_reshuffle",
+        "ts_dir": r"..\input_data\GLDAS_nordic_reshuffle",
     },
     "SMAP L3": {
         "ts_dir": r"..\input_data\SPL3SMP-smap-l3-36km_nordic_reshuffle"
