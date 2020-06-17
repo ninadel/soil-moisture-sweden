@@ -5,23 +5,19 @@ Script that takes a set of NC files and writes TS text files for a set of define
 """
 
 import json
+# import sm_tools as tools
 
 # dictionary which stores static fields (e.g. lat, lon, sm field)
 with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
 
+# dictionary which stores GLDAS points for Sweden
+with open("dict_swe_gldas_points.json", "r") as f:
+    dict_swe_gldas_points = json.load(f)
 
-def writets_tofile(input_dir, output_dir, product, resolution, parameters):
-     pass
-# for each file
-    # for each location to find
-        # determine filename: Descriptor_Resolution_Lat_Lon_TS.csv
-        # if file does not exist for location
-            # create a text file for filename
-            # write column names: date, variable-1... variable-n
-        # get date from filename or file
-        # append to data string
-        # for each variable
-            # find value
-            # append to data string
-        # write data to filename
+output_dir = r"..\SWE_ts_csv\GLDAS_0-25"
+
+# for gpi, coordinate in dict_swe_gldas_points.items():
+#     print(gpi, coordinate)
+
+write_grid_shuffle_ts('GLDAS', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=False)
