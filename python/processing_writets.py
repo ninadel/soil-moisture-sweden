@@ -22,5 +22,23 @@ if not os.path.exists(output_dir):
 
 # for gpi, coordinate in dict_swe_gldas_points.items():
 #     print(gpi, coordinate)
+# counter = 0
+# group = 0
+# group_dict = {}
+# group_dict['0'] = {}
+#
+# for location, coordinate in dict_swe_gldas_points.items():
+#     group_dict[str(group)][location] = coordinate
+#     counter += 1
+#     if counter == 20:
+#         counter = 0
+#         group += 1
+#         group_dict[str(group)] = {}
 
+# print(len(group_dict))
+#
+# for group, loc_dict in group_dict.items():
 tools.write_grid_shuffle_ts('GLDAS', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=False)
+tools.write_grid_shuffle_ts('GLDAS', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=True)
+
+# tools.write_grid_shuffle_ts('GLDAS', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=False)
