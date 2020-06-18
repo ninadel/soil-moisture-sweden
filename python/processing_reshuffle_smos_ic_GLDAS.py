@@ -20,6 +20,7 @@ gldas_reader = GLDAS_Noah_v21_025Ds(data_path=r"C:\git\soil-moisture-sweden\test
 gldas_reader.subpath_templ = []
 gldas_data = gldas_reader.read(datetime(2018,6,1))
 grid = BasicGrid(gldas_data.lon, gldas_data.lat)
+# grid = r"C:\git\soil-moisture-sweden\input_data\GLDAS_global_reshuffle\grid.nc"
 
 ff = r"D:\sm_backup\smos-ic-l3-25km_global\ASC\2015\SM_RE06_MIR_CDF3SA_20150101T000000_20150101T235959_105_001_8.DBL.nc"
 outputpath = r"D:\sm_backup\smos-ic-l3-25km_global_reshuffle_GLDASgrid"
@@ -42,7 +43,7 @@ if run_reshuffle:
         os.makedirs(outputpath)
     global_attr = {'product': 'SMOS_IC'}
     reshuffler = Img2Ts(input_dataset=input_dataset, outputpath=outputpath, startdate=startdate, enddate=enddate,
-                        input_grid=grid, cellsize_lat=5.0, cellsize_lon=5.0, global_attr=global_attr, zlib=True,
+                        target_grid=grid, cellsize_lat=5.0, cellsize_lon=5.0, global_attr=global_attr, zlib=True,
                         unlim_chunksize=1000, ts_attributes=ts_attributes)
     reshuffler.calc()
 
