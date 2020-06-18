@@ -13,3 +13,4 @@ analysis_output/
 iris/
 ignore_scripts/
 *.lnk
+SWE_ts_csv/
