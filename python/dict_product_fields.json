@@ -48,12 +48,13 @@
         "scale": "",
         "datetime_search_str": "([2]{1}[0-9]{3}[0-9]{2}[0-9]{2}).([0-9]{4})"
     },
-    "Sentinel": {
+    "Sentinel-1": {
         "lon_field": "lon",
         "lat_field": "lat",
         "time_field": "time",
         "sm_field": "ssm",
         "filter_dict": {},
+        "scale": "",
         "scale": "lin_cdf_match",
         "datetime_search_str": ""
     },
@@ -81,17 +82,10 @@
         "scale": "",
         "datetime_search_str": ""
     },
-    "Sentinel-1": {
-        "lon_field": "lon",
-        "lat_field": "lat",
-        "sm_field": "ssm",
-        "filter_dict": {},
-        "scale": "",
-        "datetime_search_str": ""
-    },
     "SMOS-BEC": {
         "lon_field": "lon",
         "lat_field": "lat",
+        "time_field": "time",
         "sm_field": "SM",
         "filter_dict": {},
         "scale": "",
@@ -100,6 +94,7 @@
     "SMOS-IC": {
         "lon_field": "lon",
         "lat_field": "lat",
+        "time_field": "Days",
         "sm_field": "Soil_Moisture",
         "filter_dict": {},
         "scale": "",
