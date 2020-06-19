@@ -16,18 +16,20 @@ with open("dict_extent_nordic.json", "r") as f:
 with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
 
-input_dir = r"D:\sm_backup\smos-ic-l3-25km_global\ASC"
-output_dir = r"D:\sm_backup\smos-ic-l3-25km_nordic\ASC"
-product_name = "SMOS-IC"
-print_feedback = True
+input_dir = r"D:\sm_backup\smos-bec-reprocessed-01km-euro\ASC"
+output_dir = r"D:\sm_backup\smos-bec-reprocessed-01km-nordic\ASC"
+product_name = "SMOS-BEC"
+print_feedback = False
 
 product_metadata = dict_product_fields[product_name]
 lat_field = product_metadata['lat_field']
 lon_field = product_metadata['lon_field']
+time_field = product_metadata['time_field']
 # metadata fields that don't need to be subset
-meta_variables = []
+meta_variables = ['crs', 'time']
 # fields that need to be subset based on lat/lon dimensions
-subset_variables = ['Quality_Flag', 'Soil_Moisture']
+subset_variables = ['SM', 'quality_flag']
+
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -96,6 +98,11 @@ for file in os.listdir(input_dir):
         dst.createVariable(lon_field, src[lon_field].datatype, lon_field)
         dst[lon_field].setncatts(src[lon_field].__dict__)
         dst[lon_field][:] = lon_subset
+        for variable in meta_variables:
+            dst.createVariable(variable, src[variable].datatype, src[variable].dimensions)
+            dst[variable][:] = src[variable][:]
+            # copy variable attributes all at once via dictionary
+            dst[variable].setncatts(src[variable].__dict__)
         for variable in subset_variables:
             src_var_attributes = src[variable].__dict__
             dst_var_attributes = {}
@@ -104,9 +111,9 @@ for file in os.listdir(input_dir):
                     continue
                 else:
                     dst_var_attributes[key] = value
-            dst.createVariable(variable, src[variable].datatype, (lat_field, lon_field),
+            dst.createVariable(variable, src[variable].datatype, (time_field, lat_field, lon_field),
                                fill_value=src_var_attributes['_FillValue'])
-            dst[variable][:] = src[variable][latli:latui, lonli:lonui]
+            dst[variable][:] = src[variable][:, latli:latui, lonli:lonui]
             dst[variable].setncatts(dst_var_attributes)
     counter += 1
     print("Processed file {} of {}".format(counter, file_len))
