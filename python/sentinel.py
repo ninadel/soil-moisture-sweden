@@ -67,16 +67,12 @@ class SentinelImg(ImageBase):
                 metadata[attr] = param.getncattr(attr)
 
             # mask according to valid_min, valid_max and _FillValue
-            try:
+            if parameter == 'ssm':
                 fill_value = metadata['_FillValue']
-                valid_min = metadata['valid_min']
-                valid_max = metadata['valid_max']
+                valid_min = 0
+                valid_max = 100
                 data = np.where(np.logical_or(data < valid_min, data > valid_max),
                                 fill_value, data)
-            except KeyError as k:
-                print(k)
-                print("masking field not present")
-                raise k
 
             return_data[parameter] = data
             return_meta[parameter] = metadata
