@@ -16,7 +16,7 @@ evaluation_dict = {
     "CCI Passive": False,    # not supported yet
     "CCI Combined": False,
     "GLDAS": True,
-    "Sentinel": False,     # not supported yet
+    "Sentinel-1": False,     # not supported yet
     "SMAP L3": False,
     "SMAP L4": False,
     "SMOS-IC": False,
