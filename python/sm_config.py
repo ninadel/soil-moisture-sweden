@@ -24,13 +24,13 @@ dict_product_inputs = {
         "static_layers_dir": None
     },
     "CCI Active": {
-        "ts_dir": None
+        "ts_dir": r"..\input_data\cci-0.25deg_active_global_reshuffle"
     },
     "CCI Passive": {
-        "ts_dir": None
+        "ts_dir": r"..\input_data\cci-0.25deg_passive_global_reshuffle"
     },
     "CCI Combined": {
-        "ts_dir": r"C:\git\soil-moisture-sweden\input_data\cci-0.25deg_combined_global_reshuffle"
+        "ts_dir": r"..\input_data\cci-0.25deg_combined_global_reshuffle"
     },
     "GLDAS": {
         "ts_dir": r"..\input_data\GLDAS_nordic_reshuffle",
