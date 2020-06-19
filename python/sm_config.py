@@ -30,7 +30,7 @@ dict_product_inputs = {
         "ts_dir": None
     },
     "CCI Combined": {
-        "ts_dir": r"C:\git\soil-moisture-sweden\input_data\cci-0.25deg_global_reshuffle"
+        "ts_dir": r"C:\git\soil-moisture-sweden\input_data\cci-0.25deg_combined_global_reshuffle"
     },
     "GLDAS": {
         "ts_dir": r"..\input_data\GLDAS_nordic_reshuffle",
