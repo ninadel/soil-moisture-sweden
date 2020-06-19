@@ -16,9 +16,9 @@ with open("dict_extent_nordic.json", "r") as f:
 with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
 
-input_dir = r"..\sm_sample_files\cgls-biopar-ssm-01km"
-output_dir = r"..\test_output_data\sentinel_subset"
-product_name = "Sentinel"
+input_dir = r"D:\sm_backup\cgls-biopar-ssm-01km_europe"
+output_dir = r"D:\sm_backup\cgls-biopar-ssm-01km_nordic"
+product_name = "Sentinel-1"
 
 product_metadata = dict_product_fields[product_name]
 lat_field = product_metadata['lat_field']
@@ -81,11 +81,11 @@ for file in os.listdir(input_dir):
             else:
                 dst.createDimension(name, (len(dimension) if not dimension.isunlimited() else None))
         # create lat variable
-        dst.createVariable(lat_field, src[lat_field].datatype, lat_field, chunksizes=lat_subset.size)
+        dst.createVariable(lat_field, src[lat_field].datatype, lat_field)
         dst[lat_field].setncatts(src[lat_field].__dict__)
         dst[lat_field][:] = lat_subset
         # create lon variable
-        dst.createVariable(lon_field, src[lon_field].datatype, lon_field, chunksizes=lon_subset.size)
+        dst.createVariable(lon_field, src[lon_field].datatype, lon_field)
         dst[lon_field].setncatts(src[lon_field].__dict__)
         dst[lon_field][:] = lon_subset
         for variable in meta_variables:
@@ -105,7 +105,6 @@ for file in os.listdir(input_dir):
                                fill_value=src_var_attributes['_FillValue'])
             dst[variable][:] = src[variable][:, latli:latui, lonli:lonui]
             dst[variable].setncatts(dst_var_attributes)
-    break
 
 # import netCDF4 as nc
 # toexclude = ['ExcludeVar1', 'ExcludeVar2']
