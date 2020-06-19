@@ -4,7 +4,9 @@ Author: Nina del Rosario, nina.del@gmail.com
 Class for analysing Sentinel-1 SSM data (https://land.copernicus.eu/global/products/ssm)
 """
 import numpy as np
+from datetime import datetime
 import os
+import re
 from pygeobase.io_base import ImageBase, MultiTemporalImageBase
 from pygeobase.object_base import Image
 from pynetcf.time_series import GriddedNcOrthoMultiTs
@@ -25,21 +27,13 @@ class SentinelImg(ImageBase):
     parameters : string or list, optional (default: ssm)
         one or list of parameters to read
         for more information (default: 'ssm').
-    flatten: boolean, optional (default:False)
-        if set then the data is read into 1D arrays.
-        Needed for some legacy code.
-    grid : pygeogrids.BasicGrid, optional (default: None)
-        A grid object, on which the image data is organised. If None is passed,
     """
     def __init__(self, filename, mode='r', parameter='ssm'):
-    # def __init__(self, filename, mode='r', parameter='ssm', flatten=False,
-    #              grid=None):
         super(SentinelImg, self).__init__(filename, mode=mode)
 
         if type(parameter) != list:
             parameter = [parameter]
         self.parameters = parameter
-        self.flatten = flatten
 
 
     def read_img(self):
@@ -52,6 +46,11 @@ class SentinelImg(ImageBase):
             print(e)
             print(" ".join([self.filename, "Dataset can not be opened"]))
             raise e
+
+        timekey = 'time'
+
+        timestamp_str = re.findall(r"c_gls_SSM1km_[0-9]{8}", self.filename)[-1][-8:]
+        timestamp = datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]))
 
         latitude = ds['lat'][:]
         longitude = ds['lon'][:]
@@ -78,15 +77,8 @@ class SentinelImg(ImageBase):
             return_data[parameter] = data
             return_meta[parameter] = metadata
 
-        # if self.flatten:
-        #     longitude = longitude.flatten()
-        #     latitude = latitude.flatten()
-        #     for param in return_data.keys():
-        #         return_data[param] = return_data[param].flatten()
-
         ds.close()
-        return return_data, return_meta
-        # return Image(longitude, latitude, return_data, return_meta, timestamp)
+        return Image(longitude, latitude, return_data, return_meta, timestamp, timekey)
 
     def write(self, data):
         raise NotImplementedError()
