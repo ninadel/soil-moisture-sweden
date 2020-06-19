@@ -5,10 +5,8 @@ to include SMOS L4 (BEC: http://bec.icm.csic.es/land-datasets/)
 """
 import warnings
 import numpy as np
-import os
 from pygeobase.io_base import ImageBase, MultiTemporalImageBase
 from pygeobase.object_base import Image
-from pynetcf.time_series import GriddedNcOrthoMultiTs
 from datetime import timedelta
 from netCDF4 import Dataset
 from pygeogrids.netcdf import load_grid
