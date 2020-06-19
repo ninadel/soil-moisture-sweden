@@ -195,6 +195,7 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False)
 # get data for all network/stations in a dictionary
 def get_metrics(data, xcol, ycol, anomaly=False):
     """""
+    Calculate metrics for a pair of TS
     data: temporally matched dataset
     metrics: list of metrics to calculate on matched dataset
         default: "pearsonr", "bias", "rmsd", "ubrmsd"
@@ -221,6 +222,10 @@ def get_metrics(data, xcol, ycol, anomaly=False):
 
 
 def convert_tab_comma(filename):
+    """""
+    Converts tab delimited to comma separated
+    filename: tab delimited file
+    """""
     file_df = pandas.read_csv(filename, sep="\t")
     output_file = filename[:-4]+"_commareformat"+filename[-4:]
     file_df.to_csv(output_file, sep=",")
@@ -228,6 +233,13 @@ def convert_tab_comma(filename):
 
 # given an NC file and coordinate fields, return lower left coordinate and upper right coordinate
 def get_geo_extent(nc_file, lon_field="lon", lat_field="lat"):
+    """""
+    Finds the minimum and maxiumum lat/lon of a netcdf file
+    Returns tuple of lower-left and upper-right coordinates
+    nc_file: netcdf filename
+    lon_field: name of longitude field (default 'lon')
+    lat_field: name of latitude field (default 'lat')
+    """""
     nc = netCDF4.Dataset(nc_file, "r")
     try:
         lon_array = nc[lon_field][:]
@@ -241,6 +253,10 @@ def get_geo_extent(nc_file, lon_field="lon", lat_field="lat"):
 
 # for a value, find the nearest value and its index
 def find_nearest(array, value):
+    """""
+    For an array and value, finds the nearest member of array
+    Returns tuple of array index
+    """""
     array = numpy.asarray(array)
     idx = (numpy.abs(array - value)).argmin()
     return idx, array[idx]
@@ -248,11 +264,13 @@ def find_nearest(array, value):
 
 def get_series(input_root, lon_loc, lat_loc, parameters, lon_field="lon", lat_field="lat", datetime_len=8,
                datetime_startstr="201", cutoff=None):
+    """""
+    UPDATE: clean up to include product name--remove datetime parameters
+    """""
     if type(parameters) != list:
         parameters = [parameters]
     series = pandas.DataFrame()
     files = os.listdir(input_root)
-    count = 0
     for file in files:
         date_str_idx = file.find(datetime_startstr)
         date_str = file[date_str_idx:date_str_idx + 8]
@@ -270,10 +288,6 @@ def get_series(input_root, lon_loc, lat_loc, parameters, lon_field="lon", lat_fi
             values.append(value)
         file_df = pandas.DataFrame([values], columns=columns)
         series = pandas.concat([series, file_df])
-        count += 1
-        if cutoff is not None:
-            if count == cutoff:
-                break
     series.set_index("date_str", inplace=True)
     return series
 
