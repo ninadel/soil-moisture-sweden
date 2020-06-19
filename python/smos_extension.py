@@ -75,7 +75,7 @@ class SMOSBECImg(ImageBase):
         #     data = np.full((yres, xres), np.nan)
         #     return_img[param] = data.flatten()
         #     return_metadata[param] = {'image_missing': 1}
-        # 
+        #
         # return return_img, return_metadata
 
     def read_img(self):
