@@ -12,8 +12,9 @@ from esa_cci_sm.reshuffle import reshuffle
 run_reshuffle = True
 test_reshuffle = True
 
-input_root = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\CCI\cci-0.25deg_global'
-outputpath = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\CCI\cci-0.25deg_global_reshuffle'
+input_root = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\CCI\cci-0.25deg_passive_global'
+outputpath = \
+    r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\CCI\cci-0.25deg_passive_global_reshuffle'
 startdate = datetime(2015, 1, 1, 0, 0, 0)
 enddate = datetime(2018, 12, 31, 23, 59, 59)
 parameters = ['sm', 'sm_uncertainty']
