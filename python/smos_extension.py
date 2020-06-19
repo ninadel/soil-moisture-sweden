@@ -37,9 +37,7 @@ class SMOSBECImg(ImageBase):
         locations are filtered out). If None is passed, no flags are considered.
     """
 
-    def __init__(self, filename, mode='r', parameters='SM', grid=None, read_flags=(0,1)):
-    # def __init__(self, filename, mode='r', parameters='SM', flatten=False,
-    #              grid=None, read_flags=(0,1)):
+    def __init__(self, filename, mode='r', parameters='SM', read_flags=(0,1)):
 
         super(SMOSBECImg, self).__init__(filename, mode=mode)
 
@@ -48,11 +46,6 @@ class SMOSBECImg(ImageBase):
 
         self.read_flags = read_flags
         self.parameters = parameters
-        # self.flatten = flatten
-
-        self.grid = grid
-
-        self.image_missing = False
 
     def read_empty(self):
         raise NotImplementedError()
@@ -79,7 +72,7 @@ class SMOSBECImg(ImageBase):
         # return return_img, return_metadata
 
     def read_img(self):
-        '''Read exisiting file to image'''
+        '''Read existing file to image'''
 
         # Read a netcdf image
 
@@ -111,7 +104,7 @@ class SMOSBECImg(ImageBase):
             return_metadata[parameter] = metadata
 
 
-        # filter with the flags (this excludes non-land points as well)
+        # filter with the flags
         if self.read_flags is not None:
             flag_mask = ~np.isin(return_img['quality_flag'], self.read_flags)
         else:
