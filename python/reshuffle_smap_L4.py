@@ -42,9 +42,7 @@ from ease_grid import EASE2_grid
 from smap_io.interface import SPL4SMP_Ds
 
 # removing var_overpass_str to test
-def reshuffle(input_dataset, outputpath, startdate, enddate,
-              parameters, overpass=None,
-              crid=None, imgbuffer=50):
+def reshuffle(input_dataset, outputpath, startdate, enddate, parameters, crid=None, imgbuffer=50):
 
     """
     Reshuffle method applied to ERA-Interim data.
@@ -60,9 +58,6 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
         End date.
     parameters: list
         parameters to read and convert
-    overpass : str, optional (default: 'AM')
-        Select 'AM' for the descending overpass or 'PM' for the ascending one.
-        If the version data does not contain multiple overpasses, this must be None
     var_overpass_str : bool, optional (default: True)
         Append overpass indicator to the loaded variables. E.g. Soil Moisture
         will be called soil_moisture_pm and soil_moisture_am, and soil_moisture
@@ -75,9 +70,6 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
     """
 
     global_attr = {'product': 'SPL4SMAU'}
-
-    if overpass:
-        global_attr['overpass'] = overpass
 
     if not os.path.exists(outputpath):
         os.makedirs(outputpath)
