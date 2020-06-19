@@ -167,6 +167,10 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False)
         data = ts
         # No filters for GLDAS
         # Timestampp OK
+    if product == "Sentinel-1":
+        data = ts
+        # note: sentinel class manually filters out ssm values below 0 and above 100
+        # Force Timestamp: ??
     if product == "SMAP L3":
         data = ts
         # For now, no filters for SMAP L3
