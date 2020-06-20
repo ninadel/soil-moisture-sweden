@@ -18,6 +18,7 @@ for station in ismn_readers:
     key = "HOBE {}".format(station.station)
     HOBE_dict[key] = {}
     HOBE_dict[key]['station'] = station.station
+    HOBE_dict[key]['network'] = "HOBE"
     HOBE_dict[key]['latitude'] = station.latitude
     HOBE_dict[key]['longitude'] = station.longitude
     HOBE_dict[key]['elevation'] = station.elevation
