@@ -26,3 +26,6 @@ print(HOBE_dict)
 
 with open('dict_hobe.json', 'w') as f:
     json.dump(HOBE_dict, f)
+
+# for station in ismn_readers:
+#     print(tools.get_station_ts_filename(station))
