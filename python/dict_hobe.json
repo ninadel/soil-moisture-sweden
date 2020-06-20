@@ -1,180 +1,210 @@
 {
   "HOBE 1.01": {
     "station": "1.01",
+    "network": "HOBE",
     "latitude": 56.0193,
     "longitude": 9.1809,
     "elevation": 58.0
   },
   "HOBE 1.02": {
     "station": "1.02",
+    "network": "HOBE",
     "latitude": 56.0376,
     "longitude": 9.161,
     "elevation": 67.0
   },
   "HOBE 1.03": {
     "station": "1.03",
+    "network": "HOBE",
     "latitude": 56.0283,
     "longitude": 9.1654,
     "elevation": 69.0
   },
   "HOBE 1.04": {
     "station": "1.04",
+    "network": "HOBE",
     "latitude": 56.0733,
     "longitude": 9.3337,
     "elevation": 90.0
   },
   "HOBE 1.05": {
     "station": "1.05",
+    "network": "HOBE",
     "latitude": 56.033,
     "longitude": 9.1912,
     "elevation": 80.0
   },
   "HOBE 1.06": {
     "station": "1.06",
+    "network": "HOBE",
     "latitude": 56.0513,
     "longitude": 9.161,
     "elevation": 60.0
   },
   "HOBE 1.07": {
     "station": "1.07",
+    "network": "HOBE",
     "latitude": 56.0426,
     "longitude": 9.1413,
     "elevation": 60.0
   },
   "HOBE 1.08": {
     "station": "1.08",
+    "network": "HOBE",
     "latitude": 56.0466,
     "longitude": 9.1239,
     "elevation": 55.0
   },
   "HOBE 1.09": {
     "station": "1.09",
+    "network": "HOBE",
     "latitude": 56.036,
     "longitude": 9.1304,
     "elevation": 59.0
   },
   "HOBE 1.10": {
     "station": "1.10",
+    "network": "HOBE",
     "latitude": 56.0348,
     "longitude": 9.2392,
     "elevation": 71.0
   },
   "HOBE 2.01": {
     "station": "2.01",
+    "network": "HOBE",
     "latitude": 55.9398,
     "longitude": 9.2207,
     "elevation": 63.0
   },
   "HOBE 2.02": {
     "station": "2.02",
+    "network": "HOBE",
     "latitude": 55.9839,
     "longitude": 9.1624,
     "elevation": 50.0
   },
   "HOBE 2.03": {
     "station": "2.03",
+    "network": "HOBE",
     "latitude": 55.9816,
     "longitude": 9.1526,
     "elevation": 53.0
   },
   "HOBE 2.04": {
     "station": "2.04",
+    "network": "HOBE",
     "latitude": 55.9759,
     "longitude": 9.0984,
     "elevation": 45.0
   },
   "HOBE 2.05": {
     "station": "2.05",
+    "network": "HOBE",
     "latitude": 55.9763,
     "longitude": 9.0967,
     "elevation": 46.0
   },
   "HOBE 2.06b": {
     "station": "2.06b",
+    "network": "HOBE",
     "latitude": 55.9797,
     "longitude": 9.0817,
     "elevation": 43.0
   },
   "HOBE 2.07": {
     "station": "2.07",
+    "network": "HOBE",
     "latitude": 55.9482,
     "longitude": 9.0337,
     "elevation": 41.0
   },
   "HOBE 2.08b": {
     "station": "2.08b",
+    "network": "HOBE",
     "latitude": 55.9397,
     "longitude": 9.03146,
     "elevation": 38.0
   },
   "HOBE 2.09": {
     "station": "2.09",
+    "network": "HOBE",
     "latitude": 55.9282,
     "longitude": 9.1153,
     "elevation": 73.0
   },
   "HOBE 2.10": {
     "station": "2.10",
+    "network": "HOBE",
     "latitude": 55.9861,
     "longitude": 9.0907,
     "elevation": 44.0
   },
   "HOBE 2.11": {
     "station": "2.11",
+    "network": "HOBE",
     "latitude": 55.9704,
     "longitude": 9.0225,
     "elevation": 40.0
   },
   "HOBE 3.01": {
     "station": "3.01",
+    "network": "HOBE",
     "latitude": 55.8807,
     "longitude": 9.0142,
     "elevation": 52.0
   },
   "HOBE 3.02": {
     "station": "3.02",
+    "network": "HOBE",
     "latitude": 55.9354,
     "longitude": 8.9221,
     "elevation": 28.0
   },
   "HOBE 3.03": {
     "station": "3.03",
+    "network": "HOBE",
     "latitude": 55.9121,
     "longitude": 8.9462,
     "elevation": 34.0
   },
   "HOBE 3.04": {
     "station": "3.04",
+    "network": "HOBE",
     "latitude": 55.9106,
     "longitude": 8.9357,
     "elevation": 30.0
   },
   "HOBE 3.05": {
     "station": "3.05",
+    "network": "HOBE",
     "latitude": 55.9025,
     "longitude": 8.9175,
     "elevation": 36.0
   },
   "HOBE 3.06": {
     "station": "3.06",
+    "network": "HOBE",
     "latitude": 55.9115,
     "longitude": 8.8831,
     "elevation": 38.0
   },
   "HOBE 3.07": {
     "station": "3.07",
+    "network": "HOBE",
     "latitude": 55.9096,
     "longitude": 8.8536,
     "elevation": 26.0
   },
   "HOBE 3.08": {
     "station": "3.08",
+    "network": "HOBE",
     "latitude": 55.8776,
     "longitude": 9.2683,
     "elevation": 88.0
   },
   "HOBE 3.09": {
     "station": "3.09",
+    "network": "HOBE",
     "latitude": 55.8609,
     "longitude": 9.2945,
     "elevation": 104.0
