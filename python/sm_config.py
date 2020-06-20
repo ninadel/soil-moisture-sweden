@@ -45,7 +45,11 @@ dict_product_inputs = {
         "ts_dir": r"..\input_data\SPL4SMAU_nordic_reshuffle"
     },
     "Sentinel-1": {
-        "ts_dir": None
+        "raw_dir": r"C:\git\soil-moisture-sweden\input_data\cgls-biopar-ssm-01km_nordic",
+        "ts_dir": r"..\input_data\sentinel_ts",
+        # in the situation where no timestamp is available (i.e. defaults to midnight)
+        # set hours_shift to local overpass time in UTC
+        "hours_shift": 18
     },
     "SMOS-BEC": {
         "ts_dir": None
@@ -63,6 +67,14 @@ with open("dict_timeframes.json", "r") as f:
 # dictionary which stores static fields (e.g. lat, lon, sm field)
 with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
+
+# dictionary which stores ICOS stations
+with open("dict_icos.json", "r") as f:
+    dict_icos = json.load(f)
+
+# dictionary which stores HOBE stations
+with open("dict_hobe.json", "r") as f:
+    dict_hobe = json.load(f)
 
 # dictionary which stores GLDAS grid points
 with open("dict_swe_gldas_points.json", "r") as f:
