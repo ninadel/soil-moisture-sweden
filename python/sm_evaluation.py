@@ -42,38 +42,39 @@ def evaluate(references, products, startdate, enddate, output_folder, filter_ref
         product_str = product.replace(' ', '-')
         product_reader = tools.get_product_reader(product, config.dict_product_inputs[product])
         product_sm_col = config.dict_product_fields[product]['sm_field']
-        for ref_loc in references:
-            tools.write_log(log_file, "*** analyzing {} x {} {} ***".format(product, ref_loc.network, ref_loc.station))
-            ref_data = tools.get_ref_data(ref_loc, filter_ref, anomaly)[0]
-            ref_data.to_csv(os.path.join(data_output_folder, 'ref_data_{}_{}.csv'.format(ref_loc.network,
-                                                                                         ref_loc.station)))
+        for station in references:
+            tools.write_log(log_file, "*** analyzing {} x {} {} ***".format(product, station.network, station.station))
+            ref_data = tools.get_ref_data(station, filter_ref, anomaly)[0]
+            ref_data.to_csv(os.path.join(data_output_folder, 'ref_data_{}_{}.csv'.format(station.network,
+                                                                                         station.station)))
             tools.write_log(log_file, 'ref_data.shape: {}'.format(ref_data.shape))
-            ref_sm_col = tools.get_ref_data(ref_loc)[1]
+            ref_sm_col = tools.get_ref_data(station)[1]
             ref_data.rename('ref_sm', inplace=True)
-            product_data = tools.get_product_data(lon=ref_loc.longitude, lat=ref_loc.latitude, product=product,
-                                                  reader=product_reader, filter_prod=filter_prod, anomaly=anomaly)
+            product_data = tools.get_product_data(lon=station.longitude, lat=station.latitude, product=product,
+                                                  reader=product_reader, filter_prod=filter_prod, anomaly=anomaly,
+                                                  station=station)
             product_data.to_csv(os.path.join(data_output_folder, '{}_data_{}_{}.csv'.format(product_str,
-                                                                                            ref_loc.network,
-                                                                                            ref_loc.station)))
+                                                                                            station.network,
+                                                                                            station.station)))
             product_data.rename('product_sm', inplace=True)
             tools.write_log(log_file, 'product_data.shape: {}'.format(product_data.shape))
             product_data = product_data.loc[startdate:enddate]
             tools.write_log(log_file, 'product_data.shape (with date filter): {}'.format(product_data.shape))
             matched_data = temporal_matching.matching(product_data, ref_data, window=1 / 24.)
             matched_data.to_csv(os.path.join(data_output_folder, 'matched_data_{}_{}_{}.csv'.format(product_str,
-                                                                                                    ref_loc.network,
-                                                                                                    ref_loc.station)))
+                                                                                                    station.network,
+                                                                                                    station.station)))
             tools.write_log(log_file, 'matched_data.shape: {}'.format(matched_data.shape))
             # insert scaling conditional here
             metric_values = tools.get_metrics(matched_data, 'product_sm', 'ref_sm', anomaly)
             n = matched_data.shape[0]
-            station_metrics_df = pandas.DataFrame([[ref_loc.network, ref_loc.station, filter_ref, product_str,
+            station_metrics_df = pandas.DataFrame([[station.network, station.station, filter_ref, product_str,
                                                     filter_prod, timeframe, anomaly, n] + metric_values],
                                                   columns=config.metrics_df_columns)
             tools.write_log(log_file, str(station_metrics_df))
             metrics_df = pandas.concat([metrics_df, station_metrics_df])
             metrics_df.reset_index(drop=True, inplace=True)
-            tools.write_log(log_file, '{} x {} {} analysis complete'.format(product, ref_loc.network, ref_loc.station))
+            tools.write_log(log_file, '{} x {} {} analysis complete'.format(product, station.network, station.station))
             tools.write_log(log_file, '')
     metrics_df.to_csv(metrics_file, sep=',')
     return metrics_df
