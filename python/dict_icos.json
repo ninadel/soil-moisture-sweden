@@ -1,42 +1,49 @@
 {
   "SE-Deg": {
     "station": "Degero",
+    "network": "ICOS",
     "latitude": 64.182029,
     "longitude": 19.556539,
     "elevation": 270
   },
   "SE-Htm": {
     "station": "Hyltemossa",
+    "network": "ICOS",
     "latitude": 56.097581,
     "longitude": 13.419064,
     "elevation": 115
   },
   "SE-Lnn": {
     "station": "Lanna",
+    "network": "ICOS",
     "latitude": 58.340629,
     "longitude": 13.101768,
     "elevation": 75
   },
   "SE-Nor": {
     "station": "Norunda",
+    "network": "ICOS",
     "latitude": 60.086441,
     "longitude": 17.479455,
     "elevation": 46
   },
   "SE-Oes": {
     "station": "Ostergarnsholm",
+    "network": "ICOS",
     "latitude": 57.430061,
     "longitude": 18.984339,
     "elevation": 0
   },
   "SE-Sto": {
     "station": "Stordalen",
+    "network": "ICOS",
     "latitude": 68.356003,
     "longitude": 19.0452,
     "elevation": 360
   },
   "SE-Svb": {
     "station": "Svartberget",
+    "network": "ICOS",
     "latitude": 64.256125,
     "longitude": 19.774413,
     "elevation": 270
