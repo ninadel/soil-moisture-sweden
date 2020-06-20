@@ -382,3 +382,30 @@ def get_img_reader(product, file):
         reader = SentinelImg(file)
     return reader
 
+
+# filters dataframe by date, assuming index is a date
+def filter_df_by_timeframe(df, year_filter=None, season_filter=None, date_col_idx=None):
+    if date_col_idx is None:
+        date_column = df.columns[0]
+    else:
+        date_column = df.columns[date_col_idx]
+    if year_filter is not None:
+        df = df[df[date_column].dt.year == year_filter]
+    if season_filter is not None:
+        if season_filter == 'non-winter':
+            df = df[(df[date_column].dt.month != 12) & (df[date_column].dt.month != 1) &
+                    (df[date_column].dt.month != 2)]
+        if season_filter == 'winter':
+            df = df[(df[date_column].dt.month == 12) | (df[date_column].dt.month == 1) |
+                    (df[date_column].dt.month == 2)]
+        if season_filter == 'spring':
+            df = df[(df[date_column].dt.month == 3) | (df[date_column].dt.month == 4) |
+                    (df[date_column].dt.month == 5)]
+        if season_filter == 'summer':
+            df = df[(df[date_column].dt.month == 6) | (df[date_column].dt.month == 7) |
+                    (df[date_column].dt.month == 8)]
+        if season_filter == 'fall':
+            df = df[(df[date_column].dt.month == 9) | (df[date_column].dt.month == 10) |
+                    (df[date_column].dt.month == 11)]
+    return df
+
