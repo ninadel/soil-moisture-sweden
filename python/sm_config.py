@@ -12,7 +12,8 @@ ismn_input_dir = r"..\ismn_data\HOBE_Data_2015-2018"
 metrics_df_columns = ["network", "station", "ref_filtered", "product", "product_filtered", "timeframe", "anomaly", "n",
                       "bias", "rmsd", "ubrmsd", "pearsonr", "pearsonr_p"]
 
-timeframes = ['non-winter', 'winter', 'spring', 'summer', 'fall']
+year_timeframes = [2015, 2016, 2017, 2018]
+season_timeframes = ['non-winter', 'winter', 'spring', 'summer', 'fall']
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 dict_product_inputs = {
