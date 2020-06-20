@@ -23,7 +23,7 @@ from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
 from pytesmo.time_series.anomaly import calc_anomaly
 import sm_config as config
-
+from sentinel import SentinelImg
 
 def write_log(filename, string, print_string=True, write_output=True):
     if write_output:
@@ -98,31 +98,29 @@ def get_product_reader(product, product_metadata):
         static_layers_dir = product_metadata["static_layers_dir"]
         reader = H115Ts(cdr_path=ts_dir, grid_path=grid_dir, grid_filename=grid_file,
                         static_layer_path=static_layers_dir)
-    if product == "CCI Active":
+    elif product == "CCI Active":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
-    if product == "CCI Passive":
+    elif product == "CCI Passive":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
-    if product == "CCI Combined":
+    elif product == "CCI Combined":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
-    if product == "GLDAS":
+    elif product == "GLDAS":
         ts_dir = product_metadata["ts_dir"]
         reader = GLDASTs(ts_path=ts_dir)
-    if product == "Sentinel":
-        reader = None
-    if product == "SMAP L3":
+    elif product == "SMAP L3":
         ts_dir = product_metadata["ts_dir"]
         reader = SMAPTs(ts_path=ts_dir)
-    if product == "SMAP L4":
+    elif product == "SMAP L4":
         ts_dir = product_metadata["ts_dir"]
         reader = SMAPTs(ts_path=ts_dir)
-    if product == "SMOS-BEC":
-        reader = None
-    if product == "SMOS-IC":
+    elif product == "SMOS-IC":
         ts_dir = product_metadata["ts_dir"]
         reader = SMOSTs(ts_path=ts_dir)
+    else:
+        reader = None
     return reader
 
 
@@ -147,46 +145,50 @@ def get_ref_data(ts, filter_ref=False, anomaly=False):
     return sm_data, sm_field
 
 
-def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False):
-    ts = reader.read(lon, lat)
-    if product == "ASCAT 12.5 TS":
-        data = ts.data
-        if filter_prod:
-            data = data.loc[data["ssf"] == 1]
-        # Timestampp OK
-    if product == "CCI Active":
-        data = ts
-        # For now, no filters for CCI
-    if product == "CCI Passive":
-        data = ts
-        # For now, no filters for CCI
-    if product == "CCI Combined":
-        data = ts
-        # For now, no filters for CCI
-    if product == "GLDAS":
-        data = ts
-        # No filters for GLDAS
-        # Timestampp OK
-    if product == "Sentinel-1":
-        data = ts
-        # note: sentinel class manually filters out ssm values below 0 and above 100
-        # Force Timestamp: ??
-    if product == "SMAP L3":
-        data = ts
-        # For now, no filters for SMAP L3
-        # Force Timestamp: 6AM CET, 5AM UTC
-    if product == "SMAP L4":
-        data = ts
-        # For now, no filters for SMAP L4
-        # Timestampp OK
-    if product == "SMOS-BEC":
-        pass
-    if product == "SMOS-IC":
-        data = ts
-        # For now, no filters for SMOS-IC
-        # See "Quality_Flag" field
-        # Timestampp OK
-    sm = data[config.dict_product_fields[product]["sm_field"]]
+def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False, station=None):
+    sm = None
+    if reader is not None:
+        ts = reader.read(lon, lat)
+        if product == "ASCAT 12.5 TS":
+            data = ts.data
+            if filter_prod:
+                data = data.loc[data["ssf"] == 1]
+            # Timestampp OK
+        elif product == "CCI Active":
+            data = ts
+            # For now, no filters for CCI
+        elif product == "CCI Passive":
+            data = ts
+            # For now, no filters for CCI
+        elif product == "CCI Combined":
+            data = ts
+            # For now, no filters for CCI
+        elif product == "GLDAS":
+            data = ts
+            # No filters for GLDAS
+            # Timestampp OK
+        # if product == "Sentinel-1":
+        #     data = ts
+            # note: sentinel class manually filters out ssm values below 0 and above 100
+            # Force Timestamp: ??
+        elif product == "SMAP L3":
+            data = ts
+            # For now, no filters for SMAP L3
+            # Force Timestamp: 6AM CET, 5AM UTC
+        elif product == "SMAP L4":
+            data = ts
+            # For now, no filters for SMAP L4
+            # Timestampp OK
+        # if product == "SMOS-BEC":
+        #     pass
+        elif product == "SMOS-IC":
+            data = ts
+            # For now, no filters for SMOS-IC
+            # See "Quality_Flag" field
+            # Timestampp OK
+        sm = data[config.dict_product_fields[product]["sm_field"]]
+    else:
+        sm = get_csv_series(product, station)
     if anomaly:
         sm = calc_anomaly(sm)
     return sm
@@ -339,9 +341,9 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
     location_count = len(locations)
     index_count = 0
     for location, coordinate in locations.items():
-        lat = coordinate['lat']
+        lat = coordinate['latitutde']
         lat_str = str(lat).replace('.', '-')
-        lon = coordinate['lon']
+        lon = coordinate['longitude']
         lon_str = str(lon).replace('.', '-')
         output_filename = "{}_{}_{}_{}_{}_{}.csv".format(product_str, location, lat_str, lon_str, filter_str,
                                                          anomaly_str)
@@ -355,3 +357,28 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
         print("{} of {} locations processed".format(index_count, location_count))
     else:
         index_count += 1
+
+# for text-driven datasets, generate filename
+def get_station_ts_filename(station):
+    network = station.network
+    station = station.station
+    #     product_str = product.replace(' ', '-')
+    filename = "{}_{}.csv".format(network, station.replace(".", "-"))
+    return filename
+
+
+# for text-driven datasets, retrieve time series
+def get_csv_series(product, station):
+    ts_dir = config.dict_product_inputs[product]["ts_dir"]
+    filename = get_station_ts_filename(station)
+    file = os.path.join(ts_dir, filename)
+    series = pandas.read_csv(file)
+    return series
+
+
+def get_img_reader(product, file):
+    reader = None
+    if product == "Sentinel-1":
+        reader = SentinelImg(file)
+    return reader
+
