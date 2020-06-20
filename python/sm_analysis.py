@@ -35,7 +35,7 @@ analysis_output_folder = r"../analysis_output"
 
 if insitu_evaluation:
     # for first argument, use icos_readers, ismn_readers, or reference_list
-    insitu_evaluation_results = evaluation.evaluate(icos_readers, evaluation_dict, startdate=datetime(2015, 4, 1),
+    insitu_evaluation_results = evaluation.evaluate(ismn_readers, evaluation_dict, startdate=datetime(2015, 4, 1),
                                                     enddate=datetime(2018, 12, 31, 23, 59),
                                                     output_folder=analysis_output_folder, anomaly=anomaly_evaluation)
     print(insitu_evaluation_results)
