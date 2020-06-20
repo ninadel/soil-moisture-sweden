@@ -34,7 +34,8 @@ class SentinelImg(ImageBase):
         if type(parameter) != list:
             parameter = [parameter]
         self.parameters = parameter
-
+        timestamp_str = re.findall(r"c_gls_SSM1km_[0-9]{8}", self.filename)[-1][-8:]
+        self.timestamp = datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]))
 
     def read_img(self):
         return_data = {}
@@ -48,9 +49,6 @@ class SentinelImg(ImageBase):
             raise e
 
         timekey = 'time'
-
-        timestamp_str = re.findall(r"c_gls_SSM1km_[0-9]{8}", self.filename)[-1][-8:]
-        timestamp = datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]))
 
         latitude = ds['lat'][:]
         longitude = ds['lon'][:]
@@ -78,7 +76,7 @@ class SentinelImg(ImageBase):
             return_meta[parameter] = metadata
 
         ds.close()
-        return Image(longitude, latitude, return_data, return_meta, timestamp, timekey)
+        return Image(longitude, latitude, return_data, return_meta, self.timestamp, timekey)
 
     def write(self, data):
         raise NotImplementedError()
