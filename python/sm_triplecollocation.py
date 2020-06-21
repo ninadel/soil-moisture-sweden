@@ -12,7 +12,7 @@ import sm_tools as tools
 analysis_output_root = r"../analysis_output"
 analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 analysis_results_folder = os.path.join(analysis_output_root, "{}_tc".format(analysis_timestamp))
-os.mkdirs(analysis_results_folder)
+os.makedirs(analysis_results_folder)
 metrics_filename = "tc_metrics_{}.csv".format(analysis_timestamp)
 log_filename = "tc_log_{}.csv".format(analysis_timestamp)
 log_file = os.path.join(analysis_results_folder, log_filename)
@@ -39,6 +39,8 @@ def tc_analysis(triplets, locations, anomaly=False):
         location_metrics = pandas.DataFrame()
         location_vc = config.dict_swe_gldas_points[location]["veg_class_name"]
         location_counter += 1
+        lat = metadata["latitude"]
+        lon = metadata["longitude"]
         tools.write_log(log_file, "analyzing {}: {} of {} locations".format(location, location_counter, locations_len))
         ts_dict = {}
         for triplet in triplets:
@@ -52,8 +54,6 @@ def tc_analysis(triplets, locations, anomaly=False):
         for triplet in triplets:
             triplet_metrics = pandas.DataFrame()
             for product in triplet:
-                lat = metadata["latitude"]
-                lon = metadata["longitude"]
                 ts_dict[product].rename(product, inplace=True)
                 tools.write_log(log_file, "{} {} data.shape: {}".format(location, product,
                                                                         ts_dict[product].shape))
