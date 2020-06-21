@@ -62,6 +62,31 @@ dict_product_inputs = {
     }
 }
 
+# for products that default to midnight, these dictionary values shift datetimeindex values to local overpass in UTC
+# through the tools.get_timeshifted_data function
+dict_timeshifts = {
+    "ASCAT SM-OBS-2": None,
+    # Timestamps are already present in TS
+    "ASCAT 12.5 TS": None,
+    # CCI Active Force Timestamp: 9:30AM CET, 8:30AM UTC based on ASCAT overpasses
+    "CCI Active": (30600, 'S'),
+    # CCI Passive Force Timestamp: 6AM CET, 5AM UTC
+    "CCI Passive": (5, 'H'),
+    # CCI Combined Force Timestamp: 8AM CET, 7AM UTC based on average of Active and Passive products
+    "CCI Combined": (7, 'H'),
+    # GLDAS Timestamps already present in ts
+    "GLDAS": None,
+    # SMAP L3 Force Timestamp: 6AM CET, 5AM UTC
+    "SMAP L3": (5, 'H'),
+    "SMAP L3 Enhanced": None,
+    # SMAP L4 Timestamps already present in ts
+    "SMAP L4": None,
+    # Sentinel-1 timestamps present in data
+    "Sentinel-1": None,
+    "SMOS-BEC": None,
+    "SMOS-IC": (5, 'H')
+}
+
 # open external dictionaries
 # dictionary which defines timeframes to analyze
 with open("dict_timeframes.json", "r") as f:
