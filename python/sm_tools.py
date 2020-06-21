@@ -23,7 +23,7 @@ from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
 from pytesmo.time_series.anomaly import calc_anomaly
 import sm_config as config
-
+from sentinel import SentinelImg
 
 def write_log(filename, string, print_string=True, write_output=True):
     if write_output:
@@ -34,15 +34,11 @@ def write_log(filename, string, print_string=True, write_output=True):
 
 
 def create_output_dir(output_folder):
-    analysis_results_folder = os.path.join(output_folder, "{}_analysis".format(datetime.now().
-                                                                               strftime("%Y%m%d_%H%M%S")))
-    os.makedirs(analysis_results_folder)
-    data_output_folder = os.path.join(analysis_results_folder, "data_output")
+    data_output_folder = os.path.join(output_folder, "data_output")
     os.mkdir(data_output_folder)
-    log_file = os.path.join(analysis_results_folder, "analysis_log.txt")
-    metrics_file = os.path.join(analysis_results_folder, "analysis_metrics.csv")
+    log_file = os.path.join(output_folder, "analysis_log.txt")
+    metrics_file = os.path.join(output_folder, "analysis_metrics.csv")
     return log_file, metrics_file, data_output_folder
-    # MOVE to config later
 
 
 def get_icos_files(input_dir):
@@ -70,10 +66,14 @@ def get_icos_readers(input_dir):
 
 def get_ismn_readers(input_dir):
     ismn_readers = []
+    ismn_stations = []
     interface = ISMN_Interface(input_dir)
     for station_object in interface.stations_that_measure("soil moisture"):
         for ISMN_time_series in station_object.data_for_variable("soil moisture", min_depth=0, max_depth=0.1):
-            ismn_readers.append(ISMN_time_series)
+            # appends only the first TS of the station in the case where there are multiple sensors per station
+            if ISMN_time_series.station not in ismn_stations:
+                ismn_readers.append(ISMN_time_series)
+                ismn_stations.append(ISMN_time_series.station)
     return ismn_readers
 
 
@@ -98,31 +98,29 @@ def get_product_reader(product, product_metadata):
         static_layers_dir = product_metadata["static_layers_dir"]
         reader = H115Ts(cdr_path=ts_dir, grid_path=grid_dir, grid_filename=grid_file,
                         static_layer_path=static_layers_dir)
-    if product == "CCI Active":
+    elif product == "CCI Active":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
-    if product == "CCI Passive":
+    elif product == "CCI Passive":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
-    if product == "CCI Combined":
+    elif product == "CCI Combined":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
-    if product == "GLDAS":
+    elif product == "GLDAS":
         ts_dir = product_metadata["ts_dir"]
         reader = GLDASTs(ts_path=ts_dir)
-    if product == "Sentinel":
-        reader = None
-    if product == "SMAP L3":
+    elif product == "SMAP L3":
         ts_dir = product_metadata["ts_dir"]
         reader = SMAPTs(ts_path=ts_dir)
-    if product == "SMAP L4":
+    elif product == "SMAP L4":
         ts_dir = product_metadata["ts_dir"]
         reader = SMAPTs(ts_path=ts_dir)
-    if product == "SMOS-BEC":
-        reader = None
-    if product == "SMOS-IC":
+    elif product == "SMOS-IC":
         ts_dir = product_metadata["ts_dir"]
         reader = SMOSTs(ts_path=ts_dir)
+    else:
+        reader = None
     return reader
 
 
@@ -147,53 +145,66 @@ def get_ref_data(ts, filter_ref=False, anomaly=False):
     return sm_data, sm_field
 
 
-def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False):
-    ts = reader.read(lon, lat)
-    if product == "ASCAT 12.5 TS":
-        data = ts.data
-        if filter_prod:
-            data = data.loc[data["ssf"] == 1]
-        # Timestampp OK
-    if product == "CCI Active":
-        data = ts
-        # For now, no filters for CCI
-    if product == "CCI Passive":
-        data = ts
-        # For now, no filters for CCI
-    if product == "CCI Combined":
-        data = ts
-        # For now, no filters for CCI
-    if product == "GLDAS":
-        data = ts
-        # No filters for GLDAS
-        # Timestampp OK
-    if product == "Sentinel-1":
-        data = ts
-        # note: sentinel class manually filters out ssm values below 0 and above 100
-        # Force Timestamp: ??
-    if product == "SMAP L3":
-        data = ts
-        # For now, no filters for SMAP L3
-        # Force Timestamp: 6AM CET, 5AM UTC
-    if product == "SMAP L4":
-        data = ts
-        # For now, no filters for SMAP L4
-        # Timestampp OK
-    if product == "SMOS-BEC":
-        pass
-    if product == "SMOS-IC":
-        data = ts
-        # For now, no filters for SMOS-IC
-        # See "Quality_Flag" field
-        # Timestampp OK
-    sm = data[config.dict_product_fields[product]["sm_field"]]
+def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False, station=None):
+    sm = None
+    if reader is not None:
+        ts = reader.read(lon, lat)
+        if product == "ASCAT 12.5 TS":
+            data = ts.data
+            if filter_prod:
+                data = data.loc[data["ssf"] == 1]
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 100)]
+        elif product == "CCI Active":
+            data = ts
+            # For now, no filters for CCI
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 100)]
+        elif product == "CCI Passive":
+            data = ts
+            # For now, no filters for CCI
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 1)]
+        elif product == "CCI Combined":
+            data = ts
+            # For now, no filters for CCI
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 1)]
+        elif product == "GLDAS":
+            data = ts
+            # No filters needed for GLDAS
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 100)]
+        elif product == "SMAP L3":
+            data = ts
+            # For now, no filters for SMAP L3
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 1)]
+        elif product == "SMAP L4":
+            data = ts
+            # No filters needed for SMAP L4
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 1)]
+        # if product == "SMOS-BEC":
+        #     pass
+        elif product == "SMOS-IC":
+            # Force Timestamp: 6AM CET, 5AM UTC
+            # data = ts.shift(5, freq='H')
+            data = ts
+            # Quality_Flag field is already filtered to 0, 1 by reader
+            # For now, no filters for SMOS-IC
+            # See "Quality_Flag" field
+            sm = data[config.dict_product_fields[product]["sm_field"]]
+            sm = sm[(sm >= 0) & (sm < 1)]
+    else:
+        sm = get_csv_series(product, station)
     if anomaly:
         sm = calc_anomaly(sm)
     return sm
 
 
 # get data for all network/stations in a dictionary
-def get_metrics(data, xcol, ycol, anomaly=False):
+def get_metrics(data, xcol=None, ycol=None, anomaly=False):
     """""
     Calculate metrics for a pair of TS
     data: temporally matched dataset
@@ -339,9 +350,9 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
     location_count = len(locations)
     index_count = 0
     for location, coordinate in locations.items():
-        lat = coordinate['lat']
+        lat = coordinate['latitutde']
         lat_str = str(lat).replace('.', '-')
-        lon = coordinate['lon']
+        lon = coordinate['longitude']
         lon_str = str(lon).replace('.', '-')
         output_filename = "{}_{}_{}_{}_{}_{}.csv".format(product_str, location, lat_str, lon_str, filter_str,
                                                          anomaly_str)
@@ -355,3 +366,67 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
         print("{} of {} locations processed".format(index_count, location_count))
     else:
         index_count += 1
+
+# for text-driven datasets, generate filename
+def get_station_ts_filename(station):
+    network = station.network
+    station = station.station
+    #     product_str = product.replace(' ', '-')
+    filename = "{}_{}.csv".format(network, station.replace(".", "-"))
+    return filename
+
+
+# for text-driven datasets, retrieve time series
+def get_csv_series(product, station):
+    ts_dir = config.dict_product_inputs[product]["ts_dir"]
+    filename = get_station_ts_filename(station)
+    file = os.path.join(ts_dir, filename)
+    df = pandas.read_csv(file)
+    # df['timestamp'].to_datetime(df['timestamp'])
+    df = df.set_index(pandas.DatetimeIndex(df['timestamp']))
+    # df = df.tz_localize('UTC')
+    sm = df['sm']
+    return sm
+
+
+def get_img_reader(product, file):
+    reader = None
+    if product == "Sentinel-1":
+        reader = SentinelImg(file)
+    return reader
+
+
+# filters dataframe by date, assuming index is a datetimeindex
+def filter_df_by_timeframe(df, year_filter=None, season_filter=None):
+    if year_filter is not None:
+        df = df[df.index.year == year_filter]
+    if season_filter is not None:
+        if season_filter == 'non-winter':
+            df = df[(df.index.month != 12) & (df.index.month != 1) & (df.index.month != 2)]
+        if season_filter == 'winter':
+            df = df[(df.index.month == 12) | (df.index.month == 1) | (df.index.month == 2)]
+        if season_filter == 'spring':
+            df = df[(df.index.month == 3) | (df.index.month == 4) | (df.index.month == 5)]
+        if season_filter == 'summer':
+            df = df[(df.index.month == 6) | (df.index.month == 7) | (df.index.month == 8)]
+        if season_filter == 'fall':
+            df = df[(df.index.month == 9) | (df.index.month == 10) | (df.index.month == 11)]
+    return df
+
+
+def get_triplet_list(triplets):
+    triplet_list = []
+    for triplet, analyze in triplets.items():
+        if analyze:
+            triplet_list.append(triplet)
+    return triplet_list
+
+
+def get_timeshifted_data(product, product_data):
+    hours = product_data.index.hour
+    if not hours.any():
+        value, interval = config.dict_timeshifts[product]
+        product_data = product_data.shift(value, freq=interval)
+        return product_data
+    else:
+        return product_data

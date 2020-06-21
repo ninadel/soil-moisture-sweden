@@ -12,6 +12,9 @@ ismn_input_dir = r"..\ismn_data\HOBE_Data_2015-2018"
 metrics_df_columns = ["network", "station", "ref_filtered", "product", "product_filtered", "timeframe", "anomaly", "n",
                       "bias", "rmsd", "ubrmsd", "pearsonr", "pearsonr_p"]
 
+year_timeframes = [2015, 2016, 2017, 2018]
+season_timeframes = ['non-winter', 'winter', 'spring', 'summer', 'fall']
+
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 dict_product_inputs = {
     "ASCAT SM-OBS-2": {
@@ -45,7 +48,8 @@ dict_product_inputs = {
         "ts_dir": r"..\input_data\SPL4SMAU_nordic_reshuffle"
     },
     "Sentinel-1": {
-        "ts_dir": None
+        "raw_dir": r"C:\git\soil-moisture-sweden\input_data\cgls-biopar-ssm-01km_nordic",
+        "ts_dir": r"..\input_data\sentinel_ts",
     },
     "SMOS-BEC": {
         "ts_dir": None
@@ -53,6 +57,31 @@ dict_product_inputs = {
     "SMOS-IC": {
         "ts_dir": r"C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC"
     }
+}
+
+# for products that default to midnight, these dictionary values shift datetimeindex values to local overpass in UTC
+# through the tools.get_timeshifted_data function
+dict_timeshifts = {
+    "ASCAT SM-OBS-2": None,
+    # Timestamps are already present in TS
+    "ASCAT 12.5 TS": None,
+    # CCI Active Force Timestamp: 9:30AM CET, 8:30AM UTC based on ASCAT overpasses
+    "CCI Active": (30600, 'S'),
+    # CCI Passive Force Timestamp: 6AM CET, 5AM UTC
+    "CCI Passive": (5, 'H'),
+    # CCI Combined Force Timestamp: 8AM CET, 7AM UTC based on average of Active and Passive products
+    "CCI Combined": (7, 'H'),
+    # GLDAS Timestamps already present in ts
+    "GLDAS": None,
+    # SMAP L3 Force Timestamp: 6AM CET, 5AM UTC
+    "SMAP L3": (5, 'H'),
+    "SMAP L3 Enhanced": None,
+    # SMAP L4 Timestamps already present in ts
+    "SMAP L4": None,
+    # Sentinel-1 timestamps present in data
+    "Sentinel-1": None,
+    "SMOS-BEC": None,
+    "SMOS-IC": (5, 'H')
 }
 
 # open external dictionaries
@@ -63,6 +92,14 @@ with open("dict_timeframes.json", "r") as f:
 # dictionary which stores static fields (e.g. lat, lon, sm field)
 with open("dict_product_fields.json", "r") as f:
     dict_product_fields = json.load(f)
+
+# dictionary which stores ICOS stations
+with open("dict_icos.json", "r") as f:
+    dict_icos = json.load(f)
+
+# dictionary which stores HOBE stations
+with open("dict_hobe.json", "r") as f:
+    dict_hobe = json.load(f)
 
 # dictionary which stores GLDAS grid points
 with open("dict_swe_gldas_points.json", "r") as f:
