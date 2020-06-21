@@ -50,9 +50,6 @@ dict_product_inputs = {
     "Sentinel-1": {
         "raw_dir": r"C:\git\soil-moisture-sweden\input_data\cgls-biopar-ssm-01km_nordic",
         "ts_dir": r"..\input_data\sentinel_ts",
-        # in the situation where no timestamp is available (i.e. defaults to midnight)
-        # set hours_shift to local overpass time in UTC
-        "hours_shift": 18
     },
     "SMOS-BEC": {
         "ts_dir": None
