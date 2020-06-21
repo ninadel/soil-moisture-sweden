@@ -151,9 +151,13 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False,
                 data = data.loc[data["ssf"] == 1]
             # Timestampp OK
         elif product == "CCI Active":
+            # Force Timestamp: 9:30AM CET, 8:30AM UTC based on ASCAT overpasses
+            # data = ts.shift(30600, freq='S')
             data = ts
             # For now, no filters for CCI
         elif product == "CCI Passive":
+            # Force Timestamp: 6AM CET, 5AM UTC
+            # data = ts.shift(5, freq='H')
             data = ts
             # For now, no filters for CCI
         elif product == "CCI Combined":
@@ -161,32 +165,32 @@ def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False,
             # For now, no filters for CCI
         elif product == "GLDAS":
             data = ts
-            # No filters for GLDAS
-            # Timestampp OK
-        # if product == "Sentinel-1":
-        #     data = ts
-            # note: sentinel class manually filters out ssm values below 0 and above 100
-            # Force Timestamp: ??
+            # No filters needed for GLDAS
+            # Timestamps already present in ts
         elif product == "SMAP L3":
+            # Force Timestamp: 6AM CET, 5AM UTC
+            # data = ts.shift(5, freq='H')
             data = ts
             # For now, no filters for SMAP L3
-            # Force Timestamp: 6AM CET, 5AM UTC
         elif product == "SMAP L4":
             data = ts
-            # For now, no filters for SMAP L4
-            # Timestampp OK
+            # No filters needed for SMAP L4
+            # Timestamps already present in ts
         # if product == "SMOS-BEC":
         #     pass
         elif product == "SMOS-IC":
+            # Force Timestamp: 6AM CET, 5AM UTC
+            # data = ts.shift(5, freq='H')
             data = ts
+            # Quality_Flag field is already filtered to 0, 1 by reader
             # For now, no filters for SMOS-IC
             # See "Quality_Flag" field
-            # Timestampp OK
         sm = data[config.dict_product_fields[product]["sm_field"]]
     else:
         sm = get_csv_series(product, station)
     if anomaly:
         sm = calc_anomaly(sm)
+    sm = sm[(sm > 0) & (sm < 100)]
     return sm
 
 
@@ -396,29 +400,10 @@ def filter_df_by_timeframe(df, year_filter=None, season_filter=None):
             df = df[(df.index.month == 9) | (df.index.month == 10) | (df.index.month == 11)]
     return df
 
-# # filters dataframe by date, assuming index is a date
-# def filter_df_by_timeframe(df, year_filter=None, season_filter=None, date_col_idx=None):
-#     if date_col_idx is None:
-#         date_column = df.columns[0]
-#     else:
-#         date_column = df.columns[date_col_idx]
-#     if year_filter is not None:
-#         df = df[df[date_column].dt.year == year_filter]
-#     if season_filter is not None:
-#         if season_filter == 'non-winter':
-#             df = df[(df[date_column].dt.month != 12) & (df[date_column].dt.month != 1) &
-#                     (df[date_column].dt.month != 2)]
-#         if season_filter == 'winter':
-#             df = df[(df[date_column].dt.month == 12) | (df[date_column].dt.month == 1) |
-#                     (df[date_column].dt.month == 2)]
-#         if season_filter == 'spring':
-#             df = df[(df[date_column].dt.month == 3) | (df[date_column].dt.month == 4) |
-#                     (df[date_column].dt.month == 5)]
-#         if season_filter == 'summer':
-#             df = df[(df[date_column].dt.month == 6) | (df[date_column].dt.month == 7) |
-#                     (df[date_column].dt.month == 8)]
-#         if season_filter == 'fall':
-#             df = df[(df[date_column].dt.month == 9) | (df[date_column].dt.month == 10) |
-#                     (df[date_column].dt.month == 11)]
-#     return df
-#
+
+def get_triplet_list(triplets):
+    triplet_list = []
+    for triplet, analyze in triplets.items():
+        if analyze:
+            triplet_list.append(triplet)
+    return triplet_list
