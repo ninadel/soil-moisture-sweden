@@ -4,28 +4,28 @@
         "lat_field": "",
         "sm_field": "",
         "filter_dict": {},
-        "scale": "",
+        "scale": ""
     },
     "ASCAT 12.5 TS": {
         "lon_field": "lon",
         "lat_field": "lat",
         "sm_field": "sm",
         "filter_dict": {},
-        "scale": "lin_cdf_match",
+        "scale": "lin_cdf_match"
     },
     "CCI Active": {
         "lon_field": "lon",
         "lat_field": "lat",
         "sm_field": "sm",
         "filter_dict": {},
-        "scale": "lin_cdf_match",
+        "scale": "lin_cdf_match"
     },
     "CCI Passive": {
         "lon_field": "lon",
         "lat_field": "lat",
         "sm_field": "sm",
         "filter_dict": {},
-        "scale": "",
+        "scale": ""
     },
     "CCI Combined": {
         "lon_field": "lon",
