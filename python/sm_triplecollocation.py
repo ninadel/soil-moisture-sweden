@@ -1,8 +1,11 @@
 from pytesmo.metrics import tcol_snr
 from pytesmo import temporal_matching
+from pytesmo.metrics import tcol_snr
 
 from datetime import datetime
+from itertools import permutations
 import os
+import pandas
 import sm_config as config
 import sm_tools as tools
 
@@ -22,9 +25,9 @@ tc_analysis_triplets = {
 }
 
 def tc_analysis(triplets, locations, anomaly=False):
+    metrics = pandas.DataFrame()
     reader_dict = {}
     triplets = tools.get_triplet_list(triplets)
-    print(triplets)
     # get data for each product for each location
     for triplet in triplets:
         for product in triplet:
@@ -33,39 +36,65 @@ def tc_analysis(triplets, locations, anomaly=False):
     location_counter = 0
     locations_len = len(list(config.dict_swe_gldas_points.keys()))
     for location, metadata in config.dict_swe_gldas_points.items():
+        location_metrics = pandas.DataFrame()
+        location_vc = config.dict_swe_gldas_points[location]["veg_class_name"]
         location_counter += 1
-        tools.write_log(log_file, "analyzing {} of {} locations".format(location_counter, locations_len))
+        tools.write_log(log_file, "analyzing {}: {} of {} locations".format(location, location_counter, locations_len))
         ts_dict = {}
-        for product, reader in reader_dict.items():
-            lat = metadata["latitude"]
-            lon = metadata["longitude"]
-            ts_dict[product] = tools.get_product_data(lon=lon, lat=lat, product=product, reader=reader, anomaly=anomaly)
         for triplet in triplets:
-            product1 = triplet[0]
-            product2 = triplet[1]
-            product3 = triplet[2]
-            product1_data = ts_dict[product1]
-            product2_data = ts_dict[product2]
-            product3_data = ts_dict[product3]
-            product1_data.rename('sm_1', inplace=True)
-            product2_data.rename('sm_2', inplace=True)
-            product3_data.rename('sm_3', inplace=True)
-            tools.write_log(log_file, "{} {} data.shape: {}".format(location, product1, product1_data.shape))
-            tools.write_log(log_file, "{} {} data.shape: {}".format(location, product2, product2_data.shape))
-            tools.write_log(log_file, "{} {} data.shape: {}".format(location, product3, product3_data.shape))
-            # print(product1_data.head())
-            # print(product2_data.head())
-            # print(product3_data.head())
-            if product1_data.size > 0 and product2_data.size > 0 and product3_data.size > 0:
-                matched_data = temporal_matching.matching(product2_data, product3_data, product1_data, window=.5)
-                tools.write_log(log_file,
-                    "{} [{}, {}, {}] matched_data.shape: {}".format(
-                        location, product1, product2, product3, matched_data.shape))
+            for product in triplet:
+                if product not in ts_dict.keys():
+                    reader = reader_dict[product]
+                    product_data = tools.get_product_data(lon=lon, lat=lat, product=product, reader=reader,
+                                                          anomaly=anomaly)
+                    product_data = tools.get_timeshifted_data(product, product_data)
+                ts_dict[product] = product_data
+        for triplet in triplets:
+            triplet_metrics = pandas.DataFrame()
+            for product in triplet:
+                lat = metadata["latitude"]
+                lon = metadata["longitude"]
+                ts_dict[product].rename(product, inplace=True)
+                tools.write_log(log_file, "{} {} data.shape: {}".format(location, product,
+                                                                        ts_dict[product].shape))
+            perm = permutations(triplet)
+            matched_data = pandas.DataFrame()
+            if ts_dict[triplet[0]].size > 0 and ts_dict[triplet[1]].size > 0 and ts_dict[triplet[2]].size > 0:
+                for p in perm:
+                    permutation_matched_data = temporal_matching.matching(ts_dict[p[0]], ts_dict[p[1]], ts_dict[p[2]],
+                                                                          window=.5)
+                    if permutation_matched_data.shape[0] > matched_data.shape[0]:
+                        matched_data = permutation_matched_data
+                        product_order = p
+                        n = matched_data.shape[0]
+                tools.write_log(log_file, "{} {} matched_data.shape: {}".format(location, product_order,
+                                                                                matched_data.shape))
             else:
-                tools.write_log(log_file, "{} [{}, {}, {}] insufficient data to match".format(
-                        location, product1, product2, product3))
-    # for location, metadata in config.dict_swe_gldas_points.items():
-    # pass
+                tools.write_log(log_file, "{} {} insufficient data to match".format(location, triplet))
+            for column in matched_data.columns:
+                series = matched_data[column].to_numpy()
+                ts_dict[column] = series
+            try:
+                snr, err_std, beta = tcol_snr(ts_dict[triplet[0]], ts_dict[triplet[1]], ts_dict[triplet[2]])
+                tools.write_log(log_file, '{} {} snr: {}'.format(location, triplet, snr))
+                tools.write_log(log_file, '{} {} err_std: {}'.format(location, triplet, err_std))
+                tools.write_log(log_file, '{} {} beta: {}'.format(location, triplet, beta))
+                for idx, product in enumerate(triplet):
+                    product_metrics = pandas.DataFrame([[location, location_vc, product, triplet, n, snr[idx],
+                                                         err_std[idx], beta[idx]]],
+                                                       columns=['location', 'location_veg_class', 'product', 'triplet',
+                                                                'n', 'snr', 'err_std', 'beta'])
+            except:
+                for idx, product in enumerate(triplet):
+                    product_metrics = pandas.DataFrame([[location, location_vc, product, triplet, n, None, None, None]],
+                                                       columns=['location', 'location_veg_class', 'product', 'triplet',
+                                                                'n', 'snr', 'err_std', 'beta'])
+                tools.write_log(log_file, "{} {} could not run tcol analysis".format(location, triplet))
+            triplet_metrics = triplet_metrics.append(product_metrics)
+        location_metrics = location_metrics.append(triplet_metrics)
+    metrics = metrics.append(location_metrics)
+    return metrics
 
 
 tc_results = tc_analysis(tc_analysis_triplets, config.dict_swe_gldas_points, anomaly=False)
+print(tc_results)
