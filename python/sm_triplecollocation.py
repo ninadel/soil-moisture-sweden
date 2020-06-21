@@ -12,7 +12,7 @@ import sm_tools as tools
 analysis_output_root = r"../analysis_output"
 analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 analysis_results_folder = os.path.join(analysis_output_root, "{}_tc".format(analysis_timestamp))
-os.mkdir(analysis_results_folder)
+os.mkdirs(analysis_results_folder)
 metrics_filename = "tc_metrics_{}.csv".format(analysis_timestamp)
 log_filename = "tc_log_{}.csv".format(analysis_timestamp)
 log_file = os.path.join(analysis_results_folder, log_filename)
