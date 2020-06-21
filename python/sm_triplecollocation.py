@@ -13,7 +13,7 @@ analysis_output_root = r"../analysis_output"
 analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 analysis_results_folder = os.path.join(analysis_output_root, "{}_tc".format(analysis_timestamp))
 os.mkdir(analysis_results_folder)
-metrics_filename = "metrics_{}.csv".format(analysis_timestamp)
+metrics_filename = "tc_metrics_{}.csv".format(analysis_timestamp)
 log_filename = "tc_log_{}.csv".format(analysis_timestamp)
 log_file = os.path.join(analysis_results_folder, log_filename)
 
@@ -97,4 +97,4 @@ def tc_analysis(triplets, locations, anomaly=False):
 
 
 tc_results = tc_analysis(tc_analysis_triplets, config.dict_swe_gldas_points, anomaly=False)
-print(tc_results)
+tc_results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
