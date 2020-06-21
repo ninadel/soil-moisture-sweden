@@ -4,6 +4,7 @@ import pandas
 import sm_config as config
 import sm_tools as tools
 
+write_ts_to_file = True
 product = "Sentinel-1"
 input_dir = config.dict_product_inputs[product]['raw_dir']
 output_dir = config.dict_product_inputs[product]['ts_dir']
@@ -66,4 +67,5 @@ for location, metadata in station_ts.items():
     df.set_index('timestamp', drop=True)
     tools.write_log(os.path.join(output_dir, "results_log_{}.txt".format(export_timestamp)),
                     "{}: {} rows".format(filename, df.shape[0]))
-    df.to_csv(os.path.join(output_dir, filename), index=False)
+    if write_ts_to_file:
+        df.to_csv(os.path.join(output_dir, filename), index=False)
