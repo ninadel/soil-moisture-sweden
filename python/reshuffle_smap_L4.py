@@ -79,8 +79,12 @@ def reshuffle(input_dataset, outputpath, startdate, enddate, parameters, crid=No
     ts_attributes = data.metadata
     # ease grid not working
     # ease09 = EASE2_grid(9000)
+    ease09 = EASE2_grid(9008.055210146)
+    lons, lats = np.meshgrid(ease09.londim, ease09.latdim)
+    grid = BasicGrid(lons.flatten(), lats.flatten())
     # lons, lats = np.meshgrid(data.lon, data.lat)
-    grid = BasicGrid(data.lon, data.lat)
+    # grid = BasicGrid(data.lon, data.lat)
+
 
     reshuffler = Img2Ts(input_dataset=input_dataset, outputpath=outputpath,
                         startdate=startdate, enddate=enddate, input_grid=grid,
