@@ -34,15 +34,11 @@ def write_log(filename, string, print_string=True, write_output=True):
 
 
 def create_output_dir(output_folder):
-    analysis_results_folder = os.path.join(output_folder, "{}_analysis".format(datetime.now().
-                                                                               strftime("%Y%m%d_%H%M%S")))
-    os.makedirs(analysis_results_folder)
-    data_output_folder = os.path.join(analysis_results_folder, "data_output")
+    data_output_folder = os.path.join(output_folder, "data_output")
     os.mkdir(data_output_folder)
-    log_file = os.path.join(analysis_results_folder, "analysis_log.txt")
-    metrics_file = os.path.join(analysis_results_folder, "analysis_metrics.csv")
+    log_file = os.path.join(output_folder, "analysis_log.txt")
+    metrics_file = os.path.join(output_folder, "analysis_metrics.csv")
     return log_file, metrics_file, data_output_folder
-    # MOVE to config later
 
 
 def get_icos_files(input_dir):
@@ -383,29 +379,46 @@ def get_img_reader(product, file):
     return reader
 
 
-# filters dataframe by date, assuming index is a date
-def filter_df_by_timeframe(df, year_filter=None, season_filter=None, date_col_idx=None):
-    if date_col_idx is None:
-        date_column = df.columns[0]
-    else:
-        date_column = df.columns[date_col_idx]
+# filters dataframe by date, assuming index is a datetimeindex
+def filter_df_by_timeframe(df, year_filter=None, season_filter=None):
     if year_filter is not None:
-        df = df[df[date_column].dt.year == year_filter]
+        df = df[df.index.year == year_filter]
     if season_filter is not None:
         if season_filter == 'non-winter':
-            df = df[(df[date_column].dt.month != 12) & (df[date_column].dt.month != 1) &
-                    (df[date_column].dt.month != 2)]
+            df = df[(df.index.month != 12) & (df.index.month != 1) & (df.index.month != 2)]
         if season_filter == 'winter':
-            df = df[(df[date_column].dt.month == 12) | (df[date_column].dt.month == 1) |
-                    (df[date_column].dt.month == 2)]
+            df = df[(df.index.month == 12) | (df.index.month == 1) | (df.index.month == 2)]
         if season_filter == 'spring':
-            df = df[(df[date_column].dt.month == 3) | (df[date_column].dt.month == 4) |
-                    (df[date_column].dt.month == 5)]
+            df = df[(df.index.month == 3) | (df.index.month == 4) | (df.index.month == 5)]
         if season_filter == 'summer':
-            df = df[(df[date_column].dt.month == 6) | (df[date_column].dt.month == 7) |
-                    (df[date_column].dt.month == 8)]
+            df = df[(df.index.month == 6) | (df.index.month == 7) | (df.index.month == 8)]
         if season_filter == 'fall':
-            df = df[(df[date_column].dt.month == 9) | (df[date_column].dt.month == 10) |
-                    (df[date_column].dt.month == 11)]
+            df = df[(df.index.month == 9) | (df.index.month == 10) | (df.index.month == 11)]
     return df
 
+# # filters dataframe by date, assuming index is a date
+# def filter_df_by_timeframe(df, year_filter=None, season_filter=None, date_col_idx=None):
+#     if date_col_idx is None:
+#         date_column = df.columns[0]
+#     else:
+#         date_column = df.columns[date_col_idx]
+#     if year_filter is not None:
+#         df = df[df[date_column].dt.year == year_filter]
+#     if season_filter is not None:
+#         if season_filter == 'non-winter':
+#             df = df[(df[date_column].dt.month != 12) & (df[date_column].dt.month != 1) &
+#                     (df[date_column].dt.month != 2)]
+#         if season_filter == 'winter':
+#             df = df[(df[date_column].dt.month == 12) | (df[date_column].dt.month == 1) |
+#                     (df[date_column].dt.month == 2)]
+#         if season_filter == 'spring':
+#             df = df[(df[date_column].dt.month == 3) | (df[date_column].dt.month == 4) |
+#                     (df[date_column].dt.month == 5)]
+#         if season_filter == 'summer':
+#             df = df[(df[date_column].dt.month == 6) | (df[date_column].dt.month == 7) |
+#                     (df[date_column].dt.month == 8)]
+#         if season_filter == 'fall':
+#             df = df[(df[date_column].dt.month == 9) | (df[date_column].dt.month == 10) |
+#                     (df[date_column].dt.month == 11)]
+#     return df
+#
