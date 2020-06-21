@@ -7,9 +7,11 @@ import os
 import shutil
 import sm_config as config
 
-input_folder = "../input_data/GLDAS_global_reshuffle"
-output_folder = "../test_output_data/GLDAS_nordic_reshuffle"
+input_folder = r"C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-smap-l3-36km_global_reshuffle"
+output_folder = r"C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-smap-l3-36km_nordic_reshuffle"
 region_cells = config.nordic_shuffle_cells
+if not os.path.exists(output_folder):
+    os.mkdir(output_folder)
 
 # copy grid nc file
 shutil.copy(os.path.join(input_folder, "grid.nc"), os.path.join(output_folder, "grid.nc"))
