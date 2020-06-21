@@ -17,13 +17,12 @@ evaluation_dict = {
     "CCI Passive": False,
     "CCI Combined": False,
     "GLDAS": False,
-    "Sentinel-1": True,     # not supported yet
+    "Sentinel-1": False,     # not supported yet
     "SMAP L3": False,
     "SMAP L4": False,
-    "SMOS-IC": False,
+    "SMOS-IC": True,
     "SMOS-BEC": False    # not supported yet
 }
-
 
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
 ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
@@ -32,7 +31,7 @@ reference_list = icos_readers + ismn_readers
 
 analysis_output_root = r"../analysis_output"
 analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-analysis_results_folder = os.path.join(analysis_output_root, "{}_analysis".format(analysis_timestamp))
+analysis_results_folder = os.path.join(analysis_output_root, "{}_evaluation".format(analysis_timestamp))
 os.mkdir(analysis_results_folder)
 metrics_filename = "metrics_{}.csv".format(analysis_timestamp)
 
