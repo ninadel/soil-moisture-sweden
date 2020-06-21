@@ -333,7 +333,7 @@ class SPL3SMP_E_H5_Ds(MultiTemporalImageBase):
     """
 
     def __init__(self, data_path, parameter='soil_moisture', overpass='AM',
-                 var_overpass_str=True, subpath_templ=['%Y.%m.%d'], crid=None, flatten=False):
+                 var_overpass_str=True, subpath_templ=[], crid=None, flatten=False):
 
         ioclass_kws = {'parameter': parameter,
                        'overpass': overpass,
@@ -403,7 +403,7 @@ class SPL3SMP_E_Nc_Ds(MultiTemporalImageBase):
     """
 
     def __init__(self, data_path, parameter='soil_moisture', overpass='AM',
-                 var_overpass_str=True, subpath_templ=['%Y.%m.%d'], crid=None, flatten=False):
+                 var_overpass_str=True, subpath_templ=[], crid=None, flatten=False):
 
         ioclass_kws = {'parameter': parameter,
                        'overpass': overpass,
