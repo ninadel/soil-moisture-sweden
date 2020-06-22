@@ -8,6 +8,7 @@ import os
 import pandas
 
 from pytesmo import temporal_matching
+from pytesmo.scaling import scale
 import sm_tools as tools
 import sm_config as config
 
@@ -65,6 +66,8 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                                                                         timeframe, anomaly_str)
             matched_data_str = 'station_matched_data_{}_{}_{}_{}_{}.csv'.format(product_str, station.network,
                                                                                 station.station, timeframe, anomaly_str)
+            scaled_data_str = 'station_scaled_data_{}_{}_{}_{}_{}.csv'.format(product_str, station.network,
+                                                                              station.station, timeframe, anomaly_str)
             if station.network not in matched_data_dict.keys():
                 matched_data_dict[station.network] = pandas.DataFrame()
             tools.write_log(log_file, "*** analyzing {} x {} {} ({}) ***".format(product, station.network,
@@ -77,6 +80,8 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                                                   reader=product_reader, filter_prod=filter_prod, anomaly=anomaly,
                                                   station=station)
             product_data.rename('product_sm', inplace=True)
+            if export_ts:
+                product_data.to_csv(os.path.join(data_output_folder, product_data_str))
             tools.write_log(log_file, 'product_data.shape: {}'.format(product_data.shape))
             product_data = product_data.loc[startdate:enddate]
             product_data = tools.get_timeshifted_data(product, product_data)
@@ -84,6 +89,13 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
             matched_data = pandas.DataFrame()
             if product_data.shape[0] > 0:
                 matched_data = temporal_matching.matching(product_data, ref_data, window=1 / 24.)
+                if export_ts:
+                    matched_data.to_csv(os.path.join(data_output_folder, matched_data_str))
+                matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
+                if export_ts:
+                    matched_data.to_csv(os.path.join(data_output_folder, scaled_data_str))
+                # if config.dict_product_fields[product]['scale'] != "":
+                #     matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
                 network_matched_data = matched_data_dict[station.network]
                 matched_data_dict[station.network] = pandas.concat([network_matched_data, matched_data])
                 tools.write_log(log_file, '{} matched data shape: {}'.format(
@@ -104,8 +116,6 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
             tools.write_log(log_file, '')
             if export_ts:
                 ref_data.to_csv(os.path.join(data_output_folder, ref_data_str))
-                product_data.to_csv(os.path.join(data_output_folder, product_data_str))
-                matched_data.to_csv(os.path.join(data_output_folder, matched_data_str))
         # network level analysis
         tools.write_log(log_file, '*** analyzing networks ({}) ***'.format(anomaly_str))
         for network, network_matched_data in matched_data_dict.items():

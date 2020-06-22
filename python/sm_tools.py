@@ -211,13 +211,7 @@ def get_metrics(data, xcol=None, ycol=None, anomaly=False):
     metrics: list of metrics to calculate on matched dataset
         default: "pearsonr", "bias", "rmsd", "ubrmsd"
     """""
-    if data.shape[0] == 0:
-        bias = None
-        rmsd = None
-        ubrmsd = None
-        pearsonr = None
-        pearsonr_p = None
-    else:
+    try:
         x, y = data[xcol].values, data[ycol].values
         pearsonr = metrics.pearsonr(x, y)[0]
         pearsonr_p = metrics.pearsonr(x, y)[1]
@@ -229,6 +223,13 @@ def get_metrics(data, xcol=None, ycol=None, anomaly=False):
             bias = None
             rmsd = None
             ubrmsd = None
+    except:
+        bias = None
+        rmsd = None
+        ubrmsd = None
+        pearsonr = None
+        pearsonr_p = None
+        print("could not calculate metrics")
     return [bias, rmsd, ubrmsd, pearsonr, pearsonr_p]
 
 

@@ -11,16 +11,16 @@ import sm_evaluation as evaluation
 
 # Dictionary which turns on/off product analyses
 evaluation_dict = {
-    "ASCAT 12.5 TS": False,
+    "ASCAT 12.5 TS": True,
     "ASCAT SM-OBS-2": False,    # not supported yet
-    "CCI Active": False,
-    "CCI Passive": False,
-    "CCI Combined": False,
-    "GLDAS": False,
+    "CCI Active": True,
+    "CCI Passive": True,
+    "CCI Combined": True,
+    "GLDAS": True,
     "Sentinel-1": False,
-    "SMAP L3": False,
-    "SMAP L4": False,
-    "SMOS-IC": False,
+    "SMAP L3": True,
+    "SMAP L4": True,
+    "SMOS-IC": True,
     "SMOS-BEC": False    # not supported yet
 }
 
@@ -37,12 +37,12 @@ metrics_filename = "evaluation_metrics_{}.csv".format(analysis_timestamp)
 
 results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
-                              metrics_df=results)
-results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False,
-                              metrics_df=results)
-results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
-                              metrics_df=results)
-results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
+# results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
+#                               metrics_df=results)
+# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
+# results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False,
+#                               metrics_df=results)
+# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
+# results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
+#                               metrics_df=results)
+# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
