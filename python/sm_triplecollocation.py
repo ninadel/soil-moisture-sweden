@@ -84,15 +84,15 @@ def tc_analysis(triplets, locations, anomaly=False):
                                                          err_std[idx], beta[idx]]],
                                                        columns=['location', 'location_veg_class', 'product', 'triplet',
                                                                 'n', 'snr', 'err_std', 'beta'])
+                    metrics = pandas.concat([metrics, product_metrics])
             except:
                 for idx, product in enumerate(triplet):
                     product_metrics = pandas.DataFrame([[location, location_vc, product, triplet, n, None, None, None]],
                                                        columns=['location', 'location_veg_class', 'product', 'triplet',
                                                                 'n', 'snr', 'err_std', 'beta'])
+                    metrics = pandas.concat([metrics, product_metrics])
                 tools.write_log(log_file, "{} {} could not run tcol analysis".format(location, triplet))
-            triplet_metrics = triplet_metrics.append(product_metrics)
-        location_metrics = location_metrics.append(triplet_metrics)
-    metrics = metrics.append(location_metrics)
+    metrics.reset_index(drop=True, inplace=True)
     return metrics
 
 
