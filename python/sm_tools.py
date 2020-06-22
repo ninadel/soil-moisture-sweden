@@ -298,6 +298,7 @@ def get_nc_series(input_root, lon_loc, lat_loc, parameters, date_search_str, dat
     lon_field: the name of the longitude field in the dataset (default: 'lon')
     lat_field: the name of the latitude field in the dataset (default: 'lat')
     """""
+    warnings.filterwarnings("ignore")
     columns = ["timestamp"]
     for parameter in parameters:
         columns.append(parameter)
@@ -342,7 +343,7 @@ def get_nc_series(input_root, lon_loc, lat_loc, parameters, date_search_str, dat
                 value = ds[parameter][nearest_lat_idx, nearest_lon_idx]
                 values.append(value)
         series_row = pandas.DataFrame([values], columns=columns)
-        print(series_row)
+        # print(series_row)
         series = pandas.concat([series, series_row])
     series.set_index("timestamp", inplace=True)
     return series
