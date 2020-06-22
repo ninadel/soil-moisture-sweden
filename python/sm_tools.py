@@ -15,6 +15,7 @@ import numpy
 import os
 import pandas
 import re
+import warnings
 
 from ascat import H115Ts
 from esa_cci_sm.interface import CCITs
@@ -278,8 +279,8 @@ def find_nearest(array, value):
     return idx, array[idx]
 
 
-def get_series(input_root, lon_loc, lat_loc, parameters, date_search_str, datetime_format, time_dim=True,
-               lon_field="lon", lat_field="lat", file_format="netCDF4"):
+def get_nc_series(input_root, lon_loc, lat_loc, parameters, date_search_str, datetime_format, time_dim=True,
+               lon_field="lon", lat_field="lat"):
     """""
     Parameters
     input_root: directory of nc files
@@ -296,14 +297,26 @@ def get_series(input_root, lon_loc, lat_loc, parameters, date_search_str, dateti
     time_dim: boolean, whether the data is organized with 3 dimensions (time, lat, lon) (default: True)
     lon_field: the name of the longitude field in the dataset (default: 'lon')
     lat_field: the name of the latitude field in the dataset (default: 'lat')
-    file_format: file format, e.g. "netCDF4" (netCDF4 only one supported, h5 will be added soon)    
     """""
-    series = pandas.DataFrame()
+    columns = ["timestamp"]
+    for parameter in parameters:
+        columns.append(parameter)
+    series = pandas.DataFrame(columns=columns)
     if type(parameters) != list:
         parameters = [parameters]
-    series = pandas.DataFrame()
     files = os.listdir(input_root)
     for filename in files:
+        file = os.path.join(input_root, filename)
+        ds = netCDF4.Dataset(file, mode="r")
+        # ll = (numpy.amin(lat_array), numpy.amin(lon_array))
+        # ur = (numpy.amax(lat_array), numpy.amax(lon_array))
+        ll, ur = get_geo_extent(file, lon_field, lat_field)
+        if any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]]):
+            warning = \
+                'Location ({}, {}) not in extent [{}, {}] of file. Returning empty DataFrame.'.format(lat_loc, lon_loc,
+                                                                                                      ll, ur)
+            warnings.warn(warning)
+            return series
         timestamp_str = re.findall(date_search_str, filename)[-1]
         if len(datetime_format) == 3:
             timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
@@ -315,26 +328,21 @@ def get_series(input_root, lon_loc, lat_loc, parameters, date_search_str, dateti
                                  int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]),
                                  int(timestamp_str[datetime_format[3][0]:datetime_format[3][1]]),
                                  int(timestamp_str[datetime_format[4][0]:datetime_format[4][1]]))
-        file = os.path.join(input_root, filename)
-        if file_format == "netCDF4":
-            ds = netCDF4.Dataset(file, mode="r")
-        elif file_format == "h5":
-            ds = h5py.File(file, mode="r")
         lon_array = ds[lon_field][:]
         lat_array = ds[lat_field][:]
         nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
         nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
         values = [timestamp]
-        columns = ["timestamp"]
         for parameter in parameters:
-            columns.append(parameter)
             if time_dim:
                 value = ds[parameter][:][:, nearest_lat_idx, nearest_lon_idx]
+                value = numpy.asscalar(numpy.asarray(value))
                 values.append(value)
             else:
                 value = ds[parameter][nearest_lat_idx, nearest_lon_idx]
                 values.append(value)
         series_row = pandas.DataFrame([values], columns=columns)
+        print(series_row)
         series = pandas.concat([series, series_row])
     series.set_index("timestamp", inplace=True)
     return series
@@ -472,3 +480,11 @@ def get_timeshifted_data(product, product_data):
         return product_data
     else:
         return product_data
+
+
+def get_nc_parameter_count(file, parameter):
+    ds = netCDF4.Dataset(file, mode="r")
+    param_values = numpy.asarray(ds[parameter][:]).ravel()
+    (unique, counts) = numpy.unique(param_values, return_counts=True)
+    frequencies = numpy.asarray((unique, counts)).T
+    return frequencies
