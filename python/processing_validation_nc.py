@@ -14,35 +14,29 @@ import pandas
 import sm_tools as tools
 import sm_config as config
 
+product = "SMOS-BEC"
+input_dir = config.dict_product_inputs[product]['raw_dir']
+output_dir = config.dict_product_inputs[product]['ts_dir']
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+file_list = os.listdir(input_dir)
+file_list.sort()
+export_timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+sm_key = config.dict_product_fields[product]['sm_field']
+qf_key = 'quality_flag'
+time_key = 'time'
+product_lon = config.dict_product_fields[product]['lon_field']
+product_lat = config.dict_product_fields[product]['lat_field']
+
+
 # Degero: lon 19.556539 lat 64.182029
 station_lon = 19.556539
 station_lat = 64.182029
 
 
-# print(os.listdir(r"..\sm_sample_files\smos-bec-01km\ASC"))
-# series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat, parameters=['SM'])
-# print(series)
 
-# series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat, sm_field='SM')
-# print(series)
-
-
-# SMAP L3 Enhanced
-series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat,
-                          parameters=['SM', 'quality_flag'])
+series = tools.get_nc_series(input_dir, station_lon, station_lat, [sm_key, qf_key], r"[0-9]{8}T[0-9]{4}",
+                        ((0,4), (4, 6), (6, 8), (9, 11), (11, 13)))
 print(series)
 print(series.shape)
-
-
-# SMOS BEC
-# series = tools.get_series(r"..\sm_sample_files\smos-bec-01km\ASC", station_lon, station_lat,
-#                           parameters=['SM', 'quality_flag'])
-# print(series)
-# print(series.shape)
-
-# "smos-bec-01km\ASC\BEC_SM____SMOS__EUM_L4__A_20180601T030707_001km_1d_REP_v5.0.nc"
-# nc = netCDF4.Dataset(
-#     r"..\sm_sample_files\smos-bec-01km\ASC\BEC_SM____SMOS__EUM_L4__A_20180601T030707_001km_1d_REP_v5.0.nc", 'r')
-# print(nc.variables.keys())
-# print(list(nc.variables.keys()))
 
