@@ -38,7 +38,6 @@ def tc_analysis(triplets, locations, anomaly=False):
     location_counter = 0
     locations_len = len(list(config.dict_swe_gldas_points.keys()))
     for location, metadata in config.dict_swe_gldas_points.items():
-        location_metrics = pandas.DataFrame()
         location_vc = config.dict_swe_gldas_points[location]["veg_class_name"]
         location_counter += 1
         lat = metadata["latitude"]
@@ -46,7 +45,6 @@ def tc_analysis(triplets, locations, anomaly=False):
         tools.write_log(log_file, "analyzing {}: {} of {} locations".format(location, location_counter, locations_len))
         ts_dict = {}
         for triplet in triplets:
-            triplet_metrics = pandas.DataFrame()
             for product in triplet:
                 if product not in ts_dict.keys():
                     reader = reader_dict[product]
@@ -80,17 +78,16 @@ def tc_analysis(triplets, locations, anomaly=False):
                 tools.write_log(log_file, '{} {} beta: {}'.format(location, triplet, beta))
                 for idx, product in enumerate(triplet):
                     product_metrics = pandas.DataFrame([[location, lat, lon, location_vc, product, triplet, n, snr[idx],
-                                                         err_std[idx], beta[idx]]],
-                                                       columns=metrics_columns)
+                                                         err_std[idx], beta[idx]]], columns=metrics_columns)
+                    metrics = pandas.concat([metrics, product_metrics])
             except:
                 for idx, product in enumerate(triplet):
                     product_metrics = pandas.DataFrame([[location, lat, lon, location_vc, product, triplet, n, None,
                                                          None, None]],
                                                        columns=metrics_columns)
+                    metrics = pandas.concat([metrics, product_metrics])
                 tools.write_log(log_file, "{} {} could not run tcol analysis".format(location, triplet))
-            triplet_metrics = triplet_metrics.append(product_metrics)
-        location_metrics = location_metrics.append(triplet_metrics)
-    metrics = metrics.append(location_metrics)
+    metrics.reset_index(drop=True, inplace=True)
     return metrics
 
 
