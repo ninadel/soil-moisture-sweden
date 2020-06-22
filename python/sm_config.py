@@ -48,11 +48,12 @@ dict_product_inputs = {
         "ts_dir": r"..\input_data\SPL4SMAU_nordic_reshuffle"
     },
     "Sentinel-1": {
-        "raw_dir": r"C:\git\soil-moisture-sweden\input_data\cgls-biopar-ssm-01km_nordic",
+        "raw_dir": r"..\input_data\cgls-biopar-ssm-01km_nordic",
         "ts_dir": r"..\input_data\sentinel_ts",
     },
     "SMOS-BEC": {
-        "ts_dir": None
+        "raw_dir": r"..\input_data\smos-bec-reprocessed-01km-nordic\ASC",
+        "ts_dir": r"..\input_data\smos-bec_ts",
     },
     "SMOS-IC": {
         "ts_dir": r"C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC"

@@ -3,27 +3,31 @@ Author: Nina del Rosario
 Date: 5/25/2020
 Functions for analyzing soil moisture datasets
 """
+import sm_config as config
+
 from datetime import datetime
+import h5py
+import icos
 import ismn
 import json
+import netCDF4
 import numpy
 import os
 import pandas
+import re
 
 from ascat import H115Ts
 from esa_cci_sm.interface import CCITs
 from gldas.interface import GLDASTs
-import icos
 from icos import ICOSTimeSeries
 from ismn.interface import ISMN_Interface
-import netCDF4
 from smap_io import SMAPTs
 from smos.smos_ic.interface import SMOSTs
 from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
 from pytesmo.time_series.anomaly import calc_anomaly
-import sm_config as config
 from sentinel import SentinelImg
+from smos_extension import SMOSBECImg
 
 def write_log(filename, string, print_string=True, write_output=True):
     if write_output:
@@ -274,33 +278,65 @@ def find_nearest(array, value):
     return idx, array[idx]
 
 
-def get_series(input_root, lon_loc, lat_loc, parameters, lon_field="lon", lat_field="lat", datetime_len=8,
-               datetime_startstr="201", cutoff=None):
+def get_series(input_root, lon_loc, lat_loc, parameters, date_search_str, datetime_format, time_dim=True,
+               lon_field="lon", lat_field="lat", file_format="netCDF4"):
     """""
-    UPDATE: clean up to include product name--remove datetime parameters
+    Parameters
+    input_root: directory of nc files
+    lon_loc: longitude of location to query against files
+    lat_loc: latitude of location to query against files
+    parameters: parameters to return
+    date_search_str: regex expression for finding timestamp e.g. r"[0-9]{8}T[0-9]{4}", must be unique enough to occur 
+        only once in filename
+    datetime_format: tuple of tuples. for the above date_search_str, the locations of datetime elements in the string
+        (year, month, day) or (year, month, day, hour, minute) 
+        example: in the above string, datetime_format would be ((0,4), (4, 6), (6, 8), (9, 11), (11, 13))
+        the length of the tuple will determine whether hours/minutes will be added to timestamp, otherwise it will
+        default to midnight
+    time_dim: boolean, whether the data is organized with 3 dimensions (time, lat, lon) (default: True)
+    lon_field: the name of the longitude field in the dataset (default: 'lon')
+    lat_field: the name of the latitude field in the dataset (default: 'lat')
+    file_format: file format, e.g. "netCDF4" (netCDF4 only one supported, h5 will be added soon)    
     """""
+    series = pandas.DataFrame()
     if type(parameters) != list:
         parameters = [parameters]
     series = pandas.DataFrame()
     files = os.listdir(input_root)
-    for file in files:
-        date_str_idx = file.find(datetime_startstr)
-        date_str = file[date_str_idx:date_str_idx + 8]
-        file_path = os.path.join(input_root, file)
-        nc = netCDF4.Dataset(file_path, "r")
-        lon_array = nc[lon_field][:]
-        lat_array = nc[lat_field][:]
+    for filename in files:
+        timestamp_str = re.findall(date_search_str, filename)[-1]
+        if len(datetime_format) == 3:
+            timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
+                                 int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
+                                 int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]))
+        if len(datetime_format) == 5:
+            timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
+                                 int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
+                                 int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]),
+                                 int(timestamp_str[datetime_format[3][0]:datetime_format[3][1]]),
+                                 int(timestamp_str[datetime_format[4][0]:datetime_format[4][1]]))
+        file = os.path.join(input_root, filename)
+        if file_format == "netCDF4":
+            ds = netCDF4.Dataset(file, mode="r")
+        elif file_format == "h5":
+            ds = h5py.File(file, mode="r")
+        lon_array = ds[lon_field][:]
+        lat_array = ds[lat_field][:]
         nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
         nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
-        values = [date_str]
-        columns = ["date_str"]
+        values = [timestamp]
+        columns = ["timestamp"]
         for parameter in parameters:
             columns.append(parameter)
-            value = nc[parameter][:][0, nearest_lat_idx, nearest_lon_idx]
-            values.append(value)
-        file_df = pandas.DataFrame([values], columns=columns)
-        series = pandas.concat([series, file_df])
-    series.set_index("date_str", inplace=True)
+            if time_dim:
+                value = ds[parameter][:][:, nearest_lat_idx, nearest_lon_idx]
+                values.append(value)
+            else:
+                value = ds[parameter][nearest_lat_idx, nearest_lon_idx]
+                values.append(value)
+        series_row = pandas.DataFrame([values], columns=columns)
+        series = pandas.concat([series, series_row])
+    series.set_index("timestamp", inplace=True)
     return series
 
 
@@ -369,11 +405,14 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
         index_count += 1
 
 # for text-driven datasets, generate filename
-def get_station_ts_filename(station):
-    network = station.network
-    station = station.station
-    #     product_str = product.replace(' ', '-')
-    filename = "{}_{}.csv".format(network, station.replace(".", "-"))
+def get_station_ts_filename(station_object=None, station_name=None, network_name=None):
+    if station_object is not None:
+        network = station_object.network
+        station = station_object.station
+        #     product_str = product.replace(' ', '-')
+        filename = "{}_{}.csv".format(network, station.replace(".", "-"))
+    elif station_name is not None and network_name is not None:
+        filename = "{}_{}.csv".format(network_name, station_name.replace(".", "-"))
     return filename
 
 
@@ -394,6 +433,8 @@ def get_img_reader(product, file):
     reader = None
     if product == "Sentinel-1":
         reader = SentinelImg(file)
+    if product == "SMOS-BEC":
+        reader = SMOSBECImg(file, parameters=["SM", "quality_flag"])
     return reader
 
 
