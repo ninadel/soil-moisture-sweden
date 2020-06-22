@@ -65,11 +65,11 @@ def tc_analysis(triplets, locations, anomaly=False):
                     if permutation_matched_data.shape[0] > matched_data.shape[0]:
                         matched_data = permutation_matched_data
                         product_order = p
-                        n = matched_data.shape[0]
                 tools.write_log(log_file, "{} {} matched_data.shape: {}".format(location, product_order,
                                                                                 matched_data.shape))
             else:
                 tools.write_log(log_file, "{} {} insufficient data to match".format(location, triplet))
+            n = matched_data.shape[0]
             try:
                 snr, err_std, beta = tcol_snr(matched_data[triplet[0]].to_numpy(), matched_data[triplet[1]].to_numpy(),
                                               matched_data[triplet[2]].to_numpy())
