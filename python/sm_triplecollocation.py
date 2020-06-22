@@ -24,6 +24,8 @@ tc_analysis_triplets = {
     ('GLDAS', 'ASCAT 12.5 TS', 'SMOS-IC'): False
 }
 
+metrics_columns = ['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'n', 'snr', 'err_std', 'beta']
+
 def tc_analysis(triplets, locations, anomaly=False):
     metrics = pandas.DataFrame()
     reader_dict = {}
@@ -44,17 +46,16 @@ def tc_analysis(triplets, locations, anomaly=False):
         tools.write_log(log_file, "analyzing {}: {} of {} locations".format(location, location_counter, locations_len))
         ts_dict = {}
         for triplet in triplets:
+            triplet_metrics = pandas.DataFrame()
             for product in triplet:
                 if product not in ts_dict.keys():
                     reader = reader_dict[product]
                     product_data = tools.get_product_data(lon=lon, lat=lat, product=product, reader=reader,
                                                           anomaly=anomaly)
-                    product_data = tools.get_timeshifted_data(product, product_data)
-                ts_dict[product] = product_data
-        for triplet in triplets:
-            triplet_metrics = pandas.DataFrame()
-            for product in triplet:
-                ts_dict[product].rename(product, inplace=True)
+                    if config.dict_timeshifts[product] is not None:
+                        product_data = tools.get_timeshifted_data(product, product_data)
+                    ts_dict[product] = product_data
+                    ts_dict[product].rename(product, inplace=True)
                 tools.write_log(log_file, "{} {} data.shape: {}".format(location, product,
                                                                         ts_dict[product].shape))
             perm = permutations(triplet)
@@ -71,24 +72,21 @@ def tc_analysis(triplets, locations, anomaly=False):
                                                                                 matched_data.shape))
             else:
                 tools.write_log(log_file, "{} {} insufficient data to match".format(location, triplet))
-            for column in matched_data.columns:
-                series = matched_data[column].to_numpy()
-                ts_dict[column] = series
             try:
-                snr, err_std, beta = tcol_snr(ts_dict[triplet[0]], ts_dict[triplet[1]], ts_dict[triplet[2]])
+                snr, err_std, beta = tcol_snr(matched_data[triplet[0]].to_numpy(), matched_data[triplet[1]].to_numpy(),
+                                              matched_data[triplet[2]].to_numpy())
                 tools.write_log(log_file, '{} {} snr: {}'.format(location, triplet, snr))
                 tools.write_log(log_file, '{} {} err_std: {}'.format(location, triplet, err_std))
                 tools.write_log(log_file, '{} {} beta: {}'.format(location, triplet, beta))
                 for idx, product in enumerate(triplet):
-                    product_metrics = pandas.DataFrame([[location, location_vc, product, triplet, n, snr[idx],
+                    product_metrics = pandas.DataFrame([[location, lat, lon, location_vc, product, triplet, n, snr[idx],
                                                          err_std[idx], beta[idx]]],
-                                                       columns=['location', 'location_veg_class', 'product', 'triplet',
-                                                                'n', 'snr', 'err_std', 'beta'])
+                                                       columns=metrics_columns)
             except:
                 for idx, product in enumerate(triplet):
-                    product_metrics = pandas.DataFrame([[location, location_vc, product, triplet, n, None, None, None]],
-                                                       columns=['location', 'location_veg_class', 'product', 'triplet',
-                                                                'n', 'snr', 'err_std', 'beta'])
+                    product_metrics = pandas.DataFrame([[location, lat, lon, location_vc, product, triplet, n, None,
+                                                         None, None]],
+                                                       columns=metrics_columns)
                 tools.write_log(log_file, "{} {} could not run tcol analysis".format(location, triplet))
             triplet_metrics = triplet_metrics.append(product_metrics)
         location_metrics = location_metrics.append(triplet_metrics)
