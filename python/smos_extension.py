@@ -9,10 +9,10 @@ import numpy as np
 import re
 from pygeobase.io_base import ImageBase, MultiTemporalImageBase
 from pygeobase.object_base import Image
-from datetime import timedelta
+from datetime import datetime, timedelta
 from netCDF4 import Dataset
 from pygeogrids.netcdf import load_grid
-from grid import smoc_bec_grid, EASE01CellGrid
+# from grid import smoc_bec_grid, EASE01CellGrid
 
 
 class SMOSBECImg(ImageBase):
@@ -49,9 +49,9 @@ class SMOSBECImg(ImageBase):
         self.read_flags = read_flags
         self.parameters = parameters
         # 20180601T030707
-        timestamp_str = re.findall(r"[0-9]{8}T", self.filename)[-1][0:9]
-        self.timestamp = datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]))
-        self.timestamp = None
+        timestamp_str = re.findall(r"[0-9]{8}T[0-9]{4}", self.filename)[-1]
+        self.timestamp = datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]),
+                                  int(timestamp_str[9:11]), int(timestamp_str[11:13]))
 
     def read_empty(self):
         raise NotImplementedError()
@@ -84,50 +84,66 @@ class SMOSBECImg(ImageBase):
 
         ds = Dataset(self.filename)
 
-        return_img = {}
-        return_metadata = {}
+        latitude = ds['lat'][:]
+        longitude = ds['lon'][:]
 
         parameters = list(self.parameters)
+
         if self.read_flags is not None:
             parameters += ['quality_flag']
 
+        return_data = {}
+        return_meta = {}
+
         for parameter in parameters:
             metadata = {}
-            param = ds.variables[parameter]
+            param = ds[parameter]
             data = param[:]
 
-            # read long name, FillValue and unit
+            # fill metadata dictionary
             for attr in param.ncattrs():
                 metadata[attr] = param.getncattr(attr)
 
-            if '_FillValue' in metadata.keys():
-                np.ma.set_fill_value(data, metadata['_FillValue'])
-                data = data.filled()
+            # mask according to valid_min, valid_max and _FillValue
+            if parameter == 'SM':
+                fill_value = metadata['_FillValue']
+                valid_min = 0
+                valid_max = 0.6
+                data = np.where(np.logical_or(data < valid_min, data > valid_max),
+                                fill_value, data)
+
+            # if '_FillValue' in metadata.keys():
+            #     np.ma.set_fill_value(data, metadata['_FillValue'])
+            #     data = data.filled()
 
             metadata['image_missing'] = 0
 
-            return_img[parameter] = data
-            return_metadata[parameter] = metadata
+            return_data[parameter] = data
+            return_meta[parameter] = metadata
+
+        ds.close()
+        timekey = 'time'
+        return Image(longitude, latitude, return_data, return_meta, self.timestamp, timekey)
 
 
-        # filter with the flags
-        if self.read_flags is not None:
-            flag_mask = ~np.isin(return_img['quality_flag'], self.read_flags)
-        else:
-            flag_mask = np.full(return_img[parameters[0]].shape, False)
-
-        for param, data in return_img.items():
-            if issubclass(data.dtype.type, np.integer):
-                data = data.astype(np.float32)
-            data_masked = np.ma.array(data, mask=flag_mask, fill_value=np.nan)
-            return_img[param] = data_masked.filled()
-            return_img[param] = return_img[param].flatten()
-
-        if self.read_flags is not None and ('quality_flag' not in self.parameters):
-            return_img.pop('quality_flag')
-            return_metadata.pop('quality_flag')
-
-        return return_img, return_metadata
+        # # filter with the flags
+        # if self.read_flags is not None:
+        #     flag_mask = ~np.isin(return_img['quality_flag'], self.read_flags)
+        # else:
+        #     flag_mask = np.full(return_img[parameters[0]].shape, False)
+        #
+        # for param, data in return_img.items():
+        #     if issubclass(data.dtype.type, np.integer):
+        #         data = data.astype(np.float32)
+        #     data_masked = np.ma.array(data, mask=flag_mask, fill_value=np.nan)
+        #     return_img[param] = data_masked.filled()
+        #     return_img[param] = return_img[param].flatten()
+        #
+        # if self.read_flags is not None and ('quality_flag' not in self.parameters):
+        #     return_img.pop('quality_flag')
+        #     return_metadata.pop('quality_flag')
+        #
+        # return return_img, return_metadata
 
     def read_masked_data(self, **kwargs):
         raise NotImplementedError
@@ -169,6 +185,44 @@ class SMOSBECImg(ImageBase):
         #                  return_metadata,
         #                  timestamp)
 
+    def get_values(self, locations):
+        """
+        Parameters
+        ----------
+        locations: dict
+            dictionary of locations; keys are location names/ids, values are a dictionary with 'lon' and 'lat' keys
+
+        Returns
+        ----------
+        an updated dictionary; each location will have a data value
+        a metadata key will added which will store metadata for each parameter
+        """
+        img = self.read_img()
+        lat = img.lat
+        lon = img.lon
+        data = img.data
+        metadata = img.metadata
+
+        result_dict = {}
+        result_dict['metadata'] = {}
+
+        for location, coordinate in locations.items():
+            loc_lat = coordinate['lat']
+            loc_lon = coordinate['lon']
+            result_dict[location] = {}
+            result_dict[location]['lat'] = loc_lat
+            result_dict[location]['lon'] = loc_lon
+            lat = np.asarray(lat)
+            # find nearest indices
+            lat_idx = (np.abs(lat - loc_lat)).argmin()
+            lon_idx = (np.abs(lon - loc_lon)).argmin()
+            result_dict[location]['data'] = {}
+            for parameter, parameter_data in data.items():
+                fill_value = metadata[parameter]['_FillValue']
+                parameter_value = int(parameter_data[:, lat_idx, lon_idx])
+                result_dict[location]['data'][parameter] = parameter_value
+                result_dict['metadata'][parameter] = metadata[parameter]
+        return result_dict
 
     def write(self):
         raise NotImplementedError()
