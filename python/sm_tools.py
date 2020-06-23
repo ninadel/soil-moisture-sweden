@@ -279,13 +279,24 @@ def find_nearest(array, value):
     return idx, array[idx]
 
 
-def get_nc_series(input_root, lon_loc, lat_loc, parameters, date_search_str, datetime_format, time_dim=True,
-               lon_field="lon", lat_field="lat"):
+def get_nc_series(input_root, location, parameters, date_search_str, datetime_format, time_dim=True, lon_field="lon",
+                  lat_field="lat"):
     """""
     Parameters
     input_root: directory of nc files
-    lon_loc: longitude of location to query against files
-    lat_loc: latitude of location to query against files
+    location: tuple or dictionary of locations. 
+        if tuple of a single location, [format (lat, lon)], a single ts dataframe will be returned. 
+        if a dict, a dict of ts dataframes will be returned
+            dictionary should be a set of locations. e.g.
+                {"City 1": {
+                    "longitude": 15,
+                    "latitude": 15
+                    },
+                "City 2": {
+                    "longitude": 25,
+                    "latitude": 10
+                    }
+                }
     parameters: parameters to return
     date_search_str: regex expression for finding timestamp e.g. r"[0-9]{8}T[0-9]{4}", must be unique enough to occur 
         only once in filename
@@ -299,54 +310,59 @@ def get_nc_series(input_root, lon_loc, lat_loc, parameters, date_search_str, dat
     lat_field: the name of the latitude field in the dataset (default: 'lat')
     """""
     warnings.filterwarnings("ignore")
+    # function to get ts row for a single location
+    def get_loc_df(ln_array, lt_array, ln, lt):
+        nr_lon_idx = find_nearest(ln_array, ln)[0]
+        nr_lat_idx = find_nearest(lt_array, lt)[0]
+        vs = [timestamp]
+        for p in parameters:
+            if time_dim:
+                v = ds[p][:][:, nr_lat_idx, nr_lon_idx]
+            else:
+                v = ds[p][nr_lat_idx, nr_lon_idx]
+            v = numpy.asscalar(numpy.asarray(v))
+            vs.append(v)
+        l_df = pandas.DataFrame([vs], columns=columns)
+        return l_df
+    # turn parameters into a column list
+    if type(parameters) != list:
+        parameters = [parameters]
     columns = ["timestamp"]
     for parameter in parameters:
         columns.append(parameter)
-    series = pandas.DataFrame(columns=columns)
-    if type(parameters) != list:
-        parameters = [parameters]
+    # check location type and create output shells
+    loc_ts_dict = {}
+    if type(location) == dict:
+        loc_meta_dict = location
+    elif type(location) == tuple:
+        loc_meta_dict = {}
+        loc_meta_dict["loc"] = {"longitude": location[1], "latitude": location[0]}
+    else:
+        print("invalid location. should be a tuple or dictionary.")
+        return None
+    # start processing files
     files = os.listdir(input_root)
     for filename in files:
         file = os.path.join(input_root, filename)
         ds = netCDF4.Dataset(file, mode="r")
-        # ll = (numpy.amin(lat_array), numpy.amin(lon_array))
-        # ur = (numpy.amax(lat_array), numpy.amax(lon_array))
-        ll, ur = get_geo_extent(file, lon_field, lat_field)
-        if any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]]):
-            warning = \
-                'Location ({}, {}) not in extent [{}, {}] of file. Returning empty DataFrame.'.format(lat_loc, lon_loc,
-                                                                                                      ll, ur)
-            warnings.warn(warning)
-            return series
-        timestamp_str = re.findall(date_search_str, filename)[-1]
-        if len(datetime_format) == 3:
-            timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
-                                 int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
-                                 int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]))
-        if len(datetime_format) == 5:
-            timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
-                                 int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
-                                 int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]),
-                                 int(timestamp_str[datetime_format[3][0]:datetime_format[3][1]]),
-                                 int(timestamp_str[datetime_format[4][0]:datetime_format[4][1]]))
+        timestamp = get_filename_timestamp(filename=filename, date_search_str=date_search_str,
+                                           datetime_format=datetime_format)
         lon_array = ds[lon_field][:]
         lat_array = ds[lat_field][:]
-        nearest_lon_idx = find_nearest(lon_array, lon_loc)[0]
-        nearest_lat_idx = find_nearest(lat_array, lat_loc)[0]
-        values = [timestamp]
-        for parameter in parameters:
-            if time_dim:
-                value = ds[parameter][:][:, nearest_lat_idx, nearest_lon_idx]
-                value = numpy.asscalar(numpy.asarray(value))
-                values.append(value)
-            else:
-                value = ds[parameter][nearest_lat_idx, nearest_lon_idx]
-                values.append(value)
-        series_row = pandas.DataFrame([values], columns=columns)
-        # print(series_row)
-        series = pandas.concat([series, series_row])
-    series.set_index("timestamp", inplace=True)
-    return series
+        # for each file, process all locations and store results in dictionary
+        for loc, metadata in loc_meta_dict.items():
+            loc_ts_dict[loc] = pandas.DataFrame(columns=columns)
+            lon_loc = metadata['longitude']
+            lat_loc = metadata['latitude']
+            if check_extent(lon_loc, lat_loc, file):
+                loc_row = get_loc_df(lon_array, lat_array, lon_loc, lat_loc)
+                loc_ts_dict[loc] = pandas.concat([loc_ts_dict[loc], loc_row])
+    for loc, ts in loc_ts_dict.items():
+        ts.set_index("timestamp", inplace=True)
+    if len(loc_ts_dict.keys) == 1:
+        return ts
+    else:
+        return loc_ts_dict
 
 
 def get_netcdf_summary(file, lon_field=None, lat_field=None, sm_field=None, time_field=None, show_field_data=True):
@@ -413,6 +429,7 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
     else:
         index_count += 1
 
+
 # for text-driven datasets, generate filename
 def get_station_ts_filename(station_object=None, station_name=None, network_name=None):
     if station_object is not None:
@@ -431,19 +448,36 @@ def get_csv_series(product, station):
     filename = get_station_ts_filename(station)
     file = os.path.join(ts_dir, filename)
     df = pandas.read_csv(file)
-    # df['timestamp'].to_datetime(df['timestamp'])
     df = df.set_index(pandas.DatetimeIndex(df['timestamp']))
-    # df = df.tz_localize('UTC')
-    sm = df['sm']
-    return sm
+    if product == "Sentinel-1":
+        # product is already filtered by sentinel reader
+        sm = df['sm']
+        sm = sm[(sm >= 0) & (sm < 100)]
+        return sm
+    if product == "SMOS-BEC":
+        sm_key = config.dict_product_fields[product]['sm_field']
+        columns = df.columns
+        print(df.shape)
+        if 'quality_flag' in columns:
+            # filter product based on quality flag
+            # 0: Good quality data;
+            # 1: L1 brightness temperature corrected by sea-land contamination;
+            # 2: L3 soil moisture with no data;
+            # 4: L4 soil moisture without physical meaning";
+            df = df[(df['quality_flag'] == 0) | (df['quality_flag'] == 1)]
+        sm = df[sm_key]
+        sm.rename('sm', inplace=True)
+        sm = sm[(sm >= 0) & (sm < 1)]
+        return sm
 
 
 def get_img_reader(product, file):
     reader = None
     if product == "Sentinel-1":
         reader = SentinelImg(file)
-    if product == "SMOS-BEC":
-        reader = SMOSBECImg(file, parameters=["SM", "quality_flag"])
+    # SMOS-BEC reader not currently working
+    # if product == "SMOS-BEC":
+    #     reader = SMOSBECImg(file, parameters=["SM", "quality_flag"])
     return reader
 
 
@@ -489,3 +523,65 @@ def get_nc_parameter_count(file, parameter):
     (unique, counts) = numpy.unique(param_values, return_counts=True)
     frequencies = numpy.asarray((unique, counts)).T
     return frequencies
+
+# function to find timestamps from a filename, given a searchsting and format
+def get_filename_timestamp(filename, date_search_str, datetime_format):
+    """""
+    Parameters
+    filename: filename string
+    date_search_str: regex expression for finding timestamp e.g. r"[0-9]{8}T[0-9]{4}", must be unique enough to occur 
+        only once in filename
+    datetime_format: tuple of tuples. for the above date_search_str, the locations of datetime elements in the string
+        (year, month, day) or (year, month, day, hour, minute) 
+        example: in the above string, datetime_format would be ((0,4), (4, 6), (6, 8), (9, 11), (11, 13))
+        the length of the tuple will determine whether hours/minutes will be added to timestamp, otherwise it will
+        default to midnight
+    """""
+    timestamp_str = re.findall(date_search_str, filename)[-1]
+    # when datetime_format is year, month, day
+    if len(datetime_format) == 3:
+        timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
+                             int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
+                             int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]))
+    # when datetime_format is year, month, day, hour, minute
+    if len(datetime_format) == 5:
+        timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
+                             int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
+                             int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]),
+                             int(timestamp_str[datetime_format[3][0]:datetime_format[3][1]]),
+                             int(timestamp_str[datetime_format[4][0]:datetime_format[4][1]]))
+    return timestamp
+
+
+def check_extent(lon_loc, lat_loc, file, lon_field, lat_field):
+    ll, ur = get_geo_extent(file, lon_field, lat_field)
+    print(any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]]))
+    return not any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]])
+
+
+def get_nc_values(file, location, parameters, time_dim=True, lon_field="lon", lat_field="lat"):
+    loc_values_dict = {}
+    if type(location) == dict:
+        loc_meta_dict = location
+    else:
+        loc_meta_dict = {}
+        loc_meta_dict["loc"] = {
+            "longitude": location[1],
+            "latitude": location[0]
+        }
+    if type(parameters) != list:
+        parameters = [parameters]
+    ds = netCDF4.Dataset(file, mode="r")
+    lon_array = ds[lon_field][:]
+    lat_array = ds[lat_field][:]
+    for loc, metadata in loc_meta_dict.items():
+        nr_lon_idx = find_nearest(lon_array, ln)[0]
+        nr_lat_idx = find_nearest(lat_array, lt)[0]
+        for p in parameters:
+            if time_dim:
+                v = ds[p][:][:, nr_lat_idx, nr_lon_idx]
+            else:
+                v = ds[p][nr_lat_idx, nr_lon_idx]
+            v = numpy.asscalar(numpy.asarray(v))
+            loc_values_dict[loc][p] = v
+    return loc_values_dict
