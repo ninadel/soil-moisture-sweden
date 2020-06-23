@@ -34,9 +34,12 @@ station_lon = 19.556539
 station_lat = 64.182029
 
 
+# def get_nc_series(input_root, parameters, date_search_str, datetime_format, locations, time_dim=True, lon_field="lon",
+#                   lat_field="lat"):
+series = tools.get_nc_series(input_root=input_dir, location=(station_lat, station_lon), parameters=[sm_key, qf_key],
+                             date_search_str=r"[0-9]{8}T[0-9]{4}",
+                             datetime_format=((0, 4), (4, 6), (6, 8), (9, 11), (11, 13)))
 
-series = tools.get_nc_series(input_dir, station_lon, station_lat, [sm_key, qf_key], r"[0-9]{8}T[0-9]{4}",
-                        ((0,4), (4, 6), (6, 8), (9, 11), (11, 13)))
 print(series)
 print(series.shape)
 
