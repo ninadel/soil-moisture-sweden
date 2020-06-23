@@ -147,17 +147,16 @@ def get_ref_data(ts, filter_ref=False, anomaly=False):
     sm_data = ref_data[sm_field]
     if anomaly:
         sm_data = calc_anomaly(sm_data)
-    return sm_data, sm_field
+    return sm_data
 
 
-def get_product_data(lon, lat, product, reader, filter_prod=True, anomaly=False, station=None):
+def get_product_data(lon, lat, product, reader, anomaly=False, station=None):
     sm = None
     if reader is not None:
         ts = reader.read(lon, lat)
         if product == "ASCAT 12.5 TS":
             data = ts.data
-            if filter_prod:
-                data = data.loc[data["ssf"] == 1]
+            data = data.loc[data["ssf"] == 1]
             sm = data[config.dict_product_fields[product]["sm_field"]]
             sm = sm[(sm >= 0) & (sm < 100)]
         elif product == "CCI Active":
@@ -216,25 +215,17 @@ def get_metrics(data, xcol=None, ycol=None, anomaly=False):
     metrics: list of metrics to calculate on matched dataset
         default: "pearsonr", "bias", "rmsd", "ubrmsd"
     """""
-    try:
-        x, y = data[xcol].values, data[ycol].values
-        pearsonr = metrics.pearsonr(x, y)[0]
-        pearsonr_p = metrics.pearsonr(x, y)[1]
-        if not anomaly:
-            bias = metrics.bias(x, y)
-            rmsd = metrics.rmsd(x, y)
-            ubrmsd = metrics.ubrmsd(x, y)
-        else:
-            bias = None
-            rmsd = None
-            ubrmsd = None
-    except:
+    x, y = data[xcol].values, data[ycol].values
+    pearsonr = metrics.pearsonr(x, y)[0]
+    pearsonr_p = metrics.pearsonr(x, y)[1]
+    if not anomaly:
+        bias = metrics.bias(x, y)
+        rmsd = metrics.rmsd(x, y)
+        ubrmsd = metrics.ubrmsd(x, y)
+    else:
         bias = None
         rmsd = None
         ubrmsd = None
-        pearsonr = None
-        pearsonr_p = None
-        print("could not calculate metrics")
     return [bias, rmsd, ubrmsd, pearsonr, pearsonr_p]
 
 
