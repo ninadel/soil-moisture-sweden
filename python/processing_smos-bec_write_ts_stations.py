@@ -51,8 +51,10 @@ for location, metadata in ref_locations.items():
     station_ts[location]["filename"] = tools.get_station_ts_filename(station_object=None, station_name=station,
                                                                      network_name=network)
     print(station_ts[location]["filename"])
-    station_ts[location]["data"] = tools.get_nc_series(input_dir, lon_loc=lon, lat_loc=lat, parameters=[sm_key, qf_key],
-                                                       date_search_str=r"[0-9]{8}T[0-9]{4}",
-                                                       datetime_format=((0, 4), (4, 6), (6, 8), (9, 11), (11, 13)))
+    # def get_nc_series(input_root, parameters, date_search_str, datetime_format, lon_loc=None, lat_loc=None, loc_dict=None,
+    #                   time_dim=True, lon_field="lon", lat_field="lat"):
+    station_ts[location]["data"] = tools.get_nc_series(
+        input_root=input_dir, location=(lat, lon), parameters=[sm_key, qf_key], date_search_str=r"[0-9]{8}T[0-9]{4}",
+        datetime_format=((0, 4), (4, 6), (6, 8), (9, 11), (11, 13)))
     print(station_ts[location]["data"].head())
     station_ts[location]["data"].to_csv(os.path.join(output_dir, station_ts[location]["filename"]), sep=",")
