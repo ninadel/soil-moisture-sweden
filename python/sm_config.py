@@ -9,8 +9,8 @@ import json
 icos_input_dir = r"..\icos_data"
 ismn_input_dir = r"..\ismn_data\HOBE_Data_2015-2018"
 
-metrics_df_columns = ["network", "station", "ref_filtered", "product", "product_filtered", "timeframe", "anomaly", "n",
-                      "bias", "rmsd", "ubrmsd", "pearsonr", "pearsonr_p"]
+metrics_df_columns = ["network", "station", "product", "timeframe", "anomaly", "n", "bias", "rmsd", "ubrmsd",
+                      "pearsonr", "pearsonr_p"]
 
 year_timeframes = [2015, 2016, 2017, 2018]
 season_timeframes = ['non-winter', 'winter', 'spring', 'summer', 'fall']
