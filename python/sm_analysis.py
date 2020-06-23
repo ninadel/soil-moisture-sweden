@@ -17,11 +17,11 @@ evaluation_dict = {
     "CCI Passive": True,
     "CCI Combined": True,
     "GLDAS": True,
-    "Sentinel-1": False,
-    "SMAP L3": True,
-    "SMAP L4": True,
+    "Sentinel-1": True,
+    "SMAP L3": False,
+    "SMAP L4": False,
     "SMOS-IC": True,
-    "SMOS-BEC": False    # not supported yet
+    "SMOS-BEC": True    # not supported yet
 }
 
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
@@ -37,12 +37,12 @@ metrics_filename = "evaluation_metrics_{}.csv".format(analysis_timestamp)
 
 results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-# results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
-#                               metrics_df=results)
-# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-# results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False,
-#                               metrics_df=results)
-# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-# results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
-#                               metrics_df=results)
-# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
+results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
+                              metrics_df=results)
+results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
+results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False,
+                              metrics_df=results)
+results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
+results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
+                              metrics_df=results)
+results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
