@@ -10,7 +10,7 @@ from netCDF4 import Dataset
 write_ts_to_file = True
 product = "SMOS-BEC"
 # input_dir = config.dict_product_inputs[product]['raw_dir']
-input_dir = r"C:\git\soil-moisture-sweden\sm_sample_files\smos-bec-01km_global\ASC"
+input_dir = r"D:\sm_backup\smos-bec-reprocessed-01km-euro\ASC"
 output_dir = config.dict_product_inputs[product]['ts_dir']
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -29,7 +29,7 @@ hobe_stations = config.dict_hobe
 ref_locations.update(config.dict_icos)
 ref_locations.update(config.dict_hobe)
 
-# TEST: SM value range
+# # TEST: SM value range
 # for filename in os.listdir(input_dir):
 #     file = os.path.join(input_dir, filename)
 #     counts = tools.get_nc_parameter_count(file, sm_key)
