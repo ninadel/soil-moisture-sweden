@@ -18,10 +18,10 @@ evaluation_dict = {
     "CCI Combined": True,
     "GLDAS": True,
     "Sentinel-1": True,
-    "SMAP L3": False,
-    "SMAP L4": False,
+    "SMAP L3": True,
+    "SMAP L4": True,
     "SMOS-IC": True,
-    "SMOS-BEC": True    # not supported yet
+    "SMOS-BEC": True
 }
 
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
