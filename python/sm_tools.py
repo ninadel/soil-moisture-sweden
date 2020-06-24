@@ -403,7 +403,7 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
     location_count = len(locations)
     index_count = 0
     for location, coordinate in locations.items():
-        lat = coordinate['latitutde']
+        lat = coordinate['latitude']
         lat_str = str(lat).replace('.', '-')
         lon = coordinate['longitude']
         lon_str = str(lon).replace('.', '-')
@@ -473,7 +473,7 @@ def get_img_reader(product, file):
 
 
 # filters dataframe by date, assuming index is a datetimeindex
-def filter_df_by_timeframe(df, year_filter=None, season_filter=None):
+def get_timeframe_data(df, year_filter=None, season_filter=None):
     if year_filter is not None:
         df = df[df.index.year == year_filter]
     if season_filter is not None:
