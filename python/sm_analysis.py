@@ -11,17 +11,17 @@ import sm_evaluation as evaluation
 
 # Dictionary which turns on/off product analyses
 evaluation_dict = {
-    "ASCAT 12.5 TS": True,
+    "ASCAT 12.5 TS": False,
     "ASCAT SM-OBS-2": False,    # not supported yet
-    "CCI Active": True,
-    "CCI Passive": True,
-    "CCI Combined": True,
-    "GLDAS": True,
-    "Sentinel-1": True,
-    "SMAP L3": True,
-    "SMAP L4": True,
-    "SMOS-IC": True,
-    "SMOS-BEC": True
+    "CCI Active": False,
+    "CCI Passive": False,
+    "CCI Combined": False,
+    "GLDAS": False,
+    "Sentinel-1": False,
+    "SMAP L3": False,
+    "SMAP L4": False,
+    "SMOS-IC": False,
+    "SMOS-BEC": False
 }
 
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
