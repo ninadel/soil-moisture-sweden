@@ -2,83 +2,65 @@
     "ASCAT SM-OBS-2": {
         "lon_field": "",
         "lat_field": "",
-        "sm_field": "",
-        "filter_dict": {},
-        "scale": ""
+        "sm_field": ""
     },
     "ASCAT 12.5 TS": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "sm",
-        "filter_dict": {},
-        "scale": "lin_cdf_match"
+        "sm_field": "sm"
     },
     "CCI Active": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "sm",
-        "filter_dict": {},
-        "scale": "lin_cdf_match"
+        "sm_field": "sm"
     },
     "CCI Passive": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "sm",
-        "filter_dict": {},
-        "scale": ""
+        "sm_field": "sm"
     },
     "CCI Combined": {
         "lon_field": "lon",
         "lat_field": "lat",
-        "sm_field": "sm",
-        "filter_dict": {},
-        "scale": ""
+        "sm_field": "sm"
     },
     "GLDAS": {
         "lon_field": "lon",
         "lat_field": "lat",
         "time_field": "time",
-        "sm_field": "SoilMoi0_10cm_inst",
-        "scale": "lin_cdf_match"
+        "sm_field": "SoilMoi0_10cm_inst"
     },
     "Sentinel-1": {
         "lon_field": "lon",
         "lat_field": "lat",
         "time_field": "time",
-        "sm_field": "ssm",
-        "filter_dict": {},
-        "scale": "lin_cdf_match"
+        "sm_field": "ssm"
     },
     "SMAP L3": {
         "lon_field": "longitude",
         "lat_field": "latitude",
-        "sm_field": "soil_moisture",
-        "scale": ""
+        "sm_field": "soil_moisture"
     },
     "SMAP L3 Enhanced": {
         "lon_field": "longitude",
         "lat_field": "latitude",
-        "sm_field": "soil_moisture",
-        "scale": ""
+        "sm_field": "soil_moisture"
     },
     "SMAP L4": {
         "lon_field": "cell_lon",
         "lat_field": "cell_lat",
-        "sm_field": "sm_surface_analysis",
-        "scale": ""
+        "sm_field": "sm_surface_analysis"
     },
     "SMOS-BEC": {
         "lon_field": "lon",
         "lat_field": "lat",
         "time_field": "time",
-        "sm_field": "SM",
-        "scale": ""
+        "sm_field": "SM"
     },
     "SMOS-IC": {
         "lon_field": "lon",
         "lat_field": "lat",
         "time_field": "Days",
-        "sm_field": "Soil_Moisture",
-        "scale": ""
+        "sm_field": "Soil_Moisture"
     }
 }
