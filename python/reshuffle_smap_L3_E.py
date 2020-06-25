@@ -47,11 +47,11 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
               crid=None, imgbuffer=50):
 
     """
-    Reshuffle method applied to ERA-Interim data.
+    Reshuffle method applied to SMAP L3 E data.
     Parameters
     ----------
     input_dataset: object
-        SPL3SMP_Ds object.
+        SPL3SMP_E_H5_Ds object.
     outputpath : string
         Output path.
     startdate : datetime
@@ -74,7 +74,7 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
         How many images to read at once before writing time series.
     """
 
-    global_attr = {'product': 'SPL3SMP'}
+    global_attr = {'product': 'SPL3SMP_E'}
 
     if overpass:
         global_attr['overpass'] = overpass
@@ -86,8 +86,11 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
     data = input_dataset.read(startdate)
     ts_attributes = data.metadata
     # ease2 grid not working
-    ease36 = EASE2_grid(36000)
-    lons, lats = np.meshgrid(ease36.londim, ease36.latdim)
+    ease09 = EASE2_grid(res=9008.055210146, map_scale=9008.055210146)
+    # ease09 = EASE2_grid(res=9000, map_scale=9008.055210146)
+    # ease09 = EASE2_grid(9008.055210146)
+    # ease09 = EASE2_grid(9000)
+    lons, lats = np.meshgrid(ease09.londim, ease09.latdim)
     grid = BasicGrid(lons.flatten(), lats.flatten())
 
     reshuffler = Img2Ts(input_dataset=input_dataset, outputpath=outputpath,
