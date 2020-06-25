@@ -47,7 +47,7 @@ def reshuffle(input_dataset, outputpath, startdate, enddate,
               crid=None, imgbuffer=50):
 
     """
-    Reshuffle method applied to ERA-Interim data.
+    Reshuffle method applied to SMAP L3 data.
     Parameters
     ----------
     input_dataset: object
