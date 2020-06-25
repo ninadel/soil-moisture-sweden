@@ -122,6 +122,7 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
     Reference data supported: ICOS and ISMN (GLDAS forthcoming)
 
     Parameters
+    ----------
     references: list of ICOS or ISMN time series objects (adding GLDAS soon)
     products:   dictionary of product(s) to analyze, examples:
                 evaluation_dict = {"ASCAT 12.5 TS": True}
@@ -129,8 +130,6 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
     output_folder: directory where metrics and ts data will be saved
     startdate:  datetime used to filter product data to be analyzed (default 4/1/2015)
     enddate:    datetime used to filter product data to be analyzed (default 12/31/2018 23:59)
-    filter_ref: boolean, in the case of ICOS data, if this is True only qc flag = 0 will be included 
-    filter_prod: boolean, determines whether product data will be quality filtered, see sm_tools.py > get_product_data 
     export_ts: whether ts data (reference, product, and matched) should be exported as csv files to output_folder
     evaluate_timeframes: boolean, if true config.years_timeframes and config.seasons_timeframes will be evaluated
     metrics_df: df of metrics. if None, new metrics_df will be created. otherwise existing metrics_df will be extended.
