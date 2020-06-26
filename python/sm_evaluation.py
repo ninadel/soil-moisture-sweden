@@ -17,7 +17,7 @@ import sm_config as config
 
 def evaluate_station_product(station, product, product_reader=None, startdate=datetime(2015, 4, 1),
                              enddate=datetime(2018, 12, 31, 23, 59), anomaly=False, year_filter=None,
-                             season_filter=None, match_window=1/24., scale_method=None):
+                             season_filter=None, match_window=1/24., scale_method=None, logfile=None):
     """
     Description: Matches and evaluates data for a single location
 
@@ -83,7 +83,6 @@ def evaluate_station_product(station, product, product_reader=None, startdate=da
     except:
         matched_data = None
 
-    print("matched_data.shape", matched_data.shape)
     if matched_data is not None and scale_method is not None:
         try:
             matched_data = scale(matched_data, method=scale_method, reference_index=1)
@@ -96,7 +95,6 @@ def evaluate_station_product(station, product, product_reader=None, startdate=da
         evaluation_dict['evaluation_data'] = matched_data
         evaluation_dict['scaled'] = False
 
-    print("evaluation_dict['evaluation_data'].shape", evaluation_dict['evaluation_data'].shape)
     evaluation_dict['n'] = evaluation_dict['evaluation_data'].shape[0]
 
     if evaluation_dict['evaluation_data'] is not None:
@@ -110,7 +108,7 @@ def evaluate_station_product(station, product, product_reader=None, startdate=da
 
 def evaluate_network_product(stations, product, startdate=datetime(2015, 4, 1),
                              enddate=datetime(2018, 12, 31, 23, 59), anomaly=False, year_filter=None,
-                             season_filter=None, match_window=1/24., scale_method=None):
+                             season_filter=None, match_window=1/24., scale_method=None, logfile=None):
     """
     Description: Matches and evaluates data for a single location
 
