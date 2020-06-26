@@ -207,7 +207,6 @@ def get_product_data(lon, lat, product, reader, anomaly=False, station=None):
     return sm
 
 
-# get data for all network/stations in a dictionary
 def get_metrics(data, xcol=None, ycol=None, anomaly=False):
     """""
     Calculate metrics for a pair of TS
