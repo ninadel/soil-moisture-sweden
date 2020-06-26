@@ -6,6 +6,7 @@ Script for evaluating SM datasets
 from datetime import datetime
 import os
 import pandas
+import pytz
 import warnings
 
 from pytesmo import metrics, temporal_matching
@@ -14,12 +15,9 @@ import sm_tools as tools
 import sm_config as config
 
 
-def write_eval_metrics(dict):
-    pass
-
-
-def evaluate_station_product(station, product, product_reader_dict=None, startdate=None, enddate=None, anomaly=False,
-                             year_filter=None, season_filter=None, match_window=1/24., scale=None):
+def evaluate_station_product(station, product, product_reader=None, startdate=datetime(2015, 4, 1),
+                             enddate=datetime(2018, 12, 31, 23, 59), anomaly=False, year_filter=None,
+                             season_filter=None, match_window=1/24., scale_method=None):
     """
     Description: Matches and evaluates data for a single location
 
@@ -34,6 +32,8 @@ def evaluate_station_product(station, product, product_reader_dict=None, startda
     anomaly: boolean (default: None)
     year_filter: string (default: None)
     season_filter: string (default: None)
+    match_window: number which indicates window used by pytesmo.temporal_matching (default: 1/24.)
+    scale_method: scaling method used by pytesmo.scaling (default: None)
 
     Returns
     ----------
@@ -41,6 +41,7 @@ def evaluate_station_product(station, product, product_reader_dict=None, startda
     """
     evaluation_dict = {}
     station_name = station.station
+    print(station_name)
     evaluation_dict['station'] = station_name
     evaluation_dict['product'] = product
     evaluation_dict['startdate'] = startdate
@@ -50,70 +51,174 @@ def evaluate_station_product(station, product, product_reader_dict=None, startda
     evaluation_dict['season_filter'] = season_filter
     # get station data
     station_data = tools.get_ref_data(station, anomaly=anomaly)
-    station_data.rename(station_name, inplace=True)
+    print('station_data.shape', station_data.shape)
+    station_data.rename('ref_sm', inplace=True)
     # get product data
-    if product not in product_reader_dict.keys():
-        product_metadata = config.dict_product_fields[product]
+    if product_reader is None:
+        product_metadata = config.dict_product_inputs[product]
         product_reader = tools.get_product_reader(product, product_metadata)
-    product_data = tools.get_product_data(lon=station.longitude, lat=station.latitude, product=product,
-                                          reader=product_reader, anomaly=anomaly, station=station)
-    product_data.rename(product, inplace=True)
+
+    try:
+        product_data = tools.get_product_data(lon=station.longitude, lat=station.latitude, product=product,
+                                              reader=product_reader, anomaly=anomaly, station=station)
+        product_data.rename(product, inplace=True)
+        print('product_data.shape', product_data.shape)
+    except:
+        print("can't get product data")
+        return None
     # filter product data by date/timeframe
     if startdate is not None and enddate is not None:
-        station_data = station_data.loc[startdate:enddate]
-        product_data = product_data.loc[startdate:enddate]
+        product_data = product_data[(product_data.index >= startdate) & (product_data.index <= enddate)]
     elif startdate is not None:
-        station_data = station_data.loc[startdate::]
-        product_data = product_data.loc[startdate::]
-    elif startdate is not None:
-        station_data = station_data.loc[::enddate]
-        product_data = product_data.loc[::enddate]
+        product_data = product_data[product_data.index >= startdate]
+    elif enddate is not None:
+        product_data = product_data[product_data.index <= enddate]
     if year_filter is not None:
-        station_data = tools.get_timeframe_data(station_data, year_filter=year_filter)
         product_data = tools.get_timeframe_data(product_data, year_filter=year_filter)
     if season_filter is not None:
-        station_data = tools.get_timeframe_data(station_data, season_filter=season_filter)
         product_data = tools.get_timeframe_data(product_data, season_filter=season_filter)
-
-    evaluation_dict['station_data'] = station_data
-    evaluation_dict['product_data'] = product_data
 
     try:
         matched_data = temporal_matching.matching(product_data, station_data, window=match_window)
-        evaluation_dict['matched_data'] = matched_data
     except:
-        evaluation_dict['matched_data'] = None
+        matched_data = None
 
-    if scale is not None:
+    print("matched_data.shape", matched_data.shape)
+    if matched_data is not None and scale_method is not None:
         try:
-            matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
-            evaluation_dict['scaled_data'] = matched_data
+            matched_data = scale(matched_data, method=scale_method, reference_index=1)
+            evaluation_dict['evaluation_data'] = matched_data
+            evaluation_dict['scaled'] = True
         except:
-            evaluation_dict['scaled_data'] = None
+            evaluation_dict['evaluation_data'] = None
+            evaluation_dict['scaled'] = True
+    else:
+        evaluation_dict['evaluation_data'] = matched_data
+        evaluation_dict['scaled'] = False
 
-    evaluation_dict['n'] = matched_data.shape[0]
-    evaluation_dict['metrics'] = {}
+    print("evaluation_dict['evaluation_data'].shape", evaluation_dict['evaluation_data'].shape)
+    evaluation_dict['n'] = evaluation_dict['evaluation_data'].shape[0]
 
-    x = matched_data[product].values
-    y = matched_data[station_name].values
+    if evaluation_dict['evaluation_data'] is not None:
+        try:
+            evaluation_dict['metrics'] = get_evaluation_metrics(evaluation_dict['evaluation_data'], anomaly)
+        except:
+            evaluation_dict['metrics']
+
+    return evaluation_dict
+
+
+def evaluate_network_product(stations, product, startdate=datetime(2015, 4, 1),
+                             enddate=datetime(2018, 12, 31, 23, 59), anomaly=False, year_filter=None,
+                             season_filter=None, match_window=1/24., scale_method=None):
+    """
+    Description: Matches and evaluates data for a single location
+
+    Parameters
+    ----------
+    station : list of ISMN_time_series objects
+    product : string, must match a product in dict_product_fields.json dictionary
+    product_reader_dict : dict, dictionary of product readers. If None, new product reader will be initiated.
+        (default: None)
+    startdate: datetime object (default: None)
+    enddate: datetime object (default: None)
+    anomaly: boolean (default: None)
+    year_filter: string (default: None)
+    season_filter: string (default: None)
+    match_window: number which indicates window used by pytesmo.temporal_matching (default: 1/24.)
+    scale_method: scaling method used by pytesmo.scaling (default: None)
+
+    Returns
+    ----------
+    dictionary 1:
+        dictionary of network-level metrics
+    dictionary 2:
+        first level of keys are network names
+        second level of keys are station names
+        values for station keys are a dictionary of station timeseries, product timeseries, matched timeseries,
+            and metrics
+    """
+
+    station_evaluation_dict = {}
+    network_evaluation_dict = {}
+    network_evaluation_dict['product'] = product
+    network_evaluation_dict['startdate'] = startdate
+    network_evaluation_dict['enddate'] = enddate
+    network_evaluation_dict['anomaly'] = anomaly
+    network_evaluation_dict['year_filter'] = year_filter
+    network_evaluation_dict['season_filter'] = season_filter
+
+    product_metadata = config.dict_product_inputs[product]
+    product_reader = tools.get_product_reader(product, product_metadata)
+
+    for station in stations:
+        station_name = station.station
+        network_name = station.network
+        if network_name not in station_evaluation_dict.keys():
+            station_evaluation_dict[network_name] = {}
+        if network_name not in network_evaluation_dict.keys():
+            network_evaluation_dict[network_name] = {}
+        station_evaluation_dict[network_name][station_name] = evaluate_station_product(
+            station=station, product=product, product_reader=product_reader, startdate=startdate,
+            enddate=enddate, anomaly=anomaly, year_filter=year_filter, season_filter=season_filter,
+            match_window=match_window, scale_method=scale_method)
+
+    for network, stations in station_evaluation_dict.items():
+        network_evaluation_dict[network_name]
+        for station, station_dict in stations.items():
+            if 'scaled' not in network_evaluation_dict[network_name].keys():
+                network_evaluation_dict[network_name]['scaled'] = station_dict['scaled']
+            if 'evaluation_data' not in network_evaluation_dict[network_name].keys():
+                network_evaluation_dict[network_name]['evaluation_data'] = station_dict['evaluation_data']
+            else:
+                if station_dict['evaluation_data'] is not None:
+                    network_evaluation_dict[network_name]['evaluation_data'] = \
+                        pandas.concat([network_evaluation_dict[network_name]['evaluation_data'],
+                                       station_dict['evaluation_data']])
+
+    for network, network_dict in network_evaluation_dict.items():
+        network_dict['n'] = network_dict['evaluation_data'].shape[0]
+        network_dict['metrics'] = get_evaluation_metrics(network_dict['evaluation_data'], anomaly)
+
+    return network_evaluation_dict, station_evaluation_dict
+
+
+def evaluate_timeframe(matched_data, year_filter=None, season_filter=None, anomaly=False):
+    timeframe_data = tools.get_timeframe_data(matched_data, year_filter, season_filter)
+    timeframe_metrics = get_evaluation_metrics(timeframe_data, anomaly)
+    return timeframe_metrics
+
+
+def get_evaluation_metrics(evaluation_data, anomaly):
+    metrics_dict = {}
+
+    columns = evaluation_data.columns
+    x = evaluation_data[columns[0]].values
+    y = evaluation_data[columns[1]].values
+
+    if anomaly:
+        metrics_dict['bias'] = None
+        metrics_dict['rmsd'] = None
+        metrics_dict['ubrmsd'] = None
 
     try:
         if anomaly is False:
-            evaluation_dict['metrics']['bias'] = metrics.bias(x, y)
-            evaluation_dict['metrics']['rmsd'] = metrics.rmsd(x, y)
-            evaluation_dict['metrics']['ubrmsd'] = metrics.ubrmsd(x, y)
+            metrics_dict['bias'] = metrics.bias(x, y)
+            metrics_dict['rmsd'] = metrics.rmsd(x, y)
+            metrics_dict['ubrmsd'] = metrics.ubrmsd(x, y)
     except:
-        evaluation_dict['metrics']['bias'] = None
-        evaluation_dict['metrics']['rmsd'] = None
-        evaluation_dict['metrics']['ubrmsd'] = None
+        metrics_dict['bias'] = None
+        metrics_dict['rmsd'] = None
+        metrics_dict['ubrmsd'] = None
 
     try:
-        evaluation_dict['metrics']['pearson_r'] = metrics.pearsonr(x, y)[0]
-        evaluation_dict['metrics']['pearson_r_p-value'] = metrics.pearsonr(x, y)[1]
+        metrics_dict['pearson_r'] = metrics.pearsonr(x, y)[0]
+        metrics_dict['pearson_r_p-value'] = metrics.pearsonr(x, y)[1]
     except:
-        evaluation_dict['metrics']['pearson_r'] = None
-        evaluation_dict['metrics']['pearson_r_p-value'] = None
+        metrics_dict['pearson_r'] = None
+        metrics_dict['pearson_r_p-value'] = None
 
+    return metrics_dict
 
 def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1), enddate=datetime(2018, 12, 31, 23, 59),
              export_ts=True, evaluate_timeframes=True, anomaly=False, metrics_df=None):
@@ -174,8 +279,8 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                                                                         timeframe, anomaly_str)
             matched_data_str = 'station_matched_data_{}_{}_{}_{}_{}.csv'.format(product_str, network_name,
                                                                                 station_name, timeframe, anomaly_str)
-            scaled_data_str = 'station_scaled_data_{}_{}_{}_{}_{}.csv'.format(product_str, network_name,
-                                                                              station_name, timeframe, anomaly_str)
+            # scaled_data_str = 'station_scaled_data_{}_{}_{}_{}_{}.csv'.format(product_str, network_name,
+            #                                                                   station_name, timeframe, anomaly_str)
             if network_name not in matched_data_dict.keys():
                 matched_data_dict[network_name] = pandas.DataFrame()
             tools.write_log(log_file, "*** analyzing {} x {} {} ({}) ***".format(product, network_name,
@@ -201,19 +306,19 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                 n = matched_data.shape[0]
                 if export_ts:
                     matched_data.to_csv(os.path.join(data_output_folder, matched_data_str))
-                if config.dict_product_fields[product]['scale'] != "":
-                    matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
-                    try:
-                        matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
-                        if export_ts:
-                            matched_data.to_csv(os.path.join(data_output_folder, scaled_data_str))
-                    except:
-                        empty_metrics_df = get_empty_metrics_df()
-                        metrics_df = pandas.concat([metrics_df, empty_metrics_df])
-                        message = "Could not scale data. Skipping to next station."
-                        warnings.warn(message)
-                        tools.write_log(log_file, message)
-                        break
+                # if config.dict_product_fields[product]['scale'] != "":
+                #     matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
+                #     try:
+                #         matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
+                #         if export_ts:
+                #             matched_data.to_csv(os.path.join(data_output_folder, scaled_data_str))
+                #     except:
+                #         empty_metrics_df = get_empty_metrics_df()
+                #         metrics_df = pandas.concat([metrics_df, empty_metrics_df])
+                #         message = "Could not scale data. Skipping to next station."
+                #         warnings.warn(message)
+                #         tools.write_log(log_file, message)
+                #         break
                 network_matched_data = matched_data_dict[network_name]
                 matched_data_dict[network_name] = pandas.concat([network_matched_data, matched_data])
                 tools.write_log(log_file, '{} matched data shape: {}'.format(
@@ -242,7 +347,7 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
         tools.write_log(log_file, '*** analyzing networks ({}) ***'.format(anomaly_str))
         for network, network_matched_data in matched_data_dict.items():
             station_name = "All"
-            network_matched_data.dropna
+            # network_matched_data.dropna
             data_output_str = 'network_{}_{}_{}_{}_matched_data.csv'.format(
                 product, network_name, timeframe, anomaly_str)
             if export_ts:
