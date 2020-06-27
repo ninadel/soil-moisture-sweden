@@ -5,9 +5,11 @@ Configuration settings for sm analysis
 """
 from datetime import datetime
 import json
+import numpy
 
 icos_input_dir = r"..\icos_data"
 ismn_input_dir = r"..\ismn_data\HOBE_Data_2015-2018"
+raw_data_dir = r"D:\sm_backup"
 
 metrics_df_columns = ["network", "station", "product", "timeframe", "anomaly", "n", "bias", "rmsd", "ubrmsd",
                       "pearsonr", "pearsonr_p"]
@@ -106,7 +108,14 @@ with open("dict_hobe.json", "r") as f:
 with open("dict_swe_gldas_points.json", "r") as f:
     dict_swe_gldas_points = json.load(f)
 
+# dictionary which stores GLDAS grid points
+with open("dict_extent_sweden.json", "r") as f:
+    dict_extent_sweden = json.load(f)
+
 swe_shuffle_cells = [1397, 1398, 1399, 1433, 1434, 1435, 1470, 1471]
 den_shuffle_cells = [1360, 1361, 1396, 1397, 1433]
 nordic_shuffle_cells = [1326, 1360, 1361, 1362, 1396, 1397, 1398, 1399, 1433, 1434, 1435, 1436, 1469, 1470, 1471, 1472,
                         1506, 1507, 1508, 1542, 1543, 1544]
+
+regrid_lat = numpy.arange(dict_extent_sweden["min_lat"], dict_extent_sweden["max_lat"], 0.25)
+regrid_lon = numpy.arange(dict_extent_sweden["min_lon"], dict_extent_sweden["max_lon"], 0.25)
