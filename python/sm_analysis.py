@@ -34,6 +34,8 @@ analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 analysis_results_folder = os.path.join(analysis_output_root, "{}_evaluation".format(analysis_timestamp))
 os.mkdir(analysis_results_folder)
 metrics_filename = "evaluation_metrics_{}.csv".format(analysis_timestamp)
+startdate = datetime(2015,4,1)
+enddate = datetime(2018, 12, 31, 23, 59)
 
 results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
@@ -46,3 +48,6 @@ results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
 results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
                               metrics_df=results)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
+
+
+# icos_results = evaluation.evaluate_network_product(icos_readers, 'ASCAT 12.5 TS', startdate=datetime, enddate=enddate)
