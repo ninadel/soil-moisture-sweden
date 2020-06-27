@@ -4,6 +4,11 @@
         "lat_field": "",
         "sm_field": ""
     },
+    "ASCAT 12.5 Swath": {
+        "lon_field": "lon",
+        "lat_field": "lat",
+        "sm_field": "soil_moisture"
+    },
     "ASCAT 12.5 TS": {
         "lon_field": "lon",
         "lat_field": "lat",
