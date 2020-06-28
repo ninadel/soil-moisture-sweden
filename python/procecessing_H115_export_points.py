@@ -12,11 +12,12 @@ from datetime import datetime
 
 input_dir = r"..\sm_sample_files\ascat-h115-ts-2019"
 output_dir = r"../test_output_data/H115_points_csv"
+point_subdir = "point_data"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
-startdate = datetime(2015,1,1)
-enddate = datetime(2018, 12, 31, 23, 59)
+startdate = datetime(2015, 1, 1)
+enddate = datetime(2019, 1, 1)
 
 product = 'ASCAT 12.5 TS'
 reader = tools.get_product_reader(product, config.dict_product_inputs[product])
@@ -36,7 +37,6 @@ for key, value in config.dict_swe_gldas_points.items():
         min_lon = value["longitude"]
     if value["longitude"] > max_lon:
         max_lon = value["longitude"]
-print(min_lat, max_lat, min_lon, max_lon)
 
 locations = pandas.DataFrame(columns=['loc', 'lon', 'lat'])
 
@@ -55,4 +55,10 @@ for cell in config.swe_shuffle_cells:
 
 print(locations)
 locations.set_index("loc", inplace=True)
-locations.to_csv(os.path.join(output_dir, "H115_SWE_locations.csv"), sep=",")
+
+for index, row in locations.iterrows():
+    ts = reader.read(row['lon'], row['lat'])
+    data = ts.data[startdate::]
+    data = data[['sm', 'ssf', 'sat_id']]
+    filename = "{}.csv".format(index)
+    data.to_csv(os.path.join(output_dir, point_subdir, filename))
