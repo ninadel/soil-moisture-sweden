@@ -14,4 +14,5 @@ iris/
 ignore_scripts/
 *.lnk
 SWE_ts_csv/
-test_notebooks/
+/python/test_notebooks/
+*test*.ipynb
