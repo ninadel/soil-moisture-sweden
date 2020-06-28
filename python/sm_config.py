@@ -23,39 +23,61 @@ dict_product_inputs = {
         "ts_dir": r"..\input_data\ascat-h115-ts-2019",
         "grid_dir": r"..\ascat_ts_aux\warp5_grid",
         "grid_file": "TUW_WARP5_grid_info_2_3.nc",
-        "static_layers_dir": None
+        "static_layers_dir": None,
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "CCI Active": {
-        "ts_dir": r"..\input_data\cci-0.25deg_active_global_reshuffle"
+        "ts_dir": r"..\input_data\cci-0.25deg_active_global_reshuffle",
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "CCI Passive": {
-        "ts_dir": r"..\input_data\cci-0.25deg_passive_global_reshuffle"
+        "ts_dir": r"..\input_data\cci-0.25deg_passive_global_reshuffle",
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "CCI Combined": {
-        "ts_dir": r"..\input_data\cci-0.25deg_combined_global_reshuffle"
+        "ts_dir": r"..\input_data\cci-0.25deg_combined_global_reshuffle",
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "GLDAS": {
         "ts_dir": r"..\input_data\GLDAS_nordic_reshuffle",
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "SMAP L3": {
-        "ts_dir": r"..\input_data\SPL3SMP-smap-l3-36km_nordic_reshuffle"
+        "ts_dir": r"..\input_data\SPL3SMP-smap-l3-36km_nordic_reshuffle",
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "SMAP L3 Enhanced": {
-        "ts_dir": None
+        "ts_dir": None,
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "SMAP L4": {
-        "ts_dir": r"..\input_data\SPL4SMAU_nordic_reshuffle"
+        "ts_dir": r"..\input_data\SPL4SMAU_nordic_reshuffle",
+        "csv_stations": None,
+        "csv_quarters": None
     },
     "Sentinel-1": {
         "raw_dir": r"..\input_data\cgls-biopar-ssm-01km_nordic",
         "ts_dir": r"..\input_data\csv_stations\sentinel_ts",
+        "csv_stations": r"..\input_data\csv_stations\sentinel_ts",
+        "csv_quarters": None
     },
     "SMOS-BEC": {
         "raw_dir": r"..\input_data\smos-bec-reprocessed-01km-nordic\ASC",
         "ts_dir": r"..\input_data\csv_stations\smos-bec_ts",
+        "csv_stations": r"..\input_data\csv_stations\smos-bec_ts",
+        "csv_quarters": None
     },
     "SMOS-IC": {
-        "ts_dir": r"C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC"
+        "ts_dir": r"C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC",
+        "csv_stations": None,
+        "csv_quarters": None
     }
 }
 
