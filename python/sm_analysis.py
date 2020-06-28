@@ -11,8 +11,7 @@ import sm_evaluation as evaluation
 
 # Dictionary which turns on/off product analyses
 evaluation_dict = {
-    "ASCAT 12.5 TS": False,
-    "ASCAT SM-OBS-2": False,    # not supported yet
+    "ASCAT 12.5 TS": False, 
     "CCI Active": False,
     "CCI Passive": False,
     "CCI Combined": False,

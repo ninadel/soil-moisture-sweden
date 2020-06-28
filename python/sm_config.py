@@ -19,9 +19,6 @@ season_timeframes = ['non-winter', 'winter', 'spring', 'summer', 'fall']
 
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 dict_product_inputs = {
-    "ASCAT SM-OBS-2": {
-        "ts_dir": None
-    },
     "ASCAT 12.5 TS": {
         "ts_dir": r"..\input_data\ascat-h115-ts-2019",
         "grid_dir": r"..\ascat_ts_aux\warp5_grid",
@@ -51,11 +48,11 @@ dict_product_inputs = {
     },
     "Sentinel-1": {
         "raw_dir": r"..\input_data\cgls-biopar-ssm-01km_nordic",
-        "ts_dir": r"..\input_data\sentinel_ts",
+        "ts_dir": r"..\input_data\csv_stations\sentinel_ts",
     },
     "SMOS-BEC": {
         "raw_dir": r"..\input_data\smos-bec-reprocessed-01km-nordic\ASC",
-        "ts_dir": r"..\input_data\smos-bec_ts",
+        "ts_dir": r"..\input_data\csv_stations\smos-bec_ts",
     },
     "SMOS-IC": {
         "ts_dir": r"C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC"
@@ -65,7 +62,6 @@ dict_product_inputs = {
 # for products that default to midnight, these dictionary values shift datetimeindex values to local overpass in UTC
 # through the tools.get_timeshifted_data function
 dict_timeshifts = {
-    "ASCAT SM-OBS-2": None,
     # Timestamps are already present in TS
     "ASCAT 12.5 TS": None,
     # CCI Active Force Timestamp: 9:30AM CET, 8:30AM UTC based on ASCAT overpasses

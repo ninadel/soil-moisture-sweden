@@ -1,9 +1,4 @@
 {
-    "ASCAT SM-OBS-2": {
-        "lon_field": "",
-        "lat_field": "",
-        "sm_field": ""
-    },
     "ASCAT 12.5 Swath": {
         "lon_field": "lon",
         "lat_field": "lat",
