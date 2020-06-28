@@ -15,6 +15,7 @@ evaluation_dict = {
     "CCI Active": False,
     "CCI Passive": False,
     "CCI Combined": False,
+    "ERA5": False,
     "GLDAS": False,
     "Sentinel-1": False,
     "SMAP L3": False,

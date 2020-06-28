@@ -112,6 +112,9 @@ def get_product_reader(product, product_metadata):
     elif product == "CCI Combined":
         ts_dir = product_metadata["ts_dir"]
         reader = CCITs(ts_path=ts_dir)
+    elif product == "ERA5":
+        ts_dir = None
+        reader = None
     elif product == "GLDAS":
         ts_dir = product_metadata["ts_dir"]
         reader = GLDASTs(ts_path=ts_dir)
@@ -174,6 +177,8 @@ def get_product_data(lon, lat, product, reader, anomaly=False, station=None):
             # For now, no filters for CCI
             sm = data[config.dict_product_fields[product]["sm_field"]]
             sm = sm[(sm >= 0) & (sm < 1)]
+        elif product == "ERA5":
+            pass
         elif product == "GLDAS":
             data = ts
             # No filters needed for GLDAS

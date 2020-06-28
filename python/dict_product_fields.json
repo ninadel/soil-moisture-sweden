@@ -24,6 +24,11 @@
         "lat_field": "lat",
         "sm_field": "sm"
     },
+    "ERA5": {
+        "lon_field": "longitude",
+        "lat_field": "latitude",
+        "sm_field": "swvl1"
+    },
     "GLDAS": {
         "lon_field": "lon",
         "lat_field": "lat",

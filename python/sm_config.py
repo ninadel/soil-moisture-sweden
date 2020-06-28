@@ -42,6 +42,11 @@ dict_product_inputs = {
         "csv_stations": None,
         "csv_quarters": None
     },
+    "ERA5": {
+        "ts_dir": None,
+        "csv_stations": None,
+        "csv_quarters": None
+    },
     "GLDAS": {
         "ts_dir": r"..\input_data\GLDAS_nordic_reshuffle",
         "csv_stations": None,
@@ -92,11 +97,14 @@ dict_timeshifts = {
     "CCI Passive": (5, 'H'),
     # CCI Combined Force Timestamp: 8AM CET, 7AM UTC based on average of Active and Passive products
     "CCI Combined": (7, 'H'),
+    # ERA5 Timestamps already present in ts
+    "ERA5": None,
     # GLDAS Timestamps already present in ts
     "GLDAS": None,
     # SMAP L3 Force Timestamp: 6AM CET, 5AM UTC
     "SMAP L3": (5, 'H'),
-    "SMAP L3 Enhanced": None,
+    # SMAP L3E Force Timestamp: 6AM CET, 5AM UTC
+    "SMAP L3 Enhanced": (5, 'H'),
     # SMAP L4 Timestamps already present in ts
     "SMAP L4": None,
     # Sentinel-1 timestamps present in data
