@@ -9,8 +9,8 @@ import os
 from datetime import datetime, timedelta
 
 write_data = True
-input_dir = r"..\test_output_data\H115_points_csv\point_data"
-dict_file = r"..\test_output_data\H115_points_csv\H115_SWE_locations.csv"
+input_dir = r"..\input_data\ascat_h115_points_csv\point_data"
+dict_file = r"..\input_data\ascat_h115_points_csv\H115_SWE_locations.csv"
 output_dir = r"..\test_output_data\H115_points_csv\date_data"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
@@ -36,11 +36,12 @@ for date in daterange(startdate, enddate):
     date_str = date.strftime("%Y-%m-%d")
     filename = "{}.csv".format(date_str)
     file = os.path.join(output_dir, filename)
-    if not os.path.exists(file):
-        with open(os.path.join(output_dir, filename), "a") as file:
-            file.write("lon,lat,sm,ssf" + "\n")
 
+points = len(os.listdir(input_dir))
+point_idx = 0
 for point_file in os.listdir(input_dir):
+    point_idx += 1
+    print("{} of {}".format(point_idx, points))
     location_id = point_file.split(".")[0]
     loc_lon = loc_dict[location_id]["longitude"]
     loc_lat = loc_dict[location_id]["latitude"]
@@ -54,7 +55,12 @@ for point_file in os.listdir(input_dir):
             row = (str(loc_lon), str(loc_lat), str(row['sm']), str(row['ssf']))
             row_str = sep.join(row)
             filename = "{}.csv".format(short_date)
-            if write_data:
+            out_file = os.path.join(output_dir, filename)
+            if os.path.exists(out_file):
+                with open(os.path.join(out_file), "a") as file:
+                    file.write(row_str + "\n")
+            else:
                 with open(os.path.join(output_dir, filename), "a") as file:
+                    file.write("lon,lat,sm,ssf" + "\n")
                     file.write(row_str + "\n")
             last_date = short_date
