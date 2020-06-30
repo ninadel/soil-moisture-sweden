@@ -360,7 +360,7 @@ def get_nc_series(input_root, location, parameters, date_search_str, datetime_fo
         return loc_ts_dict
 
 
-def get_netcdf_summary(file, lon_field=None, lat_field=None, sm_field=None, time_field=None, show_field_data=True):
+def get_nc_summary(file, lon_field=None, lat_field=None, sm_field=None, time_field=None, show_field_data=True):
     dataset = netCDF4.Dataset(file, 'r')
     print("Attributes in dataset:")
     print(dataset.ncattrs())
