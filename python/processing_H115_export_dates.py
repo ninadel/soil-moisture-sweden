@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 write_data = True
 input_dir = r"..\input_data\ascat_h115_points_csv\point_data"
 dict_file = r"..\input_data\ascat_h115_points_csv\H115_SWE_locations.csv"
-output_dir = r"..\test_output_data\H115_points_csv\date_data"
+output_dir = r"..\input_data\ascat_h115_points_csv\\date_data_2"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
@@ -50,8 +50,8 @@ for point_file in os.listdir(input_dir):
     last_date = "2000-01-01"
     for index, row in data.iterrows():
         short_date = index[0:10]
-        time = index[11:16]
-        if short_date != last_date:
+        hour = int(index[11:13])
+        if short_date != last_date and hour < 12:
             row = (str(loc_lon), str(loc_lat), str(row['sm']), str(row['ssf']))
             row_str = sep.join(row)
             filename = "{}.csv".format(short_date)
