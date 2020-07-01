@@ -2,6 +2,7 @@ import xarray as xr
 import xesmf as xe
 import sm_config as config
 
+# info on regridding algorithms: https://xesmf.readthedocs.io/en/latest/notebooks/Compare_algorithms.html
 def xesmf_regrid(input_ds, input_array, method):
     if method == 'nearest_s2d' or method == 'bilinear':
         ds_out = xr.Dataset({'lat': (['lat'], config.regrid_lat),
