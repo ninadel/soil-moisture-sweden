@@ -18,16 +18,19 @@ import re
 import warnings
 import xarray
 
-from ascat import H115Ts
-from esa_cci_sm.interface import CCITs
-from gldas.interface import GLDASTs
-from icos import ICOSTimeSeries
-from ismn.interface import ISMN_Interface
-from smap_io import SMAPTs
-from smos.smos_ic.interface import SMOSTs
-from pytesmo import metrics
-from pytesmo.time_series.anomaly import calc_anomaly
-from sentinel import SentinelImg
+try:
+    from ascat import H115Ts
+    from esa_cci_sm.interface import CCITs
+    from gldas.interface import GLDASTs
+    from icos import ICOSTimeSeries
+    from ismn.interface import ISMN_Interface
+    from smap_io import SMAPTs
+    from smos.smos_ic.interface import SMOSTs
+    from pytesmo import metrics
+    from pytesmo.time_series.anomaly import calc_anomaly
+    from sentinel import SentinelImg
+except:
+    warnings.warn("could not import product packages")
 
 def write_log(filename, string, print_string=True, write_output=True):
     if write_output:
@@ -527,17 +530,18 @@ def get_filename_timestamp(filename, date_search_str, date_only=True, return_int
     date_search_str: regex expression for finding timestamp e.g. r"[0-9]{8}T[0-9]{4}", must be unique enough to occur 
         only once in filename
     date_only: boolean, if false, look for time as well. 
+    return_int: boolean, if true, converts timestamp into a number. 
     """""
     result_str = re.findall(date_search_str, filename)[-1]
     date_str = re.findall(r"[0-9]{8}", result_str)[0]
     # assumes timestamp is always after datestamp and timestamp is 6 digits long
     if not date_only:
         time_str = re.findall(r"[0-9]{6}", result_str)[-1]
-        timestamp = datetime(date_str[0:4], date_str[4:6], date_str[6:8], time_str[0:2], time_str[2:4], time_str[4:6])
+        timestamp = datetime(int(date_str[0:4]), int(date_str[4:6]), int(date_str[6:8]), int(time_str[0:2]), int(time_str[2:4]), int(time_str[4:6]))
     else:
-        timestamp = datetime(date_str[0:4], date_str[4:6], date_str[6:8])
+        timestamp = datetime(int(date_str[0:4]), int(date_str[4:6]), int(date_str[6:8]))
     if return_int:
-        timestamp=int(timestamp)
+        timestamp = int(timestamp.timestamp())
     return timestamp
 
 
