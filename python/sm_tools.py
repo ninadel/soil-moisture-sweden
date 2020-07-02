@@ -6,9 +6,6 @@ Functions for analyzing soil moisture datasets
 import sm_config as config
 
 from datetime import datetime
-import h5py
-import icos
-import ismn
 import json
 import netCDF4
 import numpy
@@ -16,9 +13,10 @@ import os
 import pandas
 import re
 import warnings
-import xarray
 
 try:
+    import icos
+    import ismn
     from ascat import H115Ts
     from esa_cci_sm.interface import CCITs
     from gldas.interface import GLDASTs
