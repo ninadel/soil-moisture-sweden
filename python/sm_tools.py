@@ -16,6 +16,7 @@ import os
 import pandas
 import re
 import warnings
+import xarray
 
 from ascat import H115Ts
 from esa_cci_sm.interface import CCITs
@@ -24,11 +25,9 @@ from icos import ICOSTimeSeries
 from ismn.interface import ISMN_Interface
 from smap_io import SMAPTs
 from smos.smos_ic.interface import SMOSTs
-from pytesmo.validation_framework.adapters import SelfMaskingAdapter
 from pytesmo import metrics
 from pytesmo.time_series.anomaly import calc_anomaly
 from sentinel import SentinelImg
-from smos_extension import SMOSBECImg
 
 def write_log(filename, string, print_string=True, write_output=True):
     if write_output:
