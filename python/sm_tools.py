@@ -341,7 +341,7 @@ def get_nc_series(input_root, location, parameters, date_search_str, datetime_fo
         file = os.path.join(input_root, filename)
         ds = netCDF4.Dataset(file, mode="r")
         timestamp = get_filename_timestamp(filename=filename, date_search_str=date_search_str,
-                                           datetime_format=datetime_format)
+                                           date_only=False)
         lon_array = ds[lon_field][:]
         lat_array = ds[lat_field][:]
         # for each file, process all locations and store results in dictionary
@@ -519,32 +519,26 @@ def get_nc_parameter_count(file, parameter):
     frequencies = numpy.asarray((unique, counts)).T
     return frequencies
 
+
 # function to find timestamps from a filename, given a searchsting and format
-def get_filename_timestamp(filename, date_search_str, datetime_format):
+def get_filename_timestamp(filename, date_search_str, date_only=True, return_int=False):
     """""
     Parameters
     filename: filename string
     date_search_str: regex expression for finding timestamp e.g. r"[0-9]{8}T[0-9]{4}", must be unique enough to occur 
         only once in filename
-    datetime_format: tuple of tuples. for the above date_search_str, the locations of datetime elements in the string
-        (year, month, day) or (year, month, day, hour, minute) 
-        example: in the above string, datetime_format would be ((0,4), (4, 6), (6, 8), (9, 11), (11, 13))
-        the length of the tuple will determine whether hours/minutes will be added to timestamp, otherwise it will
-        default to midnight
+    date_only: boolean, if false, look for time as well. 
     """""
-    timestamp_str = re.findall(date_search_str, filename)[-1]
-    # when datetime_format is year, month, day
-    if len(datetime_format) == 3:
-        timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
-                             int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
-                             int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]))
-    # when datetime_format is year, month, day, hour, minute
-    if len(datetime_format) == 5:
-        timestamp = datetime(int(timestamp_str[datetime_format[0][0]:datetime_format[0][1]]),
-                             int(timestamp_str[datetime_format[1][0]:datetime_format[1][1]]),
-                             int(timestamp_str[datetime_format[2][0]:datetime_format[2][1]]),
-                             int(timestamp_str[datetime_format[3][0]:datetime_format[3][1]]),
-                             int(timestamp_str[datetime_format[4][0]:datetime_format[4][1]]))
+    result_str = re.findall(date_search_str, filename)[-1]
+    date_str = re.findall(r"[0-9]{8}", result_str)[0]
+    # assumes timestamp is always after datestamp and timestamp is 6 digits long
+    if not date_only:
+        time_str = re.findall(r"[0-9]{6}", result_str)[-1]
+        timestamp = datetime(date_str[0:4], date_str[4:6], date_str[6:8], time_str[0:2], time_str[2:4], time_str[4:6])
+    else:
+        timestamp = datetime(date_str[0:4], date_str[4:6], date_str[6:8])
+    if return_int:
+        timestamp=int(timestamp)
     return timestamp
 
 
