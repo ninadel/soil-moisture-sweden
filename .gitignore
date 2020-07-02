@@ -16,3 +16,4 @@ ignore_scripts/
 SWE_ts_csv/
 /python/test_notebooks/
 *test*.ipynb
+/python/*.nc
