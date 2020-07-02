@@ -6,8 +6,12 @@ Script for exporting CSV files of TS within a bounding box around Sweden
 
 # import netCDF4
 import datetime
+import warnings
 import xarray as xr
-import xesmf as xe
+try:
+    import xesmf as xe
+except:
+    warnings.warn("could not import xesmf. not windows compatible.")
 # import matplotlib
 import numpy
 import os

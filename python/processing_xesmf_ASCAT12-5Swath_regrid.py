@@ -3,9 +3,12 @@ Author: Nina del Rosario
 Date: 6/30/2020
 Script for regridding ASCAT 12.5 Swath data
 """
-
+import warnings
 import xarray as xr
-import xesmf as xe
+try:
+    import xesmf as xe
+except:
+    warnings.warn("could not import xesmf. not windows compatible.")
 import sm_config as config
 
 # method options: 'nearest_s2d', 'bilinear', and 'conservative' (conservative not currently working)
