@@ -30,6 +30,7 @@ try:
 except:
     warnings.warn("could not import product packages")
 
+
 def write_log(filename, string, print_string=True, write_output=True):
     if write_output:
         with open(filename, "a") as logfile:
