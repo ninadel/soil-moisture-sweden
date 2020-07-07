@@ -81,11 +81,10 @@ def write_ts_quarter_deg(dr, output_dir, overwrite=False):
             break
         location_count += 1
         print("location {} of {}".format(location_count, location_len))
-        dr.set_auto_mask(False)
         # use lat index instead?
         ts = dr.sel(lat=metadata['latitude'], lon=metadata['longitude'])
         # ts_df = ts.to_pandas()
-        ts_df = ts.to_pandas().dropna
+        ts_df = ts.to_pandas().dropna()
         ts_df.rename("sm", inplace=True)
         # ts_df.dropna(inplace=True)
         if ts_df is not None:
