@@ -37,6 +37,32 @@ def preprocess_sentinel(in_ds):
     return out_ds
 
 
+def preprocess_smap_L3E(in_ds):
+    # get filename
+    source = in_ds.encoding['source']
+    # get timestamp from filename
+    datestamp = tools.get_filename_timestamp(source, r"E_[0-9]{8}_R")
+    # since timestamp is midnight, add local overpass time in utc
+    local_time_utc = 5
+    datestamp = datestamp.replace(hour=local_time_utc)
+    # open dataset as subgroup
+    out_ds = xr.open_dataset(source, group='Soil_Moisture_Retrieval_Data_AM')
+    # rename coordinates to lat and lon
+    # out_ds = out_ds.rename({'latitude': 'lat', 'longitude': 'lon'})
+    # subset to sweden
+    # out_ds = out_ds.sel(
+    #     lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
+    #     lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    # add time dimension
+    out_ds['time'] = datestamp
+    lat_array = out_ds['latitude'][:, 0]
+    lon_array = out_ds['longitude'][0, :]
+    out_ds = out_ds.expand_dims('time').set_coords('time')
+    # out_ds = out_ds.expand_dims({'lon': lon_array}, axis=1)
+    # out_ds = out_ds.expand_dims({'lat': lat_array}, axis=0)
+    return out_ds
+
+
 def preprocess_smos_ic(in_ds):
     # get filename
     source = in_ds['Soil_Moisture'].encoding['source']
@@ -66,6 +92,9 @@ def get_mf_dataset(file_list, product):
         return ds
     if product == "Sentinel-1":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_sentinel, combine='by_coords')
+        return ds
+    if product == "SMAP L3 Enhanced":
+        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3E, concat_dim='time', combine='by_coords')
         return ds
     if product == "SMOS-IC":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_smos_ic, combine='by_coords')
