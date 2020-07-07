@@ -12,7 +12,24 @@ except:
     warnings.warn("could not import xesmf. not windows compatible.")
 
 
+def preprocess_ascat_h101(in_ds):
+    out_ds = in_ds[['proc_flag', 'soil_moisture']]
+    print(out_ds)
+    print(out_ds.coords)
+    print(out_ds['soil_moisture'])
+    # out_ds = out_ds.sel(
+    #     lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
+    #     lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    return out_ds
+
+
 def preprocess_sentinel(in_ds):
+    # # get filename
+    # source = in_ds['Soil_Moisture'].encoding['source']
+    # # get timestamp from filename
+    # datestamp = tools.get_filename_timestamp(source, r"_[0-9]{8}T")
+    # select variables to keep
+    out_ds = in_ds[['Soil_Moisture', 'Quality_Flag']]
     out_ds = in_ds.sel(
         # Sentinel has descending latitude order
         lat=slice(config.dict_extent_sweden['max_lat'], config.dict_extent_sweden['min_lat']),
@@ -44,6 +61,9 @@ def preprocess_smos_ic(in_ds):
 
 
 def get_mf_dataset(file_list, product):
+    if product == "ASCAT 12.5 Swath":
+        ds = xr.open_mfdataset(file_list, preprocess=preprocess_ascat_h101, combine='by_coords', decode_times=False)
+        return ds
     if product == "Sentinel-1":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_sentinel, combine='by_coords')
         return ds
