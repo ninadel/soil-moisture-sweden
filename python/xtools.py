@@ -64,7 +64,6 @@ def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=False):
                              'lon': (['lon'], config.regrid_lon)})
     reg = xe.Regridder(ds_in, ds_out, method=method, reuse_weights=reuse)
     dr_in = ds_in[var]
-    print(dr_in)
     dr_out = reg(dr_in)
     if cleanup:
         reg.clean_weight_file()  # clean-up
