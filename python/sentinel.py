@@ -4,7 +4,8 @@ Author: Nina del Rosario, nina.del@gmail.com
 Class for analysing Sentinel-1 SSM data (https://land.copernicus.eu/global/products/ssm)
 """
 import numpy as np
-from datetime import datetime
+import math
+import datetime
 import os
 import re
 from pygeobase.io_base import ImageBase, MultiTemporalImageBase
@@ -35,7 +36,7 @@ class SentinelImg(ImageBase):
             parameter = [parameter]
         self.parameters = parameter
         timestamp_str = re.findall(r"c_gls_SSM1km_[0-9]{8}", self.filename)[-1][-8:]
-        self.timestamp = datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]))
+        self.timestamp = datetime.datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]))
 
     def read_img(self):
         return_data = {}
