@@ -127,7 +127,7 @@ def get_product_reader(product, product_metadata):
         reader = SMAPTs(ts_path=ts_dir)
     elif product == "SMOS-IC":
         ts_dir = product_metadata["ts_dir"]
-        reader = SMOSTs(ts_path=ts_dir)
+        reader = SMOSTs(ts_path=ts_dir, read_flags=None)
     else:
         reader = None
     return reader
@@ -154,63 +154,69 @@ def get_ref_data(ts, filter_ref=False, anomaly=False):
     return sm_data
 
 
-def get_product_data(lon, lat, product, reader, anomaly=False, station=None):
-    sm = None
+def get_product_data(lon, lat, product, reader, anomaly=False, station=None, filter_prod=True, sm_only=True):
+    data = None
+    sm_field = None
     if reader is not None:
         ts = reader.read(lon, lat)
+        sm_field = config.dict_product_fields[product]["sm_field"]
         if product == "ASCAT 12.5 TS":
             data = ts.data
-            data = data.loc[data["ssf"] == 1]
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 100)]
-        elif product == "CCI Active":
+        else:
             data = ts
-            # For now, no filters for CCI
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 100)]
-        elif product == "CCI Passive":
-            data = ts
-            # For now, no filters for CCI
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 1)]
-        elif product == "CCI Combined":
-            data = ts
-            # For now, no filters for CCI
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 1)]
-        elif product == "ERA5":
+        timeshift = config.dict_timeshifts[product]
+        if timeshift is not None:
             pass
+        if product == "ASCAT 12.5 TS":
+            if filter_prod:
+                # Filter for unfrozen data
+                data = data.loc[data["ssf"] == 1]
+                # Filter for valid values
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
+        elif product == "CCI Active":
+            if filter_prod:
+                # Filter for valid values
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
+        elif product == "CCI Passive":
+            if filter_prod:
+                # Filter for valid values
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        elif product == "CCI Combined":
+            # For now, no filters for CCI
+            if filter_prod:
+                # Filter for valid values
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
         elif product == "GLDAS":
-            data = ts
             # No filters needed for GLDAS
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 100)]
+            if filter_prod:
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
         elif product == "SMAP L3":
-            data = ts
             # For now, no filters for SMAP L3
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 1)]
+            if sm_only:
+                data = data[sm_field]
+                if filter_prod:
+                    data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
         elif product == "SMAP L4":
-            data = ts
             # No filters needed for SMAP L4
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 1)]
-        # if product == "SMOS-BEC":
-        #     pass
+            if sm_only:
+                data = data[sm_field]
+            if filter_prod:
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
         elif product == "SMOS-IC":
             # Force Timestamp: 6AM CET, 5AM UTC
-            # data = ts.shift(5, freq='H')
-            data = ts
+            data = ts.shift(5, freq='H')
             # Quality_Flag field is already filtered to 0, 1 by reader
             # For now, no filters for SMOS-IC
             # See "Quality_Flag" field
-            sm = data[config.dict_product_fields[product]["sm_field"]]
-            sm = sm[(sm >= 0) & (sm < 1)]
+            if filter_prod:
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
     else:
-        sm = get_csv_series(product, station)
-    if anomaly:
-        sm = calc_anomaly(sm)
-    return sm
+        data = get_csv_series(product, station, filter_prod=filter_prod, sm_only=sm_only)
+    if sm_only:
+        data = data[sm_field]
+        if anomaly:
+            data = calc_anomaly(data)
+    return data
 
 
 def get_metrics(data, xcol=None, ycol=None, anomaly=False):
@@ -394,10 +400,10 @@ def get_nc_summary(file, lon_field=None, lat_field=None, sm_field=None, time_fie
 
 
 # given a product with a suffle reader and a dictionary of locations, write TS to csv files
-def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anomaly=False):
+def write_grid_shuffle_ts(product, output_dir, locations, filter=True, anomaly=False, loc_only_filename=False):
     product_str = product.replace(' ', '-')
     reader = get_product_reader(product, config.dict_product_inputs[product])
-    if filter_prod:
+    if filter:
         filter_str = "filtered"
     else:
         filter_str = "unfiltered"
@@ -412,11 +418,13 @@ def write_grid_shuffle_ts(product, output_dir, locations, filter_prod=True, anom
         lat_str = str(lat).replace('.', '-')
         lon = coordinate['longitude']
         lon_str = str(lon).replace('.', '-')
-        output_filename = "{}_{}_{}_{}_{}_{}.csv".format(product_str, location, lat_str, lon_str, filter_str,
-                                                         anomaly_str)
-        data = get_product_data(lon=lon, lat=lat, product=product, reader=reader, filter_prod=filter_prod,
+        if loc_only_filename:
+            output_filename = "{}.csv".format(location)
+        else:
+            output_filename = "{}_{}_{}_{}_{}_{}.csv".format(product_str, location, lat_str, lon_str, filter_str,
+                                                             anomaly_str)
+        data = get_product_data(lon=lon, lat=lat, product=product, reader=reader, filter=filter,
                                 anomaly=anomaly)
-        print("data.shape:", data.shape)
         output_file = os.path.join(output_dir, output_filename)
         data.to_csv(output_file, sep=',', encoding='latin-1')
         del data
@@ -439,32 +447,34 @@ def get_station_ts_filename(station_object=None, station_name=None, network_name
 
 
 # for text-driven datasets, retrieve time series
-def get_csv_series(product, station):
+def get_csv_series(product, station, filter_prod=True, sm_only=True):
+    sm_field = config.dict_product_fields[product]["sm_field"]
     ts_dir = config.dict_product_inputs[product]["ts_dir"]
     filename = get_station_ts_filename(station)
     file = os.path.join(ts_dir, filename)
-    df = pandas.read_csv(file)
-    df = df.set_index(pandas.DatetimeIndex(df['timestamp']))
+    data = pandas.read_csv(file)
+    data = data.set_index(pandas.DatetimeIndex(data['timestamp']))
+    print(type(data))
+    print(data)
     if product == "Sentinel-1":
         # product is already filtered by sentinel reader
-        sm = df['sm']
-        sm = sm[(sm >= 0) & (sm < 100)]
-        return sm
+        if filter_prod:
+            data = data[(data['sm'] >= 0) & (data['sm'] < 100)]
+        if sm_only:
+            data.rename("ssm")
     if product == "SMOS-BEC":
-        sm_key = config.dict_product_fields[product]['sm_field']
-        columns = df.columns
-        print(df.shape)
-        if 'quality_flag' in columns:
-            # filter product based on quality flag
+        if filter_prod:
+            # Filter product based on quality flag
             # 0: Good quality data;
             # 1: L1 brightness temperature corrected by sea-land contamination;
             # 2: L3 soil moisture with no data;
             # 4: L4 soil moisture without physical meaning";
-            df = df[(df['quality_flag'] == 0) | (df['quality_flag'] == 1)]
-        sm = df[sm_key]
-        sm.rename('sm', inplace=True)
-        sm = sm[(sm >= 0) & (sm < 1)]
-        return sm
+            data = data[(data['quality_flag'] == 0) | (data['quality_flag'] == 1)]
+            # Filter product based on valid values
+            data = data[(data >= 0) & (data < 1)]
+        if sm_only:
+            data = data[sm_field]
+    return data
 
 
 def get_img_reader(product, file):
