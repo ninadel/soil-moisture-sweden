@@ -127,7 +127,7 @@ def get_product_reader(product, product_metadata):
         reader = SMAPTs(ts_path=ts_dir)
     elif product == "SMOS-IC":
         ts_dir = product_metadata["ts_dir"]
-        reader = SMOSTs(ts_path=ts_dir, read_flags=None)
+        reader = SMOSTs(ts_path=ts_dir)
     else:
         reader = None
     return reader
@@ -164,9 +164,6 @@ def get_product_data(lon, lat, product, reader, anomaly=False, station=None, fil
             data = ts.data
         else:
             data = ts
-        timeshift = config.dict_timeshifts[product]
-        if timeshift is not None:
-            pass
         if product == "ASCAT 12.5 TS":
             if filter_prod:
                 # Filter for unfrozen data
@@ -210,12 +207,15 @@ def get_product_data(lon, lat, product, reader, anomaly=False, station=None, fil
             # See "Quality_Flag" field
             if filter_prod:
                 data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        if sm_only:
+            data = data[sm_field]
     else:
         data = get_csv_series(product, station, filter_prod=filter_prod, sm_only=sm_only)
-    if sm_only:
-        data = data[sm_field]
-        if anomaly:
-            data = calc_anomaly(data)
+    if sm_only and anomaly:
+        data = calc_anomaly(data)
+    elif (not sm_only) and anomaly:
+        warnings.warn(
+            "could not calculate anomaly on a pandas dataframe. must be a pandas series. anomaly not calculated.")
     return data
 
 
@@ -281,7 +281,7 @@ def find_nearest(array, value):
     return idx, array[idx]
 
 
-def get_nc_series(input_root, location, parameters, date_search_str, datetime_format, time_dim=True, lon_field="lon",
+def get_nc_series(input_root, location, parameters, date_search_str, datetime_format=None, time_dim=True, lon_field="lon",
                   lat_field="lat"):
     """""
     Parameters
@@ -453,15 +453,10 @@ def get_csv_series(product, station, filter_prod=True, sm_only=True):
     filename = get_station_ts_filename(station)
     file = os.path.join(ts_dir, filename)
     data = pandas.read_csv(file)
-    data = data.set_index(pandas.DatetimeIndex(data['timestamp']))
-    print(type(data))
-    print(data)
     if product == "Sentinel-1":
         # product is already filtered by sentinel reader
         if filter_prod:
-            data = data[(data['sm'] >= 0) & (data['sm'] < 100)]
-        if sm_only:
-            data.rename("ssm")
+            data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
     if product == "SMOS-BEC":
         if filter_prod:
             # Filter product based on quality flag
@@ -471,9 +466,16 @@ def get_csv_series(product, station, filter_prod=True, sm_only=True):
             # 4: L4 soil moisture without physical meaning";
             data = data[(data['quality_flag'] == 0) | (data['quality_flag'] == 1)]
             # Filter product based on valid values
-            data = data[(data >= 0) & (data < 1)]
-        if sm_only:
+            try:
+                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+            except:
+                data = data[(data['sm'] >= 0) & (data['sm'] < 1)]
+    data = data.set_index(pandas.DatetimeIndex(data['timestamp']))
+    if sm_only:
+        try:
             data = data[sm_field]
+        except:
+            data = data['sm']
     return data
 
 
@@ -515,6 +517,7 @@ def get_triplet_list(triplets):
 
 def get_timeshifted_data(product, product_data):
     hours = product_data.index.hour
+    # if all timestamps are midnight (0)
     if not hours.any():
         value, interval = config.dict_timeshifts[product]
         product_data = product_data.shift(value, freq=interval)
@@ -554,7 +557,7 @@ def get_filename_timestamp(filename, date_search_str, date_only=True, return_int
     return timestamp
 
 
-def check_extent(lon_loc, lat_loc, file, lon_field, lat_field):
+def check_extent(lon_loc, lat_loc, file, lon_field="lon", lat_field="lat"):
     ll, ur = get_geo_extent(file, lon_field, lat_field)
     print(any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]]))
     return not any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]])

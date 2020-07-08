@@ -7,7 +7,7 @@ import sm_tools as tools
 write_ts_to_file = True
 product = "Sentinel-1"
 input_dir = config.dict_product_inputs[product]['raw_dir']
-output_dir = config.dict_product_inputs[product]['ts_dir']
+output_dir = r"../test_output_data/sentinel-rewrite"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 file_list = os.listdir(input_dir)
@@ -15,7 +15,7 @@ file_list.sort()
 export_timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
 sm_key = config.dict_product_fields[product]['sm_field']
-hours_shift = config.dict_product_inputs[product]['hours_shift']
+# hours_shift = config.dict_timeshifts[product]['hours_shift']
 
 ref_locations = {}
 icos_stations = config.dict_icos
@@ -34,7 +34,7 @@ for location, metadata in ref_locations.items():
         filename = "quarterdeg_{}.csv".format(location)
     station_ts[location] = {}
     station_ts[location]["filename"] = filename
-    station_ts[location]["data"] = pandas.DataFrame(columns=['timestamp', 'sm'])
+    station_ts[location]["data"] = pandas.DataFrame(columns=['timestamp', 'ssm'])
     locations[location] = {}
     locations[location]['lon'] = metadata['longitude']
     locations[location]['lat'] = metadata['latitude']
@@ -48,18 +48,23 @@ for file in file_list:
     for key, value in data_dict.items():
         if key == "metadata":
             metadata = value
-            sm_fill_value = metadata[sm_key]['_FillValue']
+            # sm_fill_value = metadata[sm_key]['_FillValue']
         else:
             location = key
             data = value['data']
             sm_value = data[sm_key]
-            # only add valid values (invalid values were set to fill value by image reader class)
-            if sm_value != sm_fill_value:
-                loc_df = station_ts[location]['data']
-                # if timestamp defaults to midnight, shift time to UTC of local overpass time
-                obs_timestamp = timestamp + datetime.timedelta(hours=hours_shift)
-                obs_df = pandas.DataFrame([[obs_timestamp, sm_value]], columns=['timestamp', 'sm'])
-                station_ts[location]['data'] = pandas.concat([loc_df, obs_df])
+            # # only add valid values (invalid values were set to fill value by image reader class)
+            # if sm_value != sm_fill_value:
+            loc_df = station_ts[location]['data']
+            # if timestamp defaults to midnight, shift time to UTC of local overpass time
+            # obs_timestamp = timestamp + datetime.timedelta(hours=hours_shift)
+            obs_timestamp = timestamp
+            # obs_df = pandas.DataFrame([[obs_timestamp, sm_value]], columns=['timestamp', 'sm'])
+            # station_ts[location]['data'] = pandas.concat([loc_df, obs_df])
+            # cell_locations.append({'loc': int(ds['location_id'].data[i]), 'lon': ds['lon'].data[i], 'lat': ds['lat'].data[i]}, ignore_index=True)
+            # station_ts[location]["data"] = pandas.DataFrame(columns=['timestamp', 'sm'])
+            station_ts[location]['data'] = station_ts[location]['data'].append(
+                {'timestamp': obs_timestamp, 'ssm': sm_value}, ignore_index=True)
 
 for location, metadata in station_ts.items():
     filename = metadata['filename']
