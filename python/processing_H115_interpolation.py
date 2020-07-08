@@ -3,6 +3,7 @@ Author: Nina del Rosario
 Date: 6/28/2020
 Script for interpolating H115 data to 0.25 and exporting TS
 """
+import matplotlib.pyplot as plt
 import numpy
 import pandas
 import os
@@ -56,12 +57,18 @@ for loc, metadata in config.dict_swe_gldas_points.items():
 file_list = [os.path.join(input_dir, date_file) for date_file in os.listdir(input_dir)]
 interp_point_dict = get_idx_dict(config.dict_swe_gldas_points, config.interp_lat, config.interp_lon)
 
-for date_file in file_list:
-    date_str = "{}/{}/{} 08:30".format(date_file[-9:-7], date_file[-6:-4], date_file[-14:-10])
-    print(date_str)
-    xi, yi, zi = get_interp_arrays(date_file, interp_lat=config.interp_lat, interp_lon=config.interp_lon)
-    date_results = get_interp_values(zi, interp_point_dict)
-    for loc, metadata in date_results.items():
-        out_file = os.path.join(output_dir, "{}.csv".format(loc))
-        with open(out_file, "a") as file:
-            file.write("{},{}".format(date_str, metadata["value"]) + "\n")
+file = file_list[0]
+xi, yi, zi = get_interp_arrays(file, interp_lat=config.interp_lat, interp_lon=config.interp_lon)
+plt.pcolormesh(xi,yi,zi)
+plt.savefig(os.path.join(output_dir, "test_ascat_scipyinterpgriddata.png"), dpi=150)
+plt.show()
+
+# for date_file in file_list:
+#     date_str = "{}/{}/{} 08:30".format(date_file[-9:-7], date_file[-6:-4], date_file[-14:-10])
+#     print(date_str)
+#     xi, yi, zi = get_interp_arrays(date_file, interp_lat=config.interp_lat, interp_lon=config.interp_lon)
+#     date_results = get_interp_values(zi, interp_point_dict)
+#     for loc, metadata in date_results.items():
+#         out_file = os.path.join(output_dir, "{}.csv".format(loc))
+#         with open(out_file, "a") as file:
+#             file.write("{},{}".format(date_str, metadata["value"]) + "\n")
