@@ -281,8 +281,8 @@ def find_nearest(array, value):
     return idx, array[idx]
 
 
-def get_nc_series(input_root, location, parameters, date_search_str, datetime_format=None, time_dim=True, lon_field="lon",
-                  lat_field="lat"):
+def get_nc_series(input_root, location, parameters, date_search_str, datetime_format=None, time_dim=True,
+                  lon_field="lon", lat_field="lat", date_only=True):
     """""
     Parameters
     input_root: directory of nc files
@@ -302,36 +302,31 @@ def get_nc_series(input_root, location, parameters, date_search_str, datetime_fo
     parameters: parameters to return
     date_search_str: regex expression for finding timestamp e.g. r"[0-9]{8}T[0-9]{4}", must be unique enough to occur 
         only once in filename
-    datetime_format: tuple of tuples. for the above date_search_str, the locations of datetime elements in the string
-        (year, month, day) or (year, month, day, hour, minute) 
-        example: in the above string, datetime_format would be ((0,4), (4, 6), (6, 8), (9, 11), (11, 13))
-        the length of the tuple will determine whether hours/minutes will be added to timestamp, otherwise it will
-        default to midnight
     time_dim: boolean, whether the data is organized with 3 dimensions (time, lat, lon) (default: True)
     lon_field: the name of the longitude field in the dataset (default: 'lon')
     lat_field: the name of the latitude field in the dataset (default: 'lat')
     """""
     warnings.filterwarnings("ignore")
     # function to get ts row for a single location
-    def get_loc_df(ln_array, lt_array, ln, lt):
+    def get_loc_data(ln_array, lt_array, ln, lt):
         nr_lon_idx = find_nearest(ln_array, ln)[0]
         nr_lat_idx = find_nearest(lt_array, lt)[0]
-        vs = [timestamp]
+        vs = {}
+        vs['timestamp'] = timestamp
         for p in parameters:
             if time_dim:
                 v = ds[p][:][:, nr_lat_idx, nr_lon_idx]
             else:
                 v = ds[p][nr_lat_idx, nr_lon_idx]
             v = numpy.asscalar(numpy.asarray(v))
-            vs.append(v)
-        l_df = pandas.DataFrame([vs], columns=columns)
-        return l_df
+            vs[p] = v
+        return vs
     # turn parameters into a column list
     if type(parameters) != list:
         parameters = [parameters]
     columns = ["timestamp"]
-    for parameter in parameters:
-        columns.append(parameter)
+    for p in parameters:
+        columns.append(p)
     # check location type and create output shells
     loc_ts_dict = {}
     if type(location) == dict:
@@ -344,24 +339,25 @@ def get_nc_series(input_root, location, parameters, date_search_str, datetime_fo
         return None
     # start processing files
     files = os.listdir(input_root)
+    for loc, metadata in loc_meta_dict.items():
+        loc_ts_dict[loc] = pandas.DataFrame(columns=columns)
     for filename in files:
         file = os.path.join(input_root, filename)
         ds = netCDF4.Dataset(file, mode="r")
-        timestamp = get_filename_timestamp(filename=filename, date_search_str=date_search_str,
-                                           date_only=False)
+        timestamp = get_filename_timestamp(filename=filename, date_search_str=date_search_str, date_only=date_only)
         lon_array = ds[lon_field][:]
         lat_array = ds[lat_field][:]
         # for each file, process all locations and store results in dictionary
         for loc, metadata in loc_meta_dict.items():
-            loc_ts_dict[loc] = pandas.DataFrame(columns=columns)
+            # loc_ts_dict[loc] = pandas.DataFrame(columns=columns)
             lon_loc = metadata['longitude']
             lat_loc = metadata['latitude']
             if check_extent(lon_loc, lat_loc, file):
-                loc_row = get_loc_df(lon_array, lat_array, lon_loc, lat_loc)
-                loc_ts_dict[loc] = pandas.concat([loc_ts_dict[loc], loc_row])
+                loc_data = get_loc_data(lon_array, lat_array, lon_loc, lat_loc)
+                loc_ts_dict[loc] = loc_ts_dict[loc].append(loc_data, ignore_index=True)
     for loc, ts in loc_ts_dict.items():
-        ts.set_index("timestamp", inplace=True)
-    if len(loc_ts_dict.keys) == 1:
+        ts = ts.set_index("timestamp")
+    if len(loc_ts_dict.keys()) == 1:
         return ts
     else:
         return loc_ts_dict
@@ -515,6 +511,7 @@ def get_triplet_list(triplets):
     return triplet_list
 
 
+# function for changing time series by shifting existing time by a specified value
 def get_timeshifted_data(product, product_data):
     hours = product_data.index.hour
     # if all timestamps are midnight (0)
@@ -559,7 +556,6 @@ def get_filename_timestamp(filename, date_search_str, date_only=True, return_int
 
 def check_extent(lon_loc, lat_loc, file, lon_field="lon", lat_field="lat"):
     ll, ur = get_geo_extent(file, lon_field, lat_field)
-    print(any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]]))
     return not any([lat_loc < ll[0], lat_loc > ur[0], lon_loc < ll[1], lon_loc > ur[1]])
 
 
