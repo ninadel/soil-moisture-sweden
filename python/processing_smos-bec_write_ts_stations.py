@@ -11,7 +11,7 @@ write_ts_to_file = True
 product = "SMOS-BEC"
 # input_dir = config.dict_product_inputs[product]['raw_dir']
 input_dir = r"D:\sm_backup\smos-bec-reprocessed-01km-euro\ASC"
-output_dir = config.dict_product_inputs[product]['ts_dir']
+output_dir = "../test_output_data/smos_bec_rewrite"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 file_list = os.listdir(input_dir)
@@ -53,8 +53,14 @@ for location, metadata in ref_locations.items():
     print(station_ts[location]["filename"])
     # def get_nc_series(input_root, parameters, date_search_str, datetime_format, lon_loc=None, lat_loc=None, loc_dict=None,
     #                   time_dim=True, lon_field="lon", lat_field="lat"):
-    station_ts[location]["data"] = tools.get_nc_series(
-        input_root=input_dir, location=(lat, lon), parameters=[sm_key, qf_key], date_search_str=r"[0-9]{8}T[0-9]{4}",
-        datetime_format=((0, 4), (4, 6), (6, 8), (9, 11), (11, 13)))
+    # station_ts[location]["data"] = tools.get_nc_series(
+    #     input_root=input_dir, location=(lat, lon), parameters=[sm_key, qf_key], date_search_str=r"[0-9]{8}T[0-9]{4}",
+    #     datetime_format=((0, 4), (4, 6), (6, 8), (9, 11), (11, 13)))
+    data = tools.get_nc_series(input_root=input_dir, location=(lat, lon), parameters=[sm_key, qf_key],
+                               date_search_str=r"[0-9]{8}T", date_only=True)
+    # Force shift time to 5 AM (local overpass time in UTC)
+    # product_data = product_data.shift(value, freq=interval)
+    data = data.shift(5, "H")
+    station_ts[location]["data"] = data
     print(station_ts[location]["data"].head())
     station_ts[location]["data"].to_csv(os.path.join(output_dir, station_ts[location]["filename"]), sep=",")
