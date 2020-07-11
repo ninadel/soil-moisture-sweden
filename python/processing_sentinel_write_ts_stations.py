@@ -39,11 +39,12 @@ for location, metadata in ref_locations.items():
     locations[location]['lon'] = metadata['longitude']
     locations[location]['lat'] = metadata['latitude']
 
+
 # extract data for locations from images
 for file in file_list:
+    print(file)
     image = tools.get_img_reader(product, os.path.join(input_dir, file))
     timestamp = image.timestamp
-    print(timestamp)
     data_dict = image.get_values(locations)
     for key, value in data_dict.items():
         if key == "metadata":
@@ -58,7 +59,7 @@ for file in file_list:
             loc_df = station_ts[location]['data']
             # if timestamp defaults to midnight, shift time to UTC of local overpass time
             # obs_timestamp = timestamp + datetime.timedelta(hours=hours_shift)
-            obs_timestamp = timestamp
+            obs_timestamp = timestamp + datetime.timedelta(hours=18)
             # obs_df = pandas.DataFrame([[obs_timestamp, sm_value]], columns=['timestamp', 'sm'])
             # station_ts[location]['data'] = pandas.concat([loc_df, obs_df])
             # cell_locations.append({'loc': int(ds['location_id'].data[i]), 'lon': ds['lon'].data[i], 'lat': ds['lat'].data[i]}, ignore_index=True)
@@ -70,6 +71,7 @@ for location, metadata in station_ts.items():
     filename = metadata['filename']
     df = metadata['data']
     df.set_index('timestamp', drop=True)
+    # df = df.shift(18, freq='H')
     tools.write_log(os.path.join(output_dir, "results_log_{}.txt".format(export_timestamp)),
                     "{}: {} rows".format(filename, df.shape[0]))
     if write_ts_to_file:
