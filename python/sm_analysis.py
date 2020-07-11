@@ -11,17 +11,17 @@ import sm_evaluation as evaluation
 
 # Dictionary which turns on/off product analyses
 evaluation_dict = {
-    "ASCAT 12.5 TS": True,
-    "CCI Active": True,
-    "CCI Passive": True,
-    "CCI Combined": True,
+    "ASCAT 12.5 TS": False,
+    "CCI Active": False,
+    "CCI Passive": False,
+    "CCI Combined": False,
     "ERA5": False, #not supported yet
-    "GLDAS": True,
-    "Sentinel-1": True,
-    "SMAP L3": True,
+    "GLDAS": False,
+    "Sentinel-1": False,
+    "SMAP L3": False,
     "SMAP L3 E": False, #not supported yet
-    "SMAP L4": True,
-    "SMOS-IC": True,
+    "SMAP L4": False,
+    "SMOS-IC": False,
     "SMOS-BEC": True
 }
 
