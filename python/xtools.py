@@ -145,3 +145,7 @@ def write_ts_quarter_deg(dr, output_dir, overwrite=False):
                 file.write("time, sm" + "\n")
             with open(os.path.join(output_dir, "logfile.txt"), "a") as file:
                 file.write("{} {} empty".format(datetime.now(), location) + "\n")
+
+
+def get_xr_series(xr_dataset, coordinate_dim=False):
+    pass
