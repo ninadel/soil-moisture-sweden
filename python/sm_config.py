@@ -109,7 +109,7 @@ dict_timeshifts = {
     # SMAP L4 Timestamps already present in ts
     "SMAP L4": None,
     # Sentinel-1 timestamps present in data
-    "Sentinel-1": None,
+    "Sentinel-1": (18, 'H'),
     "SMOS-BEC": None,
     "SMOS-IC": (5, 'H')
 }
