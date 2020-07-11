@@ -291,6 +291,9 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
             ref_data.rename('ref_sm', inplace=True)
             product_data = tools.get_product_data(lon=station.longitude, lat=station.latitude, product=product,
                                                   reader=product_reader, anomaly=anomaly, station=station)
+            print("product_data")
+            print(product_data)
+            print(type(product_data))
             product_data.rename('product_sm', inplace=True)
             tools.write_log(log_file, 'product_data.shape: {}'.format(product_data.shape))
             product_data = product_data.loc[startdate:enddate]
