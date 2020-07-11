@@ -35,9 +35,10 @@ class SentinelImg(ImageBase):
         if type(parameter) != list:
             parameter = [parameter]
         self.parameters = parameter
-        timestamp_str = re.findall(r"c_gls_SSM1km_[0-9]{8}", self.filename)[-1][-8:]
-        self.timestamp = datetime.datetime(int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]))
-
+        timestamp_str = re.findall(r"c_gls_SSM1km_[0-9]{12}", self.filename)[-1][-12:]
+        self.timestamp = datetime.datetime(
+            int(timestamp_str[0:4]), int(timestamp_str[4:6]), int(timestamp_str[6:8]), int(timestamp_str[8:10]),
+            int(timestamp_str[10:12]))
     def read_img(self):
         return_data = {}
         return_meta = {}
