@@ -19,9 +19,9 @@ startdate = datetime(2015, 1, 1)
 enddate = datetime(2019, 1, 1)
 sep = ","
 
-def daterange(start_date, end_date):
-    for n in range(int((end_date - start_date).days)):
-        yield start_date + timedelta(n)
+# def daterange(start_date, end_date):
+#     for n in range(int((end_date - start_date).days)):
+#         yield start_date + timedelta(n)
 
 locations = pandas.read_csv(dict_file)
 locations.set_index("loc", inplace=True)
