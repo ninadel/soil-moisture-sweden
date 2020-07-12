@@ -585,3 +585,22 @@ def get_nc_values(file, location, parameters, time_dim=True, lon_field="lon", la
             v = numpy.asscalar(numpy.asarray(v))
             loc_values_dict[loc][p] = v
     return loc_values_dict
+
+
+def get_nearest_half_hour(hour, minute):
+    hour_fraction = minute/60
+    if hour_fraction >= 0 and hour_fraction < 15:
+        rounded_minute = 0
+        rounded_hour = hour
+    elif hour_fraction >=15 and hour_fraction < 45:
+        rounded_minute = 30
+        rounded_hour = hour
+    else:
+        if hour < 23:
+            rounded_minute = 0
+            rounded_hour = hour + 1
+        # for simplicity, without knowing dates, round down to 23:30 when between 23:00 and 23:59
+        else:
+            rounded_minute = 30
+            rounded_hour = hour
+    return rounded_hour, rounded_minute
