@@ -11,10 +11,10 @@ import sm_tools as tools
 from datetime import datetime
 
 input_dir = r"..\sm_sample_files\ascat-h115-ts-2019"
-output_dir = r"../test_output_data/H115_points_csv"
-point_subdir = "point_data"
+output_dir = r"../test_output_data/H115_points_csv/point_data"
+# point_subdir = "point_data"
 if not os.path.exists(output_dir):
-    os.mkdir(output_dir)
+    os.makedirs(output_dir)
 
 startdate = datetime(2015, 1, 1)
 enddate = datetime(2019, 1, 1)
@@ -50,7 +50,7 @@ for cell in config.swe_shuffle_cells:
         loc = int(ds['location_id'].data[i])
         loc_lat = ds['lat'].data[i]
         loc_lon = ds['lon'].data[i]
-        if (loc_lat > min_lat - 1) and (loc_lat < max_lat + 1) and (loc_lon > min_lon -1) and (loc_lon < max_lon + 1):
+        if (loc_lat > min_lat - 2) and (loc_lat < max_lat + 2) and (loc_lon > min_lon - 2) and (loc_lon < max_lon + 2):
             locations = locations.append({"lon": loc_lon, "lat": loc_lat, "loc": str(loc)}, ignore_index=True)
 
 print(locations)
@@ -61,4 +61,4 @@ for index, row in locations.iterrows():
     data = ts.data[startdate::]
     data = data[['sm', 'ssf', 'sat_id']]
     filename = "{}.csv".format(index)
-    data.to_csv(os.path.join(output_dir, point_subdir, filename))
+    data.to_csv(os.path.join(output_dir, filename))
