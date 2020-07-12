@@ -20,16 +20,6 @@ if not os.path.exists(output_dir):
 startdate = datetime(2015, 1, 1)
 enddate = datetime(2019, 1, 1)
 
-def get_nearest_half_hour(minute):
-    hour_fraction = minute/60
-    if hour_fraction >= 0 and hour_fraction < 15:
-        rounded_minute = 0
-    elif hour_fraction >=15 and hour_fraction < 45:
-        rounded_minute = 30
-    else:
-        rounded_minute = 60
-    return rounded_minute
-
 product = 'ASCAT 12.5 TS'
 reader = tools.get_product_reader(product, config.dict_product_inputs[product])
 
@@ -77,7 +67,13 @@ for index, row in locations.iterrows():
     data = ts.data[startdate::]
     data_index_list = list(data.index)
     for datestamp in data_index_list:
-        date_str = (str(datestamp))[0:16].replace(" ", "").replace("-","").replace(":","")
+        year = str(datestamp)[0:4]
+        month = str(datestamp)[5:7]
+        day = str(datestamp)[8:10]
+        hour = str(datestamp)[11:13]
+        minute = str(datestamp)[14:16]
+        rounded_hour, rounded_minute = tools.get_nearest_half_hour(int(hour), int(minute))
+        date_str = year+month+day+"{:02d}".format(rounded_hour)+"{:02d}".format(rounded_minute)
         if date_str not in date_list:
             date_list.append(date_str)
             with open(date_file, "a") as file:
