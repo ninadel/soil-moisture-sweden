@@ -33,11 +33,7 @@ for index, row in locations.iterrows():
     loc_dict[str(index)]["longitude"] = row["lon"]
     loc_dict[str(index)]["latitude"] = row["lat"]
 
-for date in tools.get_date_range(startdate, enddate):
-    date_str = date.strftime("%Y-%m-%d")
-    filename = "{}.csv".format(date_str)
-    file = os.path.join(output_dir, filename)
-
+date_dict = {}
 points = len(os.listdir(input_dir))
 point_idx = 0
 for point_file in os.listdir(input_dir):
@@ -48,26 +44,19 @@ for point_file in os.listdir(input_dir):
     loc_lat = loc_dict[location_id]["latitude"]
     data = pandas.read_csv(os.path.join(input_dir, point_file))
     data.rename(columns={'Unnamed: 0': 'datestamp'}, inplace=True)
-    print(data.head())
-    print(data.columns)
-    # data.set_index('datestamp', inplace=True)
-    # last_date = "2000-01-01"
-    data_columns = ["datestamp"] + data.columns
+    date_df_columns = ['location_id', 'lon', 'lat']
+    for column in data.columns:
+        date_df_columns.append(column)
     for index, row in data.iterrows():
-        print(index)
-        short_date = index[0:10]
-        # hour = int(index[11:13])
-        # if short_date != last_date and hour < 12:
-        #     row = (str(loc_lon), str(loc_lat), str(row['sm']), str(row['ssf']))
-        #     row_str = sep.join(row)
-        filename = "{}.csv".format(short_date)
-        out_file = os.path.join(output_dir, filename)
-        if os.path.exists(out_file):
-            with open(os.path.join(out_file), "a") as file:
-                file.write(sep.join(row) + "\n")
-        else:
-            with open(os.path.join(output_dir, filename), "a") as file:
-                file.write(sep.join(data.columns) + "\n")
-                file.write(sep.join(row) + "\n")
-            last_date = short_date
-    break
+        short_date = row['datestamp'][0:10]
+        if short_date not in date_dict.keys():
+            date_dict[short_date] = pandas.DataFrame(columns=date_df_columns)
+        row_dict = {'location_id': location_id, 'lon': loc_lon, 'lat': loc_lat}
+        for column in data.columns:
+            row_dict[column] = row[column]
+        date_dict[short_date] = date_dict[short_date].append(row_dict, ignore_index=True)
+
+for short_date in date_dict.keys():
+    date_file = os.path.join(output_dir, "{}.csv".format(short_date))
+    date_dict[short_date].to_csv(date_file, index=False)
+
