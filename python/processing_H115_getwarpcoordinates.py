@@ -4,7 +4,7 @@ import sm_config as config
 import sm_tools as tools
 import os
 
-buffer = 1
+buffer = 2
 output_dir = "../test_output_data/warp_coordinates_swe"
 min_lon = 2
 max_lon = 90
