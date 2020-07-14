@@ -604,3 +604,4 @@ def get_nearest_half_hour(hour, minute):
             rounded_minute = 30
             rounded_hour = hour
     return rounded_hour, rounded_minute
+
