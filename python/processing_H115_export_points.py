@@ -10,7 +10,7 @@ import sm_config as config
 import sm_tools as tools
 from datetime import datetime
 
-export_dict = True
+export_dict = False
 export_points = True
 
 input_dir = r"..\sm_sample_files\ascat-h115-ts-2019"
