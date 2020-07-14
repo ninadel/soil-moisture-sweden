@@ -6,6 +6,7 @@ import os
 
 buffer = 2
 output_dir = "../test_output_data/warp_coordinates_swe"
+# coordinate limits different from dictionary - need a wider longitude range to create a rectangular grid from a curvilinear grid
 min_lon = 2
 max_lon = 90
 ref_lon = 6
