@@ -5,7 +5,7 @@ Functions for analyzing soil moisture datasets
 """
 import sm_config as config
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import netCDF4
 import numpy
@@ -604,4 +604,11 @@ def get_nearest_half_hour(hour, minute):
             rounded_minute = 30
             rounded_hour = hour
     return rounded_hour, rounded_minute
+
+
+def get_date_range(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)
+
+
 
