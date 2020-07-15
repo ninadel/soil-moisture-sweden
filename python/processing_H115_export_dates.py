@@ -12,7 +12,7 @@ import sm_tools as tools
 write_data = True
 input_dir = r"..\input_data\ascat_h115_points_csv\point_data"
 dict_file = r"..\input_data\ascat_h115_points_csv\H115_SWE_locations.csv"
-output_dir = r"..\input_data\ascat_h115_points_csv\\date_data_unfiltered"
+output_dir = r"..\input_data\ascat_h115_points_csv\\date_data"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
@@ -44,19 +44,21 @@ for point_file in os.listdir(input_dir):
     loc_lat = loc_dict[location_id]["latitude"]
     data = pandas.read_csv(os.path.join(input_dir, point_file))
     data.rename(columns={'Unnamed: 0': 'datestamp'}, inplace=True)
-    date_df_columns = ['location_id', 'lon', 'lat']
+    date_column = ['location_id', 'lon', 'lat']
     for column in data.columns:
-        date_df_columns.append(column)
+        date_column.append(column)
+    date_column_str = sep.join(date_column)
     for index, row in data.iterrows():
         short_date = row['datestamp'][0:10]
-        if short_date not in date_dict.keys():
-            date_dict[short_date] = pandas.DataFrame(columns=date_df_columns)
-        row_dict = {'location_id': location_id, 'lon': loc_lon, 'lat': loc_lat}
+        date_file = os.path.join(output_dir, "{}.csv".format(short_date))
+        new_row = [str(location_id), str(loc_lon), str(loc_lat)]
         for column in data.columns:
-            row_dict[column] = row[column]
-        date_dict[short_date] = date_dict[short_date].append(row_dict, ignore_index=True)
-
-for short_date in date_dict.keys():
-    date_file = os.path.join(output_dir, "{}.csv".format(short_date))
-    date_dict[short_date].to_csv(date_file, index=False)
-
+            new_row.append(str(row[column]))
+        new_row_str = sep.join(new_row)
+        if not os.path.exists(date_file):
+            with open(date_file, "w") as file:
+                file.write(date_column_str + "\n")
+                file.write(new_row_str + "\n")
+        else:
+            with open(date_file, "a") as file:
+                file.write(new_row_str + "\n")
