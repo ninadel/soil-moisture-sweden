@@ -10,9 +10,9 @@ from datetime import datetime
 import sm_tools as tools
 
 write_data = True
-input_dir = r"..\input_data\ascat_h115_points_csv\point_data"
-dict_file = r"..\input_data\ascat_h115_points_csv\H115_SWE_locations.csv"
-output_dir = r"..\input_data\ascat_h115_points_csv\\date_data"
+input_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\native_res_sweden\ascat-h115-ts_points_csv\point_data"
+dict_file = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\native_res_sweden\ascat-h115-ts_points_csv\H115_SWE_locations.csv"
+output_dir = r"D:\temp_h115_date_csv"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
