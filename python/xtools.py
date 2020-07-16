@@ -55,6 +55,7 @@ def preprocess_smap_L3E(in_ds):
     #     lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
     # add time dimension
     out_ds['time'] = datestamp
+    out_ds = out_ds.rename({'dimension182': 'latitude', 'dimension295': 'longitude'})
     lat_array = out_ds['latitude'][:, 0]
     lon_array = out_ds['longitude'][0, :]
     out_ds = out_ds.expand_dims('time').set_coords('time')
