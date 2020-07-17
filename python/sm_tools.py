@@ -26,7 +26,6 @@ try:
     from smos.smos_ic.interface import SMOSTs
     from pytesmo import metrics
     from pytesmo.time_series.anomaly import calc_anomaly
-    from sentinel import SentinelImg
 except:
     warnings.warn("could not import product packages")
 
@@ -444,11 +443,13 @@ def get_station_ts_filename(station_object=None, station_name=None, network_name
 
 # for text-driven datasets, retrieve time series
 def get_csv_series(product, station, filter_prod=True, sm_only=True):
+    print("get_csv_series")
     sm_field = config.dict_product_fields[product]["sm_field"]
     ts_dir = config.dict_product_inputs[product]["ts_dir"]
     filename = get_station_ts_filename(station)
     file = os.path.join(ts_dir, filename)
     data = pandas.read_csv(file)
+    print(data)
     if product == "Sentinel-1":
         # product is already filtered by sentinel reader
         if filter_prod:
@@ -473,16 +474,6 @@ def get_csv_series(product, station, filter_prod=True, sm_only=True):
         except:
             data = data['sm']
     return data
-
-
-def get_img_reader(product, file):
-    reader = None
-    if product == "Sentinel-1":
-        reader = SentinelImg(file)
-    # SMOS-BEC reader not currently working
-    # if product == "SMOS-BEC":
-    #     reader = SMOSBECImg(file, parameters=["SM", "quality_flag"])
-    return reader
 
 
 # filters dataframe by date, assuming index is a datetimeindex
