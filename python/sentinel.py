@@ -123,7 +123,10 @@ class SentinelImg(ImageBase):
             result_dict[location]['data'] = {}
             for parameter, parameter_data in data.items():
                 fill_value = metadata[parameter]['_FillValue']
-                parameter_value = int(parameter_data[:, lat_idx, lon_idx])
+                try:
+                    parameter_value = int(parameter_data[:, lat_idx, lon_idx])
+                except:
+                    parameter_value = fill_value
                 result_dict[location]['data'][parameter] = parameter_value
                 result_dict['metadata'][parameter] = metadata[parameter]
         return result_dict
