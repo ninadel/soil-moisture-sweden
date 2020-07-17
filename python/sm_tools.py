@@ -436,20 +436,21 @@ def get_station_ts_filename(station_object=None, station_name=None, network_name
         station = station_object.station
         #     product_str = product.replace(' ', '-')
         filename = "{}_{}.csv".format(network, station.replace(".", "-"))
+        return filename
     elif station_name is not None and network_name is not None:
         filename = "{}_{}.csv".format(network_name, station_name.replace(".", "-"))
-    return filename
+        return filename
 
 
 # for text-driven datasets, retrieve time series
 def get_csv_series(product, station, filter_prod=True, sm_only=True):
-    print("get_csv_series")
     sm_field = config.dict_product_fields[product]["sm_field"]
     ts_dir = config.dict_product_inputs[product]["ts_dir"]
+    print(ts_dir)
     filename = get_station_ts_filename(station)
+    print(filename)
     file = os.path.join(ts_dir, filename)
     data = pandas.read_csv(file)
-    print(data)
     if product == "Sentinel-1":
         # product is already filtered by sentinel reader
         if filter_prod:
