@@ -71,13 +71,13 @@ dict_product_inputs = {
     "Sentinel-1": {
         "raw_dir": r"..\input_data\cgls-biopar-ssm-01km_nordic",
         "ts_dir": r"..\input_data\csv_stations\sentinel_ts",
-        "csv_stations": r"..\input_data\csv_stations\sentinel_ts",
+        "csv_stations": r"..\input_data\csv_stations\Sentinel-1",
         "csv_quarters": None
     },
     "SMOS-BEC": {
         "raw_dir": r"..\input_data\smos-bec-reprocessed-01km-nordic\ASC",
         "ts_dir": r"..\input_data\csv_stations\smos-bec_ts",
-        "csv_stations": r"..\input_data\csv_stations\smos-bec_ts",
+        "csv_stations": r"..\input_data\csv_stations\SMOS-BEC",
         "csv_quarters": None
     },
     "SMOS-IC": {
