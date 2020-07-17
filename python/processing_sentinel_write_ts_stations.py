@@ -3,6 +3,8 @@ import os
 import pandas
 import sm_config as config
 import sm_tools as tools
+from sentinel import SentinelImg
+
 
 write_ts_to_file = True
 product = "Sentinel-1"
@@ -34,16 +36,17 @@ for location, metadata in ref_locations.items():
         filename = "quarterdeg_{}.csv".format(location)
     station_ts[location] = {}
     station_ts[location]["filename"] = filename
-    station_ts[location]["data"] = pandas.DataFrame(columns=['timestamp', 'ssm'])
+    station_ts[location]["data"] = None
     locations[location] = {}
     locations[location]['lon'] = metadata['longitude']
     locations[location]['lat'] = metadata['latitude']
 
 
 # extract data for locations from images
-for file in file_list:
-    print(file)
-    image = tools.get_img_reader(product, os.path.join(input_dir, file))
+for filename in file_list:
+    print(filename)
+    file = os.path.join(input_dir, filename)
+    image = SentinelImg(file, parameter=['ssm', 'ssm_noise'])
     timestamp = image.timestamp
     data_dict = image.get_values(locations)
     for key, value in data_dict.items():
@@ -53,7 +56,7 @@ for file in file_list:
         else:
             location = key
             data = value['data']
-            sm_value = data[sm_key]
+             # sm_value = data[sm_key]
             # # only add valid values (invalid values were set to fill value by image reader class)
             # if sm_value != sm_fill_value:
             loc_df = station_ts[location]['data']
@@ -64,8 +67,11 @@ for file in file_list:
             # station_ts[location]['data'] = pandas.concat([loc_df, obs_df])
             # cell_locations.append({'loc': int(ds['location_id'].data[i]), 'lon': ds['lon'].data[i], 'lat': ds['lat'].data[i]}, ignore_index=True)
             # station_ts[location]["data"] = pandas.DataFrame(columns=['timestamp', 'sm'])
-            station_ts[location]['data'] = station_ts[location]['data'].append(
-                {'timestamp': obs_timestamp, 'ssm': sm_value}, ignore_index=True)
+            if station_ts[location]['data'] is None:
+                columns = ['timestamp'] + list(data.keys())
+                station_ts[location]['data'] = pandas.DataFrame(columns=columns)
+            data['timestamp'] = obs_timestamp
+            station_ts[location]['data'] = station_ts[location]['data'].append(data, ignore_index=True)
 
 for location, metadata in station_ts.items():
     filename = metadata['filename']
