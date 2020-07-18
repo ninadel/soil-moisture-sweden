@@ -129,7 +129,7 @@ def get_mf_dataset(file_list, product):
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_sentinel, combine='by_coords')
         return ds
     if product == "SMAP L3":
-        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3E, concat_dim='time', combine='by_coords')
+        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3, combine='by_coords')
         return ds
     if product == "SMAP L3 Enhanced":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3E, concat_dim='time', combine='by_coords')
