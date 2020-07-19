@@ -80,21 +80,28 @@ def preprocess_smap_L3E(in_ds):
     local_time_utc = 5
     datestamp = datestamp.replace(hour=local_time_utc)
     # open dataset as subgroup
-    out_ds = xr.open_dataset(source, group='Soil_Moisture_Retrieval_Data_AM')
-    # rename coordinates to lat and lon
-    # out_ds = out_ds.rename({'latitude': 'lat', 'longitude': 'lon'})
-    # subset to sweden
-    # out_ds = out_ds.sel(
-    #     lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
-    #     lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
-    # add time dimension
-    out_ds['time'] = datestamp
-    out_ds = out_ds.rename({'dimension182': 'latitude', 'dimension295': 'longitude'})
-    lat_array = out_ds['latitude'][:, 0]
-    lon_array = out_ds['longitude'][0, :]
+    tmp_ds =  xr.open_dataset(source, group='Soil_Moisture_Retrieval_Data_AM')
+    # retrieve variables for rebuilding dataset
+    lon = tmp_ds['longitude'].values
+    lat = tmp_ds['latitude'].values
+    soil_moisture = tmp_ds['soil_moisture'].values
+    surface_flag = tmp_ds['surface_flag'].values
+    retrieval_qual_flag = tmp_ds['retrieval_qual_flag'].values
+    # rebuild dataset
+    out_ds = xr.Dataset(
+        {
+            "soil_moisture": (["x", "y"], soil_moisture),
+            "surface_flag": (["x", "y"], surface_flag),
+            "retrieval_qual_flag": (["x", "y"], retrieval_qual_flag),
+        },
+        coords={
+            "lon": (["x", "y"], lon),
+            "lat": (["x", "y"], lat),
+        },
+    )
+    # add datestamp and add as dim
+    out_ds["time"] = datestamp
     out_ds = out_ds.expand_dims('time').set_coords('time')
-    # out_ds = out_ds.expand_dims({'lon': lon_array}, axis=1)
-    # out_ds = out_ds.expand_dims({'lat': lat_array}, axis=0)
     return out_ds
 
 
@@ -132,7 +139,7 @@ def get_mf_dataset(file_list, product):
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3, combine='by_coords')
         return ds
     if product == "SMAP L3 Enhanced":
-        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3E, concat_dim='time', combine='by_coords')
+        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3E, combine='by_coords')
         return ds
     if product == "SMOS-IC":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_smos_ic, combine='by_coords')
