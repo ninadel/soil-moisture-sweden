@@ -43,7 +43,12 @@ dict_product_inputs = {
         "csv_stations": None,
         "csv_quarters": None
     },
-    "ERA5": {
+    "ERA5 0-1": {
+        "ts_dir": None,
+        "csv_stations": None,
+        "csv_quarters": None
+    },
+    "ERA5 0-25": {
         "ts_dir": None,
         "csv_stations": None,
         "csv_quarters": None
