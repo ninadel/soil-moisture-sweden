@@ -83,10 +83,16 @@ def preprocess_smap_L3E(in_ds):
     tmp_ds =  xr.open_dataset(source, group='Soil_Moisture_Retrieval_Data_AM')
     # retrieve variables for rebuilding dataset
     lon = tmp_ds['longitude'].values
+    # lon = tmp_ds['longitude'][0,:].values
     lat = tmp_ds['latitude'].values
+    # lat = tmp_ds['latitude'][:,0].values
     soil_moisture = tmp_ds['soil_moisture'].values
+    # soil_moisture_da = xr.DataArray(soil_moisture, coords=[lat, lon], dims=["lat", "lon"], name="soil_moisture")
     surface_flag = tmp_ds['surface_flag'].values
+    # surface_flag_da = xr.DataArray(surface_flag, coords=[lat, lon], dims=["lat", "lon"], name="surface_flag")
     retrieval_qual_flag = tmp_ds['retrieval_qual_flag'].values
+    # retrieval_qual_flag_da = \
+    #     xr.DataArray(retrieval_qual_flag, coords=[lat, lon], dims=["lat", "lon"], name="retrieval_qual_flag")
     # rebuild dataset
     out_ds = xr.Dataset(
         {
@@ -99,6 +105,7 @@ def preprocess_smap_L3E(in_ds):
             "lat": (["x", "y"], lat),
         },
     )
+    # out_ds = xr.merge([soil_moisture_da, surface_flag_da, retrieval_qual_flag_da])
     # add datestamp and add as dim
     out_ds["time"] = datestamp
     out_ds = out_ds.expand_dims('time').set_coords('time')
