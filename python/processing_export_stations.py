@@ -1,16 +1,21 @@
+"""
+Author: Nina del Rosario
+Date: 7/18/2020
+Script for exporting station ts
+Done:
+"ASCAT 12.5 TS", "GLDAS", "Sentinel-1", "SMAP L3", "SMAP L4", "SMOS-BEC"
+
+Need to do:
+"CCI Active", "CCI Passive", "CCI Combined", "SMOS-IC"
+
+For ERA5, SMPL3E, see processing_export_stations_xarray.py
+"""
 import os
 import sm_tools as tools
 import sm_config as config
 
 output_root = r"C:\git\soil-moisture-sweden\test_output_data\station_csv"
 log_file = os.path.join(output_root, "log_file.csv")
-"""""
-Done:
-"ASCAT 12.5 TS", "GLDAS", "Sentinel-1", "SMAP L3", "SMAP L4", "SMOS-BEC"
-
-Need to do:
-"CCI Active", "CCI Passive", "CCI Combined", "ERA5", "SMOS-IC", "SMAP L3 E", 
-"""""
 
 # Dictionary which turns on/off product analyses
 # export_products = ["ASCAT 12.5 TS", "CCI Active", "CCI Passive", "CCI Combined", "ERA5", "GLDAS", "Sentinel-1",
