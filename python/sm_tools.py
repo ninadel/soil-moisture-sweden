@@ -603,4 +603,11 @@ def get_date_range(start_date, end_date):
         yield start_date + timedelta(n)
 
 
-
+def get_smap_retrieval_qual(flags):
+    recommended = 1
+    attempted = 2
+    success = 4
+    ft_success = 8
+    qual_dict = {'recommended': (flags & recommended == 0), 'attempted': (flags & attempted == 0),
+                 'success': (flags & success == 0), 'ft_success': (flags & ft_success == 0)}
+    return qual_dict
