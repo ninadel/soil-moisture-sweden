@@ -2,9 +2,6 @@
 Author: Nina del Rosario
 Date: 7/18/2020
 Script for exporting station ts with xarray
-
-Need to do:
-ERA5, SMPL3E, ASCAT H115
 """
 import os
 import sm_tools as tools
@@ -18,12 +15,12 @@ ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 # use this as a parameter below if you want to analyze both ICOS and ISMN
 station_list = icos_readers + ismn_readers
 
-product = "SMAP L3 Enhanced"
+product = "SMAP L3"
 output_dir = os.path.join(output_root, product)
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-f = r"..\input_data\xr\smap-L3E-09km-subset-nofilter.nc"
+f = r"..\input_data\xr\smap-L3-36km-subset-nofilter.nc"
 ds = xr.open_dataset(f)
 
 print(ds)
