@@ -2,9 +2,6 @@
 Author: Nina del Rosario
 Date: 7/18/2020
 Script for exporting station ts with xarray
-
-Need to do:
-ERA5, SMPL3E, ASCAT H115
 """
 import os
 import sm_tools as tools
@@ -27,16 +24,13 @@ f = r"..\input_data\xr\smap-L3E-09km-subset-nofilter.nc"
 ds = xr.open_dataset(f)
 
 print(ds)
-print(ds.x)
-print(ds)
 
 for station in station_list:
     station_name = station.station
     print(station_name)
-    ts = ds['swvl1'].sel(latitude=station.latitude, longitude=station.longitude, method='nearest')
+    ts = ds.sel(lat=station.latitude, lon=station.longitude, method='nearest')
+    # print(ts.values)
     ts_filename = tools.get_station_ts_filename(station)
     ts_file = os.path.join(output_dir, ts_filename)
-    ts_pandas = ts.to_pandas()
-    ts_pandas.rename('swvl1', inplace=True)
+    ts_pandas = ts.to_dataframe()
     ts_pandas.to_csv(ts_file)
-    break
