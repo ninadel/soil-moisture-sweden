@@ -1,4 +1,5 @@
 from datetime import datetime
+import numpy as np
 import xarray as xr
 import warnings
 import os
@@ -37,81 +38,6 @@ def preprocess_sentinel(in_ds):
     return out_ds
 
 
-def preprocess_smap_L3(in_ds):
-    # get filename
-    source = in_ds.encoding['source']
-    # get timestamp from filename
-    datestamp = tools.get_filename_timestamp(source, r"P_[0-9]{8}_R")
-    # since timestamp is midnight, add local overpass time in utc
-    local_time_utc = 5
-    datestamp = datestamp.replace(hour=local_time_utc)
-    # open dataset as subgroup
-    tmp_ds =  xr.open_dataset(source, group='Soil_Moisture_Retrieval_Data_AM')
-    # retrieve variables for rebuilding dataset
-    lon = tmp_ds['longitude'].values
-    lat = tmp_ds['latitude'].values
-    soil_moisture = tmp_ds['soil_moisture'].values
-    surface_flag = tmp_ds['surface_flag'].values
-    retrieval_qual_flag = tmp_ds['retrieval_qual_flag'].values
-    # rebuild dataset
-    out_ds = xr.Dataset(
-        {
-            "soil_moisture": (["x", "y"], soil_moisture),
-            "surface_flag": (["x", "y"], surface_flag),
-            "retrieval_qual_flag": (["x", "y"], retrieval_qual_flag),
-        },
-        coords={
-            "lon": (["x", "y"], lon),
-            "lat": (["x", "y"], lat),
-        },
-    )
-    # add datestamp and add as dim
-    out_ds["time"] = datestamp
-    out_ds = out_ds.expand_dims('time').set_coords('time')
-    return out_ds
-
-
-def preprocess_smap_L3E(in_ds):
-    # get filename
-    source = in_ds.encoding['source']
-    # get timestamp from filename
-    datestamp = tools.get_filename_timestamp(source, r"E_[0-9]{8}_R")
-    # since timestamp is midnight, add local overpass time in utc
-    local_time_utc = 5
-    datestamp = datestamp.replace(hour=local_time_utc)
-    # open dataset as subgroup
-    tmp_ds =  xr.open_dataset(source, group='Soil_Moisture_Retrieval_Data_AM')
-    # retrieve variables for rebuilding dataset
-    lon = tmp_ds['longitude'].values
-    # lon = tmp_ds['longitude'][0,:].values
-    lat = tmp_ds['latitude'].values
-    # lat = tmp_ds['latitude'][:,0].values
-    soil_moisture = tmp_ds['soil_moisture'].values
-    # soil_moisture_da = xr.DataArray(soil_moisture, coords=[lat, lon], dims=["lat", "lon"], name="soil_moisture")
-    surface_flag = tmp_ds['surface_flag'].values
-    # surface_flag_da = xr.DataArray(surface_flag, coords=[lat, lon], dims=["lat", "lon"], name="surface_flag")
-    retrieval_qual_flag = tmp_ds['retrieval_qual_flag'].values
-    # retrieval_qual_flag_da = \
-    #     xr.DataArray(retrieval_qual_flag, coords=[lat, lon], dims=["lat", "lon"], name="retrieval_qual_flag")
-    # rebuild dataset
-    out_ds = xr.Dataset(
-        {
-            "soil_moisture": (["x", "y"], soil_moisture),
-            "surface_flag": (["x", "y"], surface_flag),
-            "retrieval_qual_flag": (["x", "y"], retrieval_qual_flag),
-        },
-        coords={
-            "lon": (["x", "y"], lon),
-            "lat": (["x", "y"], lat),
-        },
-    )
-    # out_ds = xr.merge([soil_moisture_da, surface_flag_da, retrieval_qual_flag_da])
-    # add datestamp and add as dim
-    out_ds["time"] = datestamp
-    out_ds = out_ds.expand_dims('time').set_coords('time')
-    return out_ds
-
-
 def preprocess_smos_ic(in_ds):
     # get filename
     source = in_ds['Soil_Moisture'].encoding['source']
@@ -141,12 +67,6 @@ def get_mf_dataset(file_list, product):
         return ds
     if product == "Sentinel-1":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_sentinel, combine='by_coords')
-        return ds
-    if product == "SMAP L3":
-        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3, combine='by_coords')
-        return ds
-    if product == "SMAP L3 Enhanced":
-        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smap_L3E, combine='by_coords')
         return ds
     if product == "SMOS-IC":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_smos_ic, combine='by_coords')
