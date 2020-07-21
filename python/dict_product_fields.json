@@ -24,7 +24,12 @@
         "lat_field": "lat",
         "sm_field": "sm"
     },
-    "ERA5": {
+    "ERA5 0-1": {
+        "lon_field": "longitude",
+        "lat_field": "latitude",
+        "sm_field": "swvl1"
+    },
+    "ERA5 0-25": {
         "lon_field": "longitude",
         "lat_field": "latitude",
         "sm_field": "swvl1"
