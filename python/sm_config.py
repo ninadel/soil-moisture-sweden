@@ -25,7 +25,7 @@ dict_product_inputs = {
         "grid_dir": r"..\ascat_ts_aux\warp5_grid",
         "grid_file": "TUW_WARP5_grid_info_2_3.nc",
         "static_layers_dir": None,
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\ASCAT 12.5 TS",
         "csv_quarters": None
     },
     "CCI Active": {
@@ -45,17 +45,23 @@ dict_product_inputs = {
     },
     "ERA5 0-1": {
         "ts_dir": None,
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\ERA5 0-1",
         "csv_quarters": None
     },
     "ERA5 0-25": {
         "ts_dir": None,
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\ERA5 0-25",
         "csv_quarters": None
     },
     "GLDAS": {
         "ts_dir": r"..\input_data\GLDAS_nordic_reshuffle",
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\GLDAS",
+        "csv_quarters": None
+    },
+    "Sentinel-1": {
+        "raw_dir": r"..\input_data\cgls-biopar-ssm-01km_nordic",
+        "ts_dir": None,
+        "csv_stations": r"..\input_data\csv_stations\Sentinel-1",
         "csv_quarters": None
     },
     "SMAP L3": {
@@ -70,18 +76,12 @@ dict_product_inputs = {
     },
     "SMAP L4": {
         "ts_dir": r"..\input_data\SPL4SMAU_nordic_reshuffle",
-        "csv_stations": None,
-        "csv_quarters": None
-    },
-    "Sentinel-1": {
-        "raw_dir": r"..\input_data\cgls-biopar-ssm-01km_nordic",
-        "ts_dir": r"..\input_data\csv_stations\Sentinel-1",
-        "csv_stations": r"..\input_data\csv_stations\Sentinel-1",
+        "csv_stations": "..\input_data\csv_stations\SMAP L4",
         "csv_quarters": None
     },
     "SMOS-BEC": {
         "raw_dir": r"..\input_data\smos-bec-reprocessed-01km-nordic\ASC",
-        "ts_dir": r"..\input_data\csv_stations\smos-bec_ts",
+        "ts_dir": None,
         "csv_stations": r"..\input_data\csv_stations\SMOS-BEC",
         "csv_quarters": None
     },
@@ -104,7 +104,9 @@ dict_timeshifts = {
     # CCI Combined Force Timestamp: 8AM CET, 7AM UTC based on average of Active and Passive products
     "CCI Combined": (7, 'H'),
     # ERA5 Timestamps already present in ts
-    "ERA5": None,
+    "ERA5 0-1": None,
+    # GLDAS Timestamps already present in ts
+    "ERA5 0-25": None,
     # GLDAS Timestamps already present in ts
     "GLDAS": None,
     # SMAP L3 Force Timestamp: 6AM CET, 5AM UTC
