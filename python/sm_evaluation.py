@@ -291,9 +291,6 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
             ref_data.rename('ref_sm', inplace=True)
             product_data = tools.get_product_data(lon=station.longitude, lat=station.latitude, product=product,
                                                   reader=product_reader, anomaly=anomaly, station=station)
-            print("product_data")
-            print(product_data)
-            print(type(product_data))
             product_data.rename('product_sm', inplace=True)
             tools.write_log(log_file, 'product_data.shape: {}'.format(product_data.shape))
             product_data = product_data.loc[startdate:enddate]
@@ -307,19 +304,6 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                 n = matched_data.shape[0]
                 if export_ts:
                     matched_data.to_csv(os.path.join(data_output_folder, matched_data_str))
-                # if config.dict_product_fields[product]['scale'] != "":
-                #     matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
-                #     try:
-                #         matched_data = scale(matched_data, method='lin_cdf_match', reference_index=1)
-                #         if export_ts:
-                #             matched_data.to_csv(os.path.join(data_output_folder, scaled_data_str))
-                #     except:
-                #         empty_metrics_df = get_empty_metrics_df()
-                #         metrics_df = pandas.concat([metrics_df, empty_metrics_df])
-                #         message = "Could not scale data. Skipping to next station."
-                #         warnings.warn(message)
-                #         tools.write_log(log_file, message)
-                #         break
                 network_matched_data = matched_data_dict[network_name]
                 matched_data_dict[network_name] = pandas.concat([network_matched_data, matched_data])
                 tools.write_log(log_file, '{} matched data shape: {}'.format(
@@ -327,6 +311,7 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                 tools.write_log(log_file, 'matched_data.shape: {}'.format(matched_data.shape))
             # insert scaling conditional here
             else:
+                n = 0
                 tools.write_log(log_file, 'insufficient data for matching: {}'.format(product))
             try:
                 metric_values = tools.get_metrics(matched_data, 'product_sm', 'ref_sm', anomaly)
