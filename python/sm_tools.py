@@ -153,68 +153,31 @@ def get_ref_data(ts, filter_ref=False, anomaly=False):
     return sm_data
 
 
-def get_product_data(lon, lat, product, reader, anomaly=False, station=None, filter_prod=True, sm_only=True):
-    data = None
-    sm_field = None
-    if reader is not None:
+def get_product_data(product, reader=None, lon=None, lat=None, station=None, anomaly=False, filter_prod=True, sm_only=True):
+    if station is not None:
+        lon = station.longitude
+        lat = station.latitude
+    # if CSV station data exists, get and return data from CSV files
+    if station is not None and config.dict_product_inputs[product]['csv_stations'] is not None:
+        data = get_csv_station_series(product, station)
+    # if station isn't provided or CSV station data does not exist, get data from reader
+    else:
         ts = reader.read(lon, lat)
-        sm_field = config.dict_product_fields[product]["sm_field"]
         if product == "ASCAT 12.5 TS":
             data = ts.data
         else:
             data = ts
-        if product == "ASCAT 12.5 TS":
-            if filter_prod:
-                # Filter for unfrozen data
-                data = data.loc[data["ssf"] == 1]
-                # Filter for valid values
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
-        elif product == "CCI Active":
-            if filter_prod:
-                # Filter for valid values
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
-        elif product == "CCI Passive":
-            if filter_prod:
-                # Filter for valid values
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-        elif product == "CCI Combined":
-            # For now, no filters for CCI
-            if filter_prod:
-                # Filter for valid values
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-        elif product == "GLDAS":
-            # No filters needed for GLDAS
-            if filter_prod:
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
-        elif product == "SMAP L3":
-            # For now, no filters for SMAP L3
-            if sm_only:
-                data = data[sm_field]
-                if filter_prod:
-                    data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-        elif product == "SMAP L4":
-            # No filters needed for SMAP L4
-            if sm_only:
-                data = data[sm_field]
-            if filter_prod:
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-        elif product == "SMOS-IC":
-            # Force Timestamp: 6AM CET, 5AM UTC
-            data = ts.shift(5, freq='H')
-            # Quality_Flag field is already filtered to 0, 1 by reader
-            # For now, no filters for SMOS-IC
-            # See "Quality_Flag" field
-            if filter_prod:
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-        if sm_only:
-            data = data[sm_field]
-    else:
-        data = get_csv_series(product, station, filter_prod=filter_prod, sm_only=sm_only)
+    if filter_prod:
+        data = get_filtered_data(product, data)
+    sm_field = config.dict_product_fields[product]['sm_field']
+    if sm_only and len(data.shape) > 1:
+        data = data[sm_field]
     if sm_only and anomaly:
         data = calc_anomaly(data)
     elif (not sm_only) and anomaly:
+        data['sm_anomaly'] = calc_anomaly(data[sm_field])
         warnings.warn(
-            "could not calculate anomaly on a pandas dataframe. must be a pandas series. anomaly not calculated.")
+            "new column added to df: sm_anomaly")
     return data
 
 
@@ -443,37 +406,13 @@ def get_station_ts_filename(station_object=None, station_name=None, network_name
 
 
 # for text-driven datasets, retrieve time series
-def get_csv_series(product, station, filter_prod=True, sm_only=True):
-    sm_field = config.dict_product_fields[product]["sm_field"]
-    ts_dir = config.dict_product_inputs[product]["ts_dir"]
-    print(ts_dir)
+def get_csv_station_series(product, station, filter_prod=True, sm_only=True):
+    csv_dir = config.dict_product_inputs[product]["csv_stations"]
     filename = get_station_ts_filename(station)
-    print(filename)
-    file = os.path.join(ts_dir, filename)
+    file = os.path.join(csv_dir, filename)
     data = pandas.read_csv(file)
-    if product == "Sentinel-1":
-        # product is already filtered by sentinel reader
-        if filter_prod:
-            data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
-    if product == "SMOS-BEC":
-        if filter_prod:
-            # Filter product based on quality flag
-            # 0: Good quality data;
-            # 1: L1 brightness temperature corrected by sea-land contamination;
-            # 2: L3 soil moisture with no data;
-            # 4: L4 soil moisture without physical meaning";
-            data = data[(data['quality_flag'] == 0) | (data['quality_flag'] == 1)]
-            # Filter product based on valid values
-            try:
-                data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-            except:
-                data = data[(data['sm'] >= 0) & (data['sm'] < 1)]
-    data = data.set_index(pandas.DatetimeIndex(data['timestamp']))
-    if sm_only:
-        try:
-            data = data[sm_field]
-        except:
-            data = data['sm']
+    first_col = data.columns[0]
+    data = data.set_index(pandas.DatetimeIndex(data[first_col]), drop=True)
     return data
 
 
@@ -505,9 +444,7 @@ def get_triplet_list(triplets):
 
 # function for changing time series by shifting existing time by a specified value
 def get_timeshifted_data(product, product_data):
-    hours = product_data.index.hour
-    # if all timestamps are midnight (0)
-    if not hours.any():
+    if config.dict_timeshifts[product] is not None:
         value, interval = config.dict_timeshifts[product]
         product_data = product_data.shift(value, freq=interval)
         return product_data
@@ -538,7 +475,8 @@ def get_filename_timestamp(filename, date_search_str, date_only=True, return_int
     # assumes timestamp is always after datestamp and timestamp is 6 digits long
     if not date_only:
         time_str = re.findall(r"[0-9]{6}", result_str)[-1]
-        timestamp = datetime(int(date_str[0:4]), int(date_str[4:6]), int(date_str[6:8]), int(time_str[0:2]), int(time_str[2:4]), int(time_str[4:6]))
+        timestamp = datetime(int(date_str[0:4]), int(date_str[4:6]), int(date_str[6:8]), int(time_str[0:2]),
+                             int(time_str[2:4]), int(time_str[4:6]))
     else:
         timestamp = datetime(int(date_str[0:4]), int(date_str[4:6]), int(date_str[6:8]))
     if return_int:
@@ -567,6 +505,8 @@ def get_nc_values(file, location, parameters, time_dim=True, lon_field="lon", la
     lon_array = ds[lon_field][:]
     lat_array = ds[lat_field][:]
     for loc, metadata in loc_meta_dict.items():
+        ln = metadata["longitude"]
+        lt = metadata['latitude']
         nr_lon_idx = find_nearest(lon_array, ln)[0]
         nr_lat_idx = find_nearest(lat_array, lt)[0]
         for p in parameters:
@@ -604,10 +544,99 @@ def get_date_range(start_date, end_date):
 
 
 def get_smap_retrieval_qual(flags):
-    recommended = 1
-    attempted = 2
-    success = 4
-    ft_success = 8
-    qual_dict = {'recommended': (flags & recommended == 0), 'attempted': (flags & attempted == 0),
-                 'success': (flags & success == 0), 'ft_success': (flags & ft_success == 0)}
+    flags = int(flags)
+    recommended = int(1)
+    attempted = int(2)
+    success = int(4)
+    ft_success = int(8)
+    qual_dict = {'recommended': ((flags & recommended) == 0), 'attempted': ((flags & attempted) == 0),
+                 'success': ((flags & success) == 0), 'ft_success': ((flags & ft_success) == 0)}
     return qual_dict
+
+
+def get_filtered_data(product, data, filter_counts=False):
+    result_data = None
+    sm_field = config.dict_product_fields[product]['sm_field']
+    filter_count_dict = {'quality': None, 'valid': None, 'passed': None}
+    if product == "ASCAT 12.5 TS":
+        # Filter for unfrozen data
+        if filter_counts:
+            quality_data = data.loc[data["ssf"] == 1]
+            filter_count_dict['quality'] = quality_data.shape[0]
+            # Filter for valid values
+            valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
+            filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = data.loc[data["ssf"] == 1]
+        result_data = result_data[(result_data[sm_field] >= 0) & (result_data[sm_field] < 100)]
+    elif product == "CCI Active":
+        # Filter for valid values
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = valid_data
+    elif product == "CCI Passive":
+        # Filter for valid values
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = valid_data
+    elif product == "CCI Combined":
+        # Filter for valid values
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = valid_data
+    elif product == "ERA5 0-1" or product == "ERA5 0-25":
+        result_data = data
+    elif product == "GLDAS":
+        # Filter for valid values
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = valid_data
+    elif product == "SMAP L3" or product == "SMAP L3 Enhanced":
+        # Filter based on valid values
+        if filter_counts:
+            valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+            filter_count_dict['valid'] = valid_data.shape[0]
+            # Filter based on retrieval_qual_flag
+            quality_data = data[(data['retrieval_qual_flag'] == 0) | (data['retrieval_qual_flag'] == 1) |
+                                (data['retrieval_qual_flag'] == 8)]
+            filter_count_dict['quality'] = quality_data.shape[0]
+        result_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        result_data = result_data[(result_data['retrieval_qual_flag'] == 0) |
+                                  (result_data['retrieval_qual_flag'] == 1) |
+                                  (result_data['retrieval_qual_flag'] == 8)]
+    elif product == "SMAP L4":
+        # Filter based on valid values
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = valid_data
+    elif product == "SMOS-IC":
+        # Force Timestamp: 6AM CET, 5AM UTC
+        data = data.shift(5, freq='H')
+        # Quality_Flag field is already filtered to 0, 1 by reader
+        # For now, no filters for SMOS-IC
+        # See "Quality_Flag" field
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = valid_data
+    elif product == "Sentinel-1":
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        result_data = valid_data
+    elif product == "SMOS-BEC":
+        # Filter product based on valid values
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        # Filter product based on quality flag
+        # 0: Good quality data;
+        # 1: L1 brightness temperature corrected by sea-land contamination;
+        # 2: L3 soil moisture with no data;
+        # 4: L4 soil moisture without physical meaning";
+        quality_data = data[(data['quality_flag'] == 0) | (data['quality_flag'] == 1)]
+        filter_count_dict['quality'] = quality_data.shape[0]
+        result_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        result_data = result_data[(result_data['quality_flag'] == 0) | (result_data['quality_flag'] == 1)]
+    filter_count_dict['passed'] = result_data.shape[0]
+    if filter_counts:
+        return result_data, filter_counts
+    else:
+        return result_data
+
