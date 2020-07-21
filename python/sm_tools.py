@@ -560,12 +560,11 @@ def get_filtered_data(product, data, filter_counts=False):
     filter_count_dict = {'quality': None, 'valid': None, 'passed': None}
     if product == "ASCAT 12.5 TS":
         # Filter for unfrozen data
-        if filter_counts:
-            quality_data = data.loc[data["ssf"] == 1]
-            filter_count_dict['quality'] = quality_data.shape[0]
-            # Filter for valid values
-            valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
-            filter_count_dict['valid'] = valid_data.shape[0]
+        quality_data = data.loc[data["ssf"] == 1]
+        filter_count_dict['quality'] = quality_data.shape[0]
+        # Filter for valid values
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 100)]
+        filter_count_dict['valid'] = valid_data.shape[0]
         result_data = data.loc[data["ssf"] == 1]
         result_data = result_data[(result_data[sm_field] >= 0) & (result_data[sm_field] < 100)]
     elif product == "CCI Active":
@@ -592,13 +591,12 @@ def get_filtered_data(product, data, filter_counts=False):
         result_data = valid_data
     elif product == "SMAP L3" or product == "SMAP L3 Enhanced":
         # Filter based on valid values
-        if filter_counts:
-            valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-            filter_count_dict['valid'] = valid_data.shape[0]
-            # Filter based on retrieval_qual_flag
-            quality_data = data[(data['retrieval_qual_flag'] == 0) | (data['retrieval_qual_flag'] == 1) |
-                                (data['retrieval_qual_flag'] == 8)]
-            filter_count_dict['quality'] = quality_data.shape[0]
+        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        filter_count_dict['valid'] = valid_data.shape[0]
+        # Filter based on retrieval_qual_flag
+        quality_data = data[(data['retrieval_qual_flag'] == 0) | (data['retrieval_qual_flag'] == 1) |
+                            (data['retrieval_qual_flag'] == 8)]
+        filter_count_dict['quality'] = quality_data.shape[0]
         result_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
         result_data = result_data[(result_data['retrieval_qual_flag'] == 0) |
                                   (result_data['retrieval_qual_flag'] == 1) |
