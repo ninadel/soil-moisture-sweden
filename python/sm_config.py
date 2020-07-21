@@ -146,12 +146,11 @@ with open("dict_swe_gldas_points.json", "r") as f:
 with open("dict_extent_sweden.json", "r") as f:
     dict_extent_sweden = json.load(f)
 
-regrid_lat = numpy.arange(dict_extent_sweden["min_lat"]-1, dict_extent_sweden["max_lat"]+1, 0.25)
-regrid_lon = numpy.arange(dict_extent_sweden["min_lon"]-1, dict_extent_sweden["max_lon"]+1, 0.25)
-regrid_lat_b = numpy.arange(dict_extent_sweden["min_lat"]-1.125, dict_extent_sweden["max_lat"]+1.125, 0.25)
-regrid_lon_b = numpy.arange(dict_extent_sweden["min_lon"]-1.125, dict_extent_sweden["max_lon"]+1.125, 0.25)
-interp_lat = numpy.arange(dict_extent_sweden["min_lat"]-2, dict_extent_sweden["max_lat"]+2, 0.25)
-interp_lon = numpy.arange(dict_extent_sweden["min_lon"]-2, dict_extent_sweden["max_lon"]+2, 0.25)
+coord_buffer = 2
+regrid_lat = numpy.arange(dict_extent_sweden["min_lat"]-coord_buffer, dict_extent_sweden["max_lat"]+coord_buffer, 0.25)
+regrid_lon = numpy.arange(dict_extent_sweden["min_lon"]-coord_buffer, dict_extent_sweden["max_lon"]+coord_buffer, 0.25)
+interp_lat = numpy.arange(dict_extent_sweden["min_lat"]-coord_buffer, dict_extent_sweden["max_lat"]+coord_buffer, 0.25)
+interp_lon = numpy.arange(dict_extent_sweden["min_lon"]-coord_buffer, dict_extent_sweden["max_lon"]+coord_buffer, 0.25)
 
 
 swe_shuffle_cells = [1397, 1398, 1399, 1433, 1434, 1435, 1470, 1471]
