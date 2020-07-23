@@ -1,7 +1,7 @@
 """
 Author: Nina del Rosario, nina.del@gmail.com
 Date: 5/31/2020
-Script to reshuffle SMOS IO data based on repurpose package
+Script to reshuffle SMOS IO data based on repurpose package (GLDAS grid, not working)
 """
 import os
 from smos.smos_ic import reshuffle
