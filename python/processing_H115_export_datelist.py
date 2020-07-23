@@ -1,7 +1,7 @@
 """
 Author: Nina del Rosario
 Date: 6/27/2020
-Script for exporting CSV files of TS within a bounding box around Sweden
+Script to search for range of timepoints in H115 data
 """
 import xarray as xr
 import pandas
@@ -10,7 +10,7 @@ import sm_config as config
 import sm_tools as tools
 from datetime import datetime
 
-input_dir = r"..\sm_sample_files\ascat-h115-ts-2019"
+input_dir = r"../sm_sample_files/ascat-h115-ts-2019"
 output_dir = r"../test_output_data/H115_points_csv"
 date_file = os.path.join(output_dir,"dates.csv")
 # point_subdir = "point_data"
