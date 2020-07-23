@@ -1,8 +1,10 @@
 """
 Author: Nina del Rosario
 Date: 6/27/2020
-Script for exporting CSV files of TS within a bounding box around Sweden
+Script for converting location TS to date TS
 Processes output of processing_H115_export_points.py
+Each output file is a date, any location with any data matching date is added to CSV,
+locations may have multiple observations for a date
 """
 import pandas
 import os
@@ -19,10 +21,6 @@ if not os.path.exists(output_dir):
 startdate = datetime(2015, 1, 1)
 enddate = datetime(2019, 1, 1)
 sep = ","
-
-# def daterange(start_date, end_date):
-#     for n in range(int((end_date - start_date).days)):
-#         yield start_date + timedelta(n)
 
 locations = pandas.read_csv(dict_file)
 locations.set_index("loc", inplace=True)
