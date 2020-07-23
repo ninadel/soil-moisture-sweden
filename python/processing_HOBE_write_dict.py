@@ -1,3 +1,8 @@
+"""
+Author: Nina del Rosario
+Date: 7/23/2020
+Writing dictionary of HOBE station locations
+"""
 import json
 import sm_config as config
 import sm_tools as tools
