@@ -1,3 +1,8 @@
+"""
+Author: Nina del Rosario, nina.del@gmail.com
+Date: 5/31/2020
+Script for testing reshuffle of H08 data
+"""
 from datetime import datetime
 from reshuffle_ASCAT_H08 import reshuffle
 from ascat.h_saf import H08img
