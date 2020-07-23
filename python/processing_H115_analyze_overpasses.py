@@ -1,5 +1,6 @@
 """
-Analyze dates/time for H115
+Author: Nina del Rosario, nina.del@gmail.com
+Date: 7/23/2020
 
 Purpose: Figure out how to split dates with multiple overpasses
 Input => Date CSVs where each row is a coordinate
@@ -34,24 +35,11 @@ sep = ","
 # 	Key for each instrument => DF
 date_dict = {3: None, 4: None}
 
-# Create empty dict for storing metadata
-# 	Key for each instrument
-# 		Key for each date
-# 			Multiple overpasses, boolean
-# 			Min time of each overpass (up to 2), list
-# 			Max time of each overpass (up to 2), list
-# 			Overpass overlap, boolean
 metadata_dict = {3: {}, 4: {}}
 
 for key in metadata_dict.keys():
     for date in daterange(startdate, enddate):
         metadata_dict[key][get_date_str(date)] = {"overpass_count": 0, "min_time": None, "max_time": None}
-
-
-# For each date file
-# 	Filter to AM times only
-# 	Filter to instrument 3, add df to date dataframe dict
-# 	Filter to instrument 4, add df to date dataframe dict
 
 """
 For each instrument in date dataframe dict
