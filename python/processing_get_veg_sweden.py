@@ -11,7 +11,7 @@ import sm_tools as tools
 with open("dict_gldas_veg.json", "r") as f:
     dict_gldas_veg = json.load(f)
 
-veg_grid = r"C:\git\soil-moisture-sweden\gldas_ts_aux\GLDASp4_domveg_025d.nc4"
+veg_grid = r"..\gldas_ts_aux\GLDASp4_domveg_025d.nc4"
 veg_grid_nc = netCDF4.Dataset(veg_grid, 'r')
 
 lon_array = veg_grid_nc['lon'][:]
