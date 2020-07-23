@@ -16,6 +16,7 @@ output_dir = r"..\test_output_data\h115_interp_ts"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
+#
 def get_interp_values(zi, loc_dict):
     result_dict = loc_dict.copy()
     for loc, metadata in result_dict.items():
@@ -24,6 +25,7 @@ def get_interp_values(zi, loc_dict):
         metadata["value"] = zi[lat_idx, lon_idx]
     return result_dict
 
+# function which opens date csv of available point data, extracts lon, lat, and sm, then generates interpolation data
 def get_interp_arrays(date_csv, interp_lat, interp_lon):
     data = pandas.read_csv(date_csv)
     x = data['lon'].to_numpy()
@@ -47,6 +49,7 @@ def get_idx_dict(loc_dict, lat_array, lon_array):
         # value["lon_idx"] = numpy.asscalar(numpy.where(lon_array == lon)[0])
     return idx_dict
 
+# Create a file and write header for each interpolation TS at 0.25 deg
 for loc, metadata in config.dict_swe_gldas_points.items():
     filename = "{}.csv".format(loc)
     file = os.path.join(output_dir, filename)
@@ -55,20 +58,12 @@ for loc, metadata in config.dict_swe_gldas_points.items():
             file.write("date,sm" + "\n")
 
 file_list = [os.path.join(input_dir, date_file) for date_file in os.listdir(input_dir)]
+# dictionary of locations to match interpolation data to
 interp_point_dict = get_idx_dict(config.dict_swe_gldas_points, config.interp_lat, config.interp_lon)
 
+# test file
 file = file_list[0]
 xi, yi, zi = get_interp_arrays(file, interp_lat=config.interp_lat, interp_lon=config.interp_lon)
 plt.pcolormesh(xi,yi,zi)
 plt.savefig(os.path.join(output_dir, "test_ascat_scipyinterpgriddata.png"), dpi=150)
 plt.show()
-
-# for date_file in file_list:
-#     date_str = "{}/{}/{} 08:30".format(date_file[-9:-7], date_file[-6:-4], date_file[-14:-10])
-#     print(date_str)
-#     xi, yi, zi = get_interp_arrays(date_file, interp_lat=config.interp_lat, interp_lon=config.interp_lon)
-#     date_results = get_interp_values(zi, interp_point_dict)
-#     for loc, metadata in date_results.items():
-#         out_file = os.path.join(output_dir, "{}.csv".format(loc))
-#         with open(out_file, "a") as file:
-#             file.write("{},{}".format(date_str, metadata["value"]) + "\n")
