@@ -30,52 +30,31 @@ def get_overpass(dict, time_value):
     return nearest_overpass
 
 
-input_dir = r"..\input_data\ascat_h115_points_csv\date_data"
-output_dir = r"..\test_output_data\h115_overpass_data"
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-# dict to store overpass data
-overpass_dict = {}
-# dict to store locations in date file with morning data and matching morning data
-location_data_dict = {}
-
-# start by assuming a date has a single AM overpasses
-max_rows = 1
-# variable for keeping track of how many overpasses are in dictionary
-overpass_count = 0
-
-# for each date file
-for filename in os.listdir(input_dir):
-    print(filename)
-    short_date_str = filename.split(".")[0]
-    short_date = datetime.datetime.strptime(short_date_str, "%Y-%m-%d")
-    cutoff_date = short_date + datetime.timedelta(hours=12)
-    # open CSV
-    file = os.path.join(input_dir, filename)
-    data = pd.read_csv(file)
-    data['datestamp'] = pd.to_datetime(data.datestamp)
-    columns = data.columns
-    print("data rows:", data.shape[0])
-    # filter to AM data only
-    morning_data = data[data['datestamp'] < cutoff_date]
-    print("morning_data rows:", morning_data.shape[0])
+def get_overpass_groups(data):
+    # dict to store overpass data
+    overpass_dict = {}
+    # dict to store locations and their data rows
+    location_data_dict = {}
+    # variable for keeping track of max number of rows for a location (indicating min number of overpasses)
+    location_rows_max = 0
+    # variable for keeping track of how many overpasses are in dictionary
+    overpass_count = 0
     # get unique list of location ids
-    locations = morning_data['location_id'].unique()
+    locations = data['location_id'].unique()
     # build a dictionary of rows for each location in date file
     for location in locations:
-        location_data = morning_data[morning_data['location_id'] == location]
+        location_data = data[data['location_id'] == location]
         location_row_count = location_data.shape[0]
-        if location_row_count > max_rows:
-            max_rows = location_row_count
+        if location_row_count > location_rows_max:
+            location_rows_max = location_row_count
         if location_row_count not in location_data_dict.keys():
             location_data_dict[location_row_count] = {}
         location_data_dict[location_row_count][location] = location_data
-    counter = max_rows
-    print("max_rows:", max_rows)
+    counter = location_rows_max
     while counter > 0:
         # if overpass_dict is empty, create entries for minimum number of known overpass
-        if len(overpass_dict.keys()) == 0:
+        overpass_dict_empty = len(overpass_dict.keys()) == 0
+        if overpass_dict_empty:
             for i in range(1, counter + 1):
                 overpass_dict[i] = {}
                 overpass_dict[i]['data'] = None
@@ -84,16 +63,14 @@ for filename in os.listdir(input_dir):
         # get location data matching the number of overpasses
         ungrouped_data = location_data_dict[counter]
         # iterate through each row to find matching overpass
-        test_count = 0
-        for location, data in ungrouped_data.items():
+        for location_idx, location_data in ungrouped_data.items():
             row_idx = 1
             # create dictionary to keep track of what overpasses have been used for this location
             used_overpass = {}
             for count in overpass_dict.keys():
                 used_overpass[count] = False
-            for index, row in data.iterrows():
+            for iter_idx, row in location_data.iterrows():
                 # variable to keep track of overpasses
-                last_used_overpass = None
                 time_value = get_time_value(row)
                 # row is series - convert to dataframe for concatenation
                 row = row.to_frame().transpose()
@@ -119,21 +96,55 @@ for filename in os.listdir(input_dir):
                         overpass_dict[overpass_count]['time_values'] = [time_value]
                 row_idx += 1
         counter -= 1
-    print(overpass_dict.keys())
-    for overpass, data in overpass_dict.items():
-        overpass_rows = data['data'].shape[0]
-        print("overpass:", overpass)
-        print("overpass_rows:", overpass_rows)
-        mean_time_value = statistics.mean(data['time_values'])
-        mean_time_hour = math.floor(mean_time_value)
-        mean_time_minutes = math.floor((mean_time_value - mean_time_hour) * 60)
-        print(mean_time_hour)
-        print(mean_time_minutes)
-        mean_time = short_date + datetime.timedelta(hours=mean_time_hour)
-        mean_time = mean_time + datetime.timedelta(minutes=mean_time_minutes)
-        print("mean_time:", mean_time)
-        output_filename = "{}_{:02d}-{:02d}.csv".format(short_date_str, mean_time_hour, mean_time_minutes)
-        print(output_filename)
-        output_file = os.path.join(output_dir, output_filename)
-        data['data'].to_csv(output_file)
-    break
+    return overpass_dict
+
+
+def get_mean_datestamp(time_values, base_date):
+    mean_time_value = statistics.mean(time_values)
+    mean_time_hour = math.floor(mean_time_value)
+    mean_time_minutes = math.floor((mean_time_value - mean_time_hour) * 60)
+    mean_time = short_date + datetime.timedelta(hours=mean_time_hour)
+    mean_time = mean_time + datetime.timedelta(minutes=mean_time_minutes)
+    return mean_time
+
+
+input_dir = r"..\input_data\ascat_h115_points_csv\date_data"
+output_dir = r"..\test_output_data\h115_overpass_data"
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+# # dict to store overpass data
+# overpass_dict = {}
+# # dict to store locations in date file with morning data and matching morning data
+# location_data_dict = {}
+
+# # start by assuming a date has a single AM overpasses
+# max_rows = 1
+# # variable for keeping track of how many overpasses are in dictionary
+# overpass_count = 0
+
+# for each date file
+for input_filename in os.listdir(input_dir):
+    print(input_filename)
+    short_date_str = input_filename.split(".")[0]
+    short_date = datetime.datetime.strptime(short_date_str, "%Y-%m-%d")
+    cutoff_date = short_date + datetime.timedelta(hours=12)
+    # open CSV
+    input_file = os.path.join(input_dir, input_filename)
+    data = pd.read_csv(input_file)
+    data['datestamp'] = pd.to_datetime(data.datestamp)
+    satellites = data['sat_id'].unique()
+    for satellite in satellites:
+        # filter data by satellite
+        satellite_data = data[data['sat_id'] == satellite]
+        # filter to AM data only
+        morning_data = satellite_data[satellite_data['datestamp'] < cutoff_date]
+        overpass_dict = get_overpass_groups(morning_data)
+        for overpass, overpass_data in overpass_dict.items():
+            overpass_rows = overpass_data['data'].shape[0]
+            mean_time = get_mean_datestamp(overpass_data['time_values'], short_date)
+            output_filename = "sat{}_{}_{:02d}-{:02d}.csv".format(satellite, short_date_str, mean_time.hour, mean_time.minute)
+            print(output_filename)
+            print("{} rows".format(overpass_rows))
+            output_file = os.path.join(output_dir, output_filename)
+            overpass_data['data'].to_csv(output_file)
