@@ -20,12 +20,13 @@ def get_time_value(row):
 def get_overpass(dict, time_value):
     nearest_overpass = None
     min_time_diff = 9999
+    match_threshold = 1
     for overpass, metadata in dict.items():
         overpass_average = statistics.mean(metadata['time_values'])
         time_diff = abs(overpass_average - time_value)
         if time_diff < min_time_diff:
             min_time_diff = time_diff
-            if time_diff < 1.5:
+            if time_diff < match_threshold:
                 nearest_overpass = overpass
     return nearest_overpass
 
@@ -81,7 +82,6 @@ def get_overpass_groups(data):
                 # if overpasses exist, try to match row to overpass
                 else:
                     matching_overpass = get_overpass(overpass_dict, time_value)
-                    matching_overpass_dict = overpass_dict[matching_overpass]
                     # if a matching overpass is found and hasn't been used yet
                     if matching_overpass is not None and not used_overpass[matching_overpass]:
                         overpass_dict[matching_overpass]['data'] = \
@@ -108,7 +108,7 @@ def get_mean_datestamp(time_values, base_date):
     return mean_time
 
 
-input_dir = r"..\input_data\ascat_h115_points_csv\date_data"
+input_dir = r"D:\sm_backup\csv\ascat_h115_points_csv\date_data"
 output_dir = r"..\test_output_data\h115_overpass_data"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
