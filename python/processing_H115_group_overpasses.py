@@ -20,12 +20,13 @@ def get_time_value(row):
 def get_overpass(dict, time_value):
     nearest_overpass = None
     min_time_diff = 9999
+    match_threshold = 1
     for overpass, metadata in dict.items():
         overpass_average = statistics.mean(metadata['time_values'])
         time_diff = abs(overpass_average - time_value)
         if time_diff < min_time_diff:
             min_time_diff = time_diff
-            if time_diff < 1.5:
+            if time_diff < match_threshold:
                 nearest_overpass = overpass
     return nearest_overpass
 
@@ -81,7 +82,6 @@ def get_overpass_groups(data):
                 # if overpasses exist, try to match row to overpass
                 else:
                     matching_overpass = get_overpass(overpass_dict, time_value)
-                    matching_overpass_dict = overpass_dict[matching_overpass]
                     # if a matching overpass is found and hasn't been used yet
                     if matching_overpass is not None and not used_overpass[matching_overpass]:
                         overpass_dict[matching_overpass]['data'] = \
