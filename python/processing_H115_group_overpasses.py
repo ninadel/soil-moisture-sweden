@@ -20,7 +20,7 @@ def get_time_value(row):
 def get_overpass(dict, time_value):
     nearest_overpass = None
     min_time_diff = 9999
-    match_threshold = 1
+    match_threshold = 1.5
     for overpass, metadata in dict.items():
         overpass_average = statistics.mean(metadata['time_values'])
         time_diff = abs(overpass_average - time_value)
