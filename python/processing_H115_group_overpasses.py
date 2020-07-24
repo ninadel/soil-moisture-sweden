@@ -108,7 +108,7 @@ def get_mean_datestamp(time_values, base_date):
     return mean_time
 
 
-input_dir = r"..\input_data\ascat_h115_points_csv\date_data"
+input_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\ascat-h115-ts_points_csv\date_data"
 output_dir = r"..\test_output_data\h115_overpass_data"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
