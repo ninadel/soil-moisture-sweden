@@ -13,6 +13,8 @@ import os
 import datetime
 import json
 
+export_nc = True
+export_dict_file = False
 buffer = 2
 output_dir = "../test_output_data/warp_coordinates_swe"
 # coordinate limits different from dictionary - need a wider longitude range to create a rectangular grid from a curvilinear grid
@@ -64,23 +66,6 @@ for ilt, lt in enumerate(lat_keys):
     for iln, ln in enumerate(lns):
         lon_grid[ilt, iln] = round(lns[iln],4)
 
-# lat & lon variables
-print(lat_grid)
-print(lon_grid)
-
-# row and col dimensions
-rowNums = [*range(0,len(lat_keys))]
-colNums = [*range(0,lon_window_width)]
-
-print(rowNums)
-print(colNums)
-
-# sm,sm_noise,dir,conf_flag,corr_flag,proc_flag,ssf
-# lat_da = xr.DataArray(lat_grid, coords=[rowNums, colNums], dims=["row", "col"], name="lat")
-# lon_da = xr.DataArray(lon_grid, coords=[rowNums, colNums], dims=["row", "col"], name="lon")
-lat_da = xr.DataArray(lat_grid, coords=[rowNums, colNums], dims=["row", "col"], name="lat")
-lon_da = xr.DataArray(lon_grid, coords=[rowNums, colNums], dims=["row", "col"], name="lon")
-# sm_da = xr.DataArray(np.empty(156,100), coords=[("lat", lat_grid), ("lon", lon_grid)])
 
 ds_template = xr.Dataset(
     {
@@ -116,21 +101,24 @@ ds_template = xr.Dataset(
     }
 )
 
-ds_template["time"] = datetime.datetime(1970,1,1)
+ds_template["time"] = 0
 ds_template = ds_template.expand_dims("time").set_coords("time")
-ds_template.to_netcdf(os.path.join(output_dir, "ascat_h115_swe_template.nc"))
 
+if export_nc:
+    ds_template.to_netcdf(os.path.join(output_dir, "ascat_h115_swe_template.nc"))
 
 # build dictionary file for coordinates, to be used to populate template
 lat_list = (lat_grid[:,0]).tolist()
+lat_round = [round(lat, 3) for lat in lat_list]
+print(lat_list)
+print(lat_round)
 coord_dict = {"lat": lat_list}
 
 for i in range(0,len(lat_list)):
     lon_list = lon_grid[i,:].tolist()
-    print(len(lon_list))
     coord_dict[i] = lon_list
 
-dict_file = os.path.join(output_dir, "dict_h115_swe_coords.json")
-
-with open(dict_file, 'w') as f:
-    json.dump(coord_dict, f)
+if export_dict_file:
+    dict_file = os.path.join(output_dir, "dict_h115_swe_coords.json")
+    with open(dict_file, 'w') as f:
+        json.dump(coord_dict, f)
