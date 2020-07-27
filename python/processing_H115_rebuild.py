@@ -51,11 +51,11 @@ def build_ds(array_dict, lat_grid, lon_grid, timestamp=None):
 with open("dict_h115_swe_coords.json", "r") as f:
     dict_h115_swe_coords = json.load(f)
 
-input_dir = r"..\input_data\ascat_h115_points_csv\overpass_data"
-output_dir = r"..\test_output_data\h115_reprocessed"
+input_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\ascat-h115-ts_points_csv\overpass_data"
+output_dir = r"..\test_output_data\h115_reprocessed\timedim"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
-template_f = r"..\input_data\ascat_h115_coordinates\ascat_h115_swe_template.nc"
+template_f = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\satellite\native_resolution\ASCAT-12-5\ascat_h115_swe_template.nc"
 ds = xr.open_dataset(template_f)
 ds_shape = ds['lat'].shape
 lat_array = ds['lat'].values
@@ -65,9 +65,6 @@ output_vars = ['sm', 'sm_noise', 'conf_flag', 'corr_flag', 'proc_flag', 'ssf']
 for filename in os.listdir(input_dir):
     file = os.path.join(input_dir, filename)
     arrays = xt.populate_arrays(dict_h115_swe_coords, ds_shape, file, output_vars)
-    #     datestamp = tools.get_filename_timestamp(file, r"P_[0-9]{8}_R")
-    # _2015-01-01_08-39
-    # "sat3_2015-01-01_08-39.csv"
     sat = filename[3:4]
     year = int(filename[5:9])
     month = int(filename[10:12])
@@ -76,8 +73,9 @@ for filename in os.listdir(input_dir):
     minute = int(filename[19:21])
     timestamp = datetime(year, month, day, hour, minute)
     print(timestamp)
-    ds = build_ds(arrays, lat_array, ds['lon'].values, timestamp)
-    output_file = os.path.join(output_dir, "ascat_h115_12-5_reprocessed_{}_{}{}{}{}.nc")
+    ds = build_ds(arrays, lat_array, lon_array, timestamp)
+    # ds = build_ds(arrays, lat_array, lon_array)
+    output_file = os.path.join(output_dir,
+                               "ascat-h115-12-5_reprocessed_sat{}_{}{:02d}{:02d}{:02d}{:02d}.nc".format(
+                                   sat,year,month,day,hour,minute))
     ds.to_netcdf(output_file)
-    print(ds)
-    break
