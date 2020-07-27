@@ -3,7 +3,7 @@ import numpy as np
 import xarray as xr
 import warnings
 import os
-import pandas
+import pandas as pd
 import sm_config as config
 import sm_tools as tools
 
@@ -119,5 +119,28 @@ def write_ts_quarter_deg(dr, output_dir, overwrite=False):
                 file.write("{} {} empty".format(datetime.now(), location) + "\n")
 
 
-def get_xr_series(xr_dataset, coordinate_dim=False):
-    pass
+def get_coord_array_index(dict, coord):
+    lat = coord[0]
+    lon = coord[1]
+    lat_array = dict["lat"]
+    row = tools.find_nearest(lat_array, lat)[0]
+    lon_array = dict[str(row)]
+    col = tools.find_nearest(lon_array, lon)[0]
+    return row, col
+
+
+def populate_arrays(coord_dict, shape, data_file, output_vars):
+    array_rows = shape[0]
+    array_cols = shape[1]
+    array_dict = {}
+    empty = np.empty((array_rows, array_cols))
+    empty[:] = np.NAN
+    data = pd.read_csv(data_file)
+    for var in output_vars:
+        array_dict[var] = np.copy(empty)
+    for index, data_row in data.iterrows():
+        coord = (data_row['lat'], data_row['lon'])
+        row_idx, col_idx = get_coord_array_index(coord_dict, coord)
+        for var in output_vars:
+            array_dict[var][row_idx,col_idx] = data_row[var]
+    return array_dict
