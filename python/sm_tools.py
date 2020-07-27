@@ -641,7 +641,7 @@ def get_filtered_data(product, data, filter_counts=False):
 
 # function which converts date to seconds since 1/1/70
 def unix_time_seconds(dt):
-    epoch = datetime.datetime.utcfromtimestamp(0)
+    epoch = datetime.utcfromtimestamp(0)
     seconds = int((dt - epoch).total_seconds())
     return seconds
 
