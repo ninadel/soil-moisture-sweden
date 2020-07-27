@@ -13,8 +13,8 @@ import os
 import datetime
 import json
 
-export_nc = True
-export_dict_file = False
+export_nc = False
+export_dict_file = True
 buffer = 2
 output_dir = "../test_output_data/warp_coordinates_swe"
 # coordinate limits different from dictionary - need a wider longitude range to create a rectangular grid from a curvilinear grid
@@ -59,12 +59,12 @@ empty[:] = np.nan
 lat_grid = empty.copy()
 lon_grid = empty.copy()
 for ilt, lt in enumerate(lat_keys):
-    lat_grid[ilt,:] = round(lt,4)
+    lat_grid[ilt,:] = lt
     # lon_grid[0:lon_window_width+1,i] = lat_dict[lt]
     # lon_grid[0:lon_window_width + 1, i] = i
     lns = lat_dict[lt]
     for iln, ln in enumerate(lns):
-        lon_grid[ilt, iln] = round(lns[iln],4)
+        lon_grid[ilt, iln] = lns[iln]
 
 
 ds_template = xr.Dataset(
@@ -108,17 +108,17 @@ if export_nc:
     ds_template.to_netcdf(os.path.join(output_dir, "ascat_h115_swe_template.nc"))
 
 # build dictionary file for coordinates, to be used to populate template
-lat_list = (lat_grid[:,0]).tolist()
-lat_round = [round(lat, 3) for lat in lat_list]
-print(lat_list)
-print(lat_round)
+lat_list = lat_grid[:,0].tolist()
+# lat_round = [round(lat, 6) for lat in lat_list]
 coord_dict = {"lat": lat_list}
 
 for i in range(0,len(lat_list)):
     lon_list = lon_grid[i,:].tolist()
+    # lon_round = [round(lon, 6) for lon in lon_list]
     coord_dict[i] = lon_list
 
 if export_dict_file:
     dict_file = os.path.join(output_dir, "dict_h115_swe_coords.json")
     with open(dict_file, 'w') as f:
         json.dump(coord_dict, f)
+
