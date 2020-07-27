@@ -8,6 +8,7 @@ import os
 import pandas as pd
 import math
 import statistics
+import sm_tools as tools
 
 
 # function to convert time in datestamp to a decimal number
@@ -110,6 +111,7 @@ def get_mean_datestamp(time_values, base_date):
 
 input_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\ascat-h115-ts_points_csv\date_data"
 output_dir = r"..\test_output_data\h115_overpass_data"
+logfile = os.path.join(output_dir, "logfile.txt")
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
@@ -125,7 +127,7 @@ if not os.path.exists(output_dir):
 
 # for each date file
 for input_filename in os.listdir(input_dir):
-    print(input_filename)
+    tools.write_log(logfile, input_filename)
     short_date_str = input_filename.split(".")[0]
     short_date = datetime.datetime.strptime(short_date_str, "%Y-%m-%d")
     cutoff_date = short_date + datetime.timedelta(hours=12)
@@ -144,7 +146,7 @@ for input_filename in os.listdir(input_dir):
             overpass_rows = overpass_data['data'].shape[0]
             mean_time = get_mean_datestamp(overpass_data['time_values'], short_date)
             output_filename = "sat{}_{}_{:02d}-{:02d}.csv".format(satellite, short_date_str, mean_time.hour, mean_time.minute)
-            print(output_filename)
-            print("{} rows".format(overpass_rows))
+            tools.write_log(logfile, output_filename)
+            tools.write_log(logfile, "{} rows".format(overpass_rows))
             output_file = os.path.join(output_dir, output_filename)
             overpass_data['data'].to_csv(output_file)
