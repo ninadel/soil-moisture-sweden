@@ -4,7 +4,7 @@ Date: 5/31/2020
 Script to reshuffle SMAP L4 data based on repurpose package
 """
 import os
-import reshuffle_smap_L4
+import pyt_reshuffle_smap_L4
 # from smap_io import reshuffle
 import os
 from datetime import datetime
