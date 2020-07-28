@@ -3,7 +3,7 @@ Author: Nina del Rosario
 Date: 6/2/2020
 Script to explore reading SMAP L4 files
 """
-from smos_extension import SMOSBECImg, SMOSBECDs
+from smos_extension import SMOSBECImg
 from datetime import datetime
 import os
 
@@ -31,7 +31,7 @@ imagegroup_reader.read_bulk = True
 # timestamps = smap_reader.tstamps_for_daterange(datetime(2018, 6, 1), datetime(2018, 6, 30))
 # print(timestamps)
 
-print(image.data['SM'].shape)
+# print(image.data['SM'].shape)
 
 smos_image = imagegroup_reader.read(datetime(2018, 6, 3))
 print(smos_image.data.head())

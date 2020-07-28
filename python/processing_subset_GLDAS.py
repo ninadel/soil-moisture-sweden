@@ -2,7 +2,6 @@ import json
 import netCDF4
 import numpy
 import os
-import sm_config as config
 import datetime
 from pytesmo.timedate import julian
 

@@ -34,8 +34,8 @@ ts_attributes = None
 input_dataset = CCI_SM_025Ds(input_root, parameters)
 input_dataset.subpath_templ = []
 test_image = input_dataset.read(datetime(2018,6,1))
-for key, value in test_image.data.items():
-    print(key)
+# for key, value in test_image.data.items():
+#     print(key)
 
 reshuffle = Img2Ts(input_dataset=input_dataset, outputpath=outputpath, startdate=startdate, enddate=enddate,
             input_grid=input_grid, target_grid=target_grid, cellsize_lat=5.0, cellsize_lon=5.0,

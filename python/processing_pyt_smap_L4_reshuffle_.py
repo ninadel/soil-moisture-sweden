@@ -26,7 +26,7 @@ input_dataset = SPL4SMP_nc_Ds(input_root, parameter=parameters, subpath_templ=[]
 
 # reshuffle
 if reshuffle:
-    reshuffle_smap_L4.reshuffle(input_dataset, outputpath, startdate, enddate, parameters)
+    pyt_reshuffle_smap_L4.reshuffle(input_dataset, outputpath, startdate, enddate, parameters)
 
 # test reshuffle
 # output note: why is timestamp set to midnight?

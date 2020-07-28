@@ -27,7 +27,7 @@ input_dataset.subpath_templ = []
 
 # reshuffle
 if run_reshuffle:
-    reshuffle_smap_L3.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
+    pyt_reshuffle_smap_L3.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
 
 # test reshuffle
 # output note: why is timestamp set to midnight?
