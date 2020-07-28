@@ -7,7 +7,7 @@ Script to reshuffle GLDAS data based on repurpose package
 import os
 from datetime import datetime
 from gldas.interface import GLDAS_Noah_v21_025Ds
-from reshuffle_GLDAS import reshuffle
+from pyt_reshuffle_GLDAS import reshuffle
 
 # input folder template
 # C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\gldas-noah-2.1-0.25deg_global\GLDAS Noah 0.25 2016

@@ -9,7 +9,6 @@ locations may have multiple observations for a date
 import pandas
 import os
 from datetime import datetime
-import sm_tools as tools
 
 write_data = True
 input_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\native_res_sweden\ascat-h115-ts_points_csv\point_data"

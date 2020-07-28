@@ -13,7 +13,7 @@ from gldas.interface import GLDAS_Noah_v21_025Ds
 from repurpose.img2ts import Img2Ts
 from pygeogrids.grids import BasicGrid
 run_reshuffle = True
-# test_reshuffle = True
+test_reshuffle = True
 
 input_root = r"D:\sm_backup\smos-ic-l3-25km_global\ASC"
 gldas_reader = GLDAS_Noah_v21_025Ds(data_path=r"C:\git\soil-moisture-sweden\test_output_data\gldas_subset")

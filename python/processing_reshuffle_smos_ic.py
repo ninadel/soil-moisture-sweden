@@ -39,19 +39,19 @@ for parameter in parameters:
 
 # print(ts_attributes)
 
-grid = GLDAS025Cellgrid()
+# grid = GLDAS025Cellgrid()
 
 
 
 # initialize SMOS IC reader
-input_dataset = SMOSDs(input_root, parameters=parameters, grid=grid)
+input_dataset = SMOSDs(input_root, parameters=parameters)
 
 # reshuffle
 if run_reshuffle:
     # reshuffle(input_root, outputpath, startdate, enddate, parameters=parameters, img_kwargs={'grid': GLDAS025Cellgrid()})
     fp, ff = os.path.split(ff)
     # grid=GLDAS025Cellgrid()
-    input_dataset = SMOSDs(input_root, parameters, flatten=True, grid=grid)
+    input_dataset = SMOSDs(input_root, parameters, flatten=True)
     if not os.path.exists(outputpath):
         os.makedirs(outputpath)
     global_attr = {'product': 'SMOS_IC'}

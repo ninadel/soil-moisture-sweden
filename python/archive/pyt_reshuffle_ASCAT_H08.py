@@ -11,7 +11,7 @@ import numpy as np
 from datetime import datetime
 
 from pygeogrids import BasicGrid
-from grid_gldas import GLDAS025Cellgrid
+# from grid_gldas import GLDAS025Cellgrid
 from ascat.h_saf import H08img
 
 from repurpose.img2ts import Img2Ts

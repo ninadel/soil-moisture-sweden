@@ -4,7 +4,7 @@ Date: 5/31/2020
 Script to reshuffle SMAP L4 data based on repurpose package
 """
 import os
-import reshuffle_smap_L4
+import pyt_reshuffle_smap_L4
 # from smap_io import reshuffle
 import os
 from datetime import datetime
@@ -26,7 +26,7 @@ input_dataset = SPL4SMP_nc_Ds(input_root, parameter=parameters, subpath_templ=[]
 
 # reshuffle
 if reshuffle:
-    reshuffle_smap_L4.reshuffle(input_dataset, outputpath, startdate, enddate, parameters)
+    pyt_reshuffle_smap_L4.reshuffle(input_dataset, outputpath, startdate, enddate, parameters)
 
 # test reshuffle
 # output note: why is timestamp set to midnight?

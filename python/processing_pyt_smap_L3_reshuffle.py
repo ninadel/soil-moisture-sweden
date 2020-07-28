@@ -4,8 +4,7 @@ Date: 5/31/2020
 Script to reshuffle SMAP L3 data based on repurpose package
 """
 import os
-from smap_extension import SPL3SMP_E_H5_Ds
-import reshuffle_smap_L3_E
+import pyt_reshuffle_smap_L3
 # from smap_io.reshuffle import reshuffle
 import os
 from datetime import datetime
@@ -16,20 +15,19 @@ test_reshuffle = True
 
 # input_root = r'C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\SMAP\SPL3SMP-smap-l3-36km_clipped_h5'
 # outputpath = r'C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-smap-l3-36km_nordic_reshuffle'
-input_root = r"C:\Nina_PCTower_Share\PCTower_SM\smap_L3_e"
-outputpath = r"C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-E_-smap-l3-e-09km_global_reshuffle"
+input_root = r'C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP_smap-L3-36km_global_h5 - Copy'
+outputpath = r'C:\Nina_PCTower_Share\PCTower_SM\SPL3SMP-smap-l3-36km_global_reshuffle'
 startdate = datetime(2015, 4, 1, 0, 0, 0)
 enddate = datetime(2018, 12, 31, 23, 59, 59)
 parameters = ['soil_moisture', 'surface_flag']
 
 # initialize SMAP L3 reader
-input_dataset = SPL3SMP_E_H5_Ds(input_root, parameter=parameters, overpass='AM', subpath_templ=[], crid=None,
-                                flatten=True)
+input_dataset = SPL3SMP_Ds(input_root, parameter=parameters, overpass='AM', subpath_templ=[], crid=None, flatten=True)
 input_dataset.subpath_templ = []
 
 # reshuffle
 if run_reshuffle:
-    reshuffle_smap_L3_E.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
+    pyt_reshuffle_smap_L3.reshuffle(input_dataset, outputpath, startdate, enddate, parameters, overpass='AM')
 
 # test reshuffle
 # output note: why is timestamp set to midnight?

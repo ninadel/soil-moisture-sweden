@@ -4,7 +4,7 @@ Date: 5/31/2020
 Script for testing reshuffle of H08 data
 """
 from datetime import datetime
-from reshuffle_ASCAT_H08 import reshuffle
+from pyt_reshuffle_ASCAT_H08 import reshuffle
 from ascat.h_saf import H08img
 
 parameters = ['ssm', 'proc_flag', 'ssm_noise', 'corr_flag']
