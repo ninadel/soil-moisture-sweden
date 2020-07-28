@@ -12,6 +12,7 @@ output_dir = r"..\input_data\xr"
 in_dir = r"..\input_data\SPL3SMP_E_smap-L3E_09km_clipped_NoReproj_nc"
 
 export_ds = False
+export_individual_files = True
 
 # first file for creating lat and lon dimensions
 first_file = r"..\input_data\SPL3SMP_E_smap-L3E_09km_clipped_NoReproj_nc\SMAP_L3_SM_P_E_20150401_R16510_001_HEGOUT.nc"
@@ -36,6 +37,8 @@ for filename in os.listdir(in_dir):
     retrieval_qual_flag_da = xr.DataArray(retrieval_qual_flag, coords=[lat, lon], dims=["lat", "lon"],
                                           name="retrieval_qual_flag")
     out_ds = xr.merge([soil_moisture_da, surface_flag_da, retrieval_qual_flag_da])
+    if export_individual_files:
+        out_ds.to_netcdf(os.path.join(output_dir, "smap-L3E-09km-subset-nofilter.nc"))
     out_ds["time"] = datestamp
     out_ds = out_ds.expand_dims('time').set_coords('time')
     ds_list.append(out_ds)
