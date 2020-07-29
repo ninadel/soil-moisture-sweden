@@ -52,28 +52,4 @@ dr = ds[sm_field]
 dr.to_netcdf(os.path.join(output_dir, "sentinel_01km_subset_validvalues.nc"))
 print("sentinel_01km_subset_validvalues.nc complete")
 
-# ds = xr.open_dataset(r"../test_output_data/sentinel/sentinel_01km_subset_validvalues.nc")
-# dr = ds[sm_field]
-
-# if test_plots:
-#     plot_test = dr.sel(time="2018-06-01")
-#     plot_test.plot()
-#     plt.title('{} {} subset, valid values'.format(product, native_res))
-#     plt.savefig(os.path.join(output_dir, "test_ssm_subset_validvalues.png"), dpi=150)
-#     plt.show()
-#     plt.clf()
-
-# interpolate nan?
-dr_regrid = xtools.regrid(ds, sm_field, method='nearest_s2d')
-# if test_plots:
-#     plot_test = dr_regrid.sel(time="2018-06-01")
-#     plot_test.plot()
-#     plt.title('{} 0.25 regrid'.format(product))
-#     plt.savefig(os.path.join(output_dir, "test_ssm_regrid.png"), dpi=150)
-#     plt.show()
-#     plt.clf()
-
-# export regrid to nc
-dr_regrid.to_netcdf(os.path.join(output_dir, "sentinel_0-25-regrid.nc"))
-print("sentinel_0-25-regrid.nc complete")
 
