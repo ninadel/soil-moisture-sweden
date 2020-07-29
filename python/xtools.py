@@ -82,26 +82,19 @@ def get_mf_dataset(file_list, product):
         return ds
 
 
-def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=False, mask=True):
+def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=True, mask=True):
     if 'latitude' in ds_in.coords:
         ds_in = ds_in.rename({'latitude': 'lat', 'longitude': 'lon'})
-    if 'time' in ds_in.coords:
-        ds_out = xr.Dataset({'lat': (['lat'], config.regrid_lat),
-                             'lon': (['lon'], config.regrid_lon),
-                            'time': (['time'], ds_in['time'].values)})
+    if 'time' in ds_in.coords and ds_in.time.size > 1:
+        dr_out = regrid_multidate(ds_in, var, method=method, reuse=False, cleanup=cleanup, mask=mask)
     else:
         ds_out = xr.Dataset({'lat': (['lat'], config.regrid_lat),
                              'lon': (['lon'], config.regrid_lon)})
-    reg = xe.Regridder(ds_in, ds_out, method=method, reuse_weights=reuse)
-    dr_in = ds_in[var]
-    dr_out = reg(dr_in)
-    if mask:
-        # code for masking
-        # do separate regrid with bilinear
-        # use bilinear to mask results from nearest_s2d
-        pass
-    if cleanup:
-        reg.clean_weight_file()  # clean-up
+        reg = xe.Regridder(ds_in, ds_out, method=method, reuse_weights=reuse)
+        dr_in = ds_in[var]
+        dr_out = reg(dr_in)
+        if cleanup:
+            reg.clean_weight_file()  # clean-up
     return dr_out
 
 
@@ -162,3 +155,47 @@ def populate_arrays(coord_dict, shape, data_file, output_vars):
         for var in output_vars:
             array_dict[var][row_idx,col_idx] = data_row[var]
     return array_dict
+
+
+def mask_edges(array, mask, mask_value=0):
+    masked_array = array.copy()
+    shape = array.shape
+    for i in range(0, shape[0]):
+        if mask.values[i, :].mean() == 0:
+            masked_array.values[i, :] = np.nan
+    for i in range(0, shape[1]):
+        if mask.values[:, i].mean() == 0:
+            masked_array.values[:, i] = np.nan
+    return masked_array
+
+
+def regrid_multidate(ds_in, var, method='nearest_s2d', reuse=False, cleanup=True, mask=True):
+    if mask:
+        # code for masking
+        concat_arrays = []
+        ds_in_first = ds_in[var][0, :, :]
+        ds_out = xr.Dataset({'lat': (['lat'], config.regrid_lat),
+                             'lon': (['lon'], config.regrid_lon)})
+        nearest_reg = xe.Regridder(ds_in_first, ds_out, method="nearest_s2d", reuse_weights=reuse)
+        bilinear_reg = xe.Regridder(ds_in_first, ds_out, method="bilinear", reuse_weights=reuse)
+        for index in range(0, ds_in.time.values.size):
+            dr_in = ds_in[var][index, :, :]
+            nearest_dr_out = nearest_reg(dr_in)
+            bilinear_dr_out = bilinear_reg(dr_in)
+            dr_regrid = mask_edges(nearest_dr_out, bilinear_dr_out)
+            concat_arrays.append(dr_regrid)
+        if cleanup:
+            nearest_reg.clean_weight_file()  # clean-up
+            bilinear_reg.clean_weight_file()  # clean-up
+        dr_concat = xr.concat(concat_arrays, dim="time")
+        return dr_concat
+    else:
+        ds_out = xr.Dataset({'lat': (['lat'], config.regrid_lat),
+                             'lon': (['lon'], config.regrid_lon),
+                             'time': (['time'], ds_in.time.values)})
+        reg = xe.Regridder(ds_in, ds_out, method=method, reuse_weights=reuse)
+        dr_in = ds_in[var]
+        dr_out = reg(dr_in)
+        if cleanup:
+            reg.clean_weight_file()  # clean-up
+        return dr_out
