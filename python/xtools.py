@@ -99,6 +99,7 @@ def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=False, mask=Tr
         # code for masking
         # do separate regrid with bilinear
         # use bilinear to mask results from nearest_s2d
+        pass
     if cleanup:
         reg.clean_weight_file()  # clean-up
     return dr_out
