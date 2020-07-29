@@ -13,18 +13,21 @@ except:
     warnings.warn("could not import xesmf. not windows compatible.")
 
 
-def preprocess_ascat_h101(in_ds):
+def preprocess_ascat_h101(in_ds, regrid=False):
     out_ds = in_ds[['proc_flag', 'soil_moisture']]
-    print(out_ds)
-    print(out_ds.coords)
-    print(out_ds['soil_moisture'])
+    # print(out_ds)
+    # print(out_ds.coords)
+    # print(out_ds['soil_moisture'])
     # out_ds = out_ds.sel(
     #     lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
     #     lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    if regrid:
+        # code for regrid
+        pass
     return out_ds
 
 
-def preprocess_sentinel(in_ds):
+def preprocess_sentinel(in_ds, regrid=False):
     # # get filename
     # source = in_ds['Soil_Moisture'].encoding['source']
     # # get timestamp from filename
@@ -35,10 +38,13 @@ def preprocess_sentinel(in_ds):
         # Sentinel has descending latitude order
         lat=slice(config.dict_extent_sweden['max_lat'], config.dict_extent_sweden['min_lat']),
         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    if regrid:
+        # code for regrid
+        pass
     return out_ds
 
 
-def preprocess_smos_ic(in_ds):
+def preprocess_smos_ic(in_ds, regrid=False):
     # get filename
     source = in_ds['Soil_Moisture'].encoding['source']
     # get timestamp from filename
@@ -55,6 +61,9 @@ def preprocess_smos_ic(in_ds):
     out_ds = out_ds.sel(
         lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    if regrid:
+        # code for regrid
+        pass
     # add time dimension
     out_ds['time'] = datestamp
     out_ds = out_ds.expand_dims('time').set_coords('time')
@@ -73,7 +82,7 @@ def get_mf_dataset(file_list, product):
         return ds
 
 
-def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=False):
+def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=False, mask=True):
     if 'latitude' in ds_in.coords:
         ds_in = ds_in.rename({'latitude': 'lat', 'longitude': 'lon'})
     if 'time' in ds_in.coords:
@@ -86,6 +95,10 @@ def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=False):
     reg = xe.Regridder(ds_in, ds_out, method=method, reuse_weights=reuse)
     dr_in = ds_in[var]
     dr_out = reg(dr_in)
+    if mask:
+        # code for masking
+        # do separate regrid with bilinear
+        # use bilinear to mask results from nearest_s2d
     if cleanup:
         reg.clean_weight_file()  # clean-up
     return dr_out
