@@ -23,7 +23,7 @@ output_dir = r"../test_output_data/sentinel"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-f = r"/Volumes/TOSHIBA EXT/sm_backup/xr/sentinel_01km-subset-nofilter.nc"
+f = r"../test_output_data/sentinel/sentinel_01km_subset_validvalues.nc"
 # in_dir = r"/Volumes/TOSHIBA EXT/sm_backup/native/cgls-biopar-ssm-01km_europe"
 
 # file_list = [os.path.join(in_dir, file) for file in os.listdir(in_dir)]
@@ -31,9 +31,9 @@ f = r"/Volumes/TOSHIBA EXT/sm_backup/xr/sentinel_01km-subset-nofilter.nc"
 # file = file_list[0]
 #
 ds = xr.open_dataset(f)
-print(ds)
-print(ds['ssm'].shape)
-print(ds['ssm'][0,:,:])
+# print(ds)
+# print(ds['ssm'].shape)
+# print(ds['ssm'][0,:,:])
 # print(ds[0,:,:])
 
 # print(ds['ssm'][0,:,:].shape)
@@ -78,7 +78,7 @@ for index, time in enumerate(ds['time'].values):
     # print(dr_regrid)
     concat_arrays.append(dr_regrid)
 
-ds_concat = xr.concat(concat_arrays)
+ds_concat = xr.concat(concat_arrays, dim="time")
 ds_concat.to_netcdf(os.path.join(output_dir, "sentinel_0-25-regrid-mask.nc"))
 
 
