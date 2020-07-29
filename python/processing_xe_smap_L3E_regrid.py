@@ -10,7 +10,6 @@ import sm_config as config
 
 product = "SMAP L3 Enhanced"
 sm_field = config.dict_product_fields[product]['sm_field']
-native_res = "9 km"
 output_dir = r"/Users/nina/Documents/GitHub/soil-moisture-sweden/test_output_data"
 f = r"/Volumes/TOSHIBA EXT/sm_backup/xr/smap-L3E-09km-subset-nofilter.nc"
 
