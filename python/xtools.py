@@ -105,21 +105,25 @@ def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=False, mask=Tr
     return dr_out
 
 
-def write_ts_quarter_deg(dr, output_dir, overwrite=False):
+def write_ts_quarter_deg(dr, output_dir, overwrite=False, dropna=False):
     location_len = len(config.dict_swe_gldas_points.keys())
     location_count = 0
     for location, metadata in config.dict_swe_gldas_points.items():
         outfile = os.path.join(output_dir, "{}.csv".format(location))
         if not overwrite and os.path.exists(outfile):
             with open(os.path.join(output_dir, "logfile.txt"), "a") as file:
-                file.write("{} {} exists, skipped".format(datetime.now(), location) + "\n")
+                message = "{} {} exists, skipped".format(datetime.now(), location)
+                file.write(message + "\n")
+                warnings.warn(message)
             break
         location_count += 1
         print("location {} of {}".format(location_count, location_len))
         # use lat index instead?
         ts = dr.sel(lat=metadata['latitude'], lon=metadata['longitude'])
         # ts_df = ts.to_pandas()
-        ts_df = ts.to_pandas().dropna()
+        ts_df = ts.to_pandas()
+        if dropna:
+            ts_df = ts_df.dropna()
         ts_df.rename("sm", inplace=True)
         # ts_df.dropna(inplace=True)
         if ts_df is not None:
