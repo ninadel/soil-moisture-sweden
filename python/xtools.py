@@ -44,6 +44,28 @@ def preprocess_sentinel(in_ds, regrid=False):
     return out_ds
 
 
+def preprocess_smos_bec(in_ds, regrid=False):
+    # get filename
+    source = in_ds['SM'].encoding['source']
+    # get timestamp from filename
+    datestamp = tools.get_filename_timestamp(source, r"_[0-9]{8}T")
+    # datestamp_int = tools.get_filename_timestamp(source, r"_[0-9]{8}T", return_int=True)
+    # since timestamp is midnight, add local overpass time in utc
+    local_time_utc = 5
+    datestamp = datestamp.replace(hour=local_time_utc)
+    # subset to sweden
+    out_ds = in_ds.sel(
+        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
+        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    if regrid:
+        # code for regrid
+        pass
+    # add time dimension
+    out_ds['time'].values[:] = datestamp
+    # out_ds = out_ds.expand_dims('time').set_coords('time')
+    return out_ds
+
+
 def preprocess_smos_ic(in_ds, regrid=False):
     # get filename
     source = in_ds['Soil_Moisture'].encoding['source']
@@ -79,6 +101,9 @@ def get_mf_dataset(file_list, product):
         return ds
     if product == "SMOS-IC":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_smos_ic, combine='by_coords')
+        return ds
+    if product == "SMOS-BEC":
+        ds = xr.open_mfdataset(file_list, preprocess=preprocess_smos_bec, combine='by_coords')
         return ds
 
 
