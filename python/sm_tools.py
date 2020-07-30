@@ -612,7 +612,7 @@ def get_filtered_data(product, data, filter_counts=False):
         # Quality_Flag field is already filtered to 0, 1 by reader
         # For now, no filters for SMOS-IC
         # See "Quality_Flag" field
-        valid_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
+        valid_data = data[data[sm_field] != 2]
         filter_count_dict['valid'] = valid_data.shape[0]
         result_data = valid_data
     elif product == "Sentinel-1":
@@ -628,7 +628,7 @@ def get_filtered_data(product, data, filter_counts=False):
         # 1: L1 brightness temperature corrected by sea-land contamination;
         # 2: L3 soil moisture with no data;
         # 4: L4 soil moisture without physical meaning";
-        quality_data = data[(data['quality_flag'] == 0) | (data['quality_flag'] == 1)]
+        # quality_data = data[(data['quality_flag'] == 0) | (data['quality_flag'] == 1)]
         filter_count_dict['quality'] = quality_data.shape[0]
         result_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
         result_data = result_data[(result_data['quality_flag'] == 0) | (result_data['quality_flag'] == 1)]
