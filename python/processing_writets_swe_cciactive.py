@@ -23,5 +23,5 @@ if not os.path.exists(output_dir):
 # for gpi, coordinate in dict_swe_gldas_points.items():
 #     print(gpi, coordinate)
 
-tools.write_grid_shuffle_ts('CCI Active', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=False)
+tools.write_grid_shuffle_ts('CCI Active', output_dir, dict_swe_gldas_points, filter_prod=False, anomaly=False)
 tools.write_grid_shuffle_ts('CCI Active', output_dir, dict_swe_gldas_points, filter_prod=True, anomaly=True)
