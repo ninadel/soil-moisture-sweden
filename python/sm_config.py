@@ -26,7 +26,7 @@ dict_product_inputs = {
         "grid_file": "TUW_WARP5_grid_info_2_3.nc",
         "static_layers_dir": None,
         "csv_stations": r"..\input_data\csv_stations\ASCAT 12.5 TS",
-        "csv_quarters": None
+        "csv_quarters": r"..\input_data\csv_quarters\ascat-h115_0-25-regrid_ts"
     },
     "CCI Active": {
         "ts_dir": r"..\input_data\cci-0.25deg_active_global_reshuffle",
@@ -46,7 +46,7 @@ dict_product_inputs = {
     "ERA5 0-1": {
         "ts_dir": None,
         "csv_stations": r"..\input_data\csv_stations\ERA5 0-1",
-        "csv_quarters": None
+        "csv_quarters": r"..\csv_quarters\era5_0-25-regrid_ts"
     },
     "ERA5 0-25": {
         "ts_dir": None,
