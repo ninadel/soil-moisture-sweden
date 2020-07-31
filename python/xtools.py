@@ -27,18 +27,19 @@ def preprocess_ascat_h101(in_ds):
 def preprocess_cci(in_ds):
     # subset to sweden
     out_ds = in_ds.sel(
-        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
+        # CCI has descending latitude order
+        lat=slice(config.dict_extent_sweden['max_lat'], config.dict_extent_sweden['min_lat']),
         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
     return out_ds
 
 
-def preprocess_gldas(in_ds):
-    out_ds = in_ds['SoilMoi0_10cm_inst']
-    # subset to sweden
-    out_ds = out_ds.sel(
-        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
-        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
-    return out_ds
+# def preprocess_gldas(in_ds):
+#     out_ds = in_ds['SoilMoi0_10cm_inst']
+#     # subset to sweden
+#     out_ds = out_ds.sel(
+#         lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
+#         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+#     return out_ds
 
 
 def preprocess_sentinel(in_ds):
@@ -101,9 +102,9 @@ def get_mf_dataset(file_list, product):
     if product == "ASCAT 12.5 Swath":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_ascat_h101, combine='by_coords', decode_times=False)
         return ds
-    if product == "GLDAS":
-        ds = xr.open_mfdataset(file_list, preprocess=preprocess_gldas, combine='by_coords')
-        return ds
+    # if product == "GLDAS":
+    #     ds = xr.open_mfdataset(file_list, preprocess=preprocess_gldas, combine='by_coords')
+    #     return ds
     if product == "CCI Active" or product == "CCI Passive" or product == "CCI Combined":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_cci, combine='by_coords')
         return ds
