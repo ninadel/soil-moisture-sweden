@@ -71,8 +71,8 @@ dict_product_inputs = {
     },
     "SMAP L3 Enhanced": {
         "ts_dir": None,
-        "csv_stations": r"C:\git\soil-moisture-sweden\input_data\csv_stations\SMAP L3 Enhanced",
-        "csv_quarters": None
+        "csv_stations": r"..\input_data\csv_stations\SMAP L3 Enhanced",
+        "csv_quarters": r"..\input_data\csv_quarters\smap_L3E_regrid_ts"
     },
     "SMAP L4": {
         "ts_dir": r"..\input_data\SPL4SMAU_nordic_reshuffle",
