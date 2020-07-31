@@ -13,7 +13,7 @@ except:
     warnings.warn("could not import xesmf. not windows compatible.")
 
 
-def preprocess_ascat_h101(in_ds, regrid=False):
+def preprocess_ascat_h101(in_ds):
     out_ds = in_ds[['proc_flag', 'soil_moisture']]
     # print(out_ds)
     # print(out_ds.coords)
@@ -21,13 +21,27 @@ def preprocess_ascat_h101(in_ds, regrid=False):
     # out_ds = out_ds.sel(
     #     lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
     #     lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
-    if regrid:
-        # code for regrid
-        pass
     return out_ds
 
 
-def preprocess_sentinel(in_ds, regrid=False):
+def preprocess_cci(in_ds):
+    # subset to sweden
+    out_ds = in_ds.sel(
+        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
+        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    return out_ds
+
+
+def preprocess_gldas(in_ds):
+    out_ds = in_ds['SoilMoi0_10cm_inst']
+    # subset to sweden
+    out_ds = out_ds.sel(
+        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
+        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    return out_ds
+
+
+def preprocess_sentinel(in_ds):
     # # get filename
     # source = in_ds['Soil_Moisture'].encoding['source']
     # # get timestamp from filename
@@ -38,13 +52,10 @@ def preprocess_sentinel(in_ds, regrid=False):
         # Sentinel has descending latitude order
         lat=slice(config.dict_extent_sweden['max_lat'], config.dict_extent_sweden['min_lat']),
         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
-    if regrid:
-        # code for regrid
-        pass
     return out_ds
 
 
-def preprocess_smos_bec(in_ds, regrid=False):
+def preprocess_smos_bec(in_ds):
     # get filename
     source = in_ds['SM'].encoding['source']
     # get timestamp from filename
@@ -57,16 +68,13 @@ def preprocess_smos_bec(in_ds, regrid=False):
     out_ds = in_ds.sel(
         lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
-    if regrid:
-        # code for regrid
-        pass
     # add time dimension
     out_ds['time'].values[:] = datestamp
     # out_ds = out_ds.expand_dims('time').set_coords('time')
     return out_ds
 
 
-def preprocess_smos_ic(in_ds, regrid=False):
+def preprocess_smos_ic(in_ds):
     # get filename
     source = in_ds['Soil_Moisture'].encoding['source']
     # get timestamp from filename
@@ -83,9 +91,6 @@ def preprocess_smos_ic(in_ds, regrid=False):
     out_ds = out_ds.sel(
         lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
-    if regrid:
-        # code for regrid
-        pass
     # add time dimension
     out_ds['time'] = datestamp
     out_ds = out_ds.expand_dims('time').set_coords('time')
@@ -95,6 +100,12 @@ def preprocess_smos_ic(in_ds, regrid=False):
 def get_mf_dataset(file_list, product):
     if product == "ASCAT 12.5 Swath":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_ascat_h101, combine='by_coords', decode_times=False)
+        return ds
+    if product == "GLDAS":
+        ds = xr.open_mfdataset(file_list, preprocess=preprocess_gldas, combine='by_coords')
+        return ds
+    if product == "CCI Active" or product == "CCI Passive" or product == "CCI Combined":
+        ds = xr.open_mfdataset(file_list, preprocess=preprocess_cci, combine='by_coords')
         return ds
     if product == "Sentinel-1":
         ds = xr.open_mfdataset(file_list, preprocess=preprocess_sentinel, combine='by_coords')
