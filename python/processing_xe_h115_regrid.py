@@ -20,7 +20,7 @@ output_dir = r"../test_output_data/ascat-h115_regrid"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-f = r""
+f = r"/Users/nina/Documents/GitHub/soil-moisture-sweden/test_output_data/ascat-h115_rebuild-subset-nofilter.nc"
 ds = xr.open_dataset(f)
 
 dr_out = xt.regrid_multidate(ds, sm_field)
