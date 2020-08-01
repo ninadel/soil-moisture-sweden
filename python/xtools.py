@@ -207,6 +207,8 @@ def mask_edges(array, mask, mask_value=0):
 
 
 def regrid_multidate(ds_in, var, method='nearest_s2d', reuse=False, cleanup=True, mask=True):
+    if 'latitude' in ds_in.coords:
+        ds_in = ds_in.rename({'latitude': 'lat', 'longitude': 'lon'})
     if mask:
         # code for masking
         concat_arrays = []
