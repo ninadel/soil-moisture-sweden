@@ -39,15 +39,15 @@ metrics_filename = "evaluation_metrics_{}.csv".format(analysis_timestamp)
 startdate = datetime(2015,4,1)
 enddate = datetime(2018, 12, 31, 23, 59)
 
-results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False)
+results = evaluation.evaluate_shuffle(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-results = evaluation.evaluate(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
+results = evaluation.evaluate_shuffle(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
                               metrics_df=results)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False,
+results = evaluation.evaluate_shuffle(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False,
                               metrics_df=results)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-results = evaluation.evaluate(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
+results = evaluation.evaluate_shuffle(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
                               metrics_df=results)
 results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
 
