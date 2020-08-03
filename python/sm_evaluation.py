@@ -6,14 +6,70 @@ Script for evaluating SM datasets
 from datetime import datetime
 import os
 import pandas
-import pytz
 import warnings
 
 from pytesmo import metrics, temporal_matching
 from pytesmo.scaling import scale
+from pytesmo.time_series.anomaly import calc_anomaly
 import sm_tools as tools
 import sm_config as config
 
+
+# function to evaluate time series for two datasets for one location
+# input: dictionary datasets, ref = tuple of name, data, eval = tuple of name, data
+# output: dictionary of location metrics, dictionary of
+# data_dict = {"product":
+# evaluate location
+def evaluate_location_xr(dataset_dict, anomaly=False, match_window=1/24.):
+    metrics = {}
+    ref_data_name = dataset_dict['reference']['name']
+    ref_data = dataset_dict['reference']['data']
+    eval_data_name = dataset_dict['evaluation']['name']
+    eval_data = dataset_dict['evaluation']['data']
+    if anomaly:
+        ref_data = calc_anomaly(ref_data)
+        eval_data = calc_anomaly(eval_data)
+    matched_data = temporal_matching.matching(ref_data, eval_data, window=match_window)
+    metrics = get_evaluation_metrics(matched_data, anomaly)
+    return metrics
+
+
+# function to cycle through each in-situ station in a network, evaluate network-level timeframes
+# input: folder for in-situ station data
+# output: dictionary of
+# evaluate station network
+def evaluate_network_xr(datasets):
+    # cycle through each location
+        # metrics, inventory, matched_data = evaluate_location_xr(dataset_dict)
+        # get metrics and add to df
+        # get inventory and add to df
+        # for each timeframe
+            # add matched data to
+    # build dataframe of all matched data
+    pass
+
+
+# function for evaluating a set of grid cells in a region, evaluate region-level land types, evaluate region-level
+#   timeframes
+# input: location dictionary, tuple of nc files, output folder, evaluate_timeframes=True, evaluate_landuse=True,
+#   export_datasets=False
+# output: dictionary of dataframes: 1 location metrics, 1 network timeframe metrics, 1 network landuse metrics,
+#   1 inventory
+# evaluate grid
+def evaluate_grid_xr(locations, evaluation_dict, evaluate_timeframes=):
+    evaluation_name, evaluation_file = evaluation_dict['evaluation']
+    reference_name, reference_file = evaluation_dict['reference']
+    # try to evaluate timeframes
+    # for each location in locations
+        # get reference series
+        # get evaluation series
+        # get evaluation inventory pre-filter
+        # filter
+        # get evaluation inventory post_filter
+        # temporal match
+        # get evaluation metrics
+    # return metrics_df, inventory_df
+    pass
 
 def evaluate_station_product(station, product, product_reader=None, startdate=datetime(2015, 4, 1),
                              enddate=datetime(2018, 12, 31, 23, 59), anomaly=False, year_filter=None,
@@ -74,9 +130,9 @@ def evaluate_station_product(station, product, product_reader=None, startdate=da
     elif enddate is not None:
         product_data = product_data[product_data.index <= enddate]
     if year_filter is not None:
-        product_data = tools.get_timeframe_data(product_data, year_filter=year_filter)
+        product_data = tools.filter_timeframe_data(product_data, year_filter=year_filter)
     if season_filter is not None:
-        product_data = tools.get_timeframe_data(product_data, season_filter=season_filter)
+        product_data = tools.filter_timeframe_data(product_data, season_filter=season_filter)
 
     try:
         matched_data = temporal_matching.matching(product_data, station_data, window=match_window)
@@ -182,12 +238,12 @@ def evaluate_network_product(stations, product, startdate=datetime(2015, 4, 1),
 
 
 def evaluate_timeframe(matched_data, year_filter=None, season_filter=None, anomaly=False):
-    timeframe_data = tools.get_timeframe_data(matched_data, year_filter, season_filter)
+    timeframe_data = tools.filter_timeframe_data(matched_data, year_filter, season_filter)
     timeframe_metrics = get_evaluation_metrics(timeframe_data, anomaly)
     return timeframe_metrics
 
 
-def get_evaluation_metrics(evaluation_data, anomaly):
+def get_evaluation_metrics(evaluation_data, anomaly=False):
     metrics_dict = {}
 
     columns = evaluation_data.columns
@@ -218,7 +274,8 @@ def get_evaluation_metrics(evaluation_data, anomaly):
 
     return metrics_dict
 
-def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1), enddate=datetime(2018, 12, 31, 23, 59),
+
+def evaluate_shuffle(references, products, output_folder, startdate=datetime(2015, 4, 1), enddate=datetime(2018, 12, 31, 23, 59),
              export_ts=True, evaluate_timeframes=True, anomaly=False, metrics_df=None):
     """""
     Function to compare soil moisture product to reference data
@@ -362,7 +419,7 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                                                                                      anomaly_str)
                         tools.write_log(log_file, '*** analyzing {} {} for {} ({}) ***'.format(network, timeframe,
                                                                                                product, anomaly_str))
-                        tf_network_matched_data = tools.get_timeframe_data(network_matched_data, year_filter=year)
+                        tf_network_matched_data = tools.filter_timeframe_data(network_matched_data, year_filter=year)
                         if export_ts:
                             tf_network_matched_data.to_csv(os.path.join(data_output_folder, data_output_str))
                         tools.write_log(log_file, '{} {} matched data shape: {}'.format(network_name, timeframe,
@@ -388,7 +445,7 @@ def evaluate(references, products, output_folder, startdate=datetime(2015, 4, 1)
                         data_output_str = 'network_{}_{}_{}_matched_data.csv'.format(network_name, timeframe,
                                                                                      anomaly_str)
                         tools.write_log(log_file, '*** analyzing {} {} for {} ***'.format(network, timeframe, product))
-                        tf_network_matched_data = tools.get_timeframe_data(network_matched_data,
+                        tf_network_matched_data = tools.filter_timeframe_data(network_matched_data,
                                                                                season_filter=season)
                         if export_ts:
                             tf_network_matched_data.to_csv(os.path.join(data_output_folder, data_output_str))
