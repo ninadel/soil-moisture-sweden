@@ -669,3 +669,12 @@ def split_by_timeframe(data, years=True, seasons=True, months=False):
     #     if season_filter == 'non-winter':
     #         df = df[(df.index.month != 12) & (df.index.month != 1) & (df.index.month != 2)]
     return timeframe_data_dict
+
+
+# function to count records
+def get_timeframe_counts(data):
+    count_dict = {}
+    timeframe_data_dict = split_by_timeframe(data)
+    for key in timeframe_data_dict.keys():
+        count_dict[key] = timeframe_data_dict[key].shape[0]
+    return count_dict
