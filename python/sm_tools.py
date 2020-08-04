@@ -631,9 +631,9 @@ def get_filtered_data(product, data, filter_counts=False):
         # 2: L3 soil moisture with no data;
         # 4: L4 soil moisture without physical meaning";
         # quality_data = data[(data['quality_flag'] == 0) | (data['quality_flag'] == 1)]
-        filter_count_dict['quality'] = quality_data.shape[0]
+        # filter_count_dict['quality'] = quality_data.shape[0]
         result_data = data[(data[sm_field] >= 0) & (data[sm_field] < 1)]
-        result_data = result_data[(result_data['quality_flag'] == 0) | (result_data['quality_flag'] == 1)]
+        # result_data = result_data[(result_data['quality_flag'] == 0) | (result_data['quality_flag'] == 1)]
     filter_count_dict['passed'] = result_data.shape[0]
     if filter_counts:
         return result_data, filter_counts
