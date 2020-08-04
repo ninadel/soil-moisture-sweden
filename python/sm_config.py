@@ -162,8 +162,14 @@ with open("dict_extent_sweden.json", "r") as f:
     dict_extent_sweden = json.load(f)
 
 coord_buffer = 2
-regrid_lat = numpy.arange(dict_extent_sweden["min_lat"]-coord_buffer, dict_extent_sweden["max_lat"]+coord_buffer, 0.25)
-regrid_lon = numpy.arange(dict_extent_sweden["min_lon"]-coord_buffer, dict_extent_sweden["max_lon"]+coord_buffer, 0.25)
+study_area = {
+    "min_lat": 54.125,
+    "max_lat": 68.875,
+    "min_lon": 8.625,
+    "max_lon": 24.125
+}
+regrid_lat = numpy.arange(study_area["min_lat"]-coord_buffer, study_area["max_lat"]+coord_buffer, 0.25)
+regrid_lon = numpy.arange(study_area["min_lon"]-coord_buffer, study_area["max_lon"]+coord_buffer, 0.25)
 interp_lat = numpy.arange(dict_extent_sweden["min_lat"]-coord_buffer, dict_extent_sweden["max_lat"]+coord_buffer, 0.25)
 interp_lon = numpy.arange(dict_extent_sweden["min_lon"]-coord_buffer, dict_extent_sweden["max_lon"]+coord_buffer, 0.25)
 
