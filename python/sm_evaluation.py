@@ -182,6 +182,7 @@ def evaluate_grid_xr(evaluation_dict):
             tools.write_log(logfile, message, print_string=verbose)
     for timeframe, metrics_dict in metrics_dict.items():
         metrics_dict.to_csv(os.path.join(output_folder, "{} {} metrics.csv".format(evaluation_str, timeframe)))
+    return metrics_dict
 
 
 # def evaluate_station_product(station, product, product_reader=None, startdate=datetime(2015, 4, 1),
