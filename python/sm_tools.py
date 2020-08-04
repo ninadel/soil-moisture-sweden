@@ -650,7 +650,7 @@ def unix_time_seconds(dt):
 
 # function which splits data into timeframe datasets
 # input: dataframe or data series where index is date
-def split_by_timeframe(df, years=True, seasons=True, months=False):
+def split_by_timeframe(df, years=True, seasons=True, months=True):
     timeframe_data_dict = {}
     count_dict = {}
     if seasons:
@@ -666,7 +666,8 @@ def split_by_timeframe(df, years=True, seasons=True, months=False):
         unique_months = set(df.index.month.to_list())
         # look at index and find unique months
         for month in unique_months:
-            timeframe_data_dict[month] = filter_timeframe_data(df, month_filter=month)
+            month_key = "M{:02D}".format(month)
+            timeframe_data_dict[month_key] = filter_timeframe_data(df, month_filter=month)
     for key in timeframe_data_dict.keys():
         count_dict[key] = timeframe_data_dict[key].shape[0]
     return timeframe_data_dict, count_dict
