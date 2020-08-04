@@ -21,7 +21,7 @@ grid_evaluation_dict = {
     'match_window': 1/24., #1 hour
     'anomaly': None,
     'evaluate_timeframes': True,
-    'export_ts': True,
+    'export_ts': False,
     'output_root': r"../analysis_output",
     'verbose': False
 }
@@ -33,10 +33,14 @@ reference_dataset = xr.open_dataset(reference_file)
 evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
                        'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
 
+# # skipping SMAP L4 for now
+# evaluation_datasets = ['ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC', 'SMAP L3',
+#                        'CCI Combined', 'CCI Passive', 'CCI Active']
+
 #for evaluation_dataset_name in evaluation_datasets:
 #    do_a_thing(evaluation_dataset_name)
 
-def do_a_thing(evaluation_dataset_name):
+def evaluate_dataset(evaluation_dataset_name):
     evaluation_dict = grid_evaluation_dict.copy()
     evaluation_dict['reference'] = (reference_dataset_name, reference_dataset)
     evalaution_dataset_file = config.dict_quarterdeg_files[evaluation_dataset_name]
@@ -47,6 +51,7 @@ def do_a_thing(evaluation_dataset_name):
     print("trying {}".format(evaluation_str))
     try:
         evaluation.evaluate_grid_xr(evaluation_dict)
+        print("done {}".format(evaluation_str))
     except:
         warnings.warn("could not process evaluation for {}".format(evaluation_str))
     evaluation_dict['anomaly'] = True
@@ -54,12 +59,13 @@ def do_a_thing(evaluation_dataset_name):
     print("trying {}".format(evaluation_str))
     try:
         evaluation.evaluate_grid_xr(evaluation_dict)
+        print("done {}".format(evaluation_str))
     except:
         warnings.warn("could not process evaluation for {}".format(evaluation_str))
 
 if __name__ == '__main__':
     with Pool(4) as p:
-        p.map(do_a_thing, evaluation_datasets)
+        p.map(evaluate_dataset, evaluation_datasets)
 
 
 # for dataset_name, dataset_file in config.dict_quarterdeg_files.items():
