@@ -656,33 +656,36 @@ def split_by_timeframe(df):
     # get years data
     unique_years = set(df.index.year.to_list())
     for year in unique_years:
-        timeframe_data_dict[year] = filter_timeframe_data(df, year_filter=year)
+        key = "Y_{}".format(str(year))
+        timeframe_data_dict[key] = filter_timeframe_data(df, year_filter=year)
     # get seasons data
     seasons = ['winter', 'spring', 'summer', 'fall']
     for season in seasons:
-        timeframe_data_dict[season] = filter_timeframe_data(df, season_filter=season)
+        key = "S_{}".format(season)
+        timeframe_data_dict[key] = filter_timeframe_data(df, season_filter=season)
     # get months data
     unique_months = set(df.index.month.to_list())
     for month in unique_months:
-        timeframe_data_dict[month] = filter_timeframe_data(df, month_filter=month)
+        key = "M_{:2d}".format(month)
+        timeframe_data_dict[key] = filter_timeframe_data(df, month_filter=month)
     for season in seasons:
+        season_data = timeframe_data_dict["S_{}".format(season)]
         for year in unique_years:
-            key = "{}_{}".format(season,str(year))
+            key = "SY_{}_{}".format(season,str(year))
             try:
-                season_data = timeframe_data_dict[season]
-                year_data = timeframe_data_dict[year]
-                timeframe_data_dict[key] = season_data[season_data.isin(year_data)]
+                intersection_data = filter_timeframe_data(season_data, year_filter=year)
+                timeframe_data_dict[key] = intersection_data
             except:
-                warnings.warn("could not filter data for {}".format(key))
+                warnings.warn("intersect for for {} failed".format(key))
     for month in unique_months:
+        month_data = timeframe_data_dict["M_{:2d}".format(month)]
         for year in unique_years:
-            key = "{:2d}{}".format(month, str(year))
+            key = "MY_{:2d}{}".format(month, str(year))
             try:
-                month_data = timeframe_data_dict[month]
-                year_data = timeframe_data_dict[year]
-                timeframe_data_dict[key] = month_data[month_data.isin(year_data)]
+                intersection_data = filter_timeframe_data(month_data, year_filter=year)
+                timeframe_data_dict[key] = intersection_data
             except:
-                warnings.warn("could not filter data for {}".format(key))
+                warnings.warn("intersect for for {} failed".format(key))
     for key in timeframe_data_dict.keys():
         count_dict[key] = timeframe_data_dict[key].shape[0]
     return timeframe_data_dict, count_dict
