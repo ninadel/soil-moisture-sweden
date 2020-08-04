@@ -103,11 +103,7 @@ def evaluate_insitu_network_xr(evaluation_dict):
     pass
 
 
-# function for evaluating a set of grid cells in a region, evaluate region-level land types, evaluate region-level
-#   timeframes
-# output: dictionary of dataframes: 1 location metrics, 1 network timeframe metrics, 1 network landuse metrics,
-#   1 inventory
-# evaluate grid
+# function for evaluating a set of grid cells in a region
 def evaluate_grid_xr(evaluation_dict):
     def get_new_metrics_df():
         metrics_df = pandas.DataFrame(columns=['ref_dataset', 'eval_dataset', 'timefilter', 'anomaly', 'loc',
@@ -129,9 +125,6 @@ def evaluate_grid_xr(evaluation_dict):
     eval_dataset_name, eval_dataset = evaluation_dict['evaluation']
     # anomaly: boolean which determines if absolute or anomaly values are calculated
     anomaly = evaluation_dict['anomaly']
-    # evaluate_timeframes: a boolean - if True, matched data will be split into timeframes and a separate metrics table and inventory table
-    # will be returned
-    evaluate_timeframes = evaluation_dict['evaluate_timeframes']
     # export_ts: a boolean - if True, time series data (reference, evaluation, matched) will be exported as csv to output_folder,
     # but metrics and inventory will be exported
     export_ts = evaluation_dict['export_ts']
@@ -146,8 +139,7 @@ def evaluate_grid_xr(evaluation_dict):
         anomaly_str = "anomaly"
     else:
         anomaly_str = "absolute"
-    evaluation_str = "{} {} {} {}".format(datetime.now().strftime("%Y%m%d%H%M%S"), eval_dataset_name,
-                                          ref_dataset_name, anomaly_str)
+    evaluation_str = "{} {} {}".format(eval_dataset_name, ref_dataset_name, anomaly_str)
     output_folder = os.path.join(output_root, evaluation_str)
     os.makedirs(output_folder)
     if export_ts:
@@ -156,8 +148,8 @@ def evaluate_grid_xr(evaluation_dict):
     logfile = os.path.join(output_folder, "{} log.txt".format(evaluation_str))
     tools.write_log(logfile, evaluation_str, print_string=verbose)
     for loc, loc_data in locations.items():
+        loc_evaluation_str = "{} {}".format(evaluation_str, loc)
         try:
-            loc_evaluation_str = "{} {}".format(evaluation_str, loc)
             lon = loc_data['longitude']
             lat = loc_data['latitude']
             veg_class = loc_data['veg_class_name']
@@ -166,8 +158,12 @@ def evaluate_grid_xr(evaluation_dict):
                 timeframe_evaluation_str = "{} {}".format(loc_evaluation_str, timeframe)
                 n = timeframe_metrics['n']
                 sig = timeframe_metrics['pearson_sig']
-                tools.write_log(logfile, "{}, {} rows".format(timeframe_evaluation_str, n), print_string=verbose)
-                tools.write_log(logfile, "{}, significant: {}".format(timeframe_evaluation_str, sig), print_string=verbose)
+                pearson_r = timeframe_metrics['pearson_r']
+                tools.write_log(logfile, "{}, rows: {}".format(timeframe_evaluation_str, n), print_string=verbose)
+                tools.write_log(logfile, "{}, pearson_r: {}".format(timeframe_evaluation_str, pearson_r),
+                                print_string=verbose)
+                tools.write_log(logfile, "{}, significant: {}".format(timeframe_evaluation_str, sig),
+                                print_string=verbose)
                 loc_metrics_row = get_metrics_row()
                 loc_metrics_row.update(timeframe_metrics)
                 if timeframe not in metrics_dict.keys():
@@ -175,15 +171,18 @@ def evaluate_grid_xr(evaluation_dict):
                 metrics_dict[timeframe] = metrics_dict[timeframe].append(loc_metrics_row, ignore_index=True)
             if export_ts:
                 loc_ref_data = loc_data_dict['ref_ts']
-                loc_ref_data.to_csv(os.path.join(os.path.join(ts_folder, "{} {}.csv".format(ref_dataset_name, loc))))
+                loc_ref_data.to_csv(os.path.join(os.path.join(ts_folder, "{} {} ts.csv".format(ref_dataset_name, loc))))
                 loc_eval_data = loc_data_dict['eval_ts']
-                loc_eval_data.to_csv(os.path.join(os.path.join(ts_folder, "{} {}.csv".format(eval_dataset_name, loc))))
+                loc_eval_data.to_csv(os.path.join(os.path.join(ts_folder, "{} {} ts.csv".format(eval_dataset_name, loc))))
                 loc_matched_data = loc_data_dict['matched_data']
                 loc_matched_data.to_csv(os.path.join(os.path.join(ts_folder, "{} matched.csv".format(loc_evaluation_str))))
         except:
-            warnings.warn("could not process location {}".format(loc))
-    for timeframe, metrics_dict in metrics_dict.items():
-        metrics_dict.to_csv(os.path.join(output_folder, "{} {} metrics.csv".format(evaluation_str, timeframe)))
+            message = "WARNING! could not process {}".format(loc_evaluation_str)
+            warnings.warn(message)
+            tools.write_log(logfile, message, print_string=verbose)
+    for timeframe, metrics_df in metrics_dict.items():
+        metrics_df.to_csv(os.path.join(output_folder, "{} {} metrics.csv".format(evaluation_str, timeframe)))
+    return metrics_dict
 
 
 # def evaluate_station_product(station, product, product_reader=None, startdate=datetime(2015, 4, 1),

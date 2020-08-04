@@ -128,6 +128,7 @@ dict_quarterdeg_files = {
     "CCI Combined": r"..\input_data\xr\cci-combined-subset-nofilter.nc",
     "ERA5 0-1": r"..\input_data\xr\regrid\era-0-1_0-25-regrid.nc",
     "GLDAS": r"..\input_data\xr\gldas-subset-nofilter.nc",
+    "SMAP L3": r"..\input_data\xr\regrid\smap-L3_0-25-regrid.nc",
     "SMAP L3 Enhanced": r"..\input_data\xr\regrid\smap-L3E_0-25-regrid.nc",
     "SMAP L4": r"..\input_data\xr\regrid\smap-L4_0-25-regrid.nc",
     "Sentinel-1": r"..\input_data\xr\regrid\sentinel_0-25-regrid.nc",
