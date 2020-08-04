@@ -142,7 +142,6 @@ def evaluate_grid_xr(evaluation_dict):
     # verbose: boolean which determines if log messages are printed (if false, warnings will still be printed)
     verbose = evaluation_dict['verbose']
     metrics_dict = {}
-    test_count = 0
     if anomaly:
         anomaly_str = "anomaly"
     else:
@@ -181,9 +180,6 @@ def evaluate_grid_xr(evaluation_dict):
                 loc_eval_data.to_csv(os.path.join(os.path.join(ts_folder, "{} {}.csv".format(eval_dataset_name, loc))))
                 loc_matched_data = loc_data_dict['matched_data']
                 loc_matched_data.to_csv(os.path.join(os.path.join(ts_folder, "{} matched.csv".format(loc_evaluation_str))))
-            test_count += 1
-            if test_count > 3:
-                break
         except:
             warnings.warn("could not process location {}".format(loc))
     for timeframe, metrics_dict in metrics_dict.items():
