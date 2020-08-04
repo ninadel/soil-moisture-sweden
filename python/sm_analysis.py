@@ -58,7 +58,7 @@ def do_a_thing(evaluation_dataset_name):
         warnings.warn("could not process evaluation for {}".format(evaluation_str))
 
 if __name__ == '__main__':
-    with Pool(2) as p:
+    with Pool(4) as p:
         p.map(do_a_thing, evaluation_datasets)
 
 
