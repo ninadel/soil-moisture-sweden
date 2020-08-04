@@ -30,9 +30,9 @@ except:
     warnings.warn("could not import product packages")
 
 
-def write_log(filename, string, print_string=True, write_output=True):
+def write_log(log_file, string, print_string=True, write_output=True):
     if write_output:
-        with open(filename, "a") as logfile:
+        with open(log_file, "a") as logfile:
             logfile.write(string + "\n")
     if print_string:
         print(string)
@@ -417,7 +417,7 @@ def get_csv_station_series(product, station, filter_prod=True, sm_only=True):
 
 
 # filters dataframe by date, assuming index is a datetimeindex
-def filter_timeframe_data(df, year_filter=None, season_filter=None):
+def filter_timeframe_data(df, year_filter=None, season_filter=None, month_filter=None):
     if year_filter is not None:
         df = df[df.index.year == year_filter]
     if season_filter is not None:
@@ -431,6 +431,8 @@ def filter_timeframe_data(df, year_filter=None, season_filter=None):
             df = df[(df.index.month == 6) | (df.index.month == 7) | (df.index.month == 8)]
         if season_filter == 'fall':
             df = df[(df.index.month == 9) | (df.index.month == 10) | (df.index.month == 11)]
+    if month_filter is not None:
+        df = df[df.index.month == month_filter]
     return df
 
 
@@ -646,35 +648,27 @@ def unix_time_seconds(dt):
     return seconds
 
 
-
 # function which splits data into timeframe datasets
 # input: dataframe or data series where index is date
-def split_by_timeframe(data, years=True, seasons=True, months=False):
+def split_by_timeframe(df, years=True, seasons=True, months=False):
     timeframe_data_dict = {}
+    count_dict = {}
     if seasons:
         seasons=['winter', 'spring', 'summer', 'fall']
         for season in seasons:
-            pass
+            timeframe_data_dict[season] = filter_timeframe_data(df, season_filter=season)
     if years:
         # look at index and find unique years
-        for year in years:
-            pass
+        unique_years = set(df.index.year.to_list())
+        for year in unique_years:
+            timeframe_data_dict[year] = filter_timeframe_data(df, year_filter=year)
     if months:
+        unique_months = set(df.index.month.to_list())
         # look at index and find unique months
-        for month in months:
-            pass
-    # if year_filter is not None:
-    #     df = df[df.index.year == year_filter]
-    # if season_filter is not None:
-    #     if season_filter == 'non-winter':
-    #         df = df[(df.index.month != 12) & (df.index.month != 1) & (df.index.month != 2)]
-    return timeframe_data_dict
-
-
-# function to count records
-def get_timeframe_counts(data):
-    count_dict = {}
-    timeframe_data_dict = split_by_timeframe(data)
+        for month in unique_months:
+            timeframe_data_dict[month] = filter_timeframe_data(df, month_filter=month)
     for key in timeframe_data_dict.keys():
         count_dict[key] = timeframe_data_dict[key].shape[0]
-    return count_dict
+    return timeframe_data_dict, count_dict
+
+
