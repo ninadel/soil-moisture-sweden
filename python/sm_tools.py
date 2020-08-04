@@ -650,23 +650,39 @@ def unix_time_seconds(dt):
 
 # function which splits data into timeframe datasets
 # input: dataframe or data series where index is date
-def split_by_timeframe(df, years=True, seasons=True, months=False):
+def split_by_timeframe(df):
     timeframe_data_dict = {}
     count_dict = {}
-    if seasons:
-        seasons=['winter', 'spring', 'summer', 'fall']
-        for season in seasons:
-            timeframe_data_dict[season] = filter_timeframe_data(df, season_filter=season)
-    if years:
-        # look at index and find unique years
-        unique_years = set(df.index.year.to_list())
+    # get years data
+    unique_years = set(df.index.year.to_list())
+    for year in unique_years:
+        timeframe_data_dict[year] = filter_timeframe_data(df, year_filter=year)
+    # get seasons data
+    seasons = ['winter', 'spring', 'summer', 'fall']
+    for season in seasons:
+        timeframe_data_dict[season] = filter_timeframe_data(df, season_filter=season)
+    # get months data
+    unique_months = set(df.index.month.to_list())
+    for month in unique_months:
+        timeframe_data_dict[month] = filter_timeframe_data(df, month_filter=month)
+    for season in seasons:
         for year in unique_years:
-            timeframe_data_dict[year] = filter_timeframe_data(df, year_filter=year)
-    if months:
-        unique_months = set(df.index.month.to_list())
-        # look at index and find unique months
-        for month in unique_months:
-            timeframe_data_dict[month] = filter_timeframe_data(df, month_filter=month)
+            key = "{}_{}".format(season,str(year))
+            try:
+                season_data = timeframe_data_dict[season]
+                year_data = timeframe_data_dict[year]
+                timeframe_data_dict[key] = season_data[season_data.isin(year_data)]
+            except:
+                warnings.warn("could not filter data for {}".format(key))
+    for month in unique_months:
+        for year in unique_years:
+            key = "{:2d}{}".format(month,str(year))
+            try:
+                month_data = timeframe_data_dict[month]
+                year_data = timeframe_data_dict[year]
+                timeframe_data_dict[key] = month_data[month_data.isin(year_data)]
+            except:
+                warnings.warn("could not filter data for {}".format(key))
     for key in timeframe_data_dict.keys():
         count_dict[key] = timeframe_data_dict[key].shape[0]
     return timeframe_data_dict, count_dict
