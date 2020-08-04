@@ -103,11 +103,7 @@ def evaluate_insitu_network_xr(evaluation_dict):
     pass
 
 
-# function for evaluating a set of grid cells in a region, evaluate region-level land types, evaluate region-level
-#   timeframes
-# output: dictionary of dataframes: 1 location metrics, 1 network timeframe metrics, 1 network landuse metrics,
-#   1 inventory
-# evaluate grid
+# function for evaluating a set of grid cells in a region
 def evaluate_grid_xr(evaluation_dict):
     def get_new_metrics_df():
         metrics_df = pandas.DataFrame(columns=['ref_dataset', 'eval_dataset', 'timefilter', 'anomaly', 'loc',
@@ -181,7 +177,9 @@ def evaluate_grid_xr(evaluation_dict):
                 loc_matched_data = loc_data_dict['matched_data']
                 loc_matched_data.to_csv(os.path.join(os.path.join(ts_folder, "{} matched.csv".format(loc_evaluation_str))))
         except:
-            warnings.warn("could not process location {}".format(loc))
+            message = "WARNING! could not process location {}".format(loc)
+            warnings.warn(message)
+            tools.write_log(logfile, message, print_string=verbose)
     for timeframe, metrics_dict in metrics_dict.items():
         metrics_dict.to_csv(os.path.join(output_folder, "{} {} metrics.csv".format(evaluation_str, timeframe)))
 
