@@ -30,10 +30,10 @@ reader = tools.get_product_reader(product, config.dict_product_inputs[product])
 
 # define bounding box for finding locations
 buffer = 2
-min_lat = config.dict_extent_sweden["min_lat"] - buffer
-max_lat = config.dict_extent_sweden["max_lat"] + buffer
-min_lon = config.dict_extent_sweden["min_lon"] - buffer
-max_lon = config.dict_extent_sweden["max_lon"] + buffer
+min_lat = config.study_aea["min_lat"] - buffer
+max_lat = config.study_aea["max_lat"] + buffer
+min_lon = config.study_aea["min_lon"] - buffer
+max_lon = config.study_aea["max_lon"] + buffer
 
 locations = pandas.DataFrame(columns=['loc', 'lon', 'lat'])
 
