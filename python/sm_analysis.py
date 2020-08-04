@@ -8,13 +8,26 @@ import os
 import sm_tools as tools
 import sm_config as config
 import sm_evaluation as evaluation
-import xarray as xr
-import pandas as pd
-import warnings
-from multiprocessing import Pool
 
-# icos_readers = tools.get_icos_readers(config.icos_input_dir)
-# ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
+# Dictionary which turns on/off product analyses
+evaluation_dict = {
+    "ASCAT 12.5 TS": True,
+    "CCI Active": True,
+    "CCI Passive": True,
+    "CCI Combined": True,
+    "ERA5 0-1": True,
+    "ERA5 0-25": True,
+    "GLDAS": True,
+    "Sentinel-1": True,
+    "SMAP L3": True,
+    "SMAP L3 Enhanced": True,
+    "SMAP L4": True,
+    "SMOS-IC": True,
+    "SMOS-BEC": True
+}
+
+icos_readers = tools.get_icos_readers(config.icos_input_dir)
+ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 # use this as a parameter below if you want to analyze both ICOS and ISMN
 reference_list = icos_readers + ismn_readers
 
