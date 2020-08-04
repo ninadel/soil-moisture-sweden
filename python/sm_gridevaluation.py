@@ -16,6 +16,7 @@ from multiprocessing import Pool
 reference_dataset_name = 'ERA5 0-1'
 reference_file = config.dict_quarterdeg_files[reference_dataset_name]
 reference_dataset = xr.open_dataset(reference_file)
+anomaly_evaluation = [False, True]
 output_root = r"../analysis_output/{} grid evaluation {}".format(reference_dataset_name,
                                                                  datetime.now().strftime("%Y%m%d%H%M%S"))
 
@@ -33,8 +34,9 @@ grid_evaluation_dict = {
     'verbose': False
 }
 
-evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
-                       'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
+evaluation_datasets = ['ASCAT 12.5 TS']
+# evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
+#                        'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
 
 def evaluate_dataset(evaluation_dataset_name):
     def statement_str(statement):
@@ -42,7 +44,6 @@ def evaluate_dataset(evaluation_dataset_name):
                                                       evaluation_dict['anomaly'])
         statement_str = "{}: {}".format(statement, evaluation_str)
         return statement_str
-    anomaly_evaluation = [False, True]
     evaluation_metrics = []
     for anomaly_bool in anomaly_evaluation:
         evaluation_dict = grid_evaluation_dict.copy()
@@ -62,7 +63,7 @@ def evaluate_dataset(evaluation_dataset_name):
     try:
         metrics_merge = pd.concat(evaluation_metrics, ignore_index=True)
         metrics_merge.to_csv(os.path.join(evaluation_dict['output_root'],
-                                          "{} metrics.csv".format(evaluation_dataset_name)))
+                                          "{} metrics.csv".format(evaluation_dataset_name)), index=False)
     except:
         warning_message = statement_str("metrics output failed")
         warnings.warn(warning_message)
