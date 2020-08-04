@@ -11,12 +11,13 @@ import os
 import sm_config as config
 import sm_tools as tools
 from datetime import datetime
+from multiprocessing import Pool
 
 export_dict = False
 export_points = True
 
 input_dir = r"../sm_sample_files/ascat-h115-ts-2019"
-output_dir = r"../test_output_data/H115_points_csv/point_data"
+output_dir = r"../test_output_data/H115_points_csv"
 dict_file = r"../test_output_data/H115_points_csv/H115_SWE_locations.csv"
 # point_subdir = "point_data"
 if not os.path.exists(output_dir):
@@ -36,9 +37,10 @@ min_lon = config.study_aea["min_lon"] - buffer
 max_lon = config.study_aea["max_lon"] + buffer
 
 locations = pandas.DataFrame(columns=['loc', 'lon', 'lat'])
+cells = list(set(config.swe_shuffle_cells + config.den_shuffle_cells))
+print(cells)
 
-# find locations within Sweden cells and
-for cell in config.swe_shuffle_cells:
+def get_locs(cells):
     filename = "H115_"+str(cell)+".nc"
     file = os.path.join(input_dir, filename)
     # open H115 file in xarray
@@ -52,16 +54,40 @@ for cell in config.swe_shuffle_cells:
         if (loc_lat > min_lat) and (loc_lat < max_lat) and (loc_lon > min_lon) \
                 and (loc_lon < max_lon):
             locations = locations.append({"lon": loc_lon, "lat": loc_lat, "loc": str(loc)}, ignore_index=True)
+    dict_file = r"../test_output_data/H115_points_csv/H115_{}_locations.csv".format(str(cell))
+    locations.set_index("loc", inplace=True)
+    if export_dict:
+        locations.to_csv(dict_file)
+    # for locations added to locations df, get time series and export to csv
+    if export_points:
+        for index, row in locations.iterrows():
+            ts = reader.read(row['lon'], row['lat'])
+            data = ts.data[startdate::]
+            data = data[['sat_id', 'sm', 'sm_noise', 'dir', 'conf_flag', 'corr_flag', 'proc_flag', 'ssf']]
+            filename = "{}.csv".format(index)
+            data.to_csv(os.path.join(output_dir, "point_data", filename))
+#
+# # find locations within Sweden cells and
+# for cell in config.swe_shuffle_cells:
+#     filename = "H115_"+str(cell)+".nc"
+#     file = os.path.join(input_dir, filename)
+#     # open H115 file in xarray
+#     ds = xr.open_dataset(file)
+#     loc_len = ds['location_id'].size
+#     for i in range(loc_len):
+#         loc = int(ds['location_id'].data[i])
+#         loc_lat = ds['lat'].data[i]
+#         loc_lon = ds['lon'].data[i]
+#         # check whether location is in bounding box
+#         if (loc_lat > min_lat) and (loc_lat < max_lat) and (loc_lon > min_lon) \
+#                 and (loc_lon < max_lon):
+#             locations = locations.append({"lon": loc_lon, "lat": loc_lat, "loc": str(loc)}, ignore_index=True)
+#     locations.set_index("loc", inplace=True)
+#     if export_dict:
+#         locations.to_csv(dict_file)
 
-locations.set_index("loc", inplace=True)
-if export_dict:
-    locations.to_csv(dict_file)
 
-# for locations added to locations df, get time series and export to csv
-if export_points:
-    for index, row in locations.iterrows():
-        ts = reader.read(row['lon'], row['lat'])
-        data = ts.data[startdate::]
-        data = data[['sat_id', 'sm', 'sm_noise', 'dir', 'conf_flag', 'corr_flag', 'proc_flag', 'ssf']]
-        filename = "{}.csv".format(index)
-        data.to_csv(os.path.join(output_dir, filename))
+# if __name__ == '__main__':
+#     with Pool(5) as p:
+#         p.map(evaluate_dataset, evaluation_datasets)
+# p.map(func, lists)
