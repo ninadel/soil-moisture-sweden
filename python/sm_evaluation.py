@@ -45,7 +45,6 @@ def evaluate_gridcell_xr(evaluation_dict, lon, lat):
     eval_ts = eval_dataset[eval_sm_field]
     ref_ts = ref_ts.sel(time=slice(start_date, end_date), lat=lat, lon=lon).to_pandas()
     eval_ts = eval_ts.sel(time=slice(start_date, end_date), lat=lat, lon=lon).to_pandas()
-    # print(eval_ts)
     ref_ts.rename('ref_sm', inplace=True)
     ref_ts = ref_ts.to_frame()
     eval_ts.rename('eval_ts', inplace=True)
