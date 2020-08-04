@@ -165,7 +165,7 @@ coord_buffer = 2
 study_area = {
     "min_lat": 54.125,
     "max_lat": 68.875,
-    "min_lon": 8.625,
+    "min_lon": 8.375,
     "max_lon": 24.125
 }
 regrid_lat = numpy.arange(study_area["min_lat"]-coord_buffer, study_area["max_lat"]+coord_buffer, 0.25)
