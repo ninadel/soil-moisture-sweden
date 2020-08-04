@@ -9,8 +9,11 @@ import sm_tools as tools
 import sm_config as config
 import sm_evaluation as evaluation
 import xarray as xr
+import pandas as pd
 import warnings
 from multiprocessing import Pool
+
+output_root = r"../analysis_output/{}".format(datetime.now().strftime("%Y%m%d%H%M%S"))
 
 grid_evaluation_dict = {
     'locations': config.dict_swe_gldas_points,
@@ -22,7 +25,7 @@ grid_evaluation_dict = {
     'anomaly': None,
     'evaluate_timeframes': True,
     'export_ts': False,
-    'output_root': r"../analysis_output",
+    'output_root': output_root,
     'verbose': False
 }
 
@@ -33,24 +36,20 @@ reference_dataset = xr.open_dataset(reference_file)
 evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
                        'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
 
-# # skipping SMAP L4 for now
-# evaluation_datasets = ['ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC', 'SMAP L3',
-#                        'CCI Combined', 'CCI Passive', 'CCI Active']
-
-#for evaluation_dataset_name in evaluation_datasets:
-#    do_a_thing(evaluation_dataset_name)
-
 def evaluate_dataset(evaluation_dataset_name):
+    evaluation_metrics = []
     evaluation_dict = grid_evaluation_dict.copy()
     evaluation_dict['reference'] = (reference_dataset_name, reference_dataset)
-    evalaution_dataset_file = config.dict_quarterdeg_files[evaluation_dataset_name]
-    evaluation_dataset = xr.open_dataset(evalaution_dataset_file)
+    evaluation_dataset_file = config.dict_quarterdeg_files[evaluation_dataset_name]
+    evaluation_dataset = xr.open_dataset(evaluation_dataset_file)
     evaluation_dict['evaluation'] = (evaluation_dataset_name, evaluation_dataset)
     evaluation_dict['anomaly'] = False
     evaluation_str = "{} (anomaly: {})".format(evaluation_dataset_name, evaluation_dict['anomaly'])
     print("trying {}".format(evaluation_str))
     try:
-        evaluation.evaluate_grid_xr(evaluation_dict)
+        absolute_metrics = evaluation.evaluate_grid_xr(evaluation_dict)
+        for timeframe, metrics_df in absolute_metrics.items():
+            evaluation_metrics.append(metrics_df)
         print("done {}".format(evaluation_str))
     except:
         warnings.warn("could not process evaluation for {}".format(evaluation_str))
@@ -58,10 +57,18 @@ def evaluate_dataset(evaluation_dataset_name):
     evaluation_str = "{} (anomaly: {})".format(evaluation_dataset_name, evaluation_dict['anomaly'])
     print("trying {}".format(evaluation_str))
     try:
-        evaluation.evaluate_grid_xr(evaluation_dict)
+        anomaly_metrics = evaluation.evaluate_grid_xr(evaluation_dict)
+        for timeframe, metrics_df in anomaly_metrics.items():
+            evaluation_metrics.append(metrics_df)
         print("done {}".format(evaluation_str))
     except:
         warnings.warn("could not process evaluation for {}".format(evaluation_str))
+    try:
+        metrics_merge = pd.concat(evaluation_metrics, ignore_index=True)
+        metrics_merge.to_csv(os.path.join(evaluation_dict['output_root'],
+                                          "{} metrics.csv".format(evaluation_dataset_name)))
+    except:
+        warnings.warn("could not merge metrics for {}".format(evaluation_dataset_name))
 
 if __name__ == '__main__':
     with Pool(4) as p:
