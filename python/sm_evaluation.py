@@ -37,12 +37,6 @@ def evaluate_gridcell_xr(evaluation_dict, lon, lat):
     # evaluate_timeframes: a boolean - if True, matched data will be split into timeframes and a separate metrics table and inventory table
     # will be returned
     evaluate_timeframes = evaluation_dict['evaluate_timeframes']
-    # export_ts: a boolean - if True, time series data (reference, evaluation, matched) will be exported as csv to output_folder,
-    # but metrics and inventory will be exported
-    export_ts = evaluation_dict['export_ts']
-    # output_folder: a folder location to output metrics table, inventory table, and datasets (if export_datasets = True)
-    # if None, output will be returned by function but not saved to file
-    output_root = evaluation_dict['output_root']
     data = {}
     metrics = {}
     ref_sm_field = config.dict_product_fields[ref_dataset_name]['sm_field']
@@ -130,7 +124,6 @@ def evaluate_grid_xr(evaluation_dict):
     export_ts = evaluation_dict['export_ts']
     # output_root: a folder location to output metrics table, inventory table, and datasets (if export_datasets = True)
     # a subfolder for each evaluation dataset will be created
-    # if None, output will be returned by function but not saved to file
     output_root = evaluation_dict['output_root']
     # verbose: boolean which determines if log messages are printed (if false, warnings will still be printed)
     verbose = evaluation_dict['verbose']
