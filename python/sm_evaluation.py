@@ -174,7 +174,8 @@ def evaluate_grid_xr(evaluation_dict):
             warnings.warn(message)
             tools.write_log(logfile, message, print_string=verbose)
     for timeframe, metrics_df in metrics_dict.items():
-        metrics_df.to_csv(os.path.join(output_folder, "{} {} metrics.csv".format(evaluation_str, timeframe)))
+        metrics_df.to_csv(os.path.join(output_folder, "{} {} metrics.csv".format(evaluation_str, timeframe)),
+                          index=False)
     return metrics_dict
 
 
