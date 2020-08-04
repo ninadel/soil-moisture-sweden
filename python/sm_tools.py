@@ -417,7 +417,7 @@ def get_csv_station_series(product, station, filter_prod=True, sm_only=True):
 
 
 # filters dataframe by date, assuming index is a datetimeindex
-def get_timeframe_data(df, year_filter=None, season_filter=None):
+def filter_timeframe_data(df, year_filter=None, season_filter=None):
     if year_filter is not None:
         df = df[df.index.year == year_filter]
     if season_filter is not None:
@@ -645,3 +645,36 @@ def unix_time_seconds(dt):
     seconds = int((dt - epoch).total_seconds())
     return seconds
 
+
+
+# function which splits data into timeframe datasets
+# input: dataframe or data series where index is date
+def split_by_timeframe(data, years=True, seasons=True, months=False):
+    timeframe_data_dict = {}
+    if seasons:
+        seasons=['winter', 'spring', 'summer', 'fall']
+        for season in seasons:
+            pass
+    if years:
+        # look at index and find unique years
+        for year in years:
+            pass
+    if months:
+        # look at index and find unique months
+        for month in months:
+            pass
+    # if year_filter is not None:
+    #     df = df[df.index.year == year_filter]
+    # if season_filter is not None:
+    #     if season_filter == 'non-winter':
+    #         df = df[(df.index.month != 12) & (df.index.month != 1) & (df.index.month != 2)]
+    return timeframe_data_dict
+
+
+# function to count records
+def get_timeframe_counts(data):
+    count_dict = {}
+    timeframe_data_dict = split_by_timeframe(data)
+    for key in timeframe_data_dict.keys():
+        count_dict[key] = timeframe_data_dict[key].shape[0]
+    return count_dict
