@@ -11,9 +11,9 @@ import os
 from datetime import datetime
 
 write_data = True
-input_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\native_res_sweden\ascat-h115-ts_points_csv\point_data"
-dict_file = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\native_res_sweden\ascat-h115-ts_points_csv\H115_SWE_locations.csv"
-output_dir = r"D:\temp_h115_date_csv"
+input_dir = r"..\test_output_data\H115_points_csv\point_data"
+dict_file = r"C:\git\soil-moisture-sweden\test_output_data\H115_points_csv\H115_locations.csv"
+output_dir = r"..\test_output_data\H115_dates_csv"
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
