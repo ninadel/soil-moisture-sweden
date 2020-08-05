@@ -13,7 +13,7 @@ import sm_tools as tools
 from datetime import datetime
 from multiprocessing import Pool
 
-dict_file = r"../test_output_data/H115_points_csv/H115_SWE_locations.csv"
+dict_file = r"../test_output_data/H115_points_csv/H115_locations.csv"
 # point_subdir = "point_data"
 
 export_dict = True
@@ -25,6 +25,7 @@ product = 'ASCAT 12.5 TS'
 reader = tools.get_product_reader(product, config.dict_product_inputs[product])
 input_dir = r"D:\sm_backup\native\ascat-h115-ts-2019"
 output_dir = r"../test_output_data/H115_points_csv"
+dict_file = os.path.join(output_dir, "H115_locations.csv")
 points_dir = r"../test_output_data/H115_points_csv/point_data"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -76,8 +77,8 @@ def get_locs(cell):
         data = ts.data[startdate::]
         data = data[['sat_id', 'sm', 'sm_noise', 'dir', 'conf_flag', 'corr_flag', 'proc_flag', 'ssf']]
         filename = "{}.csv".format(index)
-        data.to_csv(os.path.join(output_dir, "point_data", filename))
-
+        data.to_csv(os.path.join(points_dir, filename))
+    return locations
 
 # # find locations within Sweden cells and
 # for cell in cells:
@@ -108,5 +109,7 @@ def get_locs(cell):
 
 if __name__ == '__main__':
     with Pool(5) as p:
-        p.map(get_locs, cells)
+        locations_df_list = p.map(get_locs, cells)
+        locations_merged = pandas.concat(locations_df_list)
+        locations_merged.to_csv(dict_file)
 # p.map(func, lists)
