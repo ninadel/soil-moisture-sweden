@@ -21,7 +21,7 @@ season_timeframes = ['non-winter', 'winter', 'spring', 'summer', 'fall']
 # dictionary for dataset parameters, for each reader in this dictionary, make sure the class is imported
 dict_product_inputs = {
     "ASCAT 12.5 TS": {
-        "ts_dir": r"..\input_data\ascat-h115-ts-2019",
+        "ts_dir": r"D:\sm_backup\native\ascat-h115-ts-2019",
         "grid_dir": r"..\ascat_ts_aux\warp5_grid",
         "grid_file": "TUW_WARP5_grid_info_2_3.nc",
         "static_layers_dir": None,
