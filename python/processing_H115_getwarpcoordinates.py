@@ -13,15 +13,15 @@ import os
 import datetime
 import json
 
-export_nc = False
+export_nc = True
 export_dict_file = True
 buffer = 2
 output_dir = "../test_output_data/warp_coordinates_swe"
 # coordinate limits different from dictionary - need a wider longitude range to create a rectangular grid from a curvilinear grid
 min_lon = 2
-max_lon = 90
-ref_lon = 6
-lon_window_width = 100
+max_lon = 94
+ref_lon = 4
+lon_window_width = 120
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
@@ -33,14 +33,14 @@ warp = xr.open_dataset(f)
 lat_array = warp.lat.values
 lon_array = warp.lon.values
 gpi_array = warp['gpi'].values
-lat_filtered_array = lat_array[np.where((lat_array > config.dict_extent_sweden["min_lat"] - buffer) &
-                               (lat_array < config.dict_extent_sweden["max_lat"] + buffer) &
+lat_filtered_array = lat_array[np.where((lat_array > config.study_area['min_lat'] - buffer) &
+                               (lat_array < config.study_area["max_lat"] + buffer) &
                                (lon_array > min_lon) & (lon_array < max_lon))]
-lon_filtered_array = lon_array[np.where((lat_array > config.dict_extent_sweden["min_lat"] - buffer) &
-                               (lat_array < config.dict_extent_sweden["max_lat"] + buffer) &
+lon_filtered_array = lon_array[np.where((lat_array > config.study_area["min_lat"] - buffer) &
+                               (lat_array < config.study_area["max_lat"] + buffer) &
                                (lon_array > min_lon) & (lon_array < max_lon))]
-gpi_filtered_array = gpi_array[np.where((lat_array > config.dict_extent_sweden["min_lat"] - buffer) &
-                               (lat_array < config.dict_extent_sweden["max_lat"] + buffer) &
+gpi_filtered_array = gpi_array[np.where((lat_array > config.study_area["min_lat"] - buffer) &
+                               (lat_array < config.study_area["max_lat"] + buffer) &
                                (lon_array > min_lon) & (lon_array < max_lon))]
 
 lat_dict = {}
@@ -71,27 +71,27 @@ ds_template = xr.Dataset(
     {
         "sm": (
             ("row", "col"),
-            np.empty((156,100)),
+            np.empty((167, 120)),
         ),
         "sm_noise": (
             ("row", "col"),
-            np.empty((156,100)),
+            np.empty((167, 120)),
         ),
         "conf_flag": (
             ("row", "col"),
-            np.empty((156, 100)),
+            np.empty((167, 120)),
         ),
         "corr_flag": (
             ("row", "col"),
-            np.empty((156, 100)),
+            np.empty((167, 120)),
         ),
         "proc_flag": (
             ("row", "col"),
-            np.empty((156, 100)),
+            np.empty((167, 120)),
         ),
         "ssf": (
             ("row", "col"),
-            np.empty((156, 100)),
+            np.empty((167, 120)),
         ),
     },
     # coords={"lat": lat_grid, "lon": lon_grid, "row": rowNums, "col": colNums}
