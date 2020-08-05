@@ -9,6 +9,16 @@ import pandas as pd
 import math
 import statistics
 import sm_tools as tools
+from multiprocessing import Pool
+
+
+input_dir = r"..\test_output_data\H115_dates_csv"
+output_dir = r"..\test_output_data\H115_overpass_data"
+logfile = os.path.join(output_dir, "logfile.txt")
+datefiles = os.listdir(input_dir)
+# print(datefiles)
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 
 # function to convert time in datestamp to a decimal number
@@ -104,35 +114,20 @@ def get_mean_datestamp(time_values, base_date):
     mean_time_value = statistics.mean(time_values)
     mean_time_hour = math.floor(mean_time_value)
     mean_time_minutes = math.floor((mean_time_value - mean_time_hour) * 60)
-    mean_time = short_date + datetime.timedelta(hours=mean_time_hour)
+    mean_time = base_date + datetime.timedelta(hours=mean_time_hour)
     mean_time = mean_time + datetime.timedelta(minutes=mean_time_minutes)
     return mean_time
 
 
-input_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\csv\ascat-h115-ts_points_csv\date_data"
-output_dir = r"..\test_output_data\h115_overpass_data"
-logfile = os.path.join(output_dir, "logfile.txt")
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-# # dict to store overpass data
-# overpass_dict = {}
-# # dict to store locations in date file with morning data and matching morning data
-# location_data_dict = {}
-
-# # start by assuming a date has a single AM overpasses
-# max_rows = 1
-# # variable for keeping track of how many overpasses are in dictionary
-# overpass_count = 0
-
 # for each date file
-for input_filename in os.listdir(input_dir):
-    tools.write_log(logfile, input_filename)
-    short_date_str = input_filename.split(".")[0]
+def convert_date_to_overpass(datefile):
+# for datefile in os.listdir(input_dir):
+    tools.write_log(logfile, datefile)
+    short_date_str = datefile.split(".")[0]
     short_date = datetime.datetime.strptime(short_date_str, "%Y-%m-%d")
     cutoff_date = short_date + datetime.timedelta(hours=12)
     # open CSV
-    input_file = os.path.join(input_dir, input_filename)
+    input_file = os.path.join(input_dir, datefile)
     data = pd.read_csv(input_file)
     data['datestamp'] = pd.to_datetime(data.datestamp)
     satellites = data['sat_id'].unique()
@@ -146,7 +141,11 @@ for input_filename in os.listdir(input_dir):
             overpass_rows = overpass_data['data'].shape[0]
             mean_time = get_mean_datestamp(overpass_data['time_values'], short_date)
             output_filename = "sat{}_{}_{:02d}-{:02d}.csv".format(satellite, short_date_str, mean_time.hour, mean_time.minute)
-            tools.write_log(logfile, output_filename)
-            tools.write_log(logfile, "{} rows".format(overpass_rows))
+            tools.write_log(logfile, "{} rows: {}".format(overpass_rows, output_filename))
             output_file = os.path.join(output_dir, output_filename)
             overpass_data['data'].to_csv(output_file)
+
+
+if __name__ == '__main__':
+    with Pool(5) as p:
+        p.map(convert_date_to_overpass, datefiles)
