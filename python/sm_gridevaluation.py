@@ -29,14 +29,13 @@ grid_evaluation_dict = {
     'match_window': 1/24., #1 hour
     'anomaly': None,
     'evaluate_timeframes': True,
-    'export_ts': False,
+    'export_ts': True,
     'output_root': output_root,
     'verbose': False
 }
 
-evaluation_datasets = ['ASCAT 12.5 TS']
-# evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
-#                        'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
+evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
+                       'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
 
 def evaluate_dataset(evaluation_dataset_name):
     def statement_str(statement):
