@@ -21,8 +21,8 @@ concat_arrays = []
 for f in file_list:
     ds = xr.open_dataset(f)
     ds = ds['SoilMoi0_10cm_inst'].sel(
-        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
-        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+        lat=slice(config.study_area['min_lat'], config.study_area['max_lat']),
+        lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
     concat_arrays.append(ds)
 
 ds_concat = xr.concat(concat_arrays, dim="time")
