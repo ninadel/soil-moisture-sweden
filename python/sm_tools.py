@@ -417,7 +417,7 @@ def get_csv_station_series(product, station, filter_prod=True, sm_only=True):
 
 
 # filters dataframe by date, assuming index is a datetimeindex
-def filter_timeframe_data(df, year_filter=None, season_filter=None, month_filter=None):
+def timefilter_data(df, year_filter=None, season_filter=None, month_filter=None):
     if year_filter is not None:
         df = df[df.index.year == year_filter]
     if season_filter is not None:
@@ -650,46 +650,27 @@ def unix_time_seconds(dt):
 
 # function which splits data into timeframe datasets
 # input: dataframe or data series where index is date
-def split_by_timeframe(df):
-    timeframe_data_dict = {}
+def split_by_timeframe(df, years, seasons=True, months=True, ignore=[]):
+    timefilter_data_dict = {'No_Filter': df}
+    timefilters = get_timefilters(years, seasons=seasons, months=months, ignore=ignore)
+    filter_strs = []
+    for filter in timefilters:
+        year_filter = filter[0]
+        if year_filter is not None:
+            filter_strs.append("Y{}".format(year_filter))
+        season_filter = filter[1]
+        if season_filter is not None:
+            filter_strs.append("{}".format(season_filter))
+        month_filter = filter[2]
+        if month_filter is not None:
+            filter_strs.append("M{:02}".format(month_filter))
+        filter_data = timefilter_data(df, year_filter=year_filter, season_filter=season_filter, month_filter=month_filter)
+        filter_str = "_".join(filter_strs)
+        timefilter_data_dict[filter_str] = filter_data
     count_dict = {}
-    # get years data
-    unique_years = set(df.index.year.to_list())
-    for year in unique_years:
-        key = "Y_{}".format(str(year))
-        timeframe_data_dict[key] = filter_timeframe_data(df, year_filter=year)
-    # get seasons data
-    seasons = ['winter', 'spring', 'summer', 'fall']
-    for season in seasons:
-        key = "S_{}".format(season)
-        timeframe_data_dict[key] = filter_timeframe_data(df, season_filter=season)
-    # # get months data
-    # unique_months = set(df.index.month.to_list())
-    # for month in unique_months:
-    #     key = "M_{:2d}".format(month)
-    #     timeframe_data_dict[key] = filter_timeframe_data(df, month_filter=month)
-    for season in seasons:
-        season_data = timeframe_data_dict["S_{}".format(season)]
-        for year in unique_years:
-            key = "X_{}_{}".format(season,str(year))
-            if key != "X_winter_2015":
-                try:
-                    intersection_data = filter_timeframe_data(season_data, year_filter=year)
-                    timeframe_data_dict[key] = intersection_data
-                except:
-                    warnings.warn("intersect for for {} failed".format(key))
-        # for month in unique_months:
-    #     month_data = timeframe_data_dict["M_{:02}".format(month)]
-    #     for year in unique_years:
-    #         key = "MY_{:02}{}".format(month, str(year))
-    #         try:
-    #             intersection_data = filter_timeframe_data(month_data, year_filter=year)
-    #             timeframe_data_dict[key] = intersection_data
-    #         except:
-    #             warnings.warn("intersect for for {} failed".format(key))
-    for key in timeframe_data_dict.keys():
-        count_dict[key] = timeframe_data_dict[key].shape[0]
-    return timeframe_data_dict, count_dict
+    for key in timefilter_data_dict.keys():
+        count_dict[key] = timefilter_data_dict[key].shape[0]
+    return timefilter_data_dict, count_dict
 
 
 def get_timefilters(years, seasons=True, months=True, ignore=[]):
@@ -726,4 +707,12 @@ def get_timefilters(years, seasons=True, months=True, ignore=[]):
     timefilters = [timefilter for timefilter in timefilters if timefilter not in ignore]
     return timefilters
 
+
+def csv_to_pdseries(f):
+    data = pandas.read_csv(f)
+    # assumes first column is a datestamp
+    first_col = data.columns[0]
+    data = data.set_index(pandas.DatetimeIndex(data[first_col]))
+    data = data.drop(first_col, axis=1)
+    return data
 
