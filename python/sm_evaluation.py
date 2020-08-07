@@ -523,7 +523,7 @@ def evaluate_shuffle(references, products, output_folder, startdate=datetime(201
                                                                                      anomaly_str)
                         tools.write_log(log_file, '*** analyzing {} {} for {} ({}) ***'.format(network, timeframe,
                                                                                                product, anomaly_str))
-                        tf_network_matched_data = tools.filter_timeframe_data(network_matched_data, year_filter=year)
+                        tf_network_matched_data = tools.timefilter_data(network_matched_data, year_filter=year)
                         if export_ts:
                             tf_network_matched_data.to_csv(os.path.join(data_output_folder, data_output_str))
                         tools.write_log(log_file, '{} {} matched data shape: {}'.format(network_name, timeframe,
@@ -549,7 +549,7 @@ def evaluate_shuffle(references, products, output_folder, startdate=datetime(201
                         data_output_str = 'network_{}_{}_{}_matched_data.csv'.format(network_name, timeframe,
                                                                                      anomaly_str)
                         tools.write_log(log_file, '*** analyzing {} {} for {} ***'.format(network, timeframe, product))
-                        tf_network_matched_data = tools.filter_timeframe_data(network_matched_data,
+                        tf_network_matched_data = tools.timefilter_data(network_matched_data,
                                                                                season_filter=season)
                         if export_ts:
                             tf_network_matched_data.to_csv(os.path.join(data_output_folder, data_output_str))
