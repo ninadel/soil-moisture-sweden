@@ -692,3 +692,38 @@ def split_by_timeframe(df):
     return timeframe_data_dict, count_dict
 
 
+def get_timefilters(years, seasons=True, months=True, ignore=[]):
+    # ignore = list of tuples where tuple represents timeframe in format (year, season, month)
+    # year is a tuple of startyear *first year to include) and endyear (last year to include)
+    # month is an integer
+    # season is a string: "winter", "spring", "summer", "fall"
+    if isinstance(ignore, tuple):
+        ignore = [ignore]
+    timefilters = []
+    # timefilter format: (year, season, month)
+    startyearrange = years[0]
+    endyearrange = years[1] + 1
+    for year in range(startyearrange, endyearrange):
+        timefilter = (year, None, None)
+        if timefilter not in ignore:
+            timefilters.append(timefilter)
+    for season in ["winter", "spring", "summer", "fall"]:
+        timefilter = (None, season, None)
+        if timefilter not in ignore:
+            timefilters.append(timefilter)
+        for year in range(startyearrange, endyearrange):
+            timefilter = (year, season, None)
+            if timefilter not in ignore:
+                timefilters.append(timefilter)
+    for month in range(1,13):
+        timefilter = (None, None, month)
+        if timefilter not in ignore:
+            timefilters.append(timefilter)
+        for year in range(startyearrange, endyearrange):
+            timefilter = (year, None, month)
+            if timefilter not in ignore:
+                timefilters.append(timefilter)
+    timefilters = [timefilter for timefilter in timefilters if timefilter not in ignore]
+    return timefilters
+
+
