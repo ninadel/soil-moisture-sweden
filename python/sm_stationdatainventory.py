@@ -19,15 +19,23 @@ output_root = "../test_output/_data"
 evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'ERA5 0-1', 'ERA5 0-25', 'Sentinel-1',
                        'SMOS-BEC', 'SMOS-IC', 'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
 
+
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
 ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 evaluation_stations = icos_readers + ismn_readers
 
-def inventory_station_data():
+def inventory_ascat_h115(df):
+    pass
+
+def inventory_data():
     inventory_df = None
     for station in icos_readers:
+        station_name = station.station
+        network_name = station.network
         pass
     for station in ismn_readers:
+        station_name = station.station
+        network_name = station.network
         pass
     # station_data_dir = os.path.join(output_root, "station_data")
     # dataset_data_dir = os.path.join(output_root, dataset)
