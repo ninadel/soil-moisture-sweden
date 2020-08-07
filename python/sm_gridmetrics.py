@@ -29,20 +29,6 @@ matched_data = {
     'CCI Active': None
 }
 
-def get_timefilters():
-    timefilters = []
-    for year in range(2015, 2019):
-        timefilters.append((None,None,year))
-    for season in ["winter", "spring", "summer", "fall"]:
-        timefilters.append((None,season,None))
-        for year in range(2015, 2019):
-            if not (year == 2015 and season== "winter"):
-                timefilters.append((None, season, year))
-    for month in range(1,13):
-        timefilters.append((month, None, None))
-        for year in range(2015, 2019):
-            if not (year == 2015 and month in [1,2,3]):
-                timefilters.append((month, None, year))
 
 
 start_date = None
