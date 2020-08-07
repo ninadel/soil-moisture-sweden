@@ -29,10 +29,9 @@ def export_station_data(dataset):
     for station in evaluation_stations:
         station_name = station.station
         network_name = station.network
-        station_data_file = os.path.join(station_data_dir, '{}_{}.csv'.format(network_name, station_name)
+        station_data_file = os.path.join(station_data_dir, '{}_{}.csv'.format(network_name, station_name))
         if not os.path.exists(station_data_file):
             pass
-        evaluation_data_filename = "{}_{}_{}.csv".format(dataset, network_name, station_name)
 
 
 # icos_readers = tools.get_icos_readers(config.icos_input_dir)
@@ -63,6 +62,6 @@ def export_station_data(dataset):
 #
 # icos_results = evaluation.evaluate_network_product(icos_readers, 'ASCAT 12.5 TS', startdate=datetime, enddate=enddate)
 
-if __name__ == '__main__':
-    with Pool(5) as p:
-        p.map(export_station_data, evaluation_datasets)
+# if __name__ == '__main__':
+#     with Pool(5) as p:
+#         p.map(export_station_data, evaluation_datasets)
