@@ -653,8 +653,8 @@ def unix_time_seconds(dt):
 def split_by_timeframe(df, years, seasons=True, months=True, ignore=[]):
     timefilter_data_dict = {'No_Filter': df}
     timefilters = get_timefilters(years, seasons=seasons, months=months, ignore=ignore)
-    filter_strs = []
     for filter in timefilters:
+        filter_strs = []
         year_filter = filter[0]
         if year_filter is not None:
             filter_strs.append("Y{}".format(year_filter))
@@ -686,24 +686,21 @@ def get_timefilters(years, seasons=True, months=True, ignore=[]):
     endyearrange = years[1] + 1
     for year in range(startyearrange, endyearrange):
         timefilter = (year, None, None)
-        if timefilter not in ignore:
-            timefilters.append(timefilter)
+        timefilters.append(timefilter)
     for season in ["winter", "spring", "summer", "fall"]:
         timefilter = (None, season, None)
-        if timefilter not in ignore:
-            timefilters.append(timefilter)
+        timefilters.append(timefilter)
+    for season in ["winter", "spring", "summer", "fall"]:
         for year in range(startyearrange, endyearrange):
             timefilter = (year, season, None)
-            if timefilter not in ignore:
-                timefilters.append(timefilter)
+            timefilters.append(timefilter)
     for month in range(1,13):
         timefilter = (None, None, month)
-        if timefilter not in ignore:
-            timefilters.append(timefilter)
+        timefilters.append(timefilter)
+    for month in range(1,13):
         for year in range(startyearrange, endyearrange):
             timefilter = (year, None, month)
-            if timefilter not in ignore:
-                timefilters.append(timefilter)
+            timefilters.append(timefilter)
     timefilters = [timefilter for timefilter in timefilters if timefilter not in ignore]
     return timefilters
 
