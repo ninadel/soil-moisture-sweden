@@ -19,8 +19,8 @@ def preprocess_ascat_h101(in_ds):
     # print(out_ds.coords)
     # print(out_ds['soil_moisture'])
     # out_ds = out_ds.sel(
-    #     lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
-    #     lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+    #     lat=slice(config.study_area['min_lat'], config.study_area['max_lat']),
+    #     lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
     return out_ds
 
 
@@ -28,8 +28,8 @@ def preprocess_cci(in_ds):
     # subset to sweden
     out_ds = in_ds.sel(
         # CCI has descending latitude order
-        lat=slice(config.dict_extent_sweden['max_lat'], config.dict_extent_sweden['min_lat']),
-        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+        lat=slice(config.study_area['max_lat'], config.study_area['min_lat']),
+        lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
     return out_ds
 
 
@@ -37,8 +37,8 @@ def preprocess_cci(in_ds):
 #     out_ds = in_ds['SoilMoi0_10cm_inst']
 #     # subset to sweden
 #     out_ds = out_ds.sel(
-#         lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
-#         lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+#         lat=slice(config.study_area['min_lat'], config.study_area['max_lat']),
+#         lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
 #     return out_ds
 
 
@@ -51,8 +51,8 @@ def preprocess_sentinel(in_ds):
     out_ds = in_ds[['Soil_Moisture', 'Quality_Flag']]
     out_ds = in_ds.sel(
         # Sentinel has descending latitude order
-        lat=slice(config.dict_extent_sweden['max_lat'], config.dict_extent_sweden['min_lat']),
-        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+        lat=slice(config.study_area['max_lat'], config.study_area['min_lat']),
+        lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
     return out_ds
 
 
@@ -67,8 +67,8 @@ def preprocess_smos_bec(in_ds):
     datestamp = datestamp.replace(hour=local_time_utc)
     # subset to sweden
     out_ds = in_ds.sel(
-        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
-        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+        lat=slice(config.study_area['min_lat'], config.study_area['max_lat']),
+        lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
     # add time dimension
     out_ds['time'].values[:] = datestamp
     # out_ds = out_ds.expand_dims('time').set_coords('time')
@@ -90,8 +90,8 @@ def preprocess_smos_ic(in_ds):
     out_ds = in_ds[['Soil_Moisture', 'Quality_Flag']]
     # subset to sweden
     out_ds = out_ds.sel(
-        lat=slice(config.dict_extent_sweden['min_lat'], config.dict_extent_sweden['max_lat']),
-        lon=slice(config.dict_extent_sweden['min_lon'], config.dict_extent_sweden['max_lon']))
+        lat=slice(config.study_area['min_lat'], config.study_area['max_lat']),
+        lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
     # add time dimension
     out_ds['time'] = datestamp
     out_ds = out_ds.expand_dims('time').set_coords('time')
