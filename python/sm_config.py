@@ -178,6 +178,10 @@ with open("dict_swe_gldas_points.json", "r") as f:
 with open("dict_extent_sweden.json", "r") as f:
     dict_extent_sweden = json.load(f)
 
+# dictionary which stores GLDAS grid points
+with open("dict_h115_coords.json", "r") as f:
+    dict_h115_coords = json.load(f)
+
 coord_buffer = 2
 study_area = {
     "min_lat": 54.125,
