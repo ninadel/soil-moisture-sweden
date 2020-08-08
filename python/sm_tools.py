@@ -687,20 +687,22 @@ def get_timefilters(years, seasons=True, months=True, ignore=[]):
     for year in range(startyearrange, endyearrange):
         timefilter = (year, None, None)
         timefilters.append(timefilter)
-    for season in ["winter", "spring", "summer", "fall"]:
-        timefilter = (None, season, None)
-        timefilters.append(timefilter)
-    for season in ["winter", "spring", "summer", "fall"]:
-        for year in range(startyearrange, endyearrange):
-            timefilter = (year, season, None)
+    if seasons:
+        for season in ["winter", "spring", "summer", "fall"]:
+            timefilter = (None, season, None)
             timefilters.append(timefilter)
-    for month in range(1,13):
-        timefilter = (None, None, month)
-        timefilters.append(timefilter)
-    for month in range(1,13):
-        for year in range(startyearrange, endyearrange):
-            timefilter = (year, None, month)
+        for season in ["winter", "spring", "summer", "fall"]:
+            for year in range(startyearrange, endyearrange):
+                timefilter = (year, season, None)
+                timefilters.append(timefilter)
+    if months:
+        for month in range(1,13):
+            timefilter = (None, None, month)
             timefilters.append(timefilter)
+        for month in range(1,13):
+            for year in range(startyearrange, endyearrange):
+                timefilter = (year, None, month)
+                timefilters.append(timefilter)
     timefilters = [timefilter for timefilter in timefilters if timefilter not in ignore]
     return timefilters
 
