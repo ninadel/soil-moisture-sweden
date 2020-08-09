@@ -14,7 +14,9 @@ import pandas as pd
 import warnings
 from multiprocessing import Pool
 
-output_root = "../test_output/inventory_data"
+output_root = "../test_output_data/inventory_data"
+if not os.path.exists(output_root):
+    os.makedirs(output_root)
 
 evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'ERA5 0-1', 'ERA5 0-25', 'Sentinel-1',
                        'SMOS-BEC', 'SMOS-IC', 'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
@@ -28,7 +30,7 @@ def get_station_inventory(dataset_name, start_date, end_date, station):
     def get_inventory_dict(filter, df):
         inventory_dict = {'dataset': dataset_name, 'network': station.network, 'station': station.station,
                           'lat': station.latitude, 'lon': station.longitude, 'filter': filter}
-        timefilter_counts = tools.split_by_timeframe(df, years=(2015, 2018),
+        timefilter_counts = tools.split_by_timeframe(df, years=(2015, 2018), months=False,
                                                      ignore=[(2015, "winter", None), (2015, None, 1),
                                                              (2015, None, 2), (2015, None, 3)])[1]
         inventory_dict.update(timefilter_counts)
@@ -46,6 +48,10 @@ def get_station_inventory(dataset_name, start_date, end_date, station):
         inventory_dict = get_inventory_dict('DropNA', df)
         inventory_cols = list(inventory_dict.keys())
         inventory_df = pd.DataFrame(columns=inventory_cols)
+        inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        # valid values 0-100
+        df = df[(df >= 0) & (df <= 100)]
+        inventory_dict = get_inventory_dict('sm_0-100', df)
         inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
         # noise filters
         noise = ds['sm_noise']
@@ -95,35 +101,86 @@ def get_station_inventory(dataset_name, start_date, end_date, station):
             inventory_dict = get_inventory_dict('ssf_{}'.format(value), ssf_filter)
             inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
         return inventory_df
-    elif dataset_name == 'CCI Active':
-        pass
-    elif dataset_name == 'CCI Passive':
-        pass
-    elif dataset_name == 'CCI Combined':
-        pass
-    elif dataset_name == 'ERA 0-1':
-        pass
-    elif dataset_name == 'ERA 0-25':
-        pass
-    elif dataset_name == 'GLDAS':
-        pass
-    elif dataset_name == 'SMAP L3':
-        pass
-    elif dataset_name == 'SMAP L3 Enhanced':
-        pass
-    elif dataset_name == 'SMAP L4':
-        pass
-    elif dataset_name == 'Sentinel-1':
-        pass
-    elif dataset_name == 'SMOS-BEC':
-        pass
-    elif dataset_name == 'SMOS-IC':
-        pass
+    else:
+        df = sm.sel(time=slice(start_date, end_date), lat=lat, lon=lon).to_pandas().dropna()
+        inventory_dict = get_inventory_dict('DropNA', df)
+        inventory_cols = list(inventory_dict.keys())
+        inventory_df = pd.DataFrame(columns=inventory_cols)
+        inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        if dataset_name == 'CCI Active' or dataset_name == 'CCI Passive' or dataset_name == 'CCI Combined':
+            flag = ds['flag']
+            df = flag.sel(time=slice(start_date, end_date), lat=lat, lon=lon).to_pandas().dropna()
+            flag_values = df.unique()
+            for value in flag_values:
+                flag_filter = df[df == value]
+                inventory_dict = get_inventory_dict('flag_{}'.format(value), flag_filter)
+                inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+            df = ds['sm_uncertainty']
+            sm_uncertainty_filter = df[df < 50]
+            inventory_dict = get_inventory_dict('sm_uncertainty_below50', sm_uncertainty_filter)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+            sm_uncertainty_filter = df[df < 20]
+            inventory_dict = get_inventory_dict('sm_uncertainty_below20', sm_uncertainty_filter)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+            sm_uncertainty_filter = df[df < 10]
+            inventory_dict = get_inventory_dict('sm_uncertainty_below10', sm_uncertainty_filter)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+            sm_uncertainty_filter = df[df < 5]
+            inventory_dict = get_inventory_dict('sm_uncertainty_below10', sm_uncertainty_filter)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        if dataset_name == 'CCI Active':
+            # valid values 0-100
+            df = sm[sm >= 0 & sm <= 100]
+            inventory_dict = get_inventory_dict('sm_0-100', df)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        elif dataset_name == 'CCI Passive':
+            # valid values 0-1
+            df = sm[sm >= 0 & sm <= 1]
+            inventory_dict = get_inventory_dict('sm_0-1', df)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        elif dataset_name == 'CCI Combined':
+            # valid values 0-1
+            df = sm[sm >= 0 & sm <= 1]
+            inventory_dict = get_inventory_dict('sm_0-1', df)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        elif dataset_name == 'ERA 0-1':
+            # valid values 0-1
+            df = sm[sm >= 0 & sm <= 1]
+            inventory_dict = get_inventory_dict('sm_0-1', df)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        elif dataset_name == 'ERA 0-25':
+            # valid values 0-1
+            df = sm[sm >= 0 & sm <= 1]
+            inventory_dict = get_inventory_dict('sm_0-1', df)
+            inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        # elif dataset_name == 'GLDAS':
+        #     pass
+        elif dataset_name == 'SMAP L3' or dataset_name == 'SMAP L3 Enhanced':
+            # retrieval_qual_flag
+            df = ds['retrieval_qual_flag']
+            retrieval_flag_values = df.unique()
+            for value in retrieval_flag_values:
+                retrieval_flag_filter = df[df == value]
+                inventory_dict = get_inventory_dict('retrieval_qual_flag_{}'.format(value), retrieval_flag_filter)
+                inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+            # surface_flag
+            df = ds['surface_flag']
+            surface_flag_values = df.unique()
+            for value in surface_flag_values:
+                surface_flag_filter = df[df == value]
+                inventory_dict = get_inventory_dict('surface_flag_{}'.format(value), surface_flag_filter)
+                inventory_df = inventory_df.append(inventory_dict, ignore_index=True)
+        elif dataset_name == 'SMAP L4':
+            pass
+        elif dataset_name == 'Sentinel-1':
+            pass
+        elif dataset_name == 'SMOS-BEC':
+            pass
+        elif dataset_name == 'SMOS-IC':
+            pass
+        return inventory_df
 
-def get_dataset_station_inventory(dataset):
-    output_folder = os.path.join(output_root, dataset)
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+def get_dataset_inventory(dataset):
     inventory_df = None
     for station in evaluation_stations:
         station_inventory = get_station_inventory(dataset, start_date=datetime(2015,4,1),
@@ -132,7 +189,7 @@ def get_dataset_station_inventory(dataset):
             inventory_df = station_inventory
         else:
             inventory_df = pd.concat([inventory_df, station_inventory])
-    inventory_df.to_csv(os.path.join(output_folder, "{} inventory.csv".format(dataset)), index=False)
+    inventory_df.to_csv(os.path.join(output_root, "{} inventory.csv".format(dataset)), index=False)
     return inventory_df
 
 
@@ -168,4 +225,5 @@ def get_dataset_station_inventory(dataset):
 #     with Pool(5) as p:
 #         p.map(export_station_data, evaluation_datasets)
 
-test = get_dataset_station_inventory('ASCAT 12.5 TS')
+inventory = get_dataset_inventory('ASCAT 12.5 TS')
+inventory = get_dataset_inventory('CCI Active')
