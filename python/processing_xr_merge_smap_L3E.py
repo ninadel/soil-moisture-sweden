@@ -8,14 +8,14 @@ import xarray as xr
 import sm_tools as tools
 
 product = "SMAP L3 Enhanced"
-output_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\satellite\native_resolution\SMAP-L3-E\smap-L3E-09km_rebuild_xr"
-in_dir = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\satellite\native_resolution\SMAP-L3-E\source_data"
+output_dir = r"..\test_output_data"
+in_dir = r"D:\sm_backup\native\SPL3SMP_E_smap-L3E_09km_clipped_geographic_nc"
 
-export_concat_ds = False
-export_individual_files = True
+export_concat_ds = True
+export_individual_files = False
 
 # first file for creating lat and lon dimensions
-first_file = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\satellite\native_resolution\SMAP-L3-E\source_data\SMAP_L3_SM_P_E_20150401_R16510_001_HEGOUT.nc"
+first_file = r"D:\sm_backup\native\SPL3SMP_E_smap-L3E_09km_clipped_geographic_nc\SMAP_L3_SM_P_E_20150401_R16510_001_HEGOUT.nc"
 first_ds = xr.open_dataset(first_file, group='Soil_Moisture_Retrieval_Data_AM')
 lon = first_ds['longitude'][0, :].values
 lat = first_ds['latitude'][:, 0].values
