@@ -8,7 +8,7 @@ import xarray as xr
 import sm_tools as tools
 
 product = "SMAP L4"
-output_dir = r"..\test_output_data\smap_L4_rebuild"
+output_dir = r"..\test_output_data"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 in_dir = r"D:\sm_backup\native\SPL4SMAU-smap-ma-L4-09km_clipped_nc"
@@ -38,7 +38,7 @@ for filename in os.listdir(in_dir):
         out_ds = xr.merge([sm_surface_analysis_da, sm_surface_analysis_ensstd_da])
         out_ds['time'] = datestamp
         out_ds = out_ds.expand_dims('time').set_coords('time')
-        out_ds.to_netcdf(os.path.join(output_dir, "smap-L4-09km_rebuild_{}.nc".format(filename[15:28])))
+        # out_ds.to_netcdf(os.path.join(output_dir, "smap-L4-09km_rebuild_{}.nc".format(filename[15:28])))
         ds_list.append(out_ds)
 
 concat_ds = xr.concat(ds_list, dim="time")
