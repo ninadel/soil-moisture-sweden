@@ -12,19 +12,15 @@ import sm_config as config
 import matplotlib.pyplot as plt
 
 product = "Sentinel-1"
-native_res = "1km"
 sm_field = config.dict_product_fields[product]['sm_field']
-clean_weights = False
-test_plots = True
 
-output_dir = r"../test_output_data/sentinel"
+output_dir = r"../test_output_data"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-in_dir = r"/Volumes/TOSHIBA EXT/sm_backup/cgls-biopar-ssm-01km_europe"
+in_dir = r"D:\sm_backup\native\cgls-biopar-ssm-01km_europe"
 
 file_list = [os.path.join(in_dir, file) for file in os.listdir(in_dir)]
-print(file_list)
 
 # open files and subset
 ds = xtools.get_mf_dataset(file_list, 'Sentinel-1')
@@ -32,7 +28,7 @@ print(ds)
 
 # export subset to nc
 ds.to_netcdf(os.path.join(output_dir, "sentinel_01km-subset-nofilter.nc"))
-print("sentinel_01km-subset-nofilter.nc complete")
+print("sentinel_01km-subset-nofilter.nc")
 
 # print summaries
 print('ds summary')
