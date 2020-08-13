@@ -181,25 +181,48 @@ def get_product_data(product, reader=None, lon=None, lat=None, station=None, ano
     return data
 
 
-def get_metrics(data, xcol=None, ycol=None, anomaly=False):
+def get_metrics(data, xcol=None, ycol=None, anomaly=False, return_dict=False, sig_level=0.05):
     """""
     Calculate metrics for a pair of TS
     data: temporally matched dataset
     metrics: list of metrics to calculate on matched dataset
         default: "pearsonr", "bias", "rmsd", "ubrmsd"
     """""
-    x, y = data[xcol].values, data[ycol].values
-    pearsonr = metrics.pearsonr(x, y)[0]
-    pearsonr_p = metrics.pearsonr(x, y)[1]
-    if not anomaly:
-        bias = metrics.bias(x, y)
-        rmsd = metrics.rmsd(x, y)
-        ubrmsd = metrics.ubrmsd(x, y)
+    columns = data.columns
+    if xcol is None:
+        x = data[columns[0]].values
     else:
-        bias = None
-        rmsd = None
-        ubrmsd = None
-    return [bias, rmsd, ubrmsd, pearsonr, pearsonr_p]
+        x = data[xcol].values
+    if ycol is None:
+        y = data[columns[1]].values
+    else:
+        y = data[ycol].values
+
+    metrics_dict = {'pearson_r': None, 'pearson_r_p-value': None, 'bias': None, 'rmsd': None, 'ubrmsd': None,
+                    'n': data.shape[0], 'pearson_sig': None}
+
+    try:
+        if anomaly is False:
+            metrics_dict['bias'] = metrics.bias(x, y)
+            metrics_dict['rmsd'] = metrics.rmsd(x, y)
+            metrics_dict['ubrmsd'] = metrics.ubrmsd(x, y)
+    except:
+        message = "could not calculate bias, rmsd, ubrmsd"
+        warnings.warn(message)
+
+    try:
+        metrics_dict['pearson_r'] = metrics.pearsonr(x, y)[0]
+        metrics_dict['pearson_r_p-value'] = metrics.pearsonr(x, y)[1]
+        metrics_dict['pearson_sig'] = metrics.pearsonr(x, y)[1] < sig_level
+    except:
+        message = "could not calculate pearson r"
+        warnings.warn(message)
+
+    if return_dict:
+        return metrics_dict
+    else:
+        return [metrics_dict['bias'], metrics_dict['rmsd'], metrics_dict['ubrmsd'], metrics_dict['pearson_r'],
+                metrics_dict['pearson_r_p-value']]
 
 
 def convert_tab_comma(filename):
