@@ -30,17 +30,17 @@ dict_product_inputs = {
     },
     "CCI Active": {
         "ts_dir": r"..\input_data\cci-0.25deg_active_global_reshuffle",
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\CCI Active",
         "csv_quarters": None
     },
     "CCI Passive": {
         "ts_dir": r"..\input_data\cci-0.25deg_passive_global_reshuffle",
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\CCI Passive",
         "csv_quarters": None
     },
     "CCI Combined": {
         "ts_dir": r"..\input_data\cci-0.25deg_combined_global_reshuffle",
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\CCI Combined",
         "csv_quarters": None
     },
     "ERA5 0-1": {
@@ -87,7 +87,7 @@ dict_product_inputs = {
     },
     "SMOS-IC": {
         "ts_dir": r"C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC",
-        "csv_stations": None,
+        "csv_stations": r"..\input_data\csv_stations\SMOS-BEC",
         "csv_quarters": None
     }
 }
