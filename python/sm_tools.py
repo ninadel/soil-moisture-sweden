@@ -672,7 +672,7 @@ def unix_time_seconds(dt):
 # function which splits data into timeframe datasets
 # input: dataframe or data series where index is date
 def split_by_timeframe(df, years, seasons=True, months=True, ignore=[]):
-    timefilter_data_dict = {'No_Filter': df}
+    timefilter_data_dict = {'No_Timefilter': df}
     timefilters = get_timefilters(years, seasons=seasons, months=months, ignore=ignore)
     for filter in timefilters:
         filter_strs = []
