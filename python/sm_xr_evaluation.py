@@ -146,21 +146,21 @@ def evaluate_grid_xr(evaluation_dict):
             lat = loc_data['latitude']
             veg_class = loc_data['veg_class_name']
             loc_metrics_dict, loc_data_dict = evaluate_gridcell_xr(evaluation_dict=evaluation_dict, lon=lon, lat=lat)
-            for timeframe, timeframe_metrics in loc_metrics_dict.items():
-                timeframe_evaluation_str = "{} {}".format(loc_evaluation_str, timeframe)
-                n = timeframe_metrics['n']
-                sig = timeframe_metrics['pearson_sig']
-                pearson_r = timeframe_metrics['pearson_r']
-                tools.write_log(logfile, "{}, rows: {}".format(timeframe_evaluation_str, n), print_string=verbose)
-                tools.write_log(logfile, "{}, pearson_r: {}".format(timeframe_evaluation_str, pearson_r),
+            for timefilter, timefilter_metrics in loc_metrics_dict.items():
+                timefilter_evaluation_str = "{} {}".format(loc_evaluation_str, timefilter)
+                n = timefilter_metrics['n']
+                sig = timefilter_metrics['pearson_sig']
+                pearson_r = timefilter_metrics['pearson_r']
+                tools.write_log(logfile, "{}, rows: {}".format(timefilter_evaluation_str, n), print_string=verbose)
+                tools.write_log(logfile, "{}, pearson_r: {}".format(timefilter_evaluation_str, pearson_r),
                                 print_string=verbose)
-                tools.write_log(logfile, "{}, significant: {}".format(timeframe_evaluation_str, sig),
+                tools.write_log(logfile, "{}, significant: {}".format(timefilter_evaluation_str, sig),
                                 print_string=verbose)
                 loc_metrics_row = get_grid_metrics_row()
-                loc_metrics_row.update(timeframe_metrics)
-                if timeframe not in metrics_dict.keys():
-                    metrics_dict[timeframe] = get_new_grid_metrics_df()
-                metrics_dict[timeframe] = metrics_dict[timeframe].append(loc_metrics_row, ignore_index=True)
+                loc_metrics_row.update(timefilter_metrics)
+                if timefilter not in metrics_dict.keys():
+                    metrics_dict[timefilter] = get_new_grid_metrics_df()
+                metrics_dict[timefilter] = metrics_dict[timefilter].append(loc_metrics_row, ignore_index=True)
             if export_ts:
                 loc_ref_data = loc_data_dict['ref_ts']
                 loc_ref_data.to_csv(os.path.join(os.path.join(ts_folder, "{} {} ts.csv".format(ref_dataset_name, loc))))
