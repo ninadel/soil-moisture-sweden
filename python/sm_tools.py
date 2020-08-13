@@ -632,8 +632,6 @@ def get_filtered_data(product, data, filter_counts=False):
         filter_count_dict['valid'] = valid_data.shape[0]
         result_data = valid_data
     elif product == "SMOS-IC":
-        # Force Timestamp: 6AM CET, 5AM UTC
-        data = data.shift(5, freq='H')
         # Quality_Flag field is already filtered to 0, 1 by reader
         # For now, no filters for SMOS-IC
         # See "Quality_Flag" field
