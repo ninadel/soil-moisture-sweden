@@ -9,10 +9,10 @@ import xtools as xt
 import sm_tools as tools
 
 product = "SMOS-BEC"
-output_dir = r"/Users/nina/Documents/GitHub/soil-moisture-sweden/test_output_data"
+output_dir = r"../test_output_data"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
-in_dir = r"/Volumes/TOSHIBA EXT/sm_backup/native/smos-bec-reprocessed-01km-euro/ASC"
+in_dir = r"D:\sm_backup\native\smos-bec-reprocessed-01km-euro\ASC"
 
 file_list = [os.path.join(in_dir, file) for file in os.listdir(in_dir)]
 
