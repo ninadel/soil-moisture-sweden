@@ -14,7 +14,7 @@ import pandas as pd
 import warnings
 from multiprocessing import Pool
 
-output_root = "../test_output/_data"
+output_root = "../test_output/csv_station_data"
 
 evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'ERA5 0-1', 'ERA5 0-25', 'Sentinel-1',
                        'SMOS-BEC', 'SMOS-IC', 'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
@@ -24,44 +24,26 @@ ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 evaluation_stations = icos_readers + ismn_readers
 
 def export_station_data(dataset):
-    station_data_dir = os.path.join(output_root, "station_data")
     dataset_data_dir = os.path.join(output_root, dataset)
+    if not os.path.exists(dataset_data_dir):
+        os.makedirs(dataset_data_dir)
+    xr_file = config.dict_native_files[dataset]
+    df = xr.open_dataset(xr_file)
     for station in evaluation_stations:
-        station_name = station.station
         network_name = station.network
-        station_data_file = os.path.join(station_data_dir, '{}_{}.csv'.format(network_name, station_name))
-        if not os.path.exists(station_data_file):
-            pass
+        station_name = station.station
+        station_name.replace(".", "-")
+        lat = station.latitude
+        lon = station.longitude
+    if dataset == "ASCAT 12.5 TS":
+        row = tools.find_nearest(config.dict_h115_coords['lat'], lat)[0]
+        col = tools.find_nearest(config.dict_h115_coords[str(row)], lon)[0]
+        df = df.sel(row=row, col=col).to_pandas()
+    else:
+        df = df.sel(lat=lat, lon=lon).to_pandas()
+    df.to_csv(os.path.join(dataset_data_dir, "{}_{}.csv".format(network_name, station_name)))
 
 
-# icos_readers = tools.get_icos_readers(config.icos_input_dir)
-# ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
-# # use this as a parameter below if you want to analyze both ICOS and ISMN
-# reference_list = icos_readers + ismn_readers
-#
-# analysis_output_root = r"../analysis_output"
-# analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-# analysis_results_folder = os.path.join(analysis_output_root, "{}_evaluation".format(analysis_timestamp))
-# os.mkdir(analysis_results_folder)
-# metrics_filename = "evaluation_metrics_{}.csv".format(analysis_timestamp)
-# startdate = datetime(2015,4,1)
-# enddate = datetime(2018, 12, 31, 23, 59)
-#
-# results = evaluation.evaluate_shuffle(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False)
-# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-# results = evaluation.evaluate_shuffle(icos_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
-#                               metrics_df=results)
-# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-# results = evaluation.evaluate_shuffle(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=False,
-#                               metrics_df=results)
-# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-# results = evaluation.evaluate_shuffle(ismn_readers, evaluation_dict, output_folder=analysis_results_folder, anomaly=True,
-#                               metrics_df=results)
-# results.to_csv(os.path.join(analysis_results_folder, metrics_filename))
-#
-#
-# icos_results = evaluation.evaluate_network_product(icos_readers, 'ASCAT 12.5 TS', startdate=datetime, enddate=enddate)
-
-# if __name__ == '__main__':
-#     with Pool(5) as p:
-#         p.map(export_station_data, evaluation_datasets)
+if __name__ == '__main__':
+    with Pool(5) as p:
+        p.map(export_station_data, evaluation_datasets)
