@@ -86,10 +86,8 @@ def preprocess_smos_ic(in_ds):
     datestamp = datestamp.replace(hour=local_time_utc)
     # timestamp_int = datestamp_int + (local_time_utc * 60 * 60)
     # timestamp = datetime.utcfromtimestamp()
-    # select variables to keep
-    out_ds = in_ds[['Soil_Moisture', 'Quality_Flag']]
     # subset to sweden
-    out_ds = out_ds.sel(
+    out_ds = in_ds.sel(
         lat=slice(config.study_area['min_lat'], config.study_area['max_lat']),
         lon=slice(config.study_area['min_lon'], config.study_area['max_lon']))
     # add time dimension
