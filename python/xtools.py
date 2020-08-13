@@ -47,7 +47,6 @@ def preprocess_sentinel(in_ds):
     # source = in_ds['Soil_Moisture'].encoding['source']
     # # get timestamp from filename
     # datestamp = tools.get_filename_timestamp(source, r"_[0-9]{8}T")
-    # select variables to keep
     out_ds = in_ds.sel(
         # Sentinel has descending latitude order
         lat=slice(config.study_area['max_lat'], config.study_area['min_lat']),
