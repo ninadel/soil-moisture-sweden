@@ -688,7 +688,7 @@ def split_by_timeframe(df, years, seasons=True, months=True, ignore=[], am_only=
         if month_filter is not None:
             filter_strs.append("M{:02}".format(month_filter))
         filter_data = timefilter_data(df, year_filter=year_filter, season_filter=season_filter, month_filter=month_filter)
-        filter_str = "_".join(filter_strs)
+        filter_str = "-".join(filter_strs)
         timefilter_data_dict[filter_str] = filter_data
     count_dict = {}
     for key in timefilter_data_dict.keys():
