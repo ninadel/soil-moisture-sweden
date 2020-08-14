@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import numpy as np
 
 def write_grid_ascii_raster(metric_file):
     def get_quarter_grid_coord_index(lat, lon):
@@ -22,12 +23,17 @@ def write_grid_ascii_raster(metric_file):
         asciif.write("cellsize      {}\n".format(cellsize))
         asciif.write("NODATA_value  {}\n".format(NODATA_value))
         return asciif
+    def get_dataset_name(filename):
+        split_filename = filename.split(" ")
+        ei = split_filename.index("ERA5")
+        dataset_name = " ".join(split_filename[0:ei])
+        return dataset_name
     ncols = 52
     nrows = 55
     output_root = r"../test_output_data/grid_rasters"
     filename = os.path.split(metric_file)[1]
     split_filename = filename.split(" ")
-    dataset = split_filename[0]
+    dataset = get_dataset_name(filename)
     timefilter = split_filename[-2]
     anomaly_str = filename.split(" ")[-3]
     output_folder = os.path.join(output_root, dataset)
@@ -39,18 +45,18 @@ def write_grid_ascii_raster(metric_file):
     yllcorner = 55.25
     cellsize = 0.25
     NODATA_value = -9999
-    metrics = ["pearson_r"]
-    # metrics = ["pearson_r", "bias", "ubrmsd"]
-    # metrics = ["pearson_r", "pearson_r_p-value", "bias", "rmsd", "ubrmsd"]
-    timefilters = ["all"]
-    df = pd.read_csv(metric_file)
-    print(df)
+    metrics = ["pearson_r", "bias", "ubrmsd"]
+    mf = pd.read_csv(metric_file)
     for metric in metrics:
+        df = mf.copy()
         asciif = start_ascii_file()
         values = [NODATA_value] * (nrows * ncols)
         if metric == "pearson_r":
             df = df[df["pearson_r_p-value"] < 0.05]
-            print(df)
+        else:
+            df[metric].replace('', np.nan, inplace=True)
+            df = df[['lat', 'lon', metric]]
+            df = df.dropna()
         for index, row in df.iterrows():
             lat = row['lat']
             lon = row['lon']
