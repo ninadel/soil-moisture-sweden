@@ -65,9 +65,9 @@ def export_station_data(dataset):
         df.to_csv(os.path.join(dataset_data_dir, "{}_{}.csv".format(network_name, station_name)))
 
 
-for dataset in evaluation_datasets:
-    export_station_data(dataset)
+# for dataset in evaluation_datasets:
+#     export_station_data(dataset)
 
-# if __name__ == '__main__':
-#     with Pool(5) as p:
-#         p.map(export_station_data, evaluation_datasets)
+if __name__ == '__main__':
+    with Pool(5) as p:
+        p.map(export_station_data, evaluation_datasets)
