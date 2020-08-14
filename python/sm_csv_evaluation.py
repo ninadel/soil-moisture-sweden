@@ -72,16 +72,19 @@ def evaluation_csv_network(evaluation_dict):
     evaluation_str = "{} {}".format(dataset, anomaly_str)
     evaluation_metrics_file = os.path.join(output_root, "{} metrics.csv".format(evaluation_str))
     logfile = os.path.join(output_root, "{} log.txt".format(evaluation_str))
+    tools.write_log(logfile, evaluation_str, print_string=verbose)
     for station in stations:
         network = station.network
         station_name = station.station
         station_evaluation_str = "{} {} {}".format(evaluation_str, network, station_name)
+        tools.write_log(logfile, station_evaluation_str, print_string=verbose)
         lon = station.longitude
         lat = station.latitude
         try:
             station_metrics_dict = evaluate_csv_station(evaluation_dict, station)
             for timefilter, timefilter_metrics in station_metrics_dict.items():
                 timefilter_evaluation_str = "{} {}".format(station_evaluation_str, timefilter)
+                tools.write_log(logfile, timefilter_evaluation_str, print_string=verbose)
                 n = timefilter_metrics['n']
                 sig = timefilter_metrics['pearson_sig']
                 pearson_r = timefilter_metrics['pearson_r']
@@ -120,12 +123,12 @@ def main(dataset):
         'output_root': output_root,
         'verbose': True
     }
-    for anomaly_value in [False, True]:
+    for anomaly_value in [False]:
+    # for anomaly_value in [False, True]:
         # try:
         evaluation_dict = station_evaluation_dict.copy()
         evaluation_dict['anomaly'] = anomaly_value
         evaluation_csv_network(evaluation_dict)
-        break
 
 
 if __name__ == '__main__':
