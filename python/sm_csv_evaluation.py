@@ -11,7 +11,8 @@ import sm_config as config
 import pandas as pd
 import warnings
 from multiprocessing import Pool
-from pytesmo import temporal_matching
+from pytesmo.temporal_matching import matching
+from pytesmo.time_series.anomaly import calc_anomaly
 
 
 def evaluate_csv_station(evaluation_dict, station):
@@ -34,7 +35,9 @@ def evaluate_csv_station(evaluation_dict, station):
     eval_data = eval_data[start_date:end_date]
     eval_data = tools.get_filtered_data(dataset, eval_data)
     eval_data = eval_data[sm_field]
-    matched_data = temporal_matching.matching(ref_data, eval_data, window=match_window)
+    if anomaly:
+        eval_data = calc_anomaly(eval_data)
+    matched_data = matching(ref_data, eval_data, window=match_window)
     if evaluate_timefilters:
         timeframe_data_dict, timeframe_counts = tools.split_by_timeframe(matched_data, years=(2015,2018), months=False)
         for timeframe, timeframe_data in timeframe_data_dict.items():
@@ -122,6 +125,7 @@ def main(dataset):
         evaluation_dict = station_evaluation_dict.copy()
         evaluation_dict['anomaly'] = anomaly_value
         evaluation_csv_network(evaluation_dict)
+        break
 
 
 if __name__ == '__main__':
