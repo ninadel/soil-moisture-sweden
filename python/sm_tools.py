@@ -674,7 +674,7 @@ def unix_time_seconds(dt):
 def split_by_timeframe(df, years, seasons=True, months=True, ignore=[], am_only=True):
     if am_only:
         df = df[df.index.hour < 12]
-    timefilter_data_dict = {'No_Timefilter': df}
+    timefilter_data_dict = {'No-Timefilter': df}
     timefilters = get_timefilters(years, seasons=seasons, months=months, ignore=ignore)
     for filter in timefilters:
         filter_strs = []
@@ -688,7 +688,7 @@ def split_by_timeframe(df, years, seasons=True, months=True, ignore=[], am_only=
         if month_filter is not None:
             filter_strs.append("M{:02}".format(month_filter))
         filter_data = timefilter_data(df, year_filter=year_filter, season_filter=season_filter, month_filter=month_filter)
-        filter_str = "_".join(filter_strs)
+        filter_str = "-".join(filter_strs)
         timefilter_data_dict[filter_str] = filter_data
     count_dict = {}
     for key in timefilter_data_dict.keys():

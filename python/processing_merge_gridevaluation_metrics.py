@@ -1,8 +1,8 @@
 import os
 import pandas as pd
 
-input_dir = r"..\analysis_output\ERA5 0-1 grid evaluation 20200804044015"
-output_dir = input_dir
+input_dir = r"..\analysis_output\station evaluation\all_metrics"
+output_dir = r"..\test_output_data"
 
 merged_metrics = None
 for filename in os.listdir(input_dir):

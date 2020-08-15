@@ -29,23 +29,3 @@ print(ds)
 # export subset to nc
 ds.to_netcdf(os.path.join(output_dir, "sentinel_01km-subset-nofilter.nc"))
 print("sentinel_01km-subset-nofilter.nc")
-
-# print summaries
-print('ds summary')
-print(ds.dims)
-print(ds.coords)
-print(ds.data_vars)
-
-# export nc file
-ds.to_netcdf(os.path.join(output_dir, "sentinel_01km_subset_nofilter.nc"))
-print("sentinel_01km_subset_nofilter.nc complete")
-
-# filter out invalid values
-ds = ds.where((ds['ssm'] >= 0) & (ds['ssm'] < 100))
-dr = ds[sm_field]
-
-# export valid values to nc
-dr.to_netcdf(os.path.join(output_dir, "sentinel_01km_subset_validvalues.nc"))
-print("sentinel_01km_subset_validvalues.nc complete")
-
-

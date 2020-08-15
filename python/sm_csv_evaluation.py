@@ -11,7 +11,8 @@ import sm_config as config
 import pandas as pd
 import warnings
 from multiprocessing import Pool
-from pytesmo import temporal_matching
+from pytesmo.temporal_matching import matching
+from pytesmo.time_series.anomaly import calc_anomaly
 
 
 def evaluate_csv_station(evaluation_dict, station):
@@ -34,7 +35,9 @@ def evaluate_csv_station(evaluation_dict, station):
     eval_data = eval_data[start_date:end_date]
     eval_data = tools.get_filtered_data(dataset, eval_data)
     eval_data = eval_data[sm_field]
-    matched_data = temporal_matching.matching(ref_data, eval_data, window=match_window)
+    if anomaly:
+        eval_data = calc_anomaly(eval_data)
+    matched_data = matching(ref_data, eval_data, window=match_window)
     if evaluate_timefilters:
         timeframe_data_dict, timeframe_counts = tools.split_by_timeframe(matched_data, years=(2015,2018), months=False)
         for timeframe, timeframe_data in timeframe_data_dict.items():
@@ -69,16 +72,19 @@ def evaluation_csv_network(evaluation_dict):
     evaluation_str = "{} {}".format(dataset, anomaly_str)
     evaluation_metrics_file = os.path.join(output_root, "{} metrics.csv".format(evaluation_str))
     logfile = os.path.join(output_root, "{} log.txt".format(evaluation_str))
+    tools.write_log(logfile, evaluation_str, print_string=verbose)
     for station in stations:
         network = station.network
         station_name = station.station
         station_evaluation_str = "{} {} {}".format(evaluation_str, network, station_name)
+        tools.write_log(logfile, station_evaluation_str, print_string=verbose)
         lon = station.longitude
         lat = station.latitude
         try:
             station_metrics_dict = evaluate_csv_station(evaluation_dict, station)
             for timefilter, timefilter_metrics in station_metrics_dict.items():
                 timefilter_evaluation_str = "{} {}".format(station_evaluation_str, timefilter)
+                tools.write_log(logfile, timefilter_evaluation_str, print_string=verbose)
                 n = timefilter_metrics['n']
                 sig = timefilter_metrics['pearson_sig']
                 pearson_r = timefilter_metrics['pearson_r']
@@ -117,7 +123,8 @@ def main(dataset):
         'output_root': output_root,
         'verbose': True
     }
-    for anomaly_value in [False, True]:
+    for anomaly_value in [False]:
+    # for anomaly_value in [False, True]:
         # try:
         evaluation_dict = station_evaluation_dict.copy()
         evaluation_dict['anomaly'] = anomaly_value
