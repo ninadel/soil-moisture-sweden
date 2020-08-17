@@ -211,9 +211,10 @@ def get_metrics(data, xcol=None, ycol=None, anomaly=False, return_dict=False, si
         warnings.warn(message)
 
     try:
-        metrics_dict['pearson_r'] = metrics.pearsonr(x, y)[0]
-        metrics_dict['pearson_r_p-value'] = metrics.pearsonr(x, y)[1]
-        metrics_dict['pearson_sig'] = metrics.pearsonr(x, y)[1] < sig_level
+        pearson_r, pearson_r_p = metrics.pearsonr(x, y)
+        metrics_dict['pearson_r'] = pearson_r
+        metrics_dict['pearson_r_p-value'] = pearson_r_p
+        metrics_dict['pearson_sig'] = pearson_r_p < sig_level
     except:
         message = "could not calculate pearson r"
         warnings.warn(message)
