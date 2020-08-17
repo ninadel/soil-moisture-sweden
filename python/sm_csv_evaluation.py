@@ -9,10 +9,15 @@ import os
 import sm_tools as tools
 import sm_config as config
 import pandas as pd
-import warnings
 from multiprocessing import Pool
 from pytesmo.temporal_matching import matching
 from pytesmo.time_series.anomaly import calc_anomaly
+
+
+def get_output_root(dataset):
+    output_root = r"../analysis_output/station evaluation/{} {}".format(dataset,
+                                                                        datetime.now().strftime("%Y%m%d%H%M%S"))
+    return output_root
 
 
 def evaluate_csv_station(evaluation_dict, station):
@@ -23,10 +28,16 @@ def evaluate_csv_station(evaluation_dict, station):
     match_window = evaluation_dict['match_window']
     anomaly = evaluation_dict['anomaly']
     evaluate_timefilters = evaluation_dict['evaluate_timefilters']
+    evaluate_years = evaluate_timefilters[0]
+    evaluate_seasons = evaluate_timefilters[1]
+    evaluate_months = evaluate_timefilters[2]
+    output_root = evaluation_dict['output_root']
+    export_matched = evaluation_dict['export_matched']
     dataset_folder = config.dict_product_inputs[dataset]['csv_stations']
     sm_field = config.dict_product_fields[dataset]['sm_field']
     network = station.network
     station_name = station.station
+    station_code = tools.get_station_code(station)
     eval_file = os.path.join(dataset_folder, "{}_{}.csv".format(network, station_name.replace(".", "-")))
     ref_data = tools.get_ref_data(station, anomaly=anomaly)
     ref_data = ref_data.tz_localize(None)
@@ -38,24 +49,29 @@ def evaluate_csv_station(evaluation_dict, station):
     if anomaly:
         eval_data = calc_anomaly(eval_data)
     matched_data = matching(ref_data, eval_data, window=match_window)
-    if evaluate_timefilters:
-        timeframe_data_dict, timeframe_counts = tools.split_by_timeframe(matched_data, years=(2015,2018), months=False)
-        for timeframe, timeframe_data in timeframe_data_dict.items():
-            metrics[timeframe] = tools.get_metrics(data=timeframe_data, anomaly=anomaly, return_dict=True)
-    else:
-        metrics['No_Timefilter'] = tools.get_metrics(data=matched_data, anomaly=anomaly, return_dict=True)
+    if export_matched:
+        matched_data_folder = os.path.join(output_root, "matched_data")
+        if not os.path.exists(matched_data_folder):
+            os.makedirs(matched_data_folder)
+        matched_data_file = os.path.join(matched_data_folder, "{}_{}_matched.csv".format(dataset, station_code))
+        matched_data.to_csv(matched_data_file)
+    timefilter_data_dict, timefilter_counts = tools.split_by_timeframe(matched_data, years=evaluate_years,
+                                                                     seasons=evaluate_seasons, months=evaluate_months)
+    for timefilter, timefilter_data in timefilter_data_dict.items():
+        metrics[timefilter] = tools.get_metrics(data=timefilter_data, anomaly=anomaly, return_dict=True)
     return metrics
 
 
 def evaluation_csv_network(evaluation_dict):
     def get_station_metrics_df():
-        metrics_df = pd.DataFrame(columns=['network', 'station', 'lon', 'lat', 'eval_dataset', 'timefilter', 'anomaly',
-                                           'pearson_r', 'pearson_r_p-value', 'bias', 'rmsd', 'ubrmsd', 'n',
-                                           'pearson_sig'])
+        metrics_df = pd.DataFrame(columns=['network', 'station', 'station_code', 'lon', 'lat', 'cover', 'eval_dataset',
+                                           'timefilter', 'anomaly', 'pearson_r', 'pearson_r_p-value', 'bias', 'rmsd',
+                                           'ubrmsd', 'n', 'pearson_sig'])
         return metrics_df
     def get_station_metrics_row():
-        metrics_row = {'network': network, 'station': station_name, 'lon': lon, 'lat': lat, 'eval_dataset': dataset,
-                       'timefilter': timefilter, 'anomaly': anomaly_str}
+        metrics_row = {'network': network, 'station': station_name, 'station_code': station_code, 'lon': lon,
+                       'lat': lat, 'cover': station_cover, 'eval_dataset': dataset, 'timefilter': timefilter,
+                       'anomaly': anomaly_str}
         metrics_row.update(timefilter_metrics)
         return metrics_row
     metrics_df = None
@@ -68,22 +84,23 @@ def evaluation_csv_network(evaluation_dict):
         anomaly_str = "anomaly"
     else:
         anomaly_str = "absolute"
-    # evaluation_str = "{} {} {}".format(dataset, anomaly_str, datetime.now().strftime("%Y%m%d%H%M%S"))
-    evaluation_str = "{} {}".format(dataset, anomaly_str)
+    evaluation_str = "{}_{}".format(dataset, anomaly_str)
     evaluation_metrics_file = os.path.join(output_root, "{} metrics.csv".format(evaluation_str))
     logfile = os.path.join(output_root, "{} log.txt".format(evaluation_str))
     tools.write_log(logfile, evaluation_str, print_string=verbose)
     for station in stations:
         network = station.network
         station_name = station.station
-        station_evaluation_str = "{} {} {}".format(evaluation_str, network, station_name)
+        station_cover = tools.get_station_cover(station)
+        station_code = tools.get_station_code(station)
+        station_evaluation_str = "{}_{}".format(evaluation_str, station_code)
         tools.write_log(logfile, station_evaluation_str, print_string=verbose)
         lon = station.longitude
         lat = station.latitude
         try:
             station_metrics_dict = evaluate_csv_station(evaluation_dict, station)
             for timefilter, timefilter_metrics in station_metrics_dict.items():
-                timefilter_evaluation_str = "{} {}".format(station_evaluation_str, timefilter)
+                timefilter_evaluation_str = "{}_{}".format(station_evaluation_str, timefilter)
                 tools.write_log(logfile, timefilter_evaluation_str, print_string=verbose)
                 n = timefilter_metrics['n']
                 sig = timefilter_metrics['pearson_sig']
@@ -106,7 +123,7 @@ def evaluation_csv_network(evaluation_dict):
 
 
 def main(dataset):
-    output_root = r"../analysis_output/station evaluation/{} {}".format(dataset, datetime.now().strftime("%Y%m%d%H%M%S"))
+    output_root = get_output_root(dataset)
     if not os.path.exists(output_root):
         os.makedirs(output_root)
     icos_readers = tools.get_icos_readers(config.icos_input_dir)
@@ -119,8 +136,9 @@ def main(dataset):
         'end_date': datetime(2018, 12, 31, 23, 59),
         'match_window': 1 / 24.,  # 1 hour
         'anomaly': None,
-        'evaluate_timefilters': True,
+        'evaluate_timefilters': ((2015, 2018), True, True),
         'output_root': output_root,
+        'export_matched': True,
         'verbose': True
     }
     for anomaly_value in [False]:
@@ -136,4 +154,6 @@ if __name__ == '__main__':
                            'SMOS-BEC', 'SMOS-IC', 'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active', 'GLDAS']
     with Pool(5) as p:
         p.map(main, evaluation_datasets)
+
+
 
