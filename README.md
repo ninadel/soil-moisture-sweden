@@ -10,9 +10,10 @@ Analyses include:
 
 ## Data Sources
 
-### ESA ASCAT 12.5 H115
+### Metop ASCAT 12.5 H115
 
 * http://hsaf.meteoam.it/documents/H115_ASCAT_SSM_CDR_v5_PUM_v0.1.pdf
+* ASCAT Surface Soil Moisture Climate Data Record v5 12.5 km (H115)
 
 ### ESA Climate Change Initiative
 
@@ -33,6 +34,7 @@ Analyses include:
 ### GLDAS Noah
 
 * https://search.earthdata.nasa.gov/search?projectId=8364534388
+* GLDAS Noah Land Surface Model 3 hourly v2.1
 
 ### SMAP
 * https://search.earthdata.nasa.gov/projects?projectId=6586843843
@@ -41,15 +43,23 @@ Analyses include:
 
 * SMAP L3 Enhanced (SPL3SMP_E) https://nsidc.org/data/SPL3SMP_E
 
-* SMAP L4 (SPL4SMAU)
+* SMAP L4 (SPL4SMAU) https://nsidc.org/data/SPL4SMAU/versions/4
 
 ### Sentinel-1
 
 * https://land.copernicus.eu/global/products/ssm
+* CGLOPS-1 SSM 1km v1 https://land.copernicus.eu/global/sites/cgls.vito.be/files/products/CGLOPS1_PUM_SSM1km-V1_I1.30.pdf
 
-### SMOS
-* SMOS-BEC
-* SMOS-IC
+### SMOS-BEC
+
+* http://bec.icm.csic.es/
+
+* SMOS-BEC L4 http://bec.icm.csic.es/doc/BEC_SMOS_PD_SM_L3v3_L4v5.pdf
+
+### SMOS-IC
+
+* https://www.catds.fr/Products/Available-products-from-CEC-SM/SMOS-IC
+* SMOS-IC L3 Soil Moisture [ftp://ext-catds-cecsm:catds2010@ftp.ifremer.fr/Land_products/L3_SMOS_IC_Soil_Moisture/ASC/](ftp://ext-catds-cecsm:catds2010@ftp.ifremer.fr/Land_products/L3_SMOS_IC_Soil_Moisture/ASC/)
 
 
 ## Tools/Packages
@@ -62,6 +72,6 @@ In addition to standard data analysis packages (e.g. pandas), the following pack
 
 ## Credits
 
-Nina del Rosario
+Nina del Rosario - MSc student in GIS at Lund University
 
-MSc student in GIS at Lund University
+Supervised by Dr. Zheng Duan at Lund University
