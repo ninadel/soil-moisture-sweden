@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 input_dir = r"..\analysis_output\station evaluation\all_metrics"
-output_dir = r"..\test_output_data"
+output_dir = r"..\analysis_output\station evaluation\all_metrics"
 
 merged_metrics = None
 for filename in os.listdir(input_dir):
