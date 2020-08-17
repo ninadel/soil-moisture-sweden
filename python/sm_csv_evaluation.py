@@ -23,7 +23,6 @@ def evaluate_csv_station(evaluation_dict, station):
     match_window = evaluation_dict['match_window']
     anomaly = evaluation_dict['anomaly']
     evaluate_timefilters = evaluation_dict['evaluate_timefilters']
-    verbose = evaluation_dict['verbose']
     dataset_folder = config.dict_product_inputs[dataset]['csv_stations']
     sm_field = config.dict_product_fields[dataset]['sm_field']
     network = station.network
@@ -35,6 +34,7 @@ def evaluate_csv_station(evaluation_dict, station):
     eval_data = eval_data[start_date:end_date]
     eval_data = tools.get_filtered_data(dataset, eval_data)
     eval_data = eval_data[sm_field]
+    eval_data.dropna()
     if anomaly:
         eval_data = calc_anomaly(eval_data)
     matched_data = matching(ref_data, eval_data, window=match_window)
