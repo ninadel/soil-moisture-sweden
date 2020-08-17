@@ -5,7 +5,8 @@
     "latitude": 64.182029,
     "longitude": 19.556539,
     "elevation": 270,
-    "cover": "Wetland"
+    "cover": "Wetland",
+    "code": "SE-Deg"
   },
   "ICOS Hyltemossa": {
     "station": "Hyltemossa",
@@ -13,7 +14,8 @@
     "latitude": 56.097581,
     "longitude": 13.419064,
     "elevation": 115,
-    "cover": "Forest"
+    "cover": "Forest",
+    "code": "SE-Htm"
   },
   "ICOS Lanna": {
     "station": "Lanna",
@@ -21,7 +23,8 @@
     "latitude": 58.340629,
     "longitude": 13.101768,
     "elevation": 75,
-    "cover": "Agriculture"
+    "cover": "Agriculture",
+    "code": "SE-Lnn"
   },
   "ICOS Norunda": {
     "station": "Norunda",
@@ -29,7 +32,8 @@
     "latitude": 60.086441,
     "longitude": 17.479455,
     "elevation": 46,
-    "cover": "Forest"
+    "cover": "Forest",
+    "code": "SE-Nor"
   },
   "ICOS Ostergarnsholm": {
     "station": "Ostergarnsholm",
@@ -37,7 +41,8 @@
     "latitude": 57.430061,
     "longitude": 18.984339,
     "elevation": 0,
-    "cover": "Ocean"
+    "cover": "Ocean",
+    "code": "SE-Oes"
   },
   "ICOS Stordalen": {
     "station": "Stordalen",
@@ -45,7 +50,8 @@
     "latitude": 68.356003,
     "longitude": 19.0452,
     "elevation": 360,
-    "cover": "Wetland"
+    "cover": "Wetland",
+    "code": "SE-Sto"
   },
   "ICOS Svartberget": {
     "station": "Svartberget",
@@ -53,6 +59,7 @@
     "latitude": 64.256125,
     "longitude": 19.774413,
     "elevation": 270,
-    "cover": "Forest"
+    "cover": "Forest",
+    "code": "SE-Svb"
   }
 }
