@@ -687,7 +687,8 @@ def split_by_timeframe(df, years, seasons=True, months=True, ignore=[], am_only=
         month_filter = filter[2]
         if month_filter is not None:
             filter_strs.append("M{:02}".format(month_filter))
-        filter_data = timefilter_data(df, year_filter=year_filter, season_filter=season_filter, month_filter=month_filter)
+        filter_data = timefilter_data(df, year_filter=year_filter, season_filter=season_filter,
+                                      month_filter=month_filter)
         filter_str = "-".join(filter_strs)
         timefilter_data_dict[filter_str] = filter_data
     count_dict = {}
@@ -737,4 +738,22 @@ def csv_to_pdseries(f):
     data = data.set_index(pandas.DatetimeIndex(data[first_col]))
     data = data.drop(first_col, axis=1)
     return data
+
+
+def get_station_code(station):
+    station_dict = {**config.dict_icos, **config.dict_hobe}
+    network = station.network
+    station_name = station.station
+    station_key = " ".join([network, station_name])
+    station_code = station_dict[station_key]["code"]
+    return station_code
+
+
+def get_station_cover(station):
+    station_dict = {**config.dict_icos, **config.dict_hobe}
+    network = station.network
+    station_name = station.station
+    station_key = " ".join([network, station_name])
+    station_cover = station_dict[station_key]["cover"]
+    return station_cover
 
