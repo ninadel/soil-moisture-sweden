@@ -12,15 +12,6 @@ import sm_tools as tools
 from multiprocessing import Pool
 
 
-input_dir = r"..\test_output_data\H115_dates_csv"
-output_dir = r"..\test_output_data\H115_overpass_data"
-logfile = os.path.join(output_dir, "logfile.txt")
-datefiles = os.listdir(input_dir)
-# print(datefiles)
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-
 # function to convert time in datestamp to a decimal number
 def get_time_value(row):
     time_value = row['datestamp'].hour + row['datestamp'].minute / 60
@@ -147,5 +138,12 @@ def convert_date_to_overpass(datefile):
 
 
 if __name__ == '__main__':
+    input_dir = r"..\test_output_data\H115_dates_csv"
+    output_dir = r"..\test_output_data\H115_overpass_data"
+    logfile = os.path.join(output_dir, "logfile.txt")
+    datefiles = os.listdir(input_dir)
+    # print(datefiles)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
     with Pool(5) as p:
         p.map(convert_date_to_overpass, datefiles)
