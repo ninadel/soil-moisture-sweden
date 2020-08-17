@@ -59,10 +59,24 @@ def evaluate_csv_station(evaluation_dict, station):
                                                                      seasons=evaluate_seasons, months=evaluate_months)
     for timefilter, timefilter_data in timefilter_data_dict.items():
         metrics[timefilter] = tools.get_metrics(data=timefilter_data, anomaly=anomaly, return_dict=True)
+    return metrics, matched_data
+
+
+def evaluate_csv_network(evaluation_dict, network_matched_data):
+    metrics = {}
+    anomaly = evaluation_dict['anomaly']
+    evaluate_timefilters = evaluation_dict['evaluate_timefilters']
+    evaluate_years = evaluate_timefilters[0]
+    evaluate_seasons = evaluate_timefilters[1]
+    evaluate_months = evaluate_timefilters[2]
+    timefilter_data_dict, timefilter_counts = tools.split_by_timeframe(network_matched_data, years=evaluate_years,
+                                                                     seasons=evaluate_seasons, months=evaluate_months)
+    for timefilter, timefilter_data in timefilter_data_dict.items():
+        metrics[timefilter] = tools.get_metrics(data=timefilter_data, anomaly=anomaly, return_dict=True)
     return metrics
 
 
-def evaluation_csv_network(evaluation_dict):
+def evaluation_csv(evaluation_dict):
     def get_station_metrics_df():
         metrics_df = pd.DataFrame(columns=['network', 'station', 'station_code', 'lon', 'lat', 'cover', 'eval_dataset',
                                            'timefilter', 'anomaly', 'pearson_r', 'pearson_r_p-value', 'bias', 'rmsd',
@@ -74,7 +88,24 @@ def evaluation_csv_network(evaluation_dict):
                        'anomaly': anomaly_str}
         metrics_row.update(timefilter_metrics)
         return metrics_row
-    metrics_df = None
+    def get_network_metrics_df():
+        metrics_df = pd.DataFrame(columns=['network', 'eval_dataset', 'timefilter', 'anomaly', 'pearson_r',
+                                           'pearson_r_p-value', 'bias', 'rmsd', 'ubrmsd', 'n', 'pearson_sig'])
+        return metrics_df
+    def get_network_metrics_row():
+        metrics_row = {'network': network, 'eval_dataset': dataset, 'timefilter': timefilter, 'anomaly': anomaly_str}
+        metrics_row.update(timefilter_metrics)
+        return metrics_row
+    def log_results():
+        tools.write_log(logfile, timefilter_evaluation_str, print_string=verbose)
+        n = timefilter_metrics['n']
+        sig = timefilter_metrics['pearson_sig']
+        pearson_r = timefilter_metrics['pearson_r']
+        tools.write_log(logfile, "{}, rows: {}".format(timefilter_evaluation_str, n), print_string=verbose)
+        tools.write_log(logfile, "{}, pearson_r: {}".format(timefilter_evaluation_str, pearson_r),
+                        print_string=verbose)
+        tools.write_log(logfile, "{}, significant: {}".format(timefilter_evaluation_str, sig),
+                        print_string=verbose)
     stations = evaluation_dict['stations']
     dataset = evaluation_dict['evaluation_dataset']
     anomaly = evaluation_dict['anomaly']
@@ -85,9 +116,11 @@ def evaluation_csv_network(evaluation_dict):
     else:
         anomaly_str = "absolute"
     evaluation_str = "{}_{}".format(dataset, anomaly_str)
-    evaluation_metrics_file = os.path.join(output_root, "{} metrics.csv".format(evaluation_str))
+    station_evaluation_metrics_file = os.path.join(output_root, "{} station metrics.csv".format(evaluation_str))
+    network_evaluation_metrics_file = os.path.join(output_root, "{} network metrics.csv".format(evaluation_str))
     logfile = os.path.join(output_root, "{} log.txt".format(evaluation_str))
     tools.write_log(logfile, evaluation_str, print_string=verbose)
+    matched_data_dict = {}
     for station in stations:
         network = station.network
         station_name = station.station
@@ -98,28 +131,41 @@ def evaluation_csv_network(evaluation_dict):
         lon = station.longitude
         lat = station.latitude
         try:
-            station_metrics_dict = evaluate_csv_station(evaluation_dict, station)
+            station_metrics_dict, matched_data = evaluate_csv_station(evaluation_dict, station)
+            if network not in matched_data_dict.keys():
+                matched_data_dict[network] = {}
+            matched_data_dict[network][station_code] = matched_data
             for timefilter, timefilter_metrics in station_metrics_dict.items():
                 timefilter_evaluation_str = "{}_{}".format(station_evaluation_str, timefilter)
-                tools.write_log(logfile, timefilter_evaluation_str, print_string=verbose)
-                n = timefilter_metrics['n']
-                sig = timefilter_metrics['pearson_sig']
-                pearson_r = timefilter_metrics['pearson_r']
-                tools.write_log(logfile, "{}, rows: {}".format(timefilter_evaluation_str, n), print_string=verbose)
-                tools.write_log(logfile, "{}, pearson_r: {}".format(timefilter_evaluation_str, pearson_r),
-                                print_string=verbose)
-                tools.write_log(logfile, "{}, significant: {}".format(timefilter_evaluation_str, sig),
-                                print_string=verbose)
+                log_results()
                 station_metrics_df = get_station_metrics_df()
                 station_metrics_row = get_station_metrics_row()
                 station_metrics_df = station_metrics_df.append(station_metrics_row, ignore_index=True)
-                if not os.path.exists(evaluation_metrics_file):
-                    station_metrics_df.to_csv(evaluation_metrics_file, index=False)
+                if not os.path.exists(station_evaluation_metrics_file):
+                    station_metrics_df.to_csv(station_evaluation_metrics_file, index=False)
                 else:
-                    station_metrics_df.to_csv(evaluation_metrics_file, mode='a', header=False, index=False)
+                    station_metrics_df.to_csv(station_evaluation_metrics_file, mode='a', header=False, index=False)
         except:
             tools.write_log(logfile, "{}: failed".format(station_evaluation_str), print_string=verbose)
-    return metrics_df
+    for network_key, network_stations_dict in matched_data_dict.items():
+        network_matched_data = None
+        for station_code, station_matched_data in network_stations_dict.items():
+            if network_matched_data is None:
+                network_matched_data = station_matched_data
+            else:
+                network_matched_data = pd.concat([network_matched_data, station_matched_data])
+        network_evaluation_str = "{}_{}".format(evaluation_str, network_key)
+        network_metrics_dict = evaluate_csv_network(evaluation_dict, network_matched_data)
+        for timefilter, timefilter_metrics in network_metrics_dict.items():
+            timefilter_evaluation_str = "{}_{}".format(network_evaluation_str, timefilter)
+            log_results()
+            network_metrics_df = get_network_metrics_df()
+            network_metrics_row = get_network_metrics_row()
+            network_metrics_df = network_metrics_df.append(network_metrics_row, ignore_index=True)
+            if not os.path.exists(network_evaluation_metrics_file):
+                network_metrics_df.to_csv(network_evaluation_metrics_file, index=False)
+            else:
+                network_metrics_df.to_csv(network_evaluation_metrics_file, mode='a', header=False, index=False)
 
 
 def main(dataset):
@@ -128,7 +174,8 @@ def main(dataset):
         os.makedirs(output_root)
     icos_readers = tools.get_icos_readers(config.icos_input_dir)
     ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
-    evaluation_stations = icos_readers + ismn_readers
+    # evaluation_stations = icos_readers + ismn_readers
+    evaluation_stations = icos_readers
     station_evaluation_dict = {
         'stations': evaluation_stations,
         'evaluation_dataset': dataset,
@@ -146,7 +193,7 @@ def main(dataset):
         # try:
         evaluation_dict = station_evaluation_dict.copy()
         evaluation_dict['anomaly'] = anomaly_value
-        evaluation_csv_network(evaluation_dict)
+        evaluation_csv(evaluation_dict)
 
 
 if __name__ == '__main__':
