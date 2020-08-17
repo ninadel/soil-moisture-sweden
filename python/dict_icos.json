@@ -1,5 +1,5 @@
 {
-  "SE-Deg": {
+  "ICOS Degero": {
     "station": "Degero",
     "network": "ICOS",
     "latitude": 64.182029,
@@ -7,7 +7,7 @@
     "elevation": 270,
     "cover": "Wetland"
   },
-  "SE-Htm": {
+  "ICOS Hyltemossa": {
     "station": "Hyltemossa",
     "network": "ICOS",
     "latitude": 56.097581,
@@ -15,7 +15,7 @@
     "elevation": 115,
     "cover": "Forest"
   },
-  "SE-Lnn": {
+  "ICOS Lanna": {
     "station": "Lanna",
     "network": "ICOS",
     "latitude": 58.340629,
@@ -23,7 +23,7 @@
     "elevation": 75,
     "cover": "Agriculture"
   },
-  "SE-Nor": {
+  "ICOS Norunda": {
     "station": "Norunda",
     "network": "ICOS",
     "latitude": 60.086441,
@@ -31,7 +31,7 @@
     "elevation": 46,
     "cover": "Forest"
   },
-  "SE-Oes": {
+  "ICOS Ostergarnsholm": {
     "station": "Ostergarnsholm",
     "network": "ICOS",
     "latitude": 57.430061,
@@ -39,7 +39,7 @@
     "elevation": 0,
     "cover": "Ocean"
   },
-  "SE-Sto": {
+  "ICOS Stordalen": {
     "station": "Stordalen",
     "network": "ICOS",
     "latitude": 68.356003,
@@ -47,7 +47,7 @@
     "elevation": 360,
     "cover": "Wetland"
   },
-  "SE-Svb": {
+  "ICOS Svartberget": {
     "station": "Svartberget",
     "network": "ICOS",
     "latitude": 64.256125,
