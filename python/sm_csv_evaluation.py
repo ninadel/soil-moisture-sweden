@@ -31,16 +31,14 @@ def evaluate_csv_station(evaluation_dict, station):
     evaluate_years = evaluate_timefilters[0]
     evaluate_seasons = evaluate_timefilters[1]
     evaluate_months = evaluate_timefilters[2]
-    output_root = evaluation_dict['output_root']
-    export_matched = evaluation_dict['export_matched']
     dataset_folder = config.dict_product_inputs[dataset]['csv_stations']
     sm_field = config.dict_product_fields[dataset]['sm_field']
     network = station.network
     station_name = station.station
-    station_code = tools.get_station_code(station)
     eval_file = os.path.join(dataset_folder, "{}_{}.csv".format(network, station_name.replace(".", "-")))
     ref_data = tools.get_ref_data(station, anomaly=anomaly)
     ref_data = ref_data.tz_localize(None)
+    ref_data.rename('ref_sm', inplace=True)
     eval_data = tools.csv_to_pdseries(eval_file)
     eval_data = eval_data[start_date:end_date]
     eval_data = tools.get_filtered_data(dataset, eval_data)
@@ -48,13 +46,8 @@ def evaluate_csv_station(evaluation_dict, station):
     eval_data.dropna()
     if anomaly:
         eval_data = calc_anomaly(eval_data)
+    eval_data.rename('eval_sm', inplace=True)
     matched_data = matching(ref_data, eval_data, window=match_window)
-    if export_matched:
-        matched_data_folder = os.path.join(output_root, "matched_data")
-        if not os.path.exists(matched_data_folder):
-            os.makedirs(matched_data_folder)
-        matched_data_file = os.path.join(matched_data_folder, "{}_{}_matched.csv".format(dataset, station_code))
-        matched_data.to_csv(matched_data_file)
     timefilter_data_dict, timefilter_counts = tools.split_by_timeframe(matched_data, years=evaluate_years,
                                                                      seasons=evaluate_seasons, months=evaluate_months)
     for timefilter, timefilter_data in timefilter_data_dict.items():
@@ -110,11 +103,16 @@ def evaluation_csv(evaluation_dict):
     dataset = evaluation_dict['evaluation_dataset']
     anomaly = evaluation_dict['anomaly']
     output_root = evaluation_dict['output_root']
+    export_matched = evaluation_dict['export_matched']
     verbose = evaluation_dict['verbose']
     if anomaly:
         anomaly_str = "anomaly"
     else:
         anomaly_str = "absolute"
+    if export_matched:
+        matched_data_folder = os.path.join(output_root, "matched_data")
+        if not os.path.exists(matched_data_folder):
+            os.makedirs(matched_data_folder)
     evaluation_str = "{}_{}".format(dataset, anomaly_str)
     station_evaluation_metrics_file = os.path.join(output_root, "{} station metrics.csv".format(evaluation_str))
     network_evaluation_metrics_file = os.path.join(output_root, "{} network metrics.csv".format(evaluation_str))
@@ -132,6 +130,9 @@ def evaluation_csv(evaluation_dict):
         lat = station.latitude
         try:
             station_metrics_dict, matched_data = evaluate_csv_station(evaluation_dict, station)
+            if export_matched:
+                matched_data_file = os.path.join(matched_data_folder, "{}_matched.csv".format(station_evaluation_str))
+                matched_data.to_csv(matched_data_file)
             if network not in matched_data_dict.keys():
                 matched_data_dict[network] = {}
             matched_data_dict[network][station_code] = matched_data
@@ -174,8 +175,7 @@ def main(dataset):
         os.makedirs(output_root)
     icos_readers = tools.get_icos_readers(config.icos_input_dir)
     ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
-    # evaluation_stations = icos_readers + ismn_readers
-    evaluation_stations = icos_readers
+    evaluation_stations = icos_readers + ismn_readers
     station_evaluation_dict = {
         'stations': evaluation_stations,
         'evaluation_dataset': dataset,
@@ -188,12 +188,11 @@ def main(dataset):
         'export_matched': True,
         'verbose': True
     }
-    for anomaly_value in [False]:
-    # for anomaly_value in [False, True]:
-        # try:
+    for anomaly_value in [False, True]:
         evaluation_dict = station_evaluation_dict.copy()
         evaluation_dict['anomaly'] = anomaly_value
         evaluation_csv(evaluation_dict)
+
 
 
 if __name__ == '__main__':
