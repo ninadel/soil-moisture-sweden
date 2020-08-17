@@ -87,7 +87,7 @@ dict_product_inputs = {
     },
     "SMOS-IC": {
         "ts_dir": r"C:\git\soil-moisture-sweden\input_data\smos-ic-l3-25km_global_reshuffle\ASC",
-        "csv_stations": r"..\input_data\csv_stations\SMOS-BEC",
+        "csv_stations": r"..\input_data\csv_stations\SMOS-IC",
         "csv_quarters": None
     }
 }
