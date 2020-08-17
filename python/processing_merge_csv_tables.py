@@ -14,4 +14,4 @@ for filename in os.listdir(input_dir):
         else:
             merged_metrics = pd.concat([merged_metrics, df])
 
-merged_metrics.to_csv(os.path.join(output_dir, "merged metrics.csv"), index=False)
+merged_metrics.to_csv(os.path.join(output_dir, "merged_metrics.csv"), index=False)
