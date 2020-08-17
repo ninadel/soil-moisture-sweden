@@ -6,7 +6,7 @@
     "longitude": 9.1809,
     "elevation": 58.0,
     "cover": "Heath",
-    "code": "H1.01"
+    "code": "H101"
   },
   "HOBE 1.02": {
     "station": "1.02",
@@ -15,7 +15,7 @@
     "longitude": 9.161,
     "elevation": 67.0,
     "cover": "Agriculture",
-    "code": "H1.02"
+    "code": "H102"
   },
   "HOBE 1.03": {
     "station": "1.03",
@@ -24,7 +24,7 @@
     "longitude": 9.1654,
     "elevation": 69.0,
     "cover": "Heath",
-    "code": "H1.03"
+    "code": "H103"
   },
   "HOBE 1.04": {
     "station": "1.04",
@@ -33,7 +33,7 @@
     "longitude": 9.3337,
     "elevation": 90.0,
     "cover": "Forest",
-    "code": "H1.04"
+    "code": "H104"
   },
   "HOBE 1.05": {
     "station": "1.05",
@@ -42,7 +42,7 @@
     "longitude": 9.1912,
     "elevation": 80.0,
     "cover": "Forest",
-    "code": "H1.05"
+    "code": "H105"
   },
   "HOBE 1.06": {
     "station": "1.06",
@@ -51,7 +51,7 @@
     "longitude": 9.161,
     "elevation": 60.0,
     "cover": "Agriculture",
-    "code": "H1.06"
+    "code": "H106"
   },
   "HOBE 1.07": {
     "station": "1.07",
@@ -60,7 +60,7 @@
     "longitude": 9.1413,
     "elevation": 60.0,
     "cover": "Agriculture",
-    "code": "H1.07"
+    "code": "H107"
   },
   "HOBE 1.08": {
     "station": "1.08",
@@ -69,7 +69,7 @@
     "longitude": 9.1239,
     "elevation": 55.0,
     "cover": "Agriculture",
-    "code": "H1.08"
+    "code": "H108"
   },
   "HOBE 1.09": {
     "station": "1.09",
@@ -78,7 +78,7 @@
     "longitude": 9.1304,
     "elevation": 59.0,
     "cover": "Agriculture",
-    "code": "H1.09"
+    "code": "H109"
   },
   "HOBE 1.10": {
     "station": "1.10",
@@ -87,7 +87,7 @@
     "longitude": 9.2392,
     "elevation": 71.0,
     "cover": "Agriculture",
-    "code": "H1.10"
+    "code": "H110"
   },
   "HOBE 2.01": {
     "station": "2.01",
@@ -96,7 +96,7 @@
     "longitude": 9.2207,
     "elevation": 63.0,
     "cover": "Forest",
-    "code": "H2.01"
+    "code": "H201"
   },
   "HOBE 2.02": {
     "station": "2.02",
@@ -105,7 +105,7 @@
     "longitude": 9.1624,
     "elevation": 50.0,
     "cover": "Agriculture",
-    "code": "H2.02"
+    "code": "H202"
   },
   "HOBE 2.03": {
     "station": "2.03",
@@ -114,7 +114,7 @@
     "longitude": 9.1526,
     "elevation": 53.0,
     "cover": "Agriculture",
-    "code": "H2.03"
+    "code": "H203"
   },
   "HOBE 2.04": {
     "station": "2.04",
@@ -123,7 +123,7 @@
     "longitude": 9.0984,
     "elevation": 45.0,
     "cover": "Agriculture",
-    "code": "H2.04"
+    "code": "H204"
   },
   "HOBE 2.05": {
     "station": "2.05",
@@ -132,7 +132,7 @@
     "longitude": 9.0967,
     "elevation": 46.0,
     "cover": "Agriculture",
-    "code": "H2.05"
+    "code": "H205"
   },
   "HOBE 2.06b": {
     "station": "2.06b",
@@ -141,7 +141,7 @@
     "longitude": 9.0817,
     "elevation": 43.0,
     "cover": "Agriculture",
-    "code": "H2.06"
+    "code": "H206"
   },
   "HOBE 2.07": {
     "station": "2.07",
@@ -150,7 +150,7 @@
     "longitude": 9.0337,
     "elevation": 41.0,
     "cover": "Agriculture",
-    "code": "H2.07"
+    "code": "H207"
   },
   "HOBE 2.08b": {
     "station": "2.08b",
@@ -159,7 +159,7 @@
     "longitude": 9.03146,
     "elevation": 38.0,
     "cover": "Agriculture",
-    "code": "H2.08"
+    "code": "H208"
   },
   "HOBE 2.09": {
     "station": "2.09",
@@ -168,7 +168,7 @@
     "longitude": 9.1153,
     "elevation": 73.0,
     "cover": "Agriculture",
-    "code": "H2.09"
+    "code": "H209"
   },
   "HOBE 2.10": {
     "station": "2.10",
@@ -177,7 +177,7 @@
     "longitude": 9.0907,
     "elevation": 44.0,
     "cover": "Heath",
-    "code": "H2.10"
+    "code": "H210"
   },
   "HOBE 2.11": {
     "station": "2.11",
@@ -186,7 +186,7 @@
     "longitude": 9.0225,
     "elevation": 40.0,
     "cover": "Heath",
-    "code": "H2.11"
+    "code": "H211"
   },
   "HOBE 3.01": {
     "station": "3.01",
@@ -195,7 +195,7 @@
     "longitude": 9.0142,
     "elevation": 52.0,
     "cover": "Agriculture",
-    "code": "H3.01"
+    "code": "H301"
   },
   "HOBE 3.02": {
     "station": "3.02",
@@ -204,7 +204,7 @@
     "longitude": 8.9221,
     "elevation": 28.0,
     "cover": "Agriculture",
-    "code": "H3.02"
+    "code": "H302"
   },
   "HOBE 3.03": {
     "station": "3.03",
@@ -213,7 +213,7 @@
     "longitude": 8.9462,
     "elevation": 34.0,
     "cover": "Agriculture",
-    "code": "H3.03"
+    "code": "H303"
   },
   "HOBE 3.04": {
     "station": "3.04",
@@ -222,7 +222,7 @@
     "longitude": 8.9357,
     "elevation": 30.0,
     "cover": "Agriculture",
-    "code": "H3.04"
+    "code": "H304"
   },
   "HOBE 3.05": {
     "station": "3.05",
@@ -231,7 +231,7 @@
     "longitude": 8.9175,
     "elevation": 36.0,
     "cover": "Agriculture",
-    "code": "H3.05"
+    "code": "H305"
   },
   "HOBE 3.06": {
     "station": "3.06",
@@ -240,7 +240,7 @@
     "longitude": 8.8831,
     "elevation": 38.0,
     "cover": "Forest",
-    "code": "H3.06"
+    "code": "H306"
   },
   "HOBE 3.07": {
     "station": "3.07",
@@ -249,7 +249,7 @@
     "longitude": 8.8536,
     "elevation": 26.0,
     "cover": "Agriculture",
-    "code": "H3.07"
+    "code": "H307"
   },
   "HOBE 3.08": {
     "station": "3.08",
@@ -258,7 +258,7 @@
     "longitude": 9.2683,
     "elevation": 88.0,
     "cover": "Agriculture",
-    "code": "H3.08"
+    "code": "H308"
   },
   "HOBE 3.09": {
     "station": "3.09",
@@ -267,6 +267,6 @@
     "longitude": 9.2945,
     "elevation": 104.0,
     "cover": "Agriculture",
-    "code": "H3.09"
+    "code": "H309"
   }
 }
