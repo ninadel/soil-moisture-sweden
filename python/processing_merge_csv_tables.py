@@ -1,8 +1,9 @@
 import os
 import pandas as pd
 
-input_dir = r"..\analysis_output\station evaluation\all_metrics"
-output_dir = r"..\analysis_output\station evaluation\all_metrics"
+input_dir = r"..\analysis_output\station evaluation 20200818002200\network_metrics"
+# "C:\git\soil-moisture-sweden\analysis_output\station evaluation 20200818002200\network_metrics"
+output_dir = r"..\analysis_output\station evaluation 20200818002200"
 
 merged_metrics = None
 for filename in os.listdir(input_dir):
@@ -14,4 +15,4 @@ for filename in os.listdir(input_dir):
         else:
             merged_metrics = pd.concat([merged_metrics, df])
 
-merged_metrics.to_csv(os.path.join(output_dir, "merged_metrics.csv"), index=False)
+merged_metrics.to_csv(os.path.join(output_dir, "network_metrics.csv"), index=False)

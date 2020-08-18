@@ -1,5 +1,6 @@
 from pytesmo import temporal_matching
 from pytesmo.metrics import tcol_snr
+from pytesmo.time_series.anomaly import calc_anomaly
 import multiprocessing as mp
 from datetime import datetime
 from itertools import permutations
@@ -22,7 +23,8 @@ def get_triplets(model, active, passive):
 def get_tc_dicts(triplets, loc_dict, output_root):
     tc_dicts = []
     for triplet in triplets:
-        for anomaly_value in [False, True]:
+        for anomaly_value in [True]:
+        # for anomaly_value in [False, True]:
             for loc in loc_dict.keys():
                 if anomaly_value:
                     anomaly_str = "anomaly"
@@ -71,6 +73,7 @@ def tc_analysis(tc_dict):
         return metrics_row
     triplet = tc_dict['triplet']
     loc = tc_dict['loc']
+    anomaly = tc_dict['anomaly']
     anomaly_str = tc_dict['anomaly_str']
     metrics_file = tc_dict['metrics_file']
     logfile = tc_dict['logfile']
@@ -84,17 +87,23 @@ def tc_analysis(tc_dict):
         loc_filename = os.path.join(csv_quarter_dir, "{}_{}.csv".format(dataset, loc))
         loc_data = tools.csv_to_pdseries(loc_filename)
         loc_data = loc_data.squeeze()
+        if anomaly:
+            loc_data = calc_anomaly(loc_data)
         loc_data.rename(dataset, inplace=True)
         loc_data.dropna()
         ts_dict[dataset] = loc_data
         tools.write_log(logfile, "{} {} data.shape: {}".format(loc, dataset, ts_dict[dataset].shape))
-        perm = permutations(triplet)
-        matched_data = pandas.DataFrame()
     if ts_dict[triplet[0]].size > 0 and ts_dict[triplet[1]].size > 0 and ts_dict[triplet[2]].size > 0:
+        perm = permutations(triplet)
+        matched_data = None
+        product_order = None
         for p in perm:
             permutation_matched_data = temporal_matching.matching(ts_dict[p[0]], ts_dict[p[1]], ts_dict[p[2]],
                                                                   window=.5)
-            if permutation_matched_data.shape[0] > matched_data.shape[0]:
+            if matched_data is None:
+                matched_data = permutation_matched_data
+                product_order = p
+            elif permutation_matched_data.shape[0] > matched_data.shape[0]:
                 matched_data = permutation_matched_data
                 product_order = p
         tools.write_log(logfile, "{} {} matched_data.shape: {}".format(loc, product_order, matched_data.shape))
