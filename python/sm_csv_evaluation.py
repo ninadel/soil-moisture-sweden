@@ -116,7 +116,7 @@ def evaluation_csv(evaluation_dict):
         return metrics_df
 
     def get_network_metrics_row():
-        metrics_row = {'network': network, 'eval_dataset': dataset, 'timefilter': timefilter, 'anomaly': anomaly_str}
+        metrics_row = {'network': network_key, 'eval_dataset': dataset, 'timefilter': timefilter, 'anomaly': anomaly_str}
         metrics_row.update(timefilter_metrics)
         return metrics_row
 
@@ -211,8 +211,7 @@ if __name__ == '__main__':
     ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
     evaluation_stations = icos_readers + ismn_readers
     dicts = get_dicts(evaluation_datasets, evaluation_stations, output_root)
-    # dicts = dicts
-    with mp.get_context("spawn").Pool(5) as p: 
+    with mp.get_context("spawn").Pool(5) as p:
         p.map(evaluation_csv, dicts)
     print("pool complete")
     station_files = []
