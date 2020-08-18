@@ -8,9 +8,9 @@ import sm_config as config
 from datetime import datetime, timedelta
 import json
 import netCDF4
-import numpy
+import numpy as np
 import os
-import pandas
+import pandas as pd
 import re
 import warnings
 
@@ -63,7 +63,7 @@ def get_icos_readers(input_dir):
         filename_parts = filename.split(".")
         station = filename_parts[0]
         metadata = dict_icos[station]
-        data = pandas.read_csv(os.path.join(input_dir, filename), index_col=0)
+        data = pd.read_csv(os.path.join(input_dir, filename), index_col=0)
         reader = ICOSTimeSeries(metadata, data)
         readers.append(reader)
     return readers
@@ -231,7 +231,7 @@ def convert_tab_comma(filename):
     Converts tab delimited to comma separated
     filename: tab delimited file
     """""
-    file_df = pandas.read_csv(filename, sep="\t")
+    file_df = pd.read_csv(filename, sep="\t")
     output_file = filename[:-4]+"_commareformat"+filename[-4:]
     file_df.to_csv(output_file, sep=",")
 
@@ -249,8 +249,8 @@ def get_geo_extent(nc_file, lon_field="lon", lat_field="lat"):
     try:
         lon_array = nc[lon_field][:]
         lat_array = nc[lat_field][:]
-        ll = (numpy.amin(lat_array), numpy.amin(lon_array))
-        ur = (numpy.amax(lat_array), numpy.amax(lon_array))
+        ll = (np.amin(lat_array), np.amin(lon_array))
+        ur = (np.amax(lat_array), np.amax(lon_array))
         return ll, ur
     except:
         print("cant\' read file")
@@ -262,8 +262,8 @@ def find_nearest(array, value):
     For an array and value, finds the nearest member of array
     Returns tuple of array index
     """""
-    array = numpy.asarray(array)
-    idx = (numpy.abs(array - value)).argmin()
+    array = np.asarray(array)
+    idx = (np.abs(array - value)).argmin()
     return idx, array[idx]
 
 
@@ -304,7 +304,7 @@ def get_nc_series(input_root, location, parameters, date_search_str, datetime_fo
                 v = ds[p][:][:, nr_lat_idx, nr_lon_idx]
             else:
                 v = ds[p][nr_lat_idx, nr_lon_idx]
-            v = numpy.asscalar(numpy.asarray(v))
+            v = np.asscalar(np.asarray(v))
             vs[p] = v
         return vs
     # turn parameters into a column list
@@ -326,7 +326,7 @@ def get_nc_series(input_root, location, parameters, date_search_str, datetime_fo
     # start processing files
     files = os.listdir(input_root)
     for loc, metadata in loc_meta_dict.items():
-        loc_ts_dict[loc] = pandas.DataFrame(columns=columns)
+        loc_ts_dict[loc] = pd.DataFrame(columns=columns)
     for filename in files:
         file = os.path.join(input_root, filename)
         ds = netCDF4.Dataset(file, mode="r")
@@ -335,7 +335,7 @@ def get_nc_series(input_root, location, parameters, date_search_str, datetime_fo
         lat_array = ds[lat_field][:]
         # for each file, process all locations and store results in dictionary
         for loc, metadata in loc_meta_dict.items():
-            # loc_ts_dict[loc] = pandas.DataFrame(columns=columns)
+            # loc_ts_dict[loc] = pd.DataFrame(columns=columns)
             lon_loc = metadata['longitude']
             lat_loc = metadata['latitude']
             if check_extent(lon_loc, lat_loc, file):
@@ -434,9 +434,9 @@ def get_csv_station_series(product, station, filter_prod=True, sm_only=True):
     csv_dir = config.dict_product_inputs[product]["csv_stations"]
     filename = get_station_ts_filename(station)
     file = os.path.join(csv_dir, filename)
-    data = pandas.read_csv(file)
+    data = pd.read_csv(file)
     first_col = data.columns[0]
-    data = data.set_index(pandas.DatetimeIndex(data[first_col]), drop=True)
+    data = data.set_index(pd.DatetimeIndex(data[first_col]), drop=True)
     return data
 
 
@@ -480,9 +480,9 @@ def get_timeshifted_data(product, product_data):
 
 def get_nc_parameter_count(file, parameter):
     ds = netCDF4.Dataset(file, mode="r")
-    param_values = numpy.asarray(ds[parameter][:]).ravel()
-    (unique, counts) = numpy.unique(param_values, return_counts=True)
-    frequencies = numpy.asarray((unique, counts)).T
+    param_values = np.asarray(ds[parameter][:]).ravel()
+    (unique, counts) = np.unique(param_values, return_counts=True)
+    frequencies = np.asarray((unique, counts)).T
     return frequencies
 
 
@@ -540,7 +540,7 @@ def get_nc_values(file, location, parameters, time_dim=True, lon_field="lon", la
                 v = ds[p][:][:, nr_lat_idx, nr_lon_idx]
             else:
                 v = ds[p][nr_lat_idx, nr_lon_idx]
-            v = numpy.asscalar(numpy.asarray(v))
+            v = np.asscalar(np.asarray(v))
             loc_values_dict[loc][p] = v
     return loc_values_dict
 
@@ -733,10 +733,10 @@ def get_timefilters(years, seasons=True, months=True, ignore=[]):
 
 
 def csv_to_pdseries(f):
-    data = pandas.read_csv(f)
+    data = pd.read_csv(f)
     # assumes first column is a datestamp
     first_col = data.columns[0]
-    data = data.set_index(pandas.DatetimeIndex(data[first_col]))
+    data = data.set_index(pd.DatetimeIndex(data[first_col]))
     data = data.drop(first_col, axis=1)
     return data
 
@@ -757,4 +757,14 @@ def get_station_cover(station):
     station_key = " ".join([network, station_name])
     station_cover = station_dict[station_key]["cover"]
     return station_cover
+
+def merge_tables(files):
+    merged = None
+    for file in files:
+        df = pd.read_csv(file)
+        if merged is None:
+            merged = df
+        else:
+            merged = pd.concat([merged, df])
+    return merged
 
