@@ -25,7 +25,7 @@ def get_dicts(datasets, stations, output_root):
             evaluation_str = "{}_{}".format(dataset, anomaly_str)
             station_metrics_file = os.path.join(output_root, "{} station metrics.csv".format(evaluation_str))
             network_metrics_file = os.path.join(output_root, "{} network metrics.csv".format(evaluation_str))
-            logfile = os.path.join(output_root, "{} logfile.csv".format(evaluation_str))
+            logfile = os.path.join(output_root, "{} logfile.txt".format(evaluation_str))
             evaluation_dict = {
                 'stations': stations,
                 'evaluation_dataset': dataset,
