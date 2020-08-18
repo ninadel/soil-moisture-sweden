@@ -4,12 +4,12 @@ Date: 8/4/2020
 Script for evaluating SM for each in-situ station (HOBE & ICOS)
 Status: In progress
 """
+import multiprocessing as mp
 from datetime import datetime
 import os
 import sm_tools as tools
 import sm_config as config
 import pandas as pd
-from multiprocessing import Pool
 from pytesmo.temporal_matching import matching
 from pytesmo.time_series.anomaly import calc_anomaly
 
@@ -212,7 +212,7 @@ if __name__ == '__main__':
     evaluation_stations = icos_readers + ismn_readers
     dicts = get_dicts(evaluation_datasets, evaluation_stations, output_root)
     # dicts = dicts
-    with Pool(4) as p:
+    with mp.get_context("spawn").Pool(5) as p: 
         p.map(evaluation_csv, dicts)
     print("pool complete")
     station_files = []
