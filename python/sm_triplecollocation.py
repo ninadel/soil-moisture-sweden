@@ -20,35 +20,51 @@ def get_triplets(mod, act, pas):
     return trips
 
 
-def get_tc_dicts(trips, loc_dict, root):
+def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, match_window=0.5, anomaly_values=[True],
+                 verbose=True):
     tcds = []
+
     for trip in trips:
-        for anomaly_value in [True]:
+        for anomaly_value in anomaly_values:
             for loc in loc_dict.keys():
+
                 if anomaly_value:
                     anomaly_str = "anomaly"
                 else:
                     anomaly_str = "absolute"
+
                 evaluation_str = "{}_{}_{}_{}_{}".format(trip[0], trip[1], trip[2], anomaly_str, loc)
-                metf = os.path.join(root, "tc_metrics_{}.csv".format(evaluation_str))
-                lf = os.path.join(root, "tc_log_{}.txt".format(evaluation_str))
-                matf = os.path.join(root, 'matched_data', 'matched_{}.csv'.format(evaluation_str))
+
+                logf = os.path.join(root, "tc_log_{}.txt".format(evaluation_str))
+
+                if export_matched:
+                    matf = os.path.join(root, 'matched_data', 'matched_{}.csv'.format(evaluation_str))
+                else:
+                    matf = None
+
+                if calculate:
+                    metf = os.path.join(root, "tc_metrics_{}.csv".format(evaluation_str))
+                else:
+                    metf = None
+
                 tcd = {
                     'triplet': trip,
                     'loc': loc,
                     'output_root': root,
-                    'match_window': 0.5,  # 1 hour
+                    'match_window': match_window,
                     'anomaly': anomaly_value,
-                    'verbose': True,
+                    'verbose': verbose,
                     'anomaly_str': anomaly_str,
                     'evaluation_str': evaluation_str,
-                    'calculate': False,
+                    'calculate': calculate,
                     'metrics_file': metf,
-                    'logfile': lf,
-                    'export_matched': True,
+                    'logfile': logf,
+                    'export_matched': export_matched,
                     'matched_file': matf
                 }
+
                 tcds.append(tcd)
+
     return tcds
 
 
@@ -177,13 +193,39 @@ if __name__ == '__main__':
     model = ["ERA5 0-1"]
     active = ["ASCAT 12.5 TS"]
     passive = ["SMAP L3 Enhanced", "SMOS-IC"]
+    calc_metrics = False
+    exp_matched = True
     triplets = get_triplets(model, active, passive)
-    tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root)
+    tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
+                            export_matched=exp_matched)
     # with mp.get_context("spawn").Pool(1) as p:
     with mp.get_context("spawn").Pool(5) as p:
         p.map(tc_analysis, tc_dicts)
-    tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
-    tc_metrics_merged = tools.merge_tables(tc_metrics_files)
-    tc_metrics_merged.to_csv(os.path.join(output_root, "tc_metrics.csv"), index=False)
+    if calc_metrics:
+        tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
+        tc_metrics_merged = tools.merge_tables(tc_metrics_files)
+        tc_metrics_merged.to_csv(os.path.join(output_root, "tc_metrics.csv"), index=False)
+    tc_log_files = [tc_dict['logfile'] for tc_dict in tc_dicts]
+    master_logfile = os.path.join(output_root, "master_log.txt")
+    with open(master_logfile, 'w') as outfile:
+        for lf in tc_log_files:
+            with open(lf) as infile:
+                outfile.write(infile.read())
+    # tcd = {
+    #     'triplet': trip,
+    #     'loc': loc,
+    #     'output_root': root,
+    #     'match_window': 0.5,  # 1 hour
+    #     'anomaly': anomaly_value,
+    #     'verbose': True,
+    #     'anomaly_str': anomaly_str,
+    #     'evaluation_str': evaluation_str,
+    #     'calculate': calculate,
+    #     'metrics_file': metf,
+    #     'logfile': lf,
+    #     'export_matched': export_matched,
+    #     'matched_file': matf
+    # }
+
     print("merge complete")
 
