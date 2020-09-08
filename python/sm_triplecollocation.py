@@ -49,24 +49,30 @@ def get_tc_dicts(trips, loc_dict, root):
 
 
 def tc_analysis(tc_dict):
-    def convert_snr_r(s):
-        # 1/squareroot(1 + (1/SNR))
-        r = 1./math.sqrt(1. + (1./s))
-        return r
+    # def convert_snr_r(s):
+    #     # 1/squareroot(1 + (1/SNR))
+    #     r = 1./math.sqrt(1. + (1./s))
+    #     return r
 
     def get_tc_df():
+        # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
+        #                                 'n', 'snr', 'r', 'err_std', 'beta'])
         mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
-                                        'n', 'snr', 'r', 'err_std', 'beta'])
+                                        'n', 'snr', 'err_std', 'beta'])
         return mdf
 
     def get_metrics_row(calculate=True):
+        # mr = {
+        #     'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
+        #     'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'r': None, 'err_std': None, 'beta': None
+        # }
         mr = {
             'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
-            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'r': None, 'err_std': None, 'beta': None
+            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'err_std': None, 'beta': None
         }
         if calculate:
             mr['snr'] = snr[idx]
-            mr['r'] = convert_snr_r(snr[idx])
+            # mr['r'] = convert_snr_r(snr[idx])
             mr['err_std'] = err_std[idx]
             mr['beta'] = beta[idx]
         return mr
