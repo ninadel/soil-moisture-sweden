@@ -211,21 +211,6 @@ if __name__ == '__main__':
         for lf in tc_log_files:
             with open(lf) as infile:
                 outfile.write(infile.read())
-    # tcd = {
-    #     'triplet': trip,
-    #     'loc': loc,
-    #     'output_root': root,
-    #     'match_window': 0.5,  # 1 hour
-    #     'anomaly': anomaly_value,
-    #     'verbose': True,
-    #     'anomaly_str': anomaly_str,
-    #     'evaluation_str': evaluation_str,
-    #     'calculate': calculate,
-    #     'metrics_file': metf,
-    #     'logfile': lf,
-    #     'export_matched': export_matched,
-    #     'matched_file': matf
-    # }
 
     print("merge complete")
 
