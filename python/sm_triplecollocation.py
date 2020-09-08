@@ -11,32 +11,31 @@ import sm_tools as tools
 import math
 
 
-def get_triplets(model, active, passive):
-    triplets = []
-    for m in model:
-        for a in active:
-            for p in passive:
-                triplets.append((m,a,p))
-    return triplets
+def get_triplets(mod, act, pas):
+    trips = []
+    for m in mod:
+        for a in act:
+            for p in pas:
+                trips.append((m, a, p))
+    return trips
 
 
-def get_tc_dicts(triplets, loc_dict, output_root):
-    tc_dicts = []
-    for triplet in triplets:
+def get_tc_dicts(trips, loc_dict, root):
+    tcds = []
+    for trip in trips:
         for anomaly_value in [True]:
-        # for anomaly_value in [False, True]:
             for loc in loc_dict.keys():
                 if anomaly_value:
                     anomaly_str = "anomaly"
                 else:
                     anomaly_str = "absolute"
-                evaluation_str = "{}_{}_{}_{}_{}".format(triplet[0], triplet[1], triplet[2], anomaly_str, loc)
-                mf = os.path.join(output_root, "tc_metrics_{}.csv".format(evaluation_str))
-                lf = os.path.join(output_root, "tc_log_{}.txt".format(evaluation_str))
-                tc_dict = {
-                    'triplet': triplet,
+                evaluation_str = "{}_{}_{}_{}_{}".format(trip[0], trip[1], trip[2], anomaly_str, loc)
+                mf = os.path.join(root, "tc_metrics_{}.csv".format(evaluation_str))
+                lf = os.path.join(root, "tc_log_{}.txt".format(evaluation_str))
+                tcd = {
+                    'triplet': trip,
                     'loc': loc,
-                    'output_root': output_root,
+                    'output_root': root,
                     'match_window': 1 / 24.,  # 1 hour
                     'anomaly': anomaly_value,
                     'verbose': True,
@@ -45,32 +44,33 @@ def get_tc_dicts(triplets, loc_dict, output_root):
                     'metrics_file': mf,
                     'logfile': lf
                 }
-                tc_dicts.append(tc_dict)
-    return tc_dicts
+                tcds.append(tcd)
+    return tcds
 
 
 def tc_analysis(tc_dict):
-    def convert_snr_r(snr):
+    def convert_snr_r(s):
         # 1/squareroot(1 + (1/SNR))
-        r = 1./math.sqrt(1. + (1./snr))
+        r = 1./math.sqrt(1. + (1./s))
         return r
 
     def get_tc_df():
-        metrics_df = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet',
-                                               'anomaly', 'n', 'snr', 'r', 'err_std', 'beta'])
-        return metrics_df
+        mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
+                                        'n', 'snr', 'r', 'err_std', 'beta'])
+        return mdf
 
     def get_metrics_row(calculate=True):
-        metrics_row = {
+        mr = {
             'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
             'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'r': None, 'err_std': None, 'beta': None
         }
         if calculate:
-            metrics_row['snr'] = snr[idx]
-            metrics_row['r'] = convert_snr_r(snr[idx])
-            metrics_row['err_std'] = err_std[idx]
-            metrics_row['beta'] = beta[idx]
-        return metrics_row
+            mr['snr'] = snr[idx]
+            mr['r'] = convert_snr_r(snr[idx])
+            mr['err_std'] = err_std[idx]
+            mr['beta'] = beta[idx]
+        return mr
+
     triplet = tc_dict['triplet']
     loc = tc_dict['loc']
     anomaly = tc_dict['anomaly']
@@ -82,8 +82,9 @@ def tc_analysis(tc_dict):
     lat = loc_data["latitude"]
     lon = loc_data["longitude"]
     ts_dict = {}
+
     for dataset in triplet:
-        csv_quarter_dir = os.path.join(config.dict_product_inputs[dataset]['csv_quarters'])
+        csv_quarter_dir = config.dict_product_inputs[dataset]['csv_quarters']
         loc_filename = os.path.join(csv_quarter_dir, "{}_{}.csv".format(dataset, loc))
         loc_data = tools.csv_to_pdseries(loc_filename)
         loc_data = loc_data.squeeze()
@@ -93,47 +94,55 @@ def tc_analysis(tc_dict):
         loc_data.dropna()
         ts_dict[dataset] = loc_data
         tools.write_log(logfile, "{} {} data.shape: {}".format(loc, dataset, ts_dict[dataset].shape))
+
     if ts_dict[triplet[0]].size > 0 and ts_dict[triplet[1]].size > 0 and ts_dict[triplet[2]].size > 0:
-        perm = permutations(triplet)
+        perms = permutations(triplet)
         matched_data = None
         product_order = None
-        for p in perm:
-            permutation_matched_data = temporal_matching.matching(ts_dict[p[0]], ts_dict[p[1]], ts_dict[p[2]],
-                                                                  window=.5)
+
+        for perm in perms:
+            perm_matched_data = temporal_matching.matching(ts_dict[perm[0]], ts_dict[perm[1]], ts_dict[perm[2]],
+                                                           window=.5)
             if matched_data is None:
-                matched_data = permutation_matched_data
-                product_order = p
-            elif permutation_matched_data.shape[0] > matched_data.shape[0]:
-                matched_data = permutation_matched_data
-                product_order = p
+                matched_data = perm_matched_data
+                product_order = perm
+            elif perm_matched_data.shape[0] > matched_data.shape[0]:
+                matched_data = perm_matched_data
+                product_order = perm
+
         tools.write_log(logfile, "{} {} matched_data.shape: {}".format(loc, product_order, matched_data.shape))
+
     else:
         tools.write_log(logfile, "{} {} insufficient data to match".format(loc, triplet))
+
     n = matched_data.shape[0]
-    try:
-        snr, err_std, beta = tcol_snr(matched_data[triplet[0]].to_numpy(), matched_data[triplet[1]].to_numpy(),
-                                      matched_data[triplet[2]].to_numpy())
-        tools.write_log(logfile, '{} {} snr: {}'.format(loc, triplet, snr))
-        tools.write_log(logfile, '{} {} err_std: {}'.format(loc, triplet, err_std))
-        tools.write_log(logfile, '{} {} beta: {}'.format(loc, triplet, beta))
-        for idx, product in enumerate(triplet):
-            metrics_df = get_tc_df()
-            metrics_row = get_metrics_row()
-            metrics_df = metrics_df.append(metrics_row, ignore_index=True)
-            if not os.path.exists(metrics_file):
-                metrics_df.to_csv(metrics_file, index=False)
-            else:
-                metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
-    except:
-        for idx, product in enumerate(triplet):
-            metrics_df = get_tc_df()
-            metrics_row = get_metrics_row(calculate=False)
-            metrics_df = metrics_df.append(metrics_row, ignore_index=True)
-            if not os.path.exists(metrics_file):
-                metrics_df.to_csv(metrics_file, index=False)
-            else:
-                metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
-        tools.write_log(logfile, "{} {} could not run tcol analysis".format(loc, triplet))
+
+    # try:
+    snr, err_std, beta = tcol_snr(matched_data[triplet[0]].to_numpy(), matched_data[triplet[1]].to_numpy(),
+                                  matched_data[triplet[2]].to_numpy())
+    tools.write_log(logfile, '{} {} snr: {}'.format(loc, triplet, snr))
+    tools.write_log(logfile, '{} {} err_std: {}'.format(loc, triplet, err_std))
+    tools.write_log(logfile, '{} {} beta: {}'.format(loc, triplet, beta))
+
+    for idx, product in enumerate(triplet):
+        metrics_df = get_tc_df()
+        metrics_row = get_metrics_row()
+        metrics_df = metrics_df.append(metrics_row, ignore_index=True)
+        if not os.path.exists(metrics_file):
+            metrics_df.to_csv(metrics_file, index=False)
+        else:
+            metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
+    # except:
+    #     for idx, product in enumerate(triplet):
+    #         metrics_df = get_tc_df()
+    #         metrics_row = get_metrics_row(calculate=False)
+    #         metrics_df = metrics_df.append(metrics_row, ignore_index=True)
+    #         if not os.path.exists(metrics_file):
+    #             metrics_df.to_csv(metrics_file, index=False)
+    #         else:
+    #             metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
+    #
+    #     tools.write_log(logfile, "{} {} could not run tcol analysis".format(loc, triplet))
 
 
 if __name__ == '__main__':
@@ -147,6 +156,7 @@ if __name__ == '__main__':
     passive = ["SMAP L3 Enhanced", "SMOS-IC"]
     triplets = get_triplets(model, active, passive)
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root)
+    # with mp.get_context("spawn").Pool(1) as p:
     with mp.get_context("spawn").Pool(5) as p:
         p.map(tc_analysis, tc_dicts)
     tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
