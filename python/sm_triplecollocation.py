@@ -30,19 +30,23 @@ def get_tc_dicts(trips, loc_dict, root):
                 else:
                     anomaly_str = "absolute"
                 evaluation_str = "{}_{}_{}_{}_{}".format(trip[0], trip[1], trip[2], anomaly_str, loc)
-                mf = os.path.join(root, "tc_metrics_{}.csv".format(evaluation_str))
+                metf = os.path.join(root, "tc_metrics_{}.csv".format(evaluation_str))
                 lf = os.path.join(root, "tc_log_{}.txt".format(evaluation_str))
+                matf = os.path.join(root, 'matched_data', 'matched_{}.csv'.format(evaluation_str))
                 tcd = {
                     'triplet': trip,
                     'loc': loc,
                     'output_root': root,
-                    'match_window': 1 / 24.,  # 1 hour
+                    'match_window': 0.5,  # 1 hour
                     'anomaly': anomaly_value,
                     'verbose': True,
                     'anomaly_str': anomaly_str,
                     'evaluation_str': evaluation_str,
-                    'metrics_file': mf,
-                    'logfile': lf
+                    'calculate': False,
+                    'metrics_file': metf,
+                    'logfile': lf,
+                    'export_matched': True,
+                    'matched_file': matf
                 }
                 tcds.append(tcd)
     return tcds
@@ -61,7 +65,7 @@ def tc_analysis(tc_dict):
                                         'n', 'snr', 'err_std', 'beta'])
         return mdf
 
-    def get_metrics_row(calculate=True):
+    def get_metrics_row(calc=True):
         # mr = {
         #     'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
         #     'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'r': None, 'err_std': None, 'beta': None
@@ -70,7 +74,7 @@ def tc_analysis(tc_dict):
             'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
             'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'err_std': None, 'beta': None
         }
-        if calculate:
+        if calc:
             mr['snr'] = snr[idx]
             # mr['r'] = convert_snr_r(snr[idx])
             mr['err_std'] = err_std[idx]
@@ -87,6 +91,14 @@ def tc_analysis(tc_dict):
     loc_vc = loc_data["veg_class_name"]
     lat = loc_data["latitude"]
     lon = loc_data["longitude"]
+    calc = tc_dict["calculate"]
+    match_window = tc_dict["match_window"]
+    export_matched = tc_dict['export_matched']
+    root = tc_dict['output_root']
+    if export_matched:
+        matched_subdir = os.path.join(root, "matched_data")
+        if not os.path.exists(matched_subdir):
+            os.mkdir(matched_subdir)
     ts_dict = {}
 
     for dataset in triplet:
@@ -108,7 +120,7 @@ def tc_analysis(tc_dict):
 
         for perm in perms:
             perm_matched_data = temporal_matching.matching(ts_dict[perm[0]], ts_dict[perm[1]], ts_dict[perm[2]],
-                                                           window=.5)
+                                                           window=match_window)
             if matched_data is None:
                 matched_data = perm_matched_data
                 product_order = perm
@@ -123,32 +135,37 @@ def tc_analysis(tc_dict):
 
     n = matched_data.shape[0]
 
-    # try:
-    snr, err_std, beta = tcol_snr(matched_data[triplet[0]].to_numpy(), matched_data[triplet[1]].to_numpy(),
-                                  matched_data[triplet[2]].to_numpy())
-    tools.write_log(logfile, '{} {} snr: {}'.format(loc, triplet, snr))
-    tools.write_log(logfile, '{} {} err_std: {}'.format(loc, triplet, err_std))
-    tools.write_log(logfile, '{} {} beta: {}'.format(loc, triplet, beta))
+    if export_matched:
+        matched_file = tc_dict['matched_file']
+        matched_data.to_csv(matched_file)
 
-    for idx, product in enumerate(triplet):
-        metrics_df = get_tc_df()
-        metrics_row = get_metrics_row()
-        metrics_df = metrics_df.append(metrics_row, ignore_index=True)
-        if not os.path.exists(metrics_file):
-            metrics_df.to_csv(metrics_file, index=False)
-        else:
-            metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
-    # except:
-    #     for idx, product in enumerate(triplet):
-    #         metrics_df = get_tc_df()
-    #         metrics_row = get_metrics_row(calculate=False)
-    #         metrics_df = metrics_df.append(metrics_row, ignore_index=True)
-    #         if not os.path.exists(metrics_file):
-    #             metrics_df.to_csv(metrics_file, index=False)
-    #         else:
-    #             metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
-    #
-    #     tools.write_log(logfile, "{} {} could not run tcol analysis".format(loc, triplet))
+    # try:
+    if calc:
+        snr, err_std, beta = tcol_snr(matched_data[triplet[0]].to_numpy(), matched_data[triplet[1]].to_numpy(),
+                                      matched_data[triplet[2]].to_numpy())
+        tools.write_log(logfile, '{} {} snr: {}'.format(loc, triplet, snr))
+        tools.write_log(logfile, '{} {} err_std: {}'.format(loc, triplet, err_std))
+        tools.write_log(logfile, '{} {} beta: {}'.format(loc, triplet, beta))
+
+        for idx, product in enumerate(triplet):
+            metrics_df = get_tc_df()
+            metrics_row = get_metrics_row()
+            metrics_df = metrics_df.append(metrics_row, ignore_index=True)
+            if not os.path.exists(metrics_file):
+                metrics_df.to_csv(metrics_file, index=False)
+            else:
+                metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
+        # except:
+        #     for idx, product in enumerate(triplet):
+        #         metrics_df = get_tc_df()
+        #         metrics_row = get_metrics_row(calculate=False)
+        #         metrics_df = metrics_df.append(metrics_row, ignore_index=True)
+        #         if not os.path.exists(metrics_file):
+        #             metrics_df.to_csv(metrics_file, index=False)
+        #         else:
+        #             metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
+        #
+        #     tools.write_log(logfile, "{} {} could not run tcol analysis".format(loc, triplet))
 
 
 if __name__ == '__main__':
