@@ -768,3 +768,118 @@ def merge_tables(files):
             merged = pd.concat([merged, df])
     return merged
 
+
+def calc_tcol_snr(matched_data=None, x=None, y=None, z=None, ref_ind=0):
+    """
+    adapted on pytesmo tcol_snr function
+
+    triple collocation based estimation of signal-to-noise ratio, absolute errors,
+    and rescaling coefficients
+
+    Parameters
+    ----------
+    matched_data: 3-column pandas.dataframe (optional)
+    x: 1D numpy.ndarray (optional)
+        first input dataset
+    y: 1D numpy.ndarray (optional)
+        second input dataset
+    z: 1D numpy.ndarray (optional)
+        third input dataset
+    ref_ind: int
+        index of reference data set for estimating scaling coefficients. default: 0 (x)
+
+    Returns
+    -------
+    Dictionary with x, y, and z keys. Each value is a dictionary with
+    name: string
+        column name of matched_data column (if matched_data is None, this is None)
+    snr: float
+        signal-to-noise (variance) ratio [dB]
+    err_std: float
+        **SCALED** error standard deviation
+    beta: float
+         scaling coefficients (i_scaled = i * beta_i)
+
+    Notes
+    -----
+
+    This function estimates the triple collocation errors, the scaling
+    parameter :math:`\\beta` and the signal to noise ratio directly from the
+    covariances of the dataset. For a general overview and how this function and
+    :py:func:`pytesmo.metrics.tcol_error` are related please see [Gruber2015]_.
+
+    Estimation of the error variances from the covariances of the datasets
+    (e.g. :math:`\\sigma_{XY}` for the covariance between :math:`x` and
+    :math:`y`) is done using the following formula:
+
+    .. math:: \\sigma_{\\varepsilon_x}^2 = \\sigma_{X}^2 - \\frac{\\sigma_{XY}\\sigma_{XZ}}{\\sigma_{YZ}}
+    .. math:: \\sigma_{\\varepsilon_y}^2 = \\sigma_{Y}^2 - \\frac{\\sigma_{YX}\\sigma_{YZ}}{\\sigma_{XZ}}
+    .. math:: \\sigma_{\\varepsilon_z}^2 = \\sigma_{Z}^2 - \\frac{\\sigma_{ZY}\\sigma_{ZX}}{\\sigma_{YX}}
+
+    :math:`\\beta` can also be estimated from the covariances:
+
+    .. math:: \\beta_x = 1
+    .. math:: \\beta_y = \\frac{\\sigma_{XZ}}{\\sigma_{YZ}}
+    .. math:: \\beta_z=\\frac{\\sigma_{XY}}{\\sigma_{ZY}}
+
+    The signal to noise ratio (SNR) is also calculated from the variances
+    and covariances:
+
+    .. math:: \\text{SNR}_X[dB] = -10\\log\\left(\\frac{\\sigma_{X}^2\\sigma_{YZ}}{\\sigma_{XY}\\sigma_{XZ}}-1\\right)
+    .. math:: \\text{SNR}_Y[dB] = -10\\log\\left(\\frac{\\sigma_{Y}^2\\sigma_{XZ}}{\\sigma_{YX}\\sigma_{YZ}}-1\\right)
+    .. math:: \\text{SNR}_Z[dB] = -10\\log\\left(\\frac{\\sigma_{Z}^2\\sigma_{XY}}{\\sigma_{ZX}\\sigma_{ZY}}-1\\right)
+
+    It is given in dB to make it symmetric around zero. If the value is zero
+    it means that the signal variance and the noise variance are equal. +3dB
+    means that the signal variance is twice as high as the noise variance.
+
+    References
+    ----------
+    .. [Gruber2015] Gruber, A., Su, C., Zwieback, S., Crow, W., Dorigo, W., Wagner, W.
+       (2015). Recent advances in (soil moisture) triple collocation analysis.
+       International Journal of Applied Earth Observation and Geoinformation,
+       in review
+    """
+    tcol_snr_metrics = {
+        "x":
+            {
+                "name": None,
+                "snr": None,
+                "err_var": None,
+                "err_std":  None,
+                "beta":  None},
+
+        "y":
+            {
+                "name": None,
+                "snr": None,
+                "err_var": None,
+                "err_std": None,
+                "beta": None},
+        "z":
+            {
+                "name": None,
+                "snr": None,
+                "err_var": None,
+                "err_std": None,
+                "beta": None}
+    }
+    if matched_data != None:
+        x_name = matched_data.columns[1]
+        y_name = matched_data.columns[2]
+        z_name = matched_data.columns[3]
+        tcol_snr_metrics["x"]["name"] = x_name
+        tcol_snr_metrics["y"]["name"] = y_name
+        tcol_snr_metrics["x"]["name"] = z_name
+        x = matched_data[x_name].to_numpy()
+        y = matched_data[y_name].to_numpy()
+        z = matched_data[z_name].to_numpy()
+    cov = np.cov(np.vstack((x, y, z)))
+    ind = (0, 1, 2, 0, 1, 2)
+    no_ref_ind = np.where(np.arange(3) != ref_ind)[0]
+    # snr = (-10) * np.log10(
+    #     [((cov[i, i] * cov[ind[i + 1], ind[i + 2]]) / (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) - 1)])
+    #     for i in np.arange(3)])
+    snr = (-10) * np.log10([((cov[i, i] * cov[ind[i + 1], ind[i + 2]]) / (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) - 1)
+                            for i in np.arange(3)])
+    return tcol_snr_metrics
