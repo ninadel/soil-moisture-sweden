@@ -769,35 +769,31 @@ def merge_tables(files):
     return merged
 
 
-def calc_tcol_snr(matched_data=None, x=None, y=None, z=None, ref_ind=0):
+def calc_tcol_snr(x, y, z, ref_ind=0):
     """
-    adapted on pytesmo tcol_snr function
+    adapted on pytesmo tcol_snr function (rewriting SNR formulate to match Gruber)
 
     triple collocation based estimation of signal-to-noise ratio, absolute errors,
     and rescaling coefficients
 
     Parameters
     ----------
-    matched_data: 3-column pandas.dataframe (optional)
-    x: 1D numpy.ndarray (optional)
+    x: 1D numpy.ndarray
         first input dataset
-    y: 1D numpy.ndarray (optional)
+    y: 1D numpy.ndarray
         second input dataset
-    z: 1D numpy.ndarray (optional)
+    z: 1D numpy.ndarray
         third input dataset
     ref_ind: int
         index of reference data set for estimating scaling coefficients. default: 0 (x)
 
     Returns
     -------
-    Dictionary with x, y, and z keys. Each value is a dictionary with
-    name: string
-        column name of matched_data column (if matched_data is None, this is None)
-    snr: float
+    snr: numpy.ndarray
         signal-to-noise (variance) ratio [dB]
-    err_std: float
+    err_std: numpy.ndarray
         **SCALED** error standard deviation
-    beta: float
+    beta: numpy.ndarray
          scaling coefficients (i_scaled = i * beta_i)
 
     Notes
@@ -840,46 +836,22 @@ def calc_tcol_snr(matched_data=None, x=None, y=None, z=None, ref_ind=0):
        International Journal of Applied Earth Observation and Geoinformation,
        in review
     """
-    tcol_snr_metrics = {
-        "x":
-            {
-                "name": None,
-                "snr": None,
-                "err_var": None,
-                "err_std":  None,
-                "beta":  None},
 
-        "y":
-            {
-                "name": None,
-                "snr": None,
-                "err_var": None,
-                "err_std": None,
-                "beta": None},
-        "z":
-            {
-                "name": None,
-                "snr": None,
-                "err_var": None,
-                "err_std": None,
-                "beta": None}
-    }
-    if matched_data != None:
-        x_name = matched_data.columns[1]
-        y_name = matched_data.columns[2]
-        z_name = matched_data.columns[3]
-        tcol_snr_metrics["x"]["name"] = x_name
-        tcol_snr_metrics["y"]["name"] = y_name
-        tcol_snr_metrics["x"]["name"] = z_name
-        x = matched_data[x_name].to_numpy()
-        y = matched_data[y_name].to_numpy()
-        z = matched_data[z_name].to_numpy()
     cov = np.cov(np.vstack((x, y, z)))
+
     ind = (0, 1, 2, 0, 1, 2)
     no_ref_ind = np.where(np.arange(3) != ref_ind)[0]
-    # snr = (-10) * np.log10(
-    #     [((cov[i, i] * cov[ind[i + 1], ind[i + 2]]) / (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) - 1)])
-    #     for i in np.arange(3)])
+
+    # correcting pytesmo formula
     snr = (-10) * np.log10([((cov[i, i] * cov[ind[i + 1], ind[i + 2]]) / (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) - 1)
                             for i in np.arange(3)])
-    return tcol_snr_metrics
+    err_var = np.array([
+        cov[i, i] -
+        (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) / cov[ind[i + 1], ind[i + 2]]
+        for i in np.arange(3)])
+
+    beta = np.array([cov[ref_ind, no_ref_ind[no_ref_ind != i][0]] /
+                     cov[i, no_ref_ind[no_ref_ind != i][0]] if i != ref_ind
+                     else 1 for i in np.arange(3)])
+
+    return snr, np.sqrt(err_var) * beta, beta
