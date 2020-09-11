@@ -157,8 +157,9 @@ def tc_analysis(tc_dict):
 
     # try:
     if calc:
-        snr, err_std, beta = tcol_snr(matched_data[triplet[0]].to_numpy(), matched_data[triplet[1]].to_numpy(),
-                                      matched_data[triplet[2]].to_numpy())
+        snr, err_std, beta = tools.calc_tcol_snr(matched_data[triplet[0]].to_numpy(),
+                                                 matched_data[triplet[1]].to_numpy(),
+                                                 matched_data[triplet[2]].to_numpy())
         tools.write_log(logfile, '{} {} snr: {}'.format(loc, triplet, snr))
         tools.write_log(logfile, '{} {} err_std: {}'.format(loc, triplet, err_std))
         tools.write_log(logfile, '{} {} beta: {}'.format(loc, triplet, beta))
