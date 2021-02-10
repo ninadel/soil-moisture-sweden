@@ -1,7 +1,8 @@
 """
 Author: Nina del Rosario
-Date: 1/24/2021
-Status: is this obsolute? unresolved references, might be overridden by sm_csv_evaluation.py
+Date: 2/10/2021
+Status: This script contains functions used for evaluation, some functions that are specific to analyzing csv files have
+been split out to sm_csv_evaluation.py
 """
 from datetime import datetime
 import os
@@ -57,7 +58,9 @@ def evaluate_gridcell_xr(evaluation_dict, lon, lat):
     if evaluate_timeframes:
         timeframe_data_dict, timeframe_counts = tools.split_by_timeframe(matched_data)
         for timeframe, timeframe_data in timeframe_data_dict.items():
-            metrics[timeframe] = get_evaluation_metrics_xr(timeframe_data, anomaly)
+            # unresolved reference, is this supposed to be tools.get_metrics()?
+            # changing from get_evaluation_metrics_xr(timeframe_data, anomaly)
+            metrics[timeframe] = tools.get_metrics(data=timeframe_data, anomaly=anomaly)
     return metrics, data
 
 
