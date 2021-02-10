@@ -1,4 +1,13 @@
+"""
+Author: Nina del Rosario
+Date: 2/10/2021
+Script for evaluating SM products using triple collocation analysis
+Includes adaptation of pytesmo tc_snr function: https://github.com/TUW-GEO/pytesmo/blob/master/src/pytesmo/metrics.py
+Status: In progress
+"""
+
 from pytesmo import temporal_matching
+# should we use this function or keep writing our own?
 from pytesmo.metrics import tcol_snr
 from pytesmo.time_series.anomaly import calc_anomaly
 import multiprocessing as mp
@@ -11,7 +20,13 @@ import sm_tools as tools
 import math
 
 
+# function which generates permutations of modeled, active, and passive products
+# based on the assumption that triplets analyzed in TC should be distinct (e.g. do not include 2 passive products in a
+# triplet
 def get_triplets(mod, act, pas):
+    # mod = list of model products
+    # act = list of active products
+    # pas = list of passive products
     trips = []
     for m in mod:
         for a in act:
@@ -20,8 +35,23 @@ def get_triplets(mod, act, pas):
     return trips
 
 
+# function which generates a dictionary which is used by the triple collocation analysis function
 def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, match_window=0.5, anomaly_values=[True],
                  verbose=True):
+    # trips = list of three products to be evaluated
+    # loc_dict = a dictionary of locations to be evaluated, syntax:
+    #   {
+    #   "912322": {     // location name
+    #     "latitude": 68.375,
+    #     "longitude": 20.625,
+    #     "veg_class_name": "Open Shrublands "
+    #       }
+    #           }
+    # root = directory where logs, datasets, and metrics will be saved to
+    # calculate = calculate tcol metrics (if false, generates matched data only without metrics)
+    # match_window = precision in temporal matching (e.g. 0.5 = 12 hours)
+    # anomaly_values = whether datasets being fed into tcol analysis are absolute or anomaly
+    # verbose = whether detailed output messages are printed
     tcds = []
 
     for trip in trips:
