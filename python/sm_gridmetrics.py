@@ -1,7 +1,7 @@
 """
 Author: Nina del Rosario
-Date: 8/4/2020
-Script for evaluating SM for each GLDAS cell in Sweden using ERA5 as a reference
+Date: 1/24/2021
+Status: this file may be obsolete? might have been replaced by sm_gridevaluation.py
 """
 from datetime import datetime
 import os
