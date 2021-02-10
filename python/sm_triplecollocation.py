@@ -110,7 +110,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
     return tcds
 
 
-def tc_analysis(tc_dict, pytesmo_tcol=False):
+def tc_analysis(tc_dict, pytesmo_tcol=True):
     # def convert_snr_r(s):
     #     # 1/squareroot(1 + (1/SNR))
     #     r = 1./math.sqrt(1. + (1./s))
