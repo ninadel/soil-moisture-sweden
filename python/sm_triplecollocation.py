@@ -17,7 +17,6 @@ import os
 import pandas
 import sm_config as config
 import sm_tools as tools
-import math
 
 
 # function which generates permutations of modeled, active, and passive products
@@ -35,10 +34,10 @@ def get_triplets(mod, act, pas):
     """
 
     trips = []
-    for m in mod:
-        for a in act:
-            for p in pas:
-                trips.append((m, a, p))
+    for p in mod:
+        for m in act:
+            for a in pas:
+                trips.append((p, m, a))
     return trips
 
 
@@ -110,7 +109,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
     return tcds
 
 
-def tc_analysis(tc_dict, pytesmo_tcol=False):
+def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
     # def convert_snr_r(s):
     #     # 1/squareroot(1 + (1/SNR))
     #     r = 1./math.sqrt(1. + (1./s))
@@ -171,20 +170,28 @@ def tc_analysis(tc_dict, pytesmo_tcol=False):
         ts_dict[dataset] = loc_data
         tools.write_log(logfile, "{} {} data.shape: {}".format(loc, dataset, ts_dict[dataset].shape))
 
+    # check that data is available for all three datasets
     if ts_dict[triplet[0]].size > 0 and ts_dict[triplet[1]].size > 0 and ts_dict[triplet[2]].size > 0:
-        perms = permutations(triplet)
         matched_data = None
         product_order = None
 
-        for perm in perms:
-            perm_matched_data = temporal_matching.matching(ts_dict[perm[0]], ts_dict[perm[1]], ts_dict[perm[2]],
-                                                           window=match_window)
-            if matched_data is None:
-                matched_data = perm_matched_data
-                product_order = perm
-            elif perm_matched_data.shape[0] > matched_data.shape[0]:
-                matched_data = perm_matched_data
-                product_order = perm
+        if match_permutations:
+            # go through each permutation of the three datasets and find the order that yields the most observations based
+            # on temporal matching
+            perms = permutations(triplet)
+            for perm in perms:
+                perm_matched_data = temporal_matching.matching(ts_dict[perm[0]], ts_dict[perm[1]], ts_dict[perm[2]],
+                                                               window=match_window)
+                if matched_data is None:
+                    matched_data = perm_matched_data
+                    product_order = perm
+                elif perm_matched_data.shape[0] > matched_data.shape[0]:
+                    matched_data = perm_matched_data
+                    product_order = perm
+            else:
+                matched_data = temporal_matching.matching(ts_dict[triplet[0]], ts_dict[triplet[1]], ts_dict[triplet[2]],
+                                                          window=match_window)
+                product_order = triplet
 
         tools.write_log(logfile, "{} {} matched_data.shape: {}".format(loc, product_order, matched_data.shape))
 
@@ -193,6 +200,7 @@ def tc_analysis(tc_dict, pytesmo_tcol=False):
 
     n = matched_data.shape[0]
 
+    # export matched data as csv
     if export_matched:
         matched_file = tc_dict['matched_file']
         matched_data.to_csv(matched_file)
@@ -204,6 +212,7 @@ def tc_analysis(tc_dict, pytesmo_tcol=False):
             snr, err_std, beta = pytesmo_tcol_snr(matched_data[triplet[0]].to_numpy(),
                                                   matched_data[triplet[1]].to_numpy(),
                                                   matched_data[triplet[2]].to_numpy())
+
         # calculate tcol metrics using local sm_tools.py function
         else:
             snr, err_std, beta = tools.calc_tcol_snr(matched_data[triplet[0]].to_numpy(),
