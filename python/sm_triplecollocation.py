@@ -194,10 +194,10 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
                 elif perm_matched_data.shape[0] > matched_data.shape[0]:
                     matched_data = perm_matched_data
                     product_order = perm
-            else:
-                matched_data = temporal_matching.matching(ts_dict[triplet[0]], ts_dict[triplet[1]], ts_dict[triplet[2]],
-                                                          window=match_window)
-                product_order = triplet
+        else:
+            matched_data = temporal_matching.matching(ts_dict[triplet[0]], ts_dict[triplet[1]], ts_dict[triplet[2]],
+                                                      window=match_window)
+            product_order = triplet
 
         tools.write_log(logfile, "{} {} matched_data.shape: {}".format(loc, product_order, matched_data.shape))
 
@@ -264,8 +264,8 @@ if __name__ == '__main__':
     triplets = get_triplets(model, active, passive)
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
                             export_matched=exp_matched, anomaly_values=[False, True])
-    with mp.get_context("spawn").Pool(1) as p:
-    # with mp.get_context("spawn").Pool(5) as p:
+    # with mp.get_context("spawn").Pool(1) as p:
+    with mp.get_context("spawn").Pool(5) as p:
         p.map(tc_analysis, tc_dicts)
     if calc_metrics:
         tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
