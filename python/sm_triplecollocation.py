@@ -188,10 +188,10 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
                 elif perm_matched_data.shape[0] > matched_data.shape[0]:
                     matched_data = perm_matched_data
                     product_order = perm
-            else:
-                matched_data = temporal_matching.matching(ts_dict[triplet[0]], ts_dict[triplet[1]], ts_dict[triplet[2]],
-                                                          window=match_window)
-                product_order = triplet
+        else:
+            matched_data = temporal_matching.matching(ts_dict[triplet[0]], ts_dict[triplet[1]], ts_dict[triplet[2]],
+                                                      window=match_window)
+            product_order = triplet
 
         tools.write_log(logfile, "{} {} matched_data.shape: {}".format(loc, product_order, matched_data.shape))
 
