@@ -69,6 +69,11 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
         for anomaly_value in anomaly_values:
             for loc in loc_dict.keys():
 
+                loc_data = config.dict_swe_gldas_points[loc]
+                loc_vc = loc_data["veg_class_name"]
+                if loc_vc == "missing value" or loc_vc == "Ocean":
+                    break
+
                 if anomaly_value:
                     anomaly_str = "anomaly"
                 else:
@@ -152,6 +157,7 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
     match_window = tc_dict["match_window"]
     export_matched = tc_dict['export_matched']
     root = tc_dict['output_root']
+
     if export_matched:
         matched_subdir = os.path.join(root, "matched_data")
         if not os.path.exists(matched_subdir):
