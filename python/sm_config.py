@@ -121,6 +121,8 @@ dict_timeshifts = {
     "SMOS-IC": (5, 'H')
 }
 
+ignore_veg_classes = ["missing value", "Ocean"]
+
 dict_quarterdeg_files = {
     "ASCAT 12.5 TS": r"..\input_data\xr\regrid\ascat-h115_0-25-regrid.nc",
     "CCI Active": r"..\input_data\xr\cci-active-subset-nofilter.nc",
@@ -151,7 +153,6 @@ dict_native_files = {
     "SMOS-BEC": r"..\input_data\xr\smos-bec_01km-subset-nofilter.nc",
     "SMOS-IC": r"..\input_data\xr\smos-ic_25km-subset-nofilter.nc"
 }
-
 
 # open external dictionaries
 # dictionary which defines timeframes to analyze
@@ -189,11 +190,11 @@ study_area = {
     "min_lon": 8.375,
     "max_lon": 24.125
 }
+
 regrid_lat = numpy.arange(study_area["min_lat"]-coord_buffer, study_area["max_lat"]+coord_buffer, 0.25)
 regrid_lon = numpy.arange(study_area["min_lon"]-coord_buffer, study_area["max_lon"]+coord_buffer, 0.25)
 interp_lat = numpy.arange(dict_extent_sweden["min_lat"]-coord_buffer, dict_extent_sweden["max_lat"]+coord_buffer, 0.25)
 interp_lon = numpy.arange(dict_extent_sweden["min_lon"]-coord_buffer, dict_extent_sweden["max_lon"]+coord_buffer, 0.25)
-
 
 swe_shuffle_cells = [1397, 1398, 1399, 1433, 1434, 1435, 1470, 1471]
 den_shuffle_cells = [1360, 1361, 1396, 1397, 1433]

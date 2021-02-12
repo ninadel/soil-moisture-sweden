@@ -71,7 +71,9 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
 
                 loc_data = config.dict_swe_gldas_points[loc]
                 loc_vc = loc_data["veg_class_name"]
-                if loc_vc == "missing value" or loc_vc == "Ocean":
+
+                # filter out irrelevant vegetation classes
+                if loc_vc in config.ignore_veg_classes:
                     break
 
                 if anomaly_value:
