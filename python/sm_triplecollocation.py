@@ -17,7 +17,7 @@ import os
 import pandas
 import sm_config as config
 import sm_tools as tools
-
+import math
 
 # function which generates permutations of modeled, active, and passive products
 # based on the assumption that triplets analyzed in TC should be distinct (e.g. do not include 2 passive products in a
@@ -118,10 +118,13 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
 
 
 def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
-    # def convert_snr_r(s):
-    #     # 1/squareroot(1 + (1/SNR))
-    #     r = 1./math.sqrt(1. + (1./s))
-    #     return r
+    def convert_snr_r():
+        # 1/squareroot(1 + (1/SNR))
+        try:
+            r = 1./math.sqrt(1. + (1./snr(idx)))
+        except:
+            r = None
+        return r
 
     def get_tc_df():
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
@@ -137,13 +140,13 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
         # }
         mr = {
             'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
-            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'err_std': None, 'beta': None
+            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'err_std': None, 'beta': None, 'r': None
         }
         if calc:
             mr['snr'] = snr[idx]
-            # mr['r'] = convert_snr_r(snr[idx])
             mr['err_std'] = err_std[idx]
             mr['beta'] = beta[idx]
+            mr['r'] = convert_snr_r()
         return mr
 
     triplet = tc_dict['triplet']
@@ -267,8 +270,8 @@ if __name__ == '__main__':
     triplets = get_triplets(model, active, passive)
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
                             export_matched=exp_matched, anomaly_values=[False, True])
-    with mp.get_context("spawn").Pool(1) as p:
-    # with mp.get_context("spawn").Pool(5) as p:
+    # with mp.get_context("spawn").Pool(1) as p:
+    with mp.get_context("spawn").Pool(5) as p:
         p.map(tc_analysis, tc_dicts)
     if calc_metrics:
         tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
