@@ -17,7 +17,6 @@ import os
 import pandas
 import sm_config as config
 import sm_tools as tools
-import math
 
 
 # function which generates permutations of modeled, active, and passive products
@@ -128,7 +127,7 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
         #                                 'n', 'snr', 'r', 'err_std', 'beta'])
         mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
-                                        'n', 'snr', 'err_std', 'beta', 'r'])
+                                        'n', 'snr', 'err_std', 'beta'])
         return mdf
 
     def get_metrics_row(calc=True):
@@ -138,14 +137,13 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
         # }
         mr = {
             'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
-            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'err_std': None, 'beta': None, 'r': None
+            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'err_std': None, 'beta': None
         }
         if calc:
             mr['snr'] = snr[idx]
             # mr['r'] = convert_snr_r(snr[idx])
             mr['err_std'] = err_std[idx]
             mr['beta'] = beta[idx]
-            mr['r'] = 1/math.sqrt(1 + (1/snr[idx]))
         return mr
 
     triplet = tc_dict['triplet']
