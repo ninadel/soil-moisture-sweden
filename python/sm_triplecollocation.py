@@ -118,14 +118,6 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
 
 
 def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
-    def convert_snr_r():
-        # 1/squareroot(1 + (1/SNR))
-        try:
-            r = 1./math.sqrt(1. + (1./snr(idx)))
-        except:
-            r = None
-        return r
-
     def get_tc_df():
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
         #                                 'n', 'snr', 'r', 'err_std', 'beta'])
@@ -146,7 +138,7 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
             mr['snr'] = snr[idx]
             mr['err_std'] = err_std[idx]
             mr['beta'] = beta[idx]
-            mr['r'] = convert_snr_r()
+            mr['r'] = (r[idx])
         return mr
 
     triplet = tc_dict['triplet']
@@ -231,9 +223,11 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
                                                      matched_data[triplet[1]].to_numpy(),
                                                      matched_data[triplet[2]].to_numpy())
 
+        r = tools.calc_tcol_r(snr)
         tools.write_log(logfile, '{} {} snr: {}'.format(loc, triplet, snr))
         tools.write_log(logfile, '{} {} err_std: {}'.format(loc, triplet, err_std))
         tools.write_log(logfile, '{} {} beta: {}'.format(loc, triplet, beta))
+        tools.write_log(logfile, '{} {} r: {}'.format(loc, triplet, r))
 
         for idx, product in enumerate(triplet):
             metrics_df = get_tc_df()
@@ -265,13 +259,16 @@ if __name__ == '__main__':
     model = ["ERA5 0-1"]
     active = ["ASCAT 12.5 TS"]
     passive = ["SMAP L3 Enhanced", "SMOS-IC"]
+    # passive = ["SMAP L3 Enhanced", "SMOS-IC"]
     calc_metrics = True
     exp_matched = True
     triplets = get_triplets(model, active, passive)
+    # tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
+    #                         export_matched=exp_matched, anomaly_values=[False, True])
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
-                            export_matched=exp_matched, anomaly_values=[False, True])
-    # with mp.get_context("spawn").Pool(1) as p:
-    with mp.get_context("spawn").Pool(5) as p:
+                            export_matched=exp_matched, anomaly_values=[True])
+    with mp.get_context("spawn").Pool(1) as p:
+    # with mp.get_context("spawn").Pool(5) as p:
         p.map(tc_analysis, tc_dicts)
     if calc_metrics:
         tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]

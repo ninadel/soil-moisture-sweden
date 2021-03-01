@@ -13,6 +13,7 @@ import os
 import pandas as pd
 import re
 import warnings
+import math
 
 try:
     import icos
@@ -855,3 +856,19 @@ def calc_tcol_snr(x, y, z, ref_ind=0):
                      else 1 for i in np.arange(3)])
 
     return snr, np.sqrt(err_var) * beta, beta
+
+
+def calc_tcol_r(s):
+    # 1/squareroot(1 + (1/SNR))
+    # beta = np.array([cov[ref_ind, no_ref_ind[no_ref_ind != i][0]] /
+    #                  cov[i, no_ref_ind[no_ref_ind != i][0]] if i != ref_ind
+    #                  else 1 for i in np.arange(3)])
+    # create numpy array
+    r = np.array(
+        # calculate r
+        [1./math.sqrt(1. + (1./s[i]))
+         # if s[i] is a number
+         if isinstance(s[i], float)
+         else None
+         for i in np.arange(len(s))])
+    return r
