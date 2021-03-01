@@ -34,9 +34,9 @@ def get_triplets(mod, act, pas):
     """
 
     trips = []
-    for p in mod:
-        for m in act:
-            for a in pas:
+    for p in pas:
+        for m in mod:
+            for a in act:
                 trips.append((p, m, a))
     return trips
 
@@ -117,7 +117,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
     return tcds
 
 
-def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
+def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
     # def convert_snr_r(s):
     #     # 1/squareroot(1 + (1/SNR))
     #     r = 1./math.sqrt(1. + (1./s))
@@ -267,8 +267,8 @@ if __name__ == '__main__':
     triplets = get_triplets(model, active, passive)
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
                             export_matched=exp_matched, anomaly_values=[False, True])
-    # with mp.get_context("spawn").Pool(1) as p:
-    with mp.get_context("spawn").Pool(5) as p:
+    with mp.get_context("spawn").Pool(1) as p:
+    # with mp.get_context("spawn").Pool(5) as p:
         p.map(tc_analysis, tc_dicts)
     if calc_metrics:
         tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
