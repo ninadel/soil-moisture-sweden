@@ -864,11 +864,12 @@ def calc_tcol_r(s):
     #                  cov[i, no_ref_ind[no_ref_ind != i][0]] if i != ref_ind
     #                  else 1 for i in np.arange(3)])
     # create numpy array
+    print(s)
     r = np.array(
         # calculate r
         [1./math.sqrt(1. + (1./s[i]))
          # if s[i] is a number
-         if isinstance(s[i], float)
+         if isinstance(s[i], float) and 1. + (1./s[i]) >= 0
          else None
          for i in np.arange(len(s))])
     return r

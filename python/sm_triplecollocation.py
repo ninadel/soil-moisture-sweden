@@ -258,7 +258,7 @@ if __name__ == '__main__':
     # passive = ["SMAP L3 Enhanced", "SMOS-IC"]
     model = ["ERA5 0-1"]
     active = ["ASCAT 12.5 TS"]
-    passive = ["SMAP L3 Enhanced", "SMOS-IC"]
+    passive = ["SMAP L4", "SMAP L3"]
     # passive = ["SMAP L3 Enhanced", "SMOS-IC"]
     calc_metrics = True
     exp_matched = True
