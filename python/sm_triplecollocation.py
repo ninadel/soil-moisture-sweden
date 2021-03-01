@@ -130,7 +130,7 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
         #                                 'n', 'snr', 'r', 'err_std', 'beta'])
         mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
-                                        'n', 'snr', 'err_std', 'beta'])
+                                        'n', 'snr', 'err_std', 'beta', 'r'])
         return mdf
 
     def get_metrics_row(calc=True):
