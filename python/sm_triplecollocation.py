@@ -73,8 +73,9 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
                 loc_vc = loc_data["veg_class_name"]
 
                 # filter out irrelevant vegetation classes
-                if loc_vc in config.ignore_veg_classes:
-                    break
+                # need to fix: this is igno
+                # if loc_vc not in config.ignore_veg_classes:
+                #     break
 
                 if anomaly_value:
                     anomaly_str = "anomaly"
