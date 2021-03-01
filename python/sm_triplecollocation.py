@@ -119,10 +119,10 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
 
 
 def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
-    def convert_snr_r():
-        # 1/squareroot(1 + (1/SNR))
-        r = 1./math.sqrt(1. + (1./snr[idx]))
-        return r
+    # def convert_snr_r(s):
+    #     # 1/squareroot(1 + (1/SNR))
+    #     r = 1./math.sqrt(1. + (1./s))
+    #     return r
 
     def get_tc_df():
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
@@ -142,9 +142,10 @@ def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=False):
         }
         if calc:
             mr['snr'] = snr[idx]
+            # mr['r'] = convert_snr_r(snr[idx])
             mr['err_std'] = err_std[idx]
             mr['beta'] = beta[idx]
-            mr['r'] = convert_snr_r()
+            mr['r'] = 1/math.sqrt(1 + (1/snr[idx]))
         return mr
 
     triplet = tc_dict['triplet']
