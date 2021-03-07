@@ -42,8 +42,8 @@ def get_triplets(mod, act, pas):
 
 
 # function which generates a dictionary which is used by the triple collocation analysis function
-def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, match_window=0.5, anomaly_values=[True],
-                 verbose=True):
+def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, export_calculations=False, match_window=0.5, anomaly_values=[True],
+                 verbose=False):
     """
     :param trips: list of three products to be evaluated
     :param loc_dict: a dictionary of locations to be evaluated, syntax:
@@ -57,6 +57,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
     :param root: directory where logs, datasets, and metrics will be saved to
     :param calculate: calculate tcol metrics (if false, generates matched data only without metrics)
     :param export_matched: whether matched datasets are exported to root as csv files
+    :param export_calculations: whether intermediate calculations are exported
     :param match_window: precision in temporal matching (e.g. 0.5 = 12 hours)
     :param anomaly_values: whether datasets being fed into tcol analysis are absolute or anomaly
     :param verbose: whether detailed output messages are printed
@@ -91,6 +92,11 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
                 else:
                     matf = None
 
+                if export_calculations:
+                    calcf = os.path.join(root, 'tc_calcs_{}.csv'.format(evaluation_str))
+                else:
+                    calcf = None
+
                 if calculate:
                     metf = os.path.join(root, "tc_metrics_{}.csv".format(evaluation_str))
                 else:
@@ -106,6 +112,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
                     'anomaly_str': anomaly_str,
                     'evaluation_str': evaluation_str,
                     'calculate': calculate,
+                    'calc_file': calcf,
                     'metrics_file': metf,
                     'logfile': logf,
                     'export_matched': export_matched,
@@ -117,7 +124,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ma
     return tcds
 
 
-def tc_analysis(tc_dict, pytesmo_tcol=True, match_permutations=True):
+def tc_analysis(tc_dict, pytesmo_tcol=False, match_permutations=True):
     def get_tc_df():
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
         #                                 'n', 'snr', 'r', 'err_std', 'beta'])
@@ -258,8 +265,8 @@ if __name__ == '__main__':
     # passive = ["SMAP L3 Enhanced", "SMOS-IC"]
     model = ["ERA5 0-1"]
     active = ["ASCAT 12.5 TS"]
-    passive = ["SMAP L4", "SMAP L3"]
-    # passive = ["SMAP L3 Enhanced", "SMOS-IC"]
+    # passive = ["SMAP L4", "SMAP L3"]
+    passive = ["SMAP L3 Enhanced", "SMOS-IC"]
     calc_metrics = True
     exp_matched = True
     triplets = get_triplets(model, active, passive)
@@ -267,8 +274,8 @@ if __name__ == '__main__':
     #                         export_matched=exp_matched, anomaly_values=[False, True])
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
                             export_matched=exp_matched, anomaly_values=[True])
-    with mp.get_context("spawn").Pool(1) as p:
-    # with mp.get_context("spawn").Pool(5) as p:
+    # with mp.get_context("spawn").Pool(1) as p:
+    with mp.get_context("spawn").Pool(5) as p:
         p.map(tc_analysis, tc_dicts)
     if calc_metrics:
         tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
