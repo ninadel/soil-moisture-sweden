@@ -770,6 +770,20 @@ def merge_tables(files):
     return merged
 
 
+def calc_tcol_cov(x, y, z):
+    cov = np.cov(np.vstack((x, y, z)))
+
+    ind = (0, 1, 2, 0, 1, 2)
+
+    tcol_cov = np.array([
+                            [cov[i, i],
+                            cov[i, ind[i+1]],
+                            cov[i, ind[i+2]]]
+                        for i in np.arange(3)])
+
+    return tcol_cov
+
+
 def calc_tcol_snr(x, y, z, ref_ind=0):
     """
     adapted on pytesmo tcol_snr function (rewriting SNR formulate to match Gruber)
@@ -839,14 +853,14 @@ def calc_tcol_snr(x, y, z, ref_ind=0):
     """
 
     cov = np.cov(np.vstack((x, y, z)))
-    print("cov x", cov[0,0], "cov y", cov[1,1], "cov z", cov[2,2])
 
     ind = (0, 1, 2, 0, 1, 2)
     no_ref_ind = np.where(np.arange(3) != ref_ind)[0]
 
-    # correcting pytesmo formula
-    snr = (-10) * np.log10([((cov[i, i] * cov[ind[i + 1], ind[i + 2]]) / (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) - 1)
+    snr = (-10) * np.log10(
+        [((cov[i, i] * cov[ind[i + 1], ind[i + 2]]) / (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) - 1)
                             for i in np.arange(3)])
+
     err_var = np.array([
         cov[i, i] -
         (cov[i, ind[i + 1]] * cov[i, ind[i + 2]]) / cov[ind[i + 1], ind[i + 2]]
