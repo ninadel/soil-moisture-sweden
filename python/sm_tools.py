@@ -839,6 +839,7 @@ def calc_tcol_snr(x, y, z, ref_ind=0):
     """
 
     cov = np.cov(np.vstack((x, y, z)))
+    print("cov x", cov[0,0], "cov y", cov[1,1], "cov z", cov[2,2])
 
     ind = (0, 1, 2, 0, 1, 2)
     no_ref_ind = np.where(np.arange(3) != ref_ind)[0]
