@@ -17,6 +17,7 @@ import os
 import pandas
 import sm_config as config
 import sm_tools as tools
+import numpy as np
 import math
 
 # function which generates permutations of modeled, active, and passive products
@@ -42,8 +43,8 @@ def get_triplets(mod, act, pas):
 
 
 # function which generates a dictionary which is used by the triple collocation analysis function
-def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, export_calculations=False, match_window=0.5, anomaly_values=[True],
-                 verbose=False):
+def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, tcol_func="local",
+                 export_calcs=False, match_window=0.5, anomaly_values=[True], verbose=False):
     """
     :param trips: list of three products to be evaluated
     :param loc_dict: a dictionary of locations to be evaluated, syntax:
@@ -57,7 +58,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ex
     :param root: directory where logs, datasets, and metrics will be saved to
     :param calculate: calculate tcol metrics (if false, generates matched data only without metrics)
     :param export_matched: whether matched datasets are exported to root as csv files
-    :param export_calculations: whether intermediate calculations are exported
+    :param tcol_func: formula used to calculate triple col metrics (e.g. pytesmo or sm_tools.py function)
     :param match_window: precision in temporal matching (e.g. 0.5 = 12 hours)
     :param anomaly_values: whether datasets being fed into tcol analysis are absolute or anomaly
     :param verbose: whether detailed output messages are printed
@@ -92,10 +93,11 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ex
                 else:
                     matf = None
 
-                if export_calculations:
-                    calcf = os.path.join(root, 'tc_calcs_{}.csv'.format(evaluation_str))
+                if tcol_func == "pytesmo":
+                    pass
                 else:
-                    calcf = None
+                    pass
+
 
                 if calculate:
                     metf = os.path.join(root, "tc_metrics_{}.csv".format(evaluation_str))
@@ -112,9 +114,10 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ex
                     'anomaly_str': anomaly_str,
                     'evaluation_str': evaluation_str,
                     'calculate': calculate,
-                    'calc_file': calcf,
+                    'export_calculations': export_calcs,
                     'metrics_file': metf,
                     'logfile': logf,
+                    'tcol_function': tcol_func,
                     'export_matched': export_matched,
                     'matched_file': matf
                 }
@@ -124,30 +127,31 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, ex
     return tcds
 
 
-def tc_analysis(tc_dict, pytesmo_tcol=False, match_permutations=True):
+def tc_analysis(tc_dict, match_permutations=False):
     def get_tc_df():
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
         #                                 'n', 'snr', 'r', 'err_std', 'beta'])
         mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
-                                        'n', 'snr', 'err_std', 'beta', 'r'])
+                                        'n', 'cov_0', 'cov_1', 'cov_2', 'snr', 'err_std', 'beta', 'r'])
         return mdf
 
     def get_metrics_row(calc=True):
-        # mr = {
-        #     'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
-        #     'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'r': None, 'err_std': None, 'beta': None
-        # }
         mr = {
             'location': loc, 'lat': lat, 'lon': lon, 'location_veg_class': loc_vc, 'product': product,
-            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'snr': None, 'err_std': None, 'beta': None, 'r': None
+            'triplet': triplet, 'anomaly': anomaly_str, 'n': n, 'cov_0': None, 'cov_1': None, 'cov_2': None,
+            'snr': None, 'err_std': None, 'beta': None, 'r': None
         }
         if calc:
+            mr['cov_0'] = tcol_cov[idx][0]
+            mr['cov_1'] = tcol_cov[idx][1]
+            mr['cov_2'] = tcol_cov[idx][2]
             mr['snr'] = snr[idx]
             mr['err_std'] = err_std[idx]
             mr['beta'] = beta[idx]
             mr['r'] = (r[idx])
         return mr
 
+    print(type(tc_dict))
     triplet = tc_dict['triplet']
     loc = tc_dict['loc']
     anomaly = tc_dict['anomaly']
@@ -160,6 +164,7 @@ def tc_analysis(tc_dict, pytesmo_tcol=False, match_permutations=True):
     lon = loc_data["longitude"]
     calc = tc_dict["calculate"]
     match_window = tc_dict["match_window"]
+    tcol_func = tc_dict['tcol_function']
     export_matched = tc_dict['export_matched']
     root = tc_dict['output_root']
 
@@ -219,18 +224,25 @@ def tc_analysis(tc_dict, pytesmo_tcol=False, match_permutations=True):
     # try:
     if calc:
         # calculate tcol metrics using pytesmo function
-        if pytesmo_tcol:
+        if tcol_func == "pytesmo":
+            tcol_cov = np.array([None, None, None])
             snr, err_std, beta = pytesmo_tcol_snr(matched_data[triplet[0]].to_numpy(),
                                                   matched_data[triplet[1]].to_numpy(),
                                                   matched_data[triplet[2]].to_numpy())
 
         # calculate tcol metrics using local sm_tools.py function
         else:
+            tcol_cov = tools.calc_tcol_cov(matched_data[triplet[0]].to_numpy(),
+                                                  matched_data[triplet[1]].to_numpy(),
+                                                  matched_data[triplet[2]].to_numpy())
+
             snr, err_std, beta = tools.calc_tcol_snr(matched_data[triplet[0]].to_numpy(),
                                                      matched_data[triplet[1]].to_numpy(),
                                                      matched_data[triplet[2]].to_numpy())
 
         r = tools.calc_tcol_r(snr)
+        if tcol_func == "local":
+            tools.write_log(logfile, '{} {} cov: {}'.format(loc, triplet, tcol_cov))
         tools.write_log(logfile, '{} {} snr: {}'.format(loc, triplet, snr))
         tools.write_log(logfile, '{} {} err_std: {}'.format(loc, triplet, err_std))
         tools.write_log(logfile, '{} {} beta: {}'.format(loc, triplet, beta))
@@ -244,18 +256,8 @@ def tc_analysis(tc_dict, pytesmo_tcol=False, match_permutations=True):
                 metrics_df.to_csv(metrics_file, index=False)
             else:
                 metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
-        # except:
-        #     for idx, product in enumerate(triplet):
-        #         metrics_df = get_tc_df()
-        #         metrics_row = get_metrics_row(calculate=False)
-        #         metrics_df = metrics_df.append(metrics_row, ignore_index=True)
-        #         if not os.path.exists(metrics_file):
-        #             metrics_df.to_csv(metrics_file, index=False)
-        #         else:
-        #             metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
-        #
-        #     tools.write_log(logfile, "{} {} could not run tcol analysis".format(loc, triplet))
-
+                
+        print(metrics_file)
 
 if __name__ == '__main__':
     output_root = r"../analysis_output/tc_analysis_{}".format(datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -274,9 +276,11 @@ if __name__ == '__main__':
     #                         export_matched=exp_matched, anomaly_values=[False, True])
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
                             export_matched=exp_matched, anomaly_values=[True])
-    # with mp.get_context("spawn").Pool(1) as p:
-    with mp.get_context("spawn").Pool(5) as p:
-        p.map(tc_analysis, tc_dicts)
+    with mp.get_context("spawn").Pool(1) as p:
+    # with mp.get_context("spawn").Pool(5) as p:
+    #     p.map(tc_analysis, tc_dicts)
+        p.map(tc_analysis, tc_dicts[0:5])
+    # tc_analysis(tc_dicts[0])
     if calc_metrics:
         tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
         tc_metrics_merged = tools.merge_tables(tc_metrics_files)
