@@ -151,7 +151,6 @@ def tc_analysis(tc_dict, match_permutations=False):
             mr['r'] = (r[idx])
         return mr
 
-    print(type(tc_dict))
     triplet = tc_dict['triplet']
     loc = tc_dict['loc']
     anomaly = tc_dict['anomaly']
@@ -256,8 +255,7 @@ def tc_analysis(tc_dict, match_permutations=False):
                 metrics_df.to_csv(metrics_file, index=False)
             else:
                 metrics_df.to_csv(metrics_file, mode='a', header=False, index=False)
-                
-        print(metrics_file)
+
 
 if __name__ == '__main__':
     output_root = r"../analysis_output/tc_analysis_{}".format(datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -276,11 +274,10 @@ if __name__ == '__main__':
     #                         export_matched=exp_matched, anomaly_values=[False, True])
     tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
                             export_matched=exp_matched, anomaly_values=[True])
-    with mp.get_context("spawn").Pool(1) as p:
-    # with mp.get_context("spawn").Pool(5) as p:
-    #     p.map(tc_analysis, tc_dicts)
-        p.map(tc_analysis, tc_dicts[0:5])
-    # tc_analysis(tc_dicts[0])
+    # with mp.get_context("spawn").Pool(1) as p:
+    with mp.get_context("spawn").Pool(5) as p:
+        p.map(tc_analysis, tc_dicts)
+        # p.map(tc_analysis, tc_dicts[0:5])
     if calc_metrics:
         tc_metrics_files = [tc_dict['metrics_file'] for tc_dict in tc_dicts]
         tc_metrics_merged = tools.merge_tables(tc_metrics_files)
