@@ -1,4 +1,4 @@
-function [sX,sY,sZ,rX,rY,rZ] = matlab_graynearing_triple_collocation(X,Y,Z)
+function [sX,sY,sZ,rX,rY,rZ] = triple_collocation(X,Y,Z)
 % source: https://github.com/grey-nearing/triple_collocation/blob/master/tools/triple_collocation.m
 
 % Q = covariance matrix?

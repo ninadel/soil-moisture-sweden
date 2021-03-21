@@ -10,7 +10,7 @@ import warnings
 
 icos_input_dir = r"..\icos_data"
 ismn_input_dir = r"..\ismn_data\HOBE_Data_2015-2018"
-raw_data_dir = r"D:\sm_backup"
+# raw_data_dir = r"D:\sm_backup"
 
 metrics_df_columns = ["network", "station", "product", "timeframe", "anomaly", "n", "bias", "rmsd", "ubrmsd",
                       "pearsonr", "pearsonr_p"]
@@ -156,45 +156,46 @@ dict_native_files = {
 
 # open external dictionaries
 # dictionary which defines timeframes to analyze
-with open("dict_timeframes.json", "r") as f:
-    dict_timeframes = json.load(f)
+try:
+    with open("dict_timeframes.json", "r") as f:
+        dict_timeframes = json.load(f)
 
-# dictionary which stores static fields (e.g. lat, lon, sm field)
-with open("dict_product_fields.json", "r") as f:
-    dict_product_fields = json.load(f)
+    # dictionary which stores static fields (e.g. lat, lon, sm field)
+    with open("dict_product_fields.json", "r") as f:
+        dict_product_fields = json.load(f)
 
-# dictionary which stores ICOS stations
-with open("dict_icos.json", "r") as f:
-    dict_icos = json.load(f)
+    # dictionary which stores ICOS stations
+    with open("dict_icos.json", "r") as f:
+        dict_icos = json.load(f)
 
-# dictionary which stores HOBE stations
-with open("dict_hobe.json", "r") as f:
-    dict_hobe = json.load(f)
+    # dictionary which stores HOBE stations
+    with open("dict_hobe.json", "r") as f:
+        dict_hobe = json.load(f)
 
-# dictionary which stores GLDAS grid points
-with open("dict_swe_gldas_points.json", "r") as f:
-    dict_swe_gldas_points = json.load(f)
+    # dictionary which stores GLDAS grid points
+    with open("dict_swe_gldas_points.json", "r") as f:
+        dict_swe_gldas_points = json.load(f)
 
-# dictionary which stores GLDAS grid points
-with open("dict_extent_sweden.json", "r") as f:
-    dict_extent_sweden = json.load(f)
+    # dictionary which stores GLDAS grid points
+    with open("dict_extent_sweden.json", "r") as f:
+        dict_extent_sweden = json.load(f)
 
-# dictionary which stores GLDAS grid points
-with open("dict_h115_coords.json", "r") as f:
-    dict_h115_coords = json.load(f)
+    # dictionary which stores GLDAS grid points
+    with open("dict_h115_coords.json", "r") as f:
+        dict_h115_coords = json.load(f)
+    coord_buffer = 2
+    study_area = {
+        "min_lat": 54.125,
+        "max_lat": 68.875,
+        "min_lon": 8.375,
+        "max_lon": 24.125
+    }
 
-coord_buffer = 2
-study_area = {
-    "min_lat": 54.125,
-    "max_lat": 68.875,
-    "min_lon": 8.375,
-    "max_lon": 24.125
-}
+    regrid_lat = numpy.arange(study_area["min_lat"]-coord_buffer, study_area["max_lat"]+coord_buffer, 0.25)
+    regrid_lon = numpy.arange(study_area["min_lon"]-coord_buffer, study_area["max_lon"]+coord_buffer, 0.25)
+except:
+    print("can't import dictionaries")
 
-regrid_lat = numpy.arange(study_area["min_lat"]-coord_buffer, study_area["max_lat"]+coord_buffer, 0.25)
-regrid_lon = numpy.arange(study_area["min_lon"]-coord_buffer, study_area["max_lon"]+coord_buffer, 0.25)
-interp_lat = numpy.arange(dict_extent_sweden["min_lat"]-coord_buffer, dict_extent_sweden["max_lat"]+coord_buffer, 0.25)
-interp_lon = numpy.arange(dict_extent_sweden["min_lon"]-coord_buffer, dict_extent_sweden["max_lon"]+coord_buffer, 0.25)
 
 swe_shuffle_cells = [1397, 1398, 1399, 1433, 1434, 1435, 1470, 1471]
 den_shuffle_cells = [1360, 1361, 1396, 1397, 1433]
