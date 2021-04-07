@@ -1,6 +1,8 @@
 t = readtable(f);
 X = table2array(t(:,2)); Y = table2array(t(:,3)); Z = table2array(t(:,4));
+% isolate columns in array
 y = t(:,2:4);
+% convert table to matrix
 y = y{:,:}
 
 % grey nearing
@@ -19,9 +21,15 @@ sY = Qyy - Qxy*Qyz/Qxz;
 sZ = Qzz - Qxz*Qyz/Qxy;
 
 % s = what is this?
-sX = sX/Qxx;
-sY = sY/Qyy;
-sZ = sZ/Qzz;
+sX_a = sX/Qxx;
+sY_a = sY/Qyy;
+sZ_a = sZ/Qzz;
+
+% s = variance, or RMSE squared
+rmse_X = sqrt(sX);
+rmse_Y = sqrt(sY);
+rmse_sZ = sqrt(sZ);
+
 
 % r = rho? correlation coefficients?
 rX = Qxy*Qxz/Qxx/Qyz;
