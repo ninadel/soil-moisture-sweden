@@ -69,4 +69,5 @@ def evaluate_dataset(evaluation_dataset_name):
 
 if __name__ == '__main__':
     with Pool(5) as p:
+    # with Pool(1) as p:
         p.map(evaluate_dataset, evaluation_datasets)

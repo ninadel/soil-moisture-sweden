@@ -56,11 +56,12 @@ def evaluate_gridcell_xr(evaluation_dict, lon, lat):
     data['eval_ts'] = eval_ts
     metrics['all'] = tools.get_metrics(data=matched_data, anomaly=anomaly, return_dict=True)
     if evaluate_timeframes:
-        timeframe_data_dict, timeframe_counts = tools.split_by_timeframe(matched_data)
+        timeframe_data_dict, timeframe_counts = tools.split_by_timeframe(matched_data, (2015,2018))
         for timeframe, timeframe_data in timeframe_data_dict.items():
             # unresolved reference, is this supposed to be tools.get_metrics()?
             # changing from get_evaluation_metrics_xr(timeframe_data, anomaly)
-            metrics[timeframe] = tools.get_metrics(data=timeframe_data, anomaly=anomaly)
+            # metrics[timeframe] = tools.get_metrics(data=timeframe_data, anomaly=anomaly)
+            metrics[timeframe] = tools.get_metrics(data=timeframe_data, anomaly=anomaly, return_dict=True)
     return metrics, data
 
 
