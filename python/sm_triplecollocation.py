@@ -131,7 +131,7 @@ def tc_analysis(tc_dict, match_permutations=False):
     def get_tc_df():
         # mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
         #                                 'n', 'snr', 'r', 'err_std', 'beta'])
-        mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'product', 'triplet', 'anomaly',
+        mdf = pandas.DataFrame(columns=['location', 'lat', 'lon', 'location_veg_class', 'prod_name', 'triplet', 'anomaly',
                                         'n', 'cov_0', 'cov_1', 'cov_2', 'snr', 'err_std', 'beta', 'r'])
         return mdf
 
