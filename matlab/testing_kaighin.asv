@@ -1,0 +1,8 @@
+path = 'C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\matched_data'
+files = dir(strcat(path,'\*.csv'))
+L = length (files);
+results = table(filename, prod1, prod2, prod3, errvar1, errvar2, errvar3, rhosq1, rhosq2, rhosq3)
+
+for i=1:L
+    t = readtable(strcat(path,'\',file(i).name));
+end
