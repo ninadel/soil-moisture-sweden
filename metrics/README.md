@@ -2,20 +2,42 @@
 
 * Introduction
 
-## Statistical Evaluation - Stations
+## Statistical Evaluation - Remote Sensing & Ground Measurements
+Scale
+
 ### Methods
+
+Inputs
+Scripts & packages
+Parameters
+Outputs
+
 ### Results
 
-## Statistical Evaluation - Networks
-### Methods
-### Results
+Stations
+Networks
 
-## Statistical Evaluation - Grid (ERA5)
+## Statistical Evaluation - Remote Sensing & ERA5
+Scale - 25 km
+
 ### Methods
+
+Inputs
+Scripts & packages
+Parameters
+Outputs
+
 ### Results
 
 ## Triple Collocation
+Scale - 25 km
+
 ### Methods
+Inputs
+Scripts & packages
+Parameters
+Outputs
+
 ### Results
 
 ## Credits
