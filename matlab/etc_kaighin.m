@@ -52,10 +52,12 @@ function output_path = etc_kaighin(input_path, output_path)
                     (Q_hat(2,2) - Q_hat(1,2)*Q_hat(2,3)/Q_hat(1,3)); ...
                     (Q_hat(3,3) - Q_hat(1,3)*Q_hat(2,3)/Q_hat(1,2))];
 
+            % get rho squared for each product in triplet
             rho2_1 = rho2_ETC(1);
             rho2_2 = rho2_ETC(2);
             rho2_3 = rho2_ETC(3);
 
+            % get err var for each product in triplet
             errvar_1 = errVar_ETC(1);
             errvar_2 = errVar_ETC(2);
             errvar_3 = errVar_ETC(3);
