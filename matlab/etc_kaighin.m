@@ -1,4 +1,5 @@
 function output_path = etc_kaighin(input_path, output_path)
+%     etc_kaighin('C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\matched_data', 'C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_results.csv');
 %     input_path = 'C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\matched_data'
 %     result_path = 'C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637'
     files = dir(strcat(input_path,'\*.csv'))
