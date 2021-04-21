@@ -14,8 +14,6 @@ Outputs
 
 ### Results
 
-Stations
-Networks
 [Station and Network metric CSVs](https://github.com/ninadel/soil-moisture-sweden/tree/master/metrics/station_evaluation)
 
 ## Statistical Evaluation - Remote Sensing & ERA5
