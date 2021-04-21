@@ -203,10 +203,10 @@ def get_metrics(data, xcol=None, ycol=None, anomaly=False, return_dict=False, si
                     'n': data.shape[0], 'pearson_sig': None}
 
     try:
-        if anomaly is False:
-            metrics_dict['bias'] = metrics.bias(x, y)
-            metrics_dict['rmsd'] = metrics.rmsd(x, y)
-            metrics_dict['ubrmsd'] = metrics.ubrmsd(x, y)
+        # if anomaly is False:
+        metrics_dict['bias'] = metrics.bias(x, y)
+        metrics_dict['rmsd'] = metrics.rmsd(x, y)
+        metrics_dict['ubrmsd'] = metrics.ubrmsd(x, y)
     except:
         message = "could not calculate bias, rmsd, ubrmsd"
         warnings.warn(message)
