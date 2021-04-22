@@ -19,7 +19,13 @@ Outputs
 ## Statistical Evaluation - Remote Sensing & ERA5
 Scale - 25 km
 
-[Grid Evaluation metric CSVs and maps](https://github.com/ninadel/soil-moisture-sweden/tree/master/metrics/grid_evaluation)
+[Grid Evaluation metric CSVs](https://github.com/ninadel/soil-moisture-sweden/tree/master/metrics/grid_evaluation)
+
+[Grid Evaluation result maps: by product](https://github.com/ninadel/soil-moisture-sweden/tree/master/metrics/grid_evaluation/maps/products)
+
+[Grid Evaluation result maps: by timeframe](https://github.com/ninadel/soil-moisture-sweden/tree/master/metrics/grid_evaluation/maps/timeframes)
+
+[Grid Evaluation result maps: by metric](https://github.com/ninadel/soil-moisture-sweden/tree/master/metrics/grid_evaluation/maps/metrics)
 
 
 ### Methods
