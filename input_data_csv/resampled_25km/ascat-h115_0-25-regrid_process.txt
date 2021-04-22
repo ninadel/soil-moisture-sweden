@@ -1,0 +1,4 @@
+Process
+https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html
+"C:\git\soil-moisture-sweden\python\processing_H115_interpolation.py"
+source data: "C:\git\soil-moisture-sweden\input_data\ascat_h115_points_csv\date_data"
