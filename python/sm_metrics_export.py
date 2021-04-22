@@ -26,6 +26,9 @@ def get_basemap(f, color="white", edgecolor="silver", figsize=(9,6)):
 # grid evaluation metrics
 def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=False, metric="pearson_r", cutoff=100,
                         map_legend=True, round=True):
+    m_dir = os.path.join(output_dir, "metrics", metric)
+    if not os.path.exists(m_dir):
+        os.makedirs(m_dir)
     base = get_basemap(base_shp)
 #     sweden = geopandas.read_file(r"../basemap/SWE_adm0.shp")
     # sweden_shape.boundary.plot()
@@ -36,9 +39,9 @@ def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=F
     grid_metrics_csvs = get_filenames(grid_metrics_dir)
     for fn in grid_metrics_csvs:
         pn = fn.replace(" metrics.csv", "")
-        pn_dir = os.path.join(output_dir, pn)
+        pn_dir = os.path.join(output_dir, "products", pn)
         if not os.path.exists(pn_dir):
-            os.mkdir(pn_dir)
+            os.makedirs(pn_dir)
         f = os.path.join(grid_metrics_dir, fn)
         df = pandas.read_csv(f)
         df = df[['lon', 'lat', 'anomaly', 'timefilter', metric, 'pearson_sig']]
@@ -51,9 +54,9 @@ def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=F
         for timefilter in tfs:
 #             matplotlib.pyplot.clf()
 #         if timefilter == "No-Timefilter":
-            tf_dir = os.path.join(output_dir, timefilter)
+            tf_dir = os.path.join(output_dir, "timefilters", timefilter)
             if not os.path.exists(tf_dir):
-                os.mkdir(tf_dir)
+                os.makedirs(tf_dir)
             df_tf = df_sub[df.timefilter == timefilter]
             # create and output map
             gm_geo = [Point(xy) for xy in zip(df_tf.iloc[:, 0], df_tf.iloc[:, 1])]
@@ -63,15 +66,17 @@ def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=F
 #             gm_gdf.plot(column=metric)
 #             gm_gdf.plot(ax=base, column=metric, figsize=(6,6))
             if map_legend:
-                gm_gdf.plot(ax=base, column=metric, legend=True, legend_kwds={'label': " R (p < 0.05)"}, figsize=(9,6))
+                gm_gdf.plot(ax=base, column=metric, legend=True, legend_kwds={'label': "{}".format(metric)}, figsize=(9,6))
                 map_legend = False
             else:
                 gm_gdf.plot(ax=base, column=metric, figsize=(9,6))
-            matplotlib.pyplot.suptitle("{} x ERA5 ({})".format(pn, timefilter))
+            matplotlib.pyplot.suptitle("{} x ERA5 ({}: {})".format(pn, timefilter, metric))
             # save one copy of figure in timeframe subdirectory
-            matplotlib.pyplot.savefig(os.path.join(tf_dir, "{} {}.jpg".format(pn, timefilter)))
+            matplotlib.pyplot.savefig(os.path.join(tf_dir, "{} {} {}.jpg".format(pn, timefilter, metric)))
             # save one copy of figure in product name subdirectory
-            matplotlib.pyplot.savefig(os.path.join(pn_dir, "{} {}.jpg".format(pn, timefilter)))
+            matplotlib.pyplot.savefig(os.path.join(pn_dir, "{} {} {}.jpg".format(pn, timefilter, metric)))
+            # save one copy of figure in metric subdirectory
+            matplotlib.pyplot.savefig(os.path.join(m_dir, "{} {} {}.jpg".format(pn, timefilter, metric)))
 #             gm_gdf.plot(ax=base, column=metric, legend=None, legend_kwds={'label': " R (p < 0.05)"}, figsize=(6,6))
 #             matplotlib.pyplot.clf()
 #             matplotlib.axes.Axes.get_legend().remove()
@@ -130,7 +135,7 @@ def tc_metrics_output(csv, output_dir, base_shp, metric="r", cutoff=100, map_leg
 #             tc_gdf.plot(ax=base, column=metric, figsize=(6,6))
             if map_legend:
                 print("map_legend ", map_legend)
-                tc_gdf.plot(ax=base, column=metric, legend=True, legend_kwds={'label': "R"}, figsize=(9,6))
+                tc_gdf.plot(ax=base, column=metric, legend=True, legend_kwds={'label': "{}".format(metric)}, figsize=(9,6))
                 # tc_gdf.plot(ax=base, column=metric, legend=True, figsize=(9,6))
                 map_legend = False
             else:
@@ -174,11 +179,17 @@ def round_dataframe(df, column):
     df.loc[belowNegOne, column] = -1
     return df
 
-grid_metrics_dir = r"../analysis_output/ERA5 0-1 grid evaluation 20210407124502"
+# "C:\git\soil-moisture-sweden\metrics\grid_evaluation\CSV"
+grid_metrics_dir = r"../metrics/grid_evaluation/CSV"
 grid_map_output_dir = r"../analysis_output/grid_evaluation_maps"
 sweden_shp = r"../basemap/SWE_adm0.shp"
 
-# grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp)
+# def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=False, metric="pearson_r", cutoff=100,
+#                         map_legend=True, round=True):
+grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="pearson_r")
+grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="bias")
+grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="rmsd")
+grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="ubrmsd")
 
 tc_matlab_csv = r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_results.csv"
 
@@ -186,11 +197,11 @@ tc_matlab_csv = r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_202103
 # with open("dict_icos.json", "r") as f:
 #     dict_icos = json.load(f)
 
-tc_map_output_dir = r"../analysis_output/tc_evaluation_maps"
-tc_matlab_df = tc_matlab2pandas(tc_matlab_csv, config.dict_swe_gldas_points)
-# print(tc_csv)
-tc_matlab_df.to_csv(
-    r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_pandas_results.csv", index=False)
-tc_metrics_output(
-    r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_pandas_results.csv",
-    tc_map_output_dir, sweden_shp, metric="r", cutoff=100)
+# tc_map_output_dir = r"../analysis_output/tc_evaluation_maps"
+# tc_matlab_df = tc_matlab2pandas(tc_matlab_csv, config.dict_swe_gldas_points)
+# # print(tc_csv)
+# tc_matlab_df.to_csv(
+#     r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_pandas_results.csv", index=False)
+# tc_metrics_output(
+#     r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_pandas_results.csv",
+#     tc_map_output_dir, sweden_shp, metric="r", cutoff=100)
