@@ -442,7 +442,7 @@ def get_csv_station_series(product, station, filter_prod=True, sm_only=True):
 
 
 # filters dataframe by date, assuming index is a datetimeindex
-def timefilter_data(df, year_filter=None, season_filter=None, month_filter=None):
+def timefilter_data(df, year_filter=None, season_filter=None, month_filter=None, day_filter=None):
     if year_filter is not None:
         df = df[df.index.year == year_filter]
     if season_filter is not None:
@@ -458,6 +458,8 @@ def timefilter_data(df, year_filter=None, season_filter=None, month_filter=None)
             df = df[(df.index.month == 9) | (df.index.month == 10) | (df.index.month == 11)]
     if month_filter is not None:
         df = df[df.index.month == month_filter]
+    if day_filter is not None:
+        df = df[df.index.day == day_filter]
     return df
 
 
