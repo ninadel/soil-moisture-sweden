@@ -14,6 +14,7 @@ import pandas as pd
 import re
 import warnings
 import math
+from pytesmo import temporal_matching
 
 try:
     import icos
@@ -890,3 +891,28 @@ def calc_tcol_r(s):
          else None
          for i in np.arange(len(s))])
     return r
+
+
+def temporal_match_csv(dataset_csv, loc, anomaly=True, match_window=1):
+    # dataset_csv is a list of tuples (dataset name, csv filename)
+    ts_dfs = []
+    for dataset, file in dataset_csv:
+    # for dataset, file in csv_dict.items():
+        ts = csv_to_pdseries(file)
+        ts = ts.squeeze()
+        if anomaly:
+            ts = calc_anomaly(ts)
+        ts.rename(dataset, inplace=True)
+        ts.dropna()
+        ts_dfs.append(ts)
+    if anomaly:
+        anomaly_str = "anomaly"
+    else:
+        anomaly_str = "absolute"
+    if ts_dfs[0].size > 0 and ts_dfs[1].size > 0 and ts_dfs[2].size > 0:
+        matched_data = temporal_matching.matching(ts_dfs[0], ts_dfs[1], ts_dfs[2],
+                                                  window=match_window)
+    else:
+        matched_data = None
+    triplet_str = "{}_{}_{}_{}_{}".format(dataset_csv[0][0], dataset_csv[1][0], dataset_csv[2][0], anomaly_str, loc)
+    return matched_data, triplet_str
