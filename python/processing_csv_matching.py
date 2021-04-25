@@ -105,15 +105,15 @@ def filter_temporal_match(temp_match_dict):
         if min_rows > daily_row_cutoff:
             loc_date_list.append(date_id)
             if output_root is not None:
-                output_subdir = os.path.join(output_root, dataset)
-                if not os.path.exists(output_subdir):
-                    os.makedirs(output_subdir)
                 # Loop 2 - cycle through datasets for date
                 for dataset, count_dict in data_dict.items():
+                    output_subdir = os.path.join(output_root, dataset)
+                    if not os.path.exists(output_subdir):
+                        os.makedirs(output_subdir)
                     # generate output csv file name
                     output_csv_filename = "{}_{}.csv".format(dataset, loc)
                     output_csv_file = os.path.join(output_subdir, output_csv_filename)
-                    if not os.path.exists(output_csv_filename):
+                    if not os.path.exists(output_csv_file):
                         count_dict['data'].to_csv(output_csv_file)
                     else:
                         count_dict['data'].to_csv(output_csv_file, mode='a', header=False)
