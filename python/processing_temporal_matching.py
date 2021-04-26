@@ -86,3 +86,9 @@ output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC6_Ano
 triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
 triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
 export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
+
+output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC6_AnomalyeExcludeASCAT"
+
+triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
+triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
+export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
