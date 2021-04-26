@@ -66,7 +66,7 @@ function output_path = etc_kaighin(input_path, output_path)
         
         % location	lat	lon	location_veg_class	prod_name	triplet	anomaly	n	cov_0	cov_1	cov_2	snr	err_std	beta	r
         result_matrix = [result_matrix; loc, prod1, triplet, anomaly, height(t), errvar_1, rho2_1, sqrt(rho2_1)];
-        disp(height(result_matrix))
+%         disp(height(result_matrix))
         result_matrix = [result_matrix; loc, prod2, triplet, anomaly, height(t), errvar_2, rho2_2, sqrt(rho2_2)];
         result_matrix = [result_matrix; loc, prod3, triplet, anomaly, height(t), errvar_3, rho2_3, sqrt(rho2_3)];
         result_table = array2table(result_matrix);

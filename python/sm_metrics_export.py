@@ -88,11 +88,8 @@ def tc_metrics_output(csv, output_dir, base_shp, metric="r", cutoff=100, map_leg
 #     sweden = sweden_shape.plot(color='white', edgecolor='silver')
 #     base = sweden.plot(color='white', edgecolor='silver', figsize=(9,6))
     df = pandas.read_csv(csv)
-    print(df.shape)
     df = df[df.n >= cutoff]
-    print(df.shape)
     df = df[['lon', 'lat', 'prod_name', 'triplet', metric]]
-    print(df.shape)
     # print(df)
 #     print(df.shape)
     df.dropna(inplace=True)
@@ -109,7 +106,7 @@ def tc_metrics_output(csv, output_dir, base_shp, metric="r", cutoff=100, map_leg
 #         print(df_t.head())
         pns = df_t.prod_name.unique()
         for pn in pns:
-            output_subdir = os.path.join(output_dir, t_str, pn)
+            output_subdir = os.path.join(output_dir, t_str)
 #             print(output_subdir)
             if not os.path.exists(output_subdir):
                 os.makedirs(output_subdir)
@@ -186,18 +183,39 @@ sweden_shp = r"../basemap/SWE_adm0.shp"
 
 # def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=False, metric="pearson_r", cutoff=100,
 #                         map_legend=True, round=True):
-grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="pearson_r")
-grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="bias")
-grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="rmsd")
-grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="ubrmsd")
+# grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="pearson_r")
+# grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="bias")
+# grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="rmsd")
+# grid_metrics_output(grid_metrics_dir, grid_map_output_dir, sweden_shp, metric="ubrmsd")
 
-tc_matlab_csv = r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_results.csv"
+# tc_matlab_csv = r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_results.csv"
 
 # print(dict_swe_gldas_points)
 # with open("dict_icos.json", "r") as f:
 #     dict_icos = json.load(f)
 
-# tc_map_output_dir = r"../analysis_output/tc_evaluation_maps"
+tc_map_output_dir = r"../analysis_output/tc_evaluation_maps_Sentinel"
+os.makedirs(tc_map_output_dir)
+input_dir = r"C:\git\soil-moisture-sweden\analysis_output\tc_matched_data_Sentinel_20210425"
+pandas_output_dir = r"C:\git\soil-moisture-sweden\analysis_output\tc_matched_data_Sentinel_20210425\pandas"
+os.makedirs(pandas_output_dir)
+
+csv_list = ["tc_SMAP L3 Enhanced_Sentinel-1_ERA5 0-1_absolute.csv",
+            "tc_SMAP L3 Enhanced_Sentinel-1_ERA5 0-1_anomaly.csv",
+            "tc_SMOS-IC_Sentinel-1_ERA5 0-1_absolute.csv",
+            "tc_SMOS-IC_Sentinel-1_ERA5 0-1_anomaly.csv"]
+
+
+for csv in csv_list:
+    subdir = csv.replace(".csv", "")
+    print(csv)
+    file = os.path.join(input_dir, csv)
+    tc_matlab_df = tc_matlab2pandas(file, config.dict_swe_gldas_points)
+    pandas_csv = os.path.join(pandas_output_dir, csv)
+    tc_matlab_df.to_csv(pandas_csv)
+    tc_metrics_output(pandas_csv, os.path.join(tc_map_output_dir, subdir), sweden_shp, metric="r", cutoff=100)
+    # tc_metrics_output(pandas_csv, tc_map_output_dir, sweden_shp, metric="err_std", cutoff=100)
+
 # tc_matlab_df = tc_matlab2pandas(tc_matlab_csv, config.dict_swe_gldas_points)
 # # print(tc_csv)
 # tc_matlab_df.to_csv(
