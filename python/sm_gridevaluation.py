@@ -36,10 +36,10 @@ grid_evaluation_dict = {
 }
 
 # SMAP L4 nc file missing?
-# evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
-#                        'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
-evaluation_datasets = ['ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
+evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
                        'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
+# evaluation_datasets = ['ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC', 'SMOS-IC',
+#                        'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
 
 
 # function to evaluate time series for two datasets for one location
@@ -203,11 +203,11 @@ def evaluate_dataset(evaluation_dataset_name):
         warning_message = statement_str("metrics output failed")
         warnings.warn(warning_message)
 
-# if __name__ == '__main__':
-#     with Pool(5) as p:
-#     # with Pool(1) as p:
-#         p.map(evaluate_dataset, evaluation_datasets)
-for dataset in evaluation_datasets:
-    evaluate_dataset(dataset)
+if __name__ == '__main__':
+    with Pool(5) as p:
+    # with Pool(1) as p:
+        p.map(evaluate_dataset, evaluation_datasets)
+# for dataset in evaluation_datasets:
+#     evaluate_dataset(dataset)
 
 
