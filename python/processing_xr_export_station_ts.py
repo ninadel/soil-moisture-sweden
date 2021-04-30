@@ -1,7 +1,7 @@
 """
 Author: Nina del Rosario
 Date: 8/4/2020
-Script for evaluating SM for each in-situ station (HOBE & ICOS)
+Script which imports ICOS and HOBE station locations and exports CSV time series for each location for each soil moisture product
 Status: In progress
 """
 from datetime import datetime
@@ -22,6 +22,7 @@ evaluation_datasets = ['SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 
 icos_readers = tools.get_icos_readers(config.icos_input_dir)
 ismn_readers = tools.get_ismn_readers(config.ismn_input_dir)
 evaluation_stations = icos_readers + ismn_readers
+
 
 def export_station_data(dataset):
     print(dataset)
