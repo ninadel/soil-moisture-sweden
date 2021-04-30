@@ -14,14 +14,17 @@ import sm_config as config
 import sm_tools as tools
 import sm_triplecollocation
 
+
 def get_filenames(path_to_dir, suffix=".csv"):
     filenames = os.listdir(path_to_dir)
     return [filename for filename in filenames if filename.endswith(suffix)]
+
 
 def get_basemap(f, color="white", edgecolor="silver", figsize=(9,6)):
     base = geopandas.read_file(f)
     plot = base.plot(color=color, edgecolor=edgecolor, figsize=figsize)
     return plot
+
 
 # grid evaluation metrics
 def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=False, metric="pearson_r", cutoff=100,
@@ -80,6 +83,7 @@ def grid_metrics_output(grid_metrics_dir, output_dir, base_shp, include_months=F
 #             gm_gdf.plot(ax=base, column=metric, legend=None, legend_kwds={'label': " R (p < 0.05)"}, figsize=(6,6))
 #             matplotlib.pyplot.clf()
 #             matplotlib.axes.Axes.get_legend().remove()
+
 
 def tc_metrics_output(csv, output_dir, base_shp, metric="r", cutoff=100, map_legend=True, round=True):
     base = get_basemap(base_shp)
@@ -145,6 +149,7 @@ def tc_metrics_output(csv, output_dir, base_shp, metric="r", cutoff=100, map_leg
             # save figure in subdirectory
             matplotlib.pyplot.savefig(os.path.join(output_subdir, "{} {}.jpg".format(pn, metric)))
 
+
 def tc_matlab2pandas(in_csv, dict):
     df = pandas.read_csv(in_csv)
     new_df = pandas.DataFrame(
@@ -167,6 +172,7 @@ def tc_matlab2pandas(in_csv, dict):
              'r': r}, ignore_index=True)
     return new_df
 
+
 def round_dataframe(df, column):
     # mask = (df['Qty'] == 1) & (df['Price'] == 10)
     # df.loc[mask, 'Buy'] = 1
@@ -175,6 +181,7 @@ def round_dataframe(df, column):
     belowNegOne = df[column] < -1
     df.loc[belowNegOne, column] = -1
     return df
+
 
 # "C:\git\soil-moisture-sweden\metrics\grid_evaluation\CSV"
 grid_metrics_dir = r"../metrics/grid_evaluation/CSV"
@@ -194,16 +201,14 @@ sweden_shp = r"../basemap/SWE_adm0.shp"
 # with open("dict_icos.json", "r") as f:
 #     dict_icos = json.load(f)
 
-tc_map_output_dir = r"../analysis_output/tc_evaluation_maps_Sentinel"
-os.makedirs(tc_map_output_dir)
-input_dir = r"C:\git\soil-moisture-sweden\analysis_output\tc_matched_data_Sentinel_20210425"
-pandas_output_dir = r"C:\git\soil-moisture-sweden\analysis_output\tc_matched_data_Sentinel_20210425\pandas"
+tc_map_output_dir = r"../analysis_output/tc_evaluation_maps_ASCAT_GLDAS"
+if not os.path.exists(tc_map_output_dir):
+    os.makedirs(tc_map_output_dir)
+input_dir = r"C:\git\soil-moisture-sweden\analysis_output\matched_SMAP L3 Enhanced_ASCAT 12.5 TS_GLDAS_anomaly"
+pandas_output_dir = r"C:\git\soil-moisture-sweden\analysis_output\matched_SMAP L3 Enhanced_ASCAT 12.5 TS_GLDAS_anomaly\pandas"
 os.makedirs(pandas_output_dir)
 
-csv_list = ["tc_SMAP L3 Enhanced_Sentinel-1_ERA5 0-1_absolute.csv",
-            "tc_SMAP L3 Enhanced_Sentinel-1_ERA5 0-1_anomaly.csv",
-            "tc_SMOS-IC_Sentinel-1_ERA5 0-1_absolute.csv",
-            "tc_SMOS-IC_Sentinel-1_ERA5 0-1_anomaly.csv"]
+csv_list = ["tc_SMAP L3 Enhanced_ASCAT 12.5 TS_GLDAS.csv"]
 
 
 for csv in csv_list:
