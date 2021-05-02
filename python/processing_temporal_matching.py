@@ -45,50 +45,64 @@ def export_matched(triplet_subdir, input_dir, output_root, anomaly=True):
 # triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
 # export_matched(triplet_subdir, input_dir, output_root)
 
-input_dir = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC2_ExcludeASCAT"
-output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC2_AbsoluteExcludeASCAT"
-sentinel = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC2_ExcludeASCAT\Sentinel-1"
-temp_input_dir = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC3_AbsoluteExcludeASCAT"
+# input_dir = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC2_ExcludeASCAT"
+# output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC2_AbsoluteExcludeASCAT"
+# sentinel = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC2_ExcludeASCAT\Sentinel-1"
+# temp_input_dir = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC3_AbsoluteExcludeASCAT"
 
-for filename in os.listdir(sentinel):
-    file = os.path.join(sentinel, filename)
-    df = tools.csv_to_pdseries(file)
-    df = df/100
-    if not os.path.exists(temp_input_dir):
-        os.makedirs(temp_input_dir)
-    df.to_csv(os.path.join(temp_input_dir, filename))
-
-
-input_dir = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC3_AbsoluteExcludeASCAT"
+# for filename in os.listdir(sentinel):
+#     file = os.path.join(sentinel, filename)
+#     df = tools.csv_to_pdseries(file)
+#     df = df/100
+#     if not os.path.exists(temp_input_dir):
+#         os.makedirs(temp_input_dir)
+#     df.to_csv(os.path.join(temp_input_dir, filename))
 
 
-output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC3_AbsoluteExcludeASCAT"
+# input_dir = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC3_AbsoluteExcludeASCAT"
+#
+#
+# output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC3_AbsoluteExcludeASCAT"
+#
+# # absolute
+# triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
+# triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
+# export_matched(triplet_subdir, input_dir, output_root, anomaly=False)
+#
+# output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC4_AbsoluteExcludeASCAT"
+#
+# triplet = ['SMAP L3 Enhanced', 'Sentinel-1', 'ERA5 0-1']
+# triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
+# export_matched(triplet_subdir, input_dir, output_root, anomaly=False)
+#
+# output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC5_AnomalyeExcludeASCAT"
+#
+# triplet = ['SMAP L3 Enhanced', 'Sentinel-1', 'ERA5 0-1']
+# triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
+# export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
+#
+# output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC6_AnomalyeExcludeASCAT"
+#
+# triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
+# triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
+# export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
+#
+# output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC6_AnomalyeExcludeASCAT"
+#
+# triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
+# triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
+# export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
 
-# absolute
-triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
-triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
-export_matched(triplet_subdir, input_dir, output_root, anomaly=False)
+input_dir = r"C:\git\soil-moisture-sweden\input_data\resampled_25km_spatial_temporal_match\TC7_ASCAT_GLDAS"
+output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC7_SMOS_ASCAT_GLDAS"
 
-output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC4_AbsoluteExcludeASCAT"
-
-triplet = ['SMAP L3 Enhanced', 'Sentinel-1', 'ERA5 0-1']
-triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
-export_matched(triplet_subdir, input_dir, output_root, anomaly=False)
-
-output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC5_AnomalyeExcludeASCAT"
-
-triplet = ['SMAP L3 Enhanced', 'Sentinel-1', 'ERA5 0-1']
+triplet = ['SMOS-IC', 'ASCAT 12.5 TS', 'GLDAS']
 triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
 export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
 
-output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC6_AnomalyeExcludeASCAT"
+output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC8_SMAPL3E_ASCAT_GLDAS"
 
-triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
+triplet = ['SMAP L3 Enhanced', 'ASCAT 12.5 TS', 'GLDAS']
 triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
 export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
 
-output_root = r"C:\git\soil-moisture-sweden\analysis_output\matched_data_TC6_AnomalyeExcludeASCAT"
-
-triplet = ['SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
-triplet_subdir = [os.path.join(input_dir, dataset) for dataset in triplet]
-export_matched(triplet_subdir, input_dir, output_root, anomaly=True)
