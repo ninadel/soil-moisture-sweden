@@ -5,8 +5,14 @@ This project aims to evaluate satellite and model soil moisture products for Swe
 Analyses include:
 
 * Statistical evaluation against in-situ soil moisture data from [ICOS network ecosystem stations](https://www.icos-cp.eu/observations/ecosystem/stations)
+
 * Statistical evaluation against the [ERA5-Land reanalysis dataset](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)
+
 * Triple collocation analysis
+
+## Scripts
+
+* [Python scripts](https://github.com/ninadel/soil-moisture-sweden/tree/master/python) (documentation in progress)
 
 ## Data Sources
 
