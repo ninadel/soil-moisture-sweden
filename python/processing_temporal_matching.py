@@ -2,6 +2,8 @@
 Author: Nina del Rosario
 Date: UPDATE_DATE
 UPDATE_DESCRIPTION
+Preprocessing for TC
+Looks at CSV files for each individual dataset in a triplet, creates single file which merges data from each dataset based on coincident timepoints
 """
 
 import os

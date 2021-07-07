@@ -2,6 +2,7 @@
 Author: Nina del Rosario
 Date: UPDATE_DATE
 UPDATE_DESCRIPTION
+Results processing script
 """
 
 import os

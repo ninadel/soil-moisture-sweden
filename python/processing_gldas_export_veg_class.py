@@ -3,6 +3,7 @@ Author: Nina del Rosario, nina.del@gmail.com
 Date: 6/9/2020
 Script for extracting GLDAS dominant vegetation type: https://ldas.gsfc.nasa.gov/gldas/vegetation-class-mask
 UPDATE_DESCRIPTION
+Creating a dictionary, explain GLDAS, motivation
 """
 import json
 import netCDF4

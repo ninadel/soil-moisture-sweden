@@ -3,6 +3,7 @@ Author: Nina del Rosario, nina.del@gmail.com
 Date: 7/23/2020
 Script for downloading ERA5 data
 UPDATE_DESCRIPTION
+Include information on where this data came from and how this works, why ERA5
 """
 
 import cdsapi

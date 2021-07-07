@@ -6,7 +6,7 @@ Processes output of processing_H115_export_points.py
 Each output file is a date, any location with any data matching date is added to CSV,
 locations may have multiple observations for a date
 UPDATE_DESCRIPTION
-
+Why was this necessary?
 """
 import pandas
 import os
