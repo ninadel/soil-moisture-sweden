@@ -2,6 +2,8 @@
 Author: Nina del Rosario
 Date: 6/2/2020
 Configuration settings for sm analysis
+UPDATE_DESCRIPTION
+This includes dictionaries that are dynamic, may change depending on the scope of the analysis
 """
 from datetime import datetime
 import json

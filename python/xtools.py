@@ -1,3 +1,8 @@
+"""
+Author: Nina del Rosario
+Date: UPDATE_DATE
+UPDATE_DESCRIPTION
+"""
 from datetime import datetime
 import numpy as np
 import xarray as xr

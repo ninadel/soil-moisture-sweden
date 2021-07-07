@@ -2,6 +2,7 @@
 Author: Nina del Rosario
 Date: 7/19/2020
 Script for merging SMAP L3 data using xarray
+UPDATE_DESCRIPTION
 """
 import os
 import xarray as xr

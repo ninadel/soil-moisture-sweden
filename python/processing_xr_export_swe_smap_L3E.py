@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario
+Date: UPDATE_DATE
+UPDATE_DESCRIPTION
+"""
+
 import os
 import xarray as xr
 import xtools

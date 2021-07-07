@@ -4,6 +4,7 @@ Date: 2/10/2021
 Script for evaluating SM products using triple collocation analysis
 Includes adaptation of pytesmo tc_snr function: https://github.com/TUW-GEO/pytesmo/blob/master/src/pytesmo/metrics.py
 Status: In progress
+UPDATE_DESCRIPTION
 """
 
 from pytesmo import temporal_matching

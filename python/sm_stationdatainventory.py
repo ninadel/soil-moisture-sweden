@@ -3,6 +3,7 @@ Author: Nina del Rosario
 Date: 8/4/2020
 Script for counting inventory for evaluation data
 Status: In progress
+UPDATE_DESCRIPTION
 """
 from datetime import datetime
 import os

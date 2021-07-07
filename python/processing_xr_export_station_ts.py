@@ -3,6 +3,8 @@ Author: Nina del Rosario
 Date: 8/4/2020
 Script which imports ICOS and HOBE station locations and exports CSV time series for each location for each soil moisture product
 Status: In progress
+UPDATE_DESCRIPTION
+
 """
 from datetime import datetime
 import os

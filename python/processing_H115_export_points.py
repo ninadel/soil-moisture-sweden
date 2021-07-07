@@ -4,6 +4,8 @@ Date: 6/27/2020
 Script for extracting location time series from TUW-GEO H115 reader:
     https://github.com/TUW-GEO/ascat/blob/27f43293fab60ec6a81ba24796decd12c2e8f75b/src/ascat/h_saf.py#L745
 Script for exporting CSV files of TS within a bounding box around Sweden
+UPDATE_DESCRIPTION
+
 """
 import xarray as xr
 import pandas

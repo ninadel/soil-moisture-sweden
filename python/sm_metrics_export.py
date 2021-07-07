@@ -1,3 +1,8 @@
+"""
+Author: Nina del Rosario
+Date: UPDATE_DATE
+UPDATE_DESCRIPTION
+"""
 # from numpy import cov
 import os
 import pandas

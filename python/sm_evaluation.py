@@ -3,6 +3,7 @@ Author: Nina del Rosario
 Date: 2/10/2021
 Status: This script contains functions used for evaluation, some functions that are specific to analyzing csv files have
 been split out to sm_csv_evaluation.py
+UPDATE_DESCRIPTION
 """
 from datetime import datetime
 import os

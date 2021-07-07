@@ -2,6 +2,7 @@
 Author: Nina del Rosario, nina.del@gmail.com
 Date: 6/15/2020
 Script that takes a reshuffle TS and writes them to text files for a set of defined locations
+UPDATE_DESCRIPTION
 """
 
 import json

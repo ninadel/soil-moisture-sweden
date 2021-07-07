@@ -2,6 +2,7 @@
 Author: Nina del Rosario
 Date: 5/25/2020
 Functions for analyzing soil moisture datasets
+UPDATE_DESCRIPTION
 """
 import sm_config as config
 

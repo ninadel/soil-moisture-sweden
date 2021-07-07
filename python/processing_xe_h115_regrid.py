@@ -2,6 +2,8 @@
 Author: Nina del Rosario
 Date: 6/30/2020
 Script for regridding SMOS-IC data
+UPDATE_DESCRIPTION
+
 """
 from datetime import datetime
 import numpy as np

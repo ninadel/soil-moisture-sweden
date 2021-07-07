@@ -2,6 +2,8 @@
 Author: Nina del Rosario
 Date: 6/27/2020
 Script for regridding ERA5 file
+UPDATE_DESCRIPTION
+
 """
 
 import xarray as xr

@@ -2,6 +2,7 @@
 Author: Nina del Rosario
 Date: 5/25/2020
 Script for evaluating SM datasets
+UPDATE_DESCRIPTION
 """
 from datetime import datetime
 import os

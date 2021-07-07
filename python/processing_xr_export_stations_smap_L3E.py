@@ -2,6 +2,9 @@
 Author: Nina del Rosario
 Date: 7/18/2020
 Script for exporting station ts with xarray
+
+UPDATE_DESCRIPTION
+
 """
 import os
 import sm_tools as tools

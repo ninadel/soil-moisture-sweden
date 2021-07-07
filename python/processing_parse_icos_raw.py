@@ -4,6 +4,7 @@ Date: 5/31/2020
 Script to parse raw ICOS data to a time series more similar to ISMN format
 Times shifted from CET to UTC
 Exports soil moisture values & QC flags, soil temperature values & QC flags
+UPDATE_DESCRIPTION
 """
 
 import os

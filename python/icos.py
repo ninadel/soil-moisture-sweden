@@ -2,6 +2,7 @@
 Author: Nina del Rosario, nina.del@gmail.com
 Date: 5/31/2020
 Class to handle ICOS TS data
+UPDATE_DESCRIPTION
 """
 
 from ismn.readers import ISMNTimeSeries

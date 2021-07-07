@@ -5,6 +5,9 @@ Script for exporting station ts with xarray
 
 Need to do:
 ERA5, SMPL3E, ASCAT H115
+
+UPDATE_DESCRIPTION
+
 """
 import os
 import sm_tools as tools

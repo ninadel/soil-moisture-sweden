@@ -2,6 +2,8 @@
 Author: Nina del Rosario
 Date: 7/18/2020
 Script for regridding H115 repocessed
+UPDATE_DESCRIPTION
+
 """
 from datetime import datetime
 import numpy as np

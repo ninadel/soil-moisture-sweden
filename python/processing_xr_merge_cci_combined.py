@@ -2,6 +2,7 @@
 Author: Nina del Rosario
 Date: 7/29/2020
 Script for merging CCI data using xarray
+UPDATE_DESCRIPTION
 """
 import os
 import xarray as xr

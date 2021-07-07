@@ -2,6 +2,8 @@
 Author: Nina del Rosario
 Date: 7/29/2020
 Script for regridding SMAP L3 data
+UPDATE_DESCRIPTION
+
 """
 import os
 import xarray as xr

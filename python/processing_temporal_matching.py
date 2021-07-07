@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario
+Date: UPDATE_DATE
+UPDATE_DESCRIPTION
+"""
+
 import os
 import re
 import sm_tools as tools

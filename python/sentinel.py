@@ -2,6 +2,7 @@
 Author: Nina del Rosario, nina.del@gmail.com
 6/18/2020
 Class for analysing Sentinel-1 SSM data (https://land.copernicus.eu/global/products/ssm)
+UPDATE_DESCRIPTION
 """
 import numpy as np
 import math

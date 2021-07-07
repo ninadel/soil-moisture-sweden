@@ -1,3 +1,9 @@
+"""
+Author: Nina del Rosario
+Date: UPDATE_DATE
+UPDATE_DESCRIPTION
+"""
+
 import pandas as pd
 import os
 import numpy as np

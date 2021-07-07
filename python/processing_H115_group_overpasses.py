@@ -2,6 +2,8 @@
 Author: Nina del Rosario
 Date: 7/23/2020
 Script for reading date csv data and splitting it into AM overpasses
+UPDATE_DESCRIPTION
+
 """
 import datetime
 import os

@@ -2,6 +2,7 @@
 Author: Nina del Rosario
 Date: 8/4/2020
 Script for evaluating SM for each GLDAS cell in Sweden using ERA5 as a reference
+UPDATE_DESCRIPTION
 """
 from datetime import datetime
 import os

@@ -3,6 +3,7 @@ Author: Nina del Rosario
 Date: 8/4/2020
 Script for evaluating SM for each in-situ station (HOBE & ICOS)
 Status: In progress
+UPDATE_DESCRIPTION
 """
 import multiprocessing as mp
 from datetime import datetime
