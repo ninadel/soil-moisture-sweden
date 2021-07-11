@@ -40,8 +40,8 @@ def evaluate_gridcell_xr(evaluation_dict, lon, lat):
     evaluate_timeframes = evaluation_dict['evaluate_timeframes']
     data = {}
     metrics = {}
-    ref_sm_field = config.dict_product_fields[ref_dataset_name]['sm_field']
-    eval_sm_field = config.dict_product_fields[eval_dataset_name]['sm_field']
+    ref_sm_field = dict.dict_product_fields[ref_dataset_name]['sm_field']
+    eval_sm_field = dict.dict_product_fields[eval_dataset_name]['sm_field']
     ref_ts = ref_dataset[ref_sm_field]
     eval_ts = eval_dataset[eval_sm_field]
     ref_ts = ref_ts.sel(time=slice(start_date, end_date), lat=lat, lon=lon).to_pandas()

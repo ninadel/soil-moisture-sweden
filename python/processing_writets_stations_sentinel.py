@@ -8,6 +8,7 @@ import datetime
 import os
 import pandas
 import sm_config as config
+import sm_dictionaries as dicts
 import sm_tools as tools
 from sentinel import SentinelImg
 
@@ -22,14 +23,14 @@ file_list = os.listdir(input_dir)
 file_list.sort()
 export_timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
-sm_key = config.dict_product_fields[product]['sm_field']
+sm_key = dicts.dict_product_fields[product]['sm_field']
 # hours_shift = config.dict_timeshifts[product]['hours_shift']
 
 ref_locations = {}
-icos_stations = config.dict_icos
-hobe_stations = config.dict_hobe
-ref_locations.update(config.dict_icos)
-ref_locations.update(config.dict_hobe)
+icos_stations = dicts.dict_icos
+hobe_stations = dicts.dict_hobe
+ref_locations.update(dicts.dict_icos)
+ref_locations.update(dicts.dict_hobe)
 
 # dict to store station ts dataframes
 station_ts = {}

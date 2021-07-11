@@ -9,9 +9,10 @@ import os
 import xarray as xr
 import xtools as xt
 import sm_config as config
+import sm_dictionaries as dicts
 
 product = "SMOS-IC"
-sm_field = config.dict_product_fields[product]['sm_field']
+sm_field = dicts.dict_product_fields[product]['sm_field']
 output_dir = r"../test_output_data"
 f = r"/Volumes/TOSHIBA EXT/sm_backup/xr/smos-ic_25km-subset-nofilter.nc"
 

@@ -8,13 +8,14 @@ import os
 import xarray as xr
 import xtools
 import sm_config as config
+import sm_dictionaries as dicts
 
 product = 'Sentinel-1'
 output_dir = r"..\test_output_data\sentinel-1_regrid_ts"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 f = r"C:\Users\ninad\OneDrive - Lund University\Dokument\SM_Data_ReadOnly\satellite\0-25_regrid\Sentinel\sentinel_0-25-regrid-mask.nc"
-sm_field = config.dict_product_fields[product]['sm_field']
+sm_field = dicts.dict_product_fields[product]['sm_field']
 
 ds = xr.open_dataset(f)
 print(ds)

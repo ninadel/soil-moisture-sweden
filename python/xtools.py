@@ -10,6 +10,7 @@ import warnings
 import os
 import pandas as pd
 import sm_config as config
+import sm_dictionaries as dicts
 import sm_tools as tools
 
 try:
@@ -137,9 +138,9 @@ def regrid(ds_in, var, method='nearest_s2d', reuse=False, cleanup=True, mask=Tru
 
 
 def write_ts_quarter_deg(dr, output_dir, overwrite=False, dropna=False):
-    location_len = len(config.dict_swe_gldas_points.keys())
+    location_len = len(dicts.dict_swe_gldas_points.keys())
     location_count = 0
-    for location, metadata in config.dict_swe_gldas_points.items():
+    for location, metadata in dicts.dict_swe_gldas_points.items():
         outfile = os.path.join(output_dir, "{}.csv".format(location))
         if not overwrite and os.path.exists(outfile):
             with open(os.path.join(output_dir, "logfile.txt"), "a") as file:

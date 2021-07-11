@@ -9,6 +9,7 @@ from datetime import datetime
 import os
 import pandas
 import warnings
+import sm_dictionaries as dicts
 
 from pytesmo import metrics, temporal_matching
 from pytesmo.scaling import scale
@@ -41,8 +42,8 @@ def evaluate_gridcell_xr(evaluation_dict, lon, lat):
     evaluate_timeframes = evaluation_dict['evaluate_timeframes']
     data = {}
     metrics = {}
-    ref_sm_field = config.dict_product_fields[ref_dataset_name]['sm_field']
-    eval_sm_field = config.dict_product_fields[eval_dataset_name]['sm_field']
+    ref_sm_field = dicts.dict_product_fields[ref_dataset_name]['sm_field']
+    eval_sm_field = dicts.dict_product_fields[eval_dataset_name]['sm_field']
     ref_ts = ref_dataset[ref_sm_field]
     eval_ts = eval_dataset[eval_sm_field]
     ref_ts = ref_ts.sel(time=slice(start_date, end_date), lat=lat, lon=lon).to_pandas()
@@ -232,7 +233,7 @@ def evaluate_shuffle(references, products, output_folder, startdate=datetime(201
         timeframe = "all-dates"
         product_str = product.replace(' ', '-')
         product_reader = tools.get_product_reader(product, config.dict_product_inputs[product])
-        # product_sm_col = config.dict_product_fields[product]['sm_field']
+        # product_sm_col = dicts.dict_product_fields[product]['sm_field']
         matched_data_dict = {}
         for station in references:
             station_name = station.station

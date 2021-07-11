@@ -13,10 +13,11 @@ import xarray as xr
 import xtools as xt
 import xesmf as xe
 import sm_config as config
+import sm_dictionaries as dicts
 import matplotlib.pyplot as plt
 
 product = "ASCAT 12.5 TS"
-sm_field = config.dict_product_fields[product]['sm_field']
+sm_field = dicts.dict_product_fields[product]['sm_field']
 
 output_dir = r"../test_output_data/ascat-h115_regrid"
 if not os.path.exists(output_dir):

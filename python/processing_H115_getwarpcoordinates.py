@@ -31,7 +31,7 @@ def main():
     f = r"C:\git\soil-moisture-sweden\ascat_ts_aux\warp5_grid\TUW_WARP5_grid_info_2_3.nc"
     warp = xr.open_dataset(f)
 
-    #     if config.dict_extent_sweden["min_lat"] - buffer < lat < config.dict_extent_sweden["max_lat"] + buffer and \
+    #     if dicts.dict_extent_sweden["min_lat"] - buffer < lat < dicts.dict_extent_sweden["max_lat"] + buffer and \
     #             10 < lon < 60:
     lat_array = warp.lat.values
     lon_array = warp.lon.values

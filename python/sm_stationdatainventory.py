@@ -9,6 +9,7 @@ from datetime import datetime
 import os
 import sm_tools as tools
 import sm_config as config
+import sm_dictionaries as dicts
 import sm_evaluation as evaluation
 import xarray as xr
 import pandas as pd
@@ -40,11 +41,11 @@ def get_station_inventory(dataset_name, start_date, end_date, station):
     lat = station.latitude
     f = config.dict_native_files[dataset_name]
     ds = xr.open_dataset(f)
-    sm_field = config.dict_product_fields[dataset_name]['sm_field']
+    sm_field = dicts.dict_product_fields[dataset_name]['sm_field']
     sm = ds[sm_field]
     if dataset_name == "ASCAT 12.5 TS":
-        row = tools.find_nearest(config.dict_h115_coords['lat'], lat)[0]
-        col = tools.find_nearest(config.dict_h115_coords[str(row)], lon)[0]
+        row = tools.find_nearest(dicts.dict_h115_coords['lat'], lat)[0]
+        col = tools.find_nearest(dicts.dict_h115_coords[str(row)], lon)[0]
         df = sm.sel(time=slice(start_date, end_date), row=row, col=col).to_pandas().dropna()
         inventory_dict = get_inventory_dict('DropNA', df)
         inventory_cols = list(inventory_dict.keys())
