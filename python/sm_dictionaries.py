@@ -6975,3 +6975,28 @@ den_shuffle_cells = [1360, 1361, 1396, 1397, 1433]
 nordic_shuffle_cells = [1326, 1360, 1361, 1362, 1396, 1397, 1398, 1399, 1433, 1434, 1435, 1436, 1469, 1470, 1471, 1472,
                         1506, 1507, 1508, 1542, 1543, 1544]
 
+dict_gldas_veg = {
+  "0": "missing value",
+  "1": "Evergreen Needleleaf Forest ",
+  "2": "Evergreen Broadleaf Forest",
+  "3": "Deciduous Needleleaf Forest ",
+  "4": "Deciduous Broadleaf Forest",
+  "5": "Mixed Forest ",
+  "6": "Closed Shrublands ",
+  "7": "Open Shrublands ",
+  "8": "Woody Savannas",
+  "9": "Savannas",
+  "10": "Grassland",
+  "11": "Permanent Wetland",
+  "12": "Cropland",
+  "13": "Urban and Built-Up",
+  "14": "Cropland/Natural Vegetation Mosaic",
+  "15": "Snow and Ice ",
+  "16": "Barren or Sparsely Vegetated ",
+  "17": "Ocean ",
+  "18": "Wooded Tundra ",
+  "19": "Mixed Tundra ",
+  "20": "Bare Ground Tundra"
+}
+
+
