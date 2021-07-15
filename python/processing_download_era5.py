@@ -1,9 +1,9 @@
 """
 Author: Nina del Rosario, nina.del@gmail.com
 Date: 7/23/2020
-Script for downloading ERA5 data
-UPDATE_DESCRIPTION
-Include information on where this data came from and how this works, why ERA5
+Script for downloading ERA5 data for the region and timeframe of interest through the CDS API service:
+https://confluence.ecmwf.int/display/CKB/How+to+download+ERA5
+This script downloads data at 0.1 degree resolution
 """
 
 import cdsapi
