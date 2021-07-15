@@ -2,7 +2,11 @@
 
 ## Python Scripts
 
-Documentation coming soon
+These python scripts are in the process of being documented. This readme file will include a list of packages used for these scripts as well as a link for downloading the conda environment. 
+
+Scripts with the "processing" prefix were used to prepare input files for analysis and may be out of date. These scripts are in the process of being brought up to date and documented. 
+
+Scripts with the "sm" prefix are the main files for running analysis. 
 
 ## Tools/Packages
 
