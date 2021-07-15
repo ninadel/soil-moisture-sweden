@@ -1,19 +1,20 @@
 """
 Author: Nina del Rosario, nina.del@gmail.com
-Date: 6/9/2020
-Script for extracting GLDAS dominant vegetation type: https://ldas.gsfc.nasa.gov/gldas/vegetation-class-mask
-UPDATE_DESCRIPTION
-Creating a dictionary, explain GLDAS, motivation
+Date: 7/15/2021
+Script for extracting GLDAS dominant vegetation type:
+https://ldas.gsfc.nasa.gov/gldas/vegetation-class-mask
+based on GLDAS 0.25 degree cell coordinates for Sweden
+This script generates a dictionary in a json file which includes GLDAS cell ID, latitude and longitude coordinates,
+and vegetation type
 """
 import json
 import netCDF4
 import pandas
 import sm_tools as tools
+import sm_dictionaries as dicts
 
 def main():
-    with open("dict_gldas_veg.json", "r") as f:
-        dict_gldas_veg = json.load(f)
-
+    dict_gldas_veg = dicts.dict_gldas_veg
     veg_grid = r"..\gldas_ts_aux\GLDASp4_domveg_025d.nc4"
     veg_grid_nc = netCDF4.Dataset(veg_grid, 'r')
 
@@ -40,7 +41,6 @@ def main():
 
     with open('dict_swe_points.json', 'w') as f:
         json.dump(sweden_GLDAS_points, f)
-
 
 if __name__ == '__main__':
     main()
