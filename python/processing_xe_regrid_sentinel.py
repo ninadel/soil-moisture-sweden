@@ -13,11 +13,12 @@ import xarray as xr
 import xtools as xt
 import xesmf as xe
 import sm_config as config
+import sm_dictionaries as dicts
 import matplotlib.pyplot as plt
 
 product = "Sentinel-1"
 native_res = "1km"
-sm_field = config.dict_product_fields[product]['sm_field']
+sm_field = dicts.dict_product_fields[product]['sm_field']
 clean_weights = False
 test_plots = True
 

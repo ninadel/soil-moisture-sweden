@@ -9,11 +9,12 @@ import os
 import sm_config as config
 import xarray as xr
 from multiprocessing import Pool
+import sm_dictionaries as dicts
 
 start_date = datetime(2015,4,1)
 end_date = datetime(2018,12,31,23,59,59)
 output_root = r"../test_output_data/grid_sm_data"
-locations = config.dict_swe_gldas_points
+locations = dicts.dict_swe_gldas_points
 
 export_datasets = ['ERA5 0-1', 'SMAP L4', 'ASCAT 12.5 TS', 'SMAP L3 Enhanced', 'GLDAS', 'Sentinel-1', 'SMOS-BEC',
                    'SMOS-IC', 'SMAP L3', 'CCI Combined', 'CCI Passive', 'CCI Active']
@@ -23,7 +24,7 @@ def grid_export_data(dataset_name):
     dataset_folder = os.path.join(output_root,dataset_name)
     os.makedirs(dataset_folder)
     dataset = xr.open_dataset(config.dict_quarterdeg_files[dataset_name])
-    sm_field = config.dict_product_fields[dataset_name]['sm_field']
+    sm_field = dicts.dict_product_fields[dataset_name]['sm_field']
     sm_data = dataset[sm_field]
     for loc, loc_data in locations.items():
         print(dataset_name,loc)

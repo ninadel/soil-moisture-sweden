@@ -10,6 +10,7 @@ import os
 import pandas
 import datetime
 import sm_config as config
+import sm_dictionaries as dicts
 import sm_tools as tools
 from multiprocessing import Pool
 
@@ -129,7 +130,7 @@ def filter_temporal_match(temp_match_dict):
 
 def get_temp_match_dicts(datasets, output_root, ignore_datasets, start_date, end_date, daily_row_cutoff):
     datasets = [dataset for dataset in datasets if dataset not in ignore_datasets]
-    loc_inventory = get_loc_inventory(datasets, config.dict_swe_gldas_points)
+    loc_inventory = get_loc_inventory(datasets, dicts.dict_swe_gldas_points)
     export_loc_dict(loc_inventory, os.path.join(output_root, 'loc_inventory_{}.csv'.format(
                         datetime.datetime.now().strftime("%Y%m%d%H%M%S"))))
     filtered_loc_list = filter_loc_inventory(loc_inventory, cutoff=100)

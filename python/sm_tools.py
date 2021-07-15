@@ -5,6 +5,7 @@ Functions for analyzing soil moisture datasets
 UPDATE_DESCRIPTION
 """
 import sm_config as config
+import sm_dictionaries as dicts
 
 from datetime import datetime, timedelta
 import json
@@ -172,7 +173,7 @@ def get_product_data(product, reader=None, lon=None, lat=None, station=None, ano
             data = ts
     if filter_prod:
         data = get_filtered_data(product, data)
-    sm_field = config.dict_product_fields[product]['sm_field']
+    sm_field = dicts.dict_product_fields[product]['sm_field']
     if sm_only and len(data.shape) > 1:
         data = data[sm_field]
     if sm_only and anomaly:
@@ -587,7 +588,7 @@ def get_smap_retrieval_qual(flags):
 
 def get_filtered_data(product, data, filter_counts=False):
     result_data = None
-    sm_field = config.dict_product_fields[product]['sm_field']
+    sm_field = dicts.dict_product_fields[product]['sm_field']
     filter_count_dict = {'quality': None, 'valid': None, 'passed': None}
     if product == "ASCAT 12.5 TS":
         # Filter for unfrozen data
@@ -747,7 +748,7 @@ def csv_to_pdseries(f):
 
 
 def get_station_code(station):
-    station_dict = {**config.dict_icos, **config.dict_hobe}
+    station_dict = {**dicts.dict_icos, **dicts.dict_hobe}
     network = station.network
     station_name = station.station
     station_key = " ".join([network, station_name])
@@ -756,7 +757,7 @@ def get_station_code(station):
 
 
 def get_station_cover(station):
-    station_dict = {**config.dict_icos, **config.dict_hobe}
+    station_dict = {**dicts.dict_icos, **dicts.dict_hobe}
     network = station.network
     station_name = station.station
     station_key = " ".join([network, station_name])

@@ -14,6 +14,7 @@ import xarray as xr
 import pandas as pd
 import warnings
 from multiprocessing import Pool
+import sm_dictionaries as dicts
 
 reference_dataset_name = 'ERA5 0-1'
 reference_file = config.dict_quarterdeg_files[reference_dataset_name]
@@ -23,7 +24,7 @@ output_root = r"../analysis_output/{} grid evaluation {}".format(reference_datas
                                                                  datetime.now().strftime("%Y%m%d%H%M%S"))
 
 grid_evaluation_dict = {
-    'locations': config.dict_swe_gldas_points,
+    'locations': dicts.dict_swe_gldas_points,
     'reference': (reference_dataset_name, reference_dataset),
     'evaluation': (None, None),
     'start_date': None,
@@ -67,8 +68,8 @@ def evaluate_gridcell_xr(evaluation_dict, lon, lat):
     evaluate_timeframes = evaluation_dict['evaluate_timeframes']
     data = {}
     metrics = {}
-    ref_sm_field = config.dict_product_fields[ref_dataset_name]['sm_field']
-    eval_sm_field = config.dict_product_fields[eval_dataset_name]['sm_field']
+    ref_sm_field = dicts.dict_product_fields[ref_dataset_name]['sm_field']
+    eval_sm_field = dicts.dict_product_fields[eval_dataset_name]['sm_field']
     ref_ts = ref_dataset[ref_sm_field]
     eval_ts = eval_dataset[eval_sm_field]
     ref_ts = ref_ts.sel(time=slice(start_date, end_date), lat=lat, lon=lon).to_pandas()

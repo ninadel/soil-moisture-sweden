@@ -8,13 +8,14 @@ import os
 import xarray as xr
 import xtools
 import sm_config as config
+import sm_dictionaries as dicts
 
 product = "SMAP L3"
 output_dir = r"..\test_output_data\smap_L3_regrid_ts"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 f = r"..\input_data\xr\regrid\smap-L3_0-25-regrid.nc"
-sm_field = config.dict_product_fields[product]['sm_field']
+sm_field = dicts.dict_product_fields[product]['sm_field']
 
 ds = xr.open_dataset(f)
 print(ds)

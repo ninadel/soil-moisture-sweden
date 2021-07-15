@@ -10,6 +10,7 @@ import geopandas
 from shapely.geometry import Point
 import sys
 import matplotlib
+import sm_dictionaries as dicts
 # from pytesmo.time_series.anomaly import calc_anomaly
 # from pytesmo.time_series.anomaly import calc_anomaly
 sys.path.append('../python')
@@ -220,13 +221,13 @@ for csv in csv_list:
     subdir = csv.replace(".csv", "")
     print(csv)
     file = os.path.join(input_dir, csv)
-    tc_matlab_df = tc_matlab2pandas(file, config.dict_swe_gldas_points)
+    tc_matlab_df = tc_matlab2pandas(file, dicts.dict_swe_gldas_points)
     pandas_csv = os.path.join(pandas_output_dir, csv)
     tc_matlab_df.to_csv(pandas_csv)
     tc_metrics_output(pandas_csv, os.path.join(tc_map_output_dir, subdir), sweden_shp, metric="r", cutoff=100)
     # tc_metrics_output(pandas_csv, tc_map_output_dir, sweden_shp, metric="err_std", cutoff=100)
 
-# tc_matlab_df = tc_matlab2pandas(tc_matlab_csv, config.dict_swe_gldas_points)
+# tc_matlab_df = tc_matlab2pandas(tc_matlab_csv, dicts.dict_swe_gldas_points)
 # # print(tc_csv)
 # tc_matlab_df.to_csv(
 #     r"C:\git\soil-moisture-sweden\analysis_output\tc_analysis_20210314104637\tc_matlab_pandas_results.csv", index=False)

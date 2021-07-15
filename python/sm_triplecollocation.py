@@ -17,6 +17,7 @@ from itertools import permutations
 import os
 import pandas
 import sm_config as config
+import sm_dictionaries as dicts
 import sm_tools as tools
 import numpy as np
 import math
@@ -72,7 +73,7 @@ def get_tc_dicts(trips, loc_dict, root, calculate=True, export_matched=False, tc
         for anomaly_value in anomaly_values:
             for loc in loc_dict.keys():
 
-                loc_data = config.dict_swe_gldas_points[loc]
+                loc_data = dicts.dict_swe_gldas_points[loc]
                 loc_vc = loc_data["veg_class_name"]
 
                 # filter out irrelevant vegetation classes
@@ -158,7 +159,7 @@ def tc_analysis(tc_dict, match_permutations=False):
     anomaly_str = tc_dict['anomaly_str']
     metrics_file = tc_dict['metrics_file']
     logfile = tc_dict['logfile']
-    loc_data = config.dict_swe_gldas_points[loc]
+    loc_data = dicts.dict_swe_gldas_points[loc]
     loc_vc = loc_data["veg_class_name"]
     lat = loc_data["latitude"]
     lon = loc_data["longitude"]
@@ -271,9 +272,9 @@ if __name__ == '__main__':
     calc_metrics = True
     exp_matched = True
     triplets = get_triplets(model, active, passive)
-    # tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
+    # tc_dicts = get_tc_dicts(triplets, dicts.dict_swe_gldas_points, output_root, calculate=calc_metrics,
     #                         export_matched=exp_matched, anomaly_values=[False, True])
-    tc_dicts = get_tc_dicts(triplets, config.dict_swe_gldas_points, output_root, calculate=calc_metrics,
+    tc_dicts = get_tc_dicts(triplets, dicts.dict_swe_gldas_points, output_root, calculate=calc_metrics,
                             export_matched=exp_matched, anomaly_values=[True])
     # with mp.get_context("spawn").Pool(1) as p:
     with mp.get_context("spawn").Pool(5) as p:

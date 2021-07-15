@@ -8,11 +8,12 @@ UPDATE_DESCRIPTION
 
 import xarray as xr
 import sm_config as config
+import sm_dictionaries as dicts
 import xtools as xt
 import os
 
 product = "ERA5 0-1"
-sm_field = config.dict_product_fields[product]['sm_field']
+sm_field = dicts.dict_product_fields[product]['sm_field']
 f = r"/Volumes/TOSHIBA EXT/sm_backup/native/ERA5-Land/hourly/0-1_ERA5-Land_hourly.nc"
 ds = xr.open_dataset(f)
 output_dir = r"../test_output_data"

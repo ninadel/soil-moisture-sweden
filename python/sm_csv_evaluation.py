@@ -60,7 +60,7 @@ def evaluate_csv_station(evaluation_dict, station):
     evaluate_seasons = evaluate_timefilters[1]
     evaluate_months = evaluate_timefilters[2]
     dataset_folder = config.dict_product_inputs[dataset]['csv_stations']
-    sm_field = config.dict_product_fields[dataset]['sm_field']
+    sm_field = dicts.dict_product_fields[dataset]['sm_field']
     network = station.network
     station_name = station.station
     eval_file = os.path.join(dataset_folder, "{}_{}.csv".format(network, station_name.replace(".", "-")))

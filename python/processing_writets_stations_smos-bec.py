@@ -9,6 +9,7 @@ import os
 import pandas
 import re
 import sm_config as config
+import sm_dictionaries as dicts
 import sm_tools as tools
 from netCDF4 import Dataset
 
@@ -23,17 +24,17 @@ if not os.path.exists(output_dir):
 file_list = os.listdir(input_dir)
 file_list.sort()
 export_timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-sm_key = config.dict_product_fields[product]['sm_field']
+sm_key = dicts.dict_product_fields[product]['sm_field']
 qf_key = 'quality_flag'
 time_key = 'time'
-product_lon = config.dict_product_fields[product]['lon_field']
-product_lat = config.dict_product_fields[product]['lat_field']
+product_lon = dicts.dict_product_fields[product]['lon_field']
+product_lat = dicts.dict_product_fields[product]['lat_field']
 
 ref_locations = {}
-icos_stations = config.dict_icos
-hobe_stations = config.dict_hobe
-ref_locations.update(config.dict_icos)
-ref_locations.update(config.dict_hobe)
+icos_stations = dicts.dict_icos
+hobe_stations = dicts.dict_hobe
+ref_locations.update(dicts.dict_icos)
+ref_locations.update(dicts.dict_hobe)
 
 # # TEST: SM value range
 # for filename in os.listdir(input_dir):

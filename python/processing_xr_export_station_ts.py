@@ -10,6 +10,7 @@ from datetime import datetime
 import os
 import sm_tools as tools
 import sm_config as config
+import sm_dictionaries as dicts
 import sm_evaluation as evaluation
 import xarray as xr
 import pandas as pd
@@ -42,8 +43,8 @@ def export_station_data(dataset):
         lat = station.latitude
         lon = station.longitude
         if dataset == "ASCAT 12.5 TS":
-            row = tools.find_nearest(config.dict_h115_coords['lat'], lat)[0]
-            col = tools.find_nearest(config.dict_h115_coords[str(row)], lon)[0]
+            row = tools.find_nearest(dicts.dict_h115_coords['lat'], lat)[0]
+            col = tools.find_nearest(dicts.dict_h115_coords[str(row)], lon)[0]
             for var in ds.data_vars:
                 try:
                     dr = ds[var].sel(row=row, col=col)
