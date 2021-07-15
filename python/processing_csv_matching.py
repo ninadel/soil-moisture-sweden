@@ -1,7 +1,8 @@
 """
 Author: Nina del Rosario
-Date: UPDATE_DATE
-UPDATE_DESCRIPTION
+Date: 7/15/2021
+This script processes CSV time series data for datasets being analyzed and outputs datasets for locations where data
+is present for that location and for dates where data is present for that location
 """
 
 import csv
@@ -146,41 +147,41 @@ if __name__ == '__main__':
     start_date = datetime.datetime(2015, 4, 1)
     end_date = datetime.datetime(2018, 12, 31)
     daily_row_cutoff = 0
-    # # TC 1 - ASCAT
-    # print("TC 1")
-    # tc_datasets_1 = ['SMAP L3 Enhanced', 'SMOS-IC', 'ASCAT 12.5 TS', 'ERA5 0-1']
-    # tc_output_root_1 = r"C:\git\soil-moisture-sweden\analysis_output\tc_temp_match_ASCAT_{}".format(
-    #     datetime.datetime.now().strftime("%Y%m% d%H%M%S"))
-    # os.makedirs(tc_output_root_1)
-    # tc_temp_match_dicts_1 = get_temp_match_dicts(tc_datasets_1, tc_output_root_1, [], start_date, end_date,
-    #                                              daily_row_cutoff)
+    # TC 1 - ASCAT
+    print("TC 1")
+    tc_datasets_1 = ['SMAP L3 Enhanced', 'SMOS-IC', 'ASCAT 12.5 TS', 'ERA5 0-1']
+    tc_output_root_1 = r"C:\git\soil-moisture-sweden\analysis_output\tc_temp_match_ASCAT_{}".format(
+        datetime.datetime.now().strftime("%Y%m% d%H%M%S"))
+    os.makedirs(tc_output_root_1)
+    tc_temp_match_dicts_1 = get_temp_match_dicts(tc_datasets_1, tc_output_root_1, [], start_date, end_date,
+                                                 daily_row_cutoff)
     # GRID 1 - Include ASCAT
-    # print("GRID 1")
-    # grid_datasets_1 = all_grid_datasets
-    # grid_output_root_1 = r"C:\git\soil-moisture-sweden\analysis_output\grid_temp_match_all_{}".format(
-    #     datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
-    # os.makedirs(grid_output_root_1)
-    # grid_temp_match_dicts_1 = get_temp_match_dicts(grid_datasets_1, grid_output_root_1, [], start_date, end_date,
-    #                                                daily_row_cutoff)
-    # # TC 2 - Sentinel-1
-    # print("TC 2")
-    # tc_datasets_2 = ['SMAP L3 Enhanced', 'SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
-    # tc_output_root_2 = r"C:\git\soil-moisture-sweden\analysis_output\tc_temp_match_Sentinel-1_{}".format(
-    #     datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
-    # os.makedirs(tc_output_root_2)
-    # tc_temp_match_dicts_2 = get_temp_match_dicts(tc_datasets_2, tc_output_root_2, [], start_date, end_date,
-    #                                              daily_row_cutoff)
+    print("GRID 1")
+    grid_datasets_1 = all_grid_datasets
+    grid_output_root_1 = r"C:\git\soil-moisture-sweden\analysis_output\grid_temp_match_all_{}".format(
+        datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    os.makedirs(grid_output_root_1)
+    grid_temp_match_dicts_1 = get_temp_match_dicts(grid_datasets_1, grid_output_root_1, [], start_date, end_date,
+                                                   daily_row_cutoff)
+    # TC 2 - Sentinel-1
+    print("TC 2")
+    tc_datasets_2 = ['SMAP L3 Enhanced', 'SMOS-IC', 'Sentinel-1', 'ERA5 0-1']
+    tc_output_root_2 = r"C:\git\soil-moisture-sweden\analysis_output\tc_temp_match_Sentinel-1_{}".format(
+        datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    os.makedirs(tc_output_root_2)
+    tc_temp_match_dicts_2 = get_temp_match_dicts(tc_datasets_2, tc_output_root_2, [], start_date, end_date,
+                                                 daily_row_cutoff)
     # GRID 2 - Remove ASCAT
-    # print("GRID 2")
-    # grid_datasets_2 = [dataset for dataset in all_grid_datasets if dataset != 'ASCAT 12.5 TS']
-    # grid_output_root_2 = r"C:\git\soil-moisture-sweden\analysis_output\grid_temp_match_NoASCAT_{}".format(
-    #     datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    # )
-    # os.makedirs(grid_output_root_2)
-    # grid_temp_match_dicts_2 = get_temp_match_dicts(grid_datasets_2, grid_output_root_2, [], start_date, end_date,
-    #                                                daily_row_cutoff)
-    # temp_match_dicts = tc_temp_match_dicts_1 + grid_temp_match_dicts_1 + tc_temp_match_dicts_2 + grid_temp_match_dicts_2
-    # temp_match_dicts = grid_temp_match_dicts_1 +  grid_temp_match_dicts_2
+    print("GRID 2")
+    grid_datasets_2 = [dataset for dataset in all_grid_datasets if dataset != 'ASCAT 12.5 TS']
+    grid_output_root_2 = r"C:\git\soil-moisture-sweden\analysis_output\grid_temp_match_NoASCAT_{}".format(
+        datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    )
+    os.makedirs(grid_output_root_2)
+    grid_temp_match_dicts_2 = get_temp_match_dicts(grid_datasets_2, grid_output_root_2, [], start_date, end_date,
+                                                   daily_row_cutoff)
+    temp_match_dicts = tc_temp_match_dicts_1 + grid_temp_match_dicts_1 + tc_temp_match_dicts_2 + grid_temp_match_dicts_2
+    temp_match_dicts = grid_temp_match_dicts_1 +  grid_temp_match_dicts_2
     print("TC 3")
     tc_datasets_3 = ['SMAP L3 Enhanced', 'SMOS-IC', 'ASCAT 12.5 TS', 'GLDAS']
     tc_output_root_3 = r"C:\git\soil-moisture-sweden\analysis_output\tc_temp_match_ASCAT_GLDAS_{}".format(
