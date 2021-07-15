@@ -1,8 +1,10 @@
 """
 Author: Nina del Rosario, nina.del@gmail.com
-Date: 5/31/2020
-Class to handle ICOS TS data
-UPDATE_DESCRIPTION
+Date: 7/15/20211
+
+This class inherits from pytesmo's ISMNTimeSeries class:
+https://pytesmo.readthedocs.io/en/v0.6.10/_modules/pytesmo/io/ismn/interface.html,
+which allows pytesmo to interface with ICOS time series data in the same way as ISMN data
 """
 
 from ismn.readers import ISMNTimeSeries
